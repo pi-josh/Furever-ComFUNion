@@ -24,21 +24,21 @@ The database maintains comprehensive profiles for adoptable animals, detailing t
 
 ### Soft Copy of Manual Form
 
-[Link to the manual form]([#](https://www.canva.com/design/DAGA3tMefPE/aPt8C8q2vcuKwzEjf5fw0A/edit?utm_content=DAGA3tMefPE&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton))
+[Link to the manual form](https://www.canva.com/design/DAGA3tMefPE/aPt8C8q2vcuKwzEjf5fw0A/edit?utm_content=DAGA3tMefPE&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 
 *Disclaimer: The form has been revised specifically for this project to simplify inputs and is not the official form used by the FAUGET Animal Shelter.*
 
 ### Normalization
 
-[Link to the normalization documentation]([#](https://docs.google.com/spreadsheets/d/1qQ6mgWr-jic6zWBTz1Zve5SQPBW1k35RfxIZBazvzHs/edit?usp=sharing))
+[Link to the normalization documentation](https://docs.google.com/spreadsheets/d/1qQ6mgWr-jic6zWBTz1Zve5SQPBW1k35RfxIZBazvzHs/edit?usp=sharing)
 
 ### Entity-Relationship Diagram (ERD)
 
-[Link to the ERD]([#](https://lucid.app/lucidchart/8576b084-1302-4b38-a30f-6d9d078c8a4f/edit?viewport_loc=-5332%2C339%2C3840%2C1695%2C0_0&invitationId=inv_9335e154-3ccf-411f-939c-24920c16ccc0))
+[Link to the ERD](https://lucid.app/lucidchart/8576b084-1302-4b38-a30f-6d9d078c8a4f/edit?viewport_loc=-5332%2C339%2C3840%2C1695%2C0_0&invitationId=inv_9335e154-3ccf-411f-939c-24920c16ccc0)
 
 ### Data Dictionary
 
-[Link to the Data Dictionary]([#](https://docs.google.com/spreadsheets/d/1VVqiiR2KJIW1gC9mhwUaOY1MfFndEEd2-GYizXBWOpQ/edit?usp=sharing))
+[Link to the Data Dictionary](https://docs.google.com/spreadsheets/d/1VVqiiR2KJIW1gC9mhwUaOY1MfFndEEd2-GYizXBWOpQ/edit?usp=sharing)
 
 ## Authors
 
