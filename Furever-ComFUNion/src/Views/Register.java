@@ -72,14 +72,12 @@ public class Register extends javax.swing.JFrame {
         workTypeLabel = new javax.swing.JLabel();
         workType = new javax.swing.JComboBox<>();
         passwordLabel = new javax.swing.JLabel();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        password = new javax.swing.JTextPane();
+        password = new javax.swing.JPasswordField();
         birthdateLabel = new javax.swing.JLabel();
         jScrollPane11 = new javax.swing.JScrollPane();
         birthdate = new javax.swing.JTextPane();
         confirmPasswordLabel = new javax.swing.JLabel();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        confirmPassword = new javax.swing.JTextPane();
+        confirmPassword = new javax.swing.JPasswordField();
         registerButton = new javax.swing.JLabel();
         loginDescription = new javax.swing.JLabel();
         loginButton = new javax.swing.JLabel();
@@ -90,7 +88,7 @@ public class Register extends javax.swing.JFrame {
         errorMessageContainer = new javax.swing.JLabel();
         registerBg = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Register");
         setResizable(false);
 
@@ -186,11 +184,7 @@ public class Register extends javax.swing.JFrame {
         passwordLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         passwordLabel.setText("Password:");
         registerContainer.add(passwordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 330, -1, -1));
-
-        jScrollPane5.setHorizontalScrollBar(null);
-        jScrollPane5.setViewportView(password);
-
-        registerContainer.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, 247, -1));
+        registerContainer.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, 247, -1));
 
         birthdateLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         birthdateLabel.setText("Birthday (dd/mm/yyyy)");
@@ -204,11 +198,7 @@ public class Register extends javax.swing.JFrame {
         confirmPasswordLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         confirmPasswordLabel.setText("Confirm Password:");
         registerContainer.add(confirmPasswordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 400, -1, -1));
-
-        jScrollPane6.setHorizontalScrollBar(null);
-        jScrollPane6.setViewportView(confirmPassword);
-
-        registerContainer.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 430, 247, -1));
+        registerContainer.add(confirmPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 430, 247, -1));
 
         registerButton.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         registerButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/register acc.png"))); // NOI18N
@@ -271,9 +261,6 @@ public class Register extends javax.swing.JFrame {
 
         registerBg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/register bg.png"))); // NOI18N
         registerBg.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        registerBg.setMaximumSize(new java.awt.Dimension(650, 650));
-        registerBg.setMinimumSize(new java.awt.Dimension(650, 650));
-        registerBg.setPreferredSize(new java.awt.Dimension(650, 650));
         registerContainer.add(registerBg, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 660, 560));
 
         getContentPane().add(registerContainer, java.awt.BorderLayout.CENTER);
@@ -358,7 +345,7 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JLabel birthdateLabel;
     private javax.swing.JTextPane companyName;
     private javax.swing.JLabel companyNameLabel;
-    private javax.swing.JTextPane confirmPassword;
+    private javax.swing.JPasswordField confirmPassword;
     private javax.swing.JLabel confirmPasswordLabel;
     private javax.swing.JTextPane contactNum;
     private javax.swing.JLabel contactNumber;
@@ -377,8 +364,6 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JLabel loginButton;
@@ -386,7 +371,7 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> month;
     private javax.swing.JTextPane occupation;
     private javax.swing.JLabel occupationLabel;
-    private javax.swing.JTextPane password;
+    private javax.swing.JPasswordField password;
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JLabel registerBg;
     private javax.swing.JLabel registerButton;

@@ -1,5 +1,8 @@
+import Views.Login;
+import Views.Register;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import javafx.scene.paint.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -202,6 +205,9 @@ public class LandingPage extends javax.swing.JFrame {
         loginButton.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         loginButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/login.png"))); // NOI18N
         loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                loginButtonMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 loginButtonMouseEntered(evt);
             }
@@ -224,6 +230,9 @@ public class LandingPage extends javax.swing.JFrame {
 
         registerButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/register.png"))); // NOI18N
         registerButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                registerButtonMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 registerButtonMouseEntered(evt);
             }
@@ -315,6 +324,7 @@ public class LandingPage extends javax.swing.JFrame {
 
     private void loginButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_loginButtonKeyPressed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_loginButtonKeyPressed
 
     private void petsButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_petsButtonKeyPressed
@@ -401,6 +411,16 @@ public class LandingPage extends javax.swing.JFrame {
         adoptedCounter.setForeground(java.awt.Color.black);
         adoptedLabel.setForeground(java.awt.Color.black);
     }//GEN-LAST:event_badgeMouseExited
+
+    private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
+        // TODO add your handling code here:
+        new Login().setVisible(true);
+    }//GEN-LAST:event_loginButtonMouseClicked
+
+    private void registerButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerButtonMouseClicked
+        // TODO add your handling code here:
+        new Register().setVisible(true);
+    }//GEN-LAST:event_registerButtonMouseClicked
 
     /**
      * @param args the command line arguments
