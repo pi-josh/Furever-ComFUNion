@@ -1,14 +1,14 @@
-package Views;
-
-import java.awt.MediaTracker;
-import java.awt.Toolkit;
-import javax.swing.ImageIcon;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package Views;
+
+import java.awt.Color;
+import java.awt.MediaTracker;
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -17,7 +17,7 @@ import javax.swing.ImageIcon;
 public class Register extends javax.swing.JFrame {
 
     /**
-     * Creates new form Main
+     * Creates new form Register
      */
     public Register() {
         initComponents();
@@ -45,184 +45,173 @@ public class Register extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        navBar = new javax.swing.JPanel();
-        logoContainer = new javax.swing.JPanel();
-        logo = new javax.swing.JLabel();
-        navigations = new javax.swing.JPanel();
-        filler = new javax.swing.JPanel();
-        aboutUs = new javax.swing.JPanel();
-        aboutUsButton = new javax.swing.JLabel();
-        FAQ = new javax.swing.JPanel();
-        faqButton = new javax.swing.JLabel();
-        Pets = new javax.swing.JPanel();
-        petsButton = new javax.swing.JLabel();
-        Login = new javax.swing.JPanel();
-        loginButton = new javax.swing.JLabel();
-        Register = new javax.swing.JPanel();
+        titleContainer = new javax.swing.JPanel();
+        registerHeader = new javax.swing.JLabel();
+        registerContainer = new javax.swing.JPanel();
+        fullNameLabel = new javax.swing.JLabel();
+        jScrollPane12 = new javax.swing.JScrollPane();
+        fullName = new javax.swing.JTextPane();
+        currentAddressLabel = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        currentAddress = new javax.swing.JTextPane();
+        usernameLabel = new javax.swing.JLabel();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        username = new javax.swing.JTextPane();
+        occupationLabel = new javax.swing.JLabel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        occupation = new javax.swing.JTextPane();
+        contactNumber = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        contactNum = new javax.swing.JTextPane();
+        companyNameLabel = new javax.swing.JLabel();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        companyName = new javax.swing.JTextPane();
+        emailAddressLabel = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        emailAddress = new javax.swing.JTextPane();
+        workTypeLabel = new javax.swing.JLabel();
+        workType = new javax.swing.JComboBox<>();
+        passwordLabel = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        password = new javax.swing.JTextPane();
+        birthdateLabel = new javax.swing.JLabel();
+        jScrollPane11 = new javax.swing.JScrollPane();
+        birthdate = new javax.swing.JTextPane();
+        confirmPasswordLabel = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        confirmPassword = new javax.swing.JTextPane();
         registerButton = new javax.swing.JLabel();
-        body = new javax.swing.JPanel();
-        slogan = new javax.swing.JLabel();
-        description = new javax.swing.JLabel();
-        adoptedCounter = new javax.swing.JLabel();
-        adoptedLabel = new javax.swing.JLabel();
-        badge = new javax.swing.JLabel();
-        bulletin = new javax.swing.JLabel();
-        background = new javax.swing.JLabel();
+        loginDescription = new javax.swing.JLabel();
+        loginButton = new javax.swing.JLabel();
+        day = new javax.swing.JComboBox<>();
+        month = new javax.swing.JComboBox<>();
+        year = new javax.swing.JComboBox<>();
+        errorMessage = new javax.swing.JLabel();
+        errorMessageContainer = new javax.swing.JLabel();
+        registerBg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Register");
-        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
 
-        navBar.setBackground(new java.awt.Color(194, 144, 69));
-        navBar.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
+        titleContainer.setBackground(new java.awt.Color(194, 144, 69));
+        titleContainer.setPreferredSize(new java.awt.Dimension(900, 75));
+        titleContainer.setLayout(new java.awt.GridBagLayout());
 
-        logoContainer.setBackground(navBar.getBackground());
-        logoContainer.setPreferredSize(new java.awt.Dimension(355, 125));
+        registerHeader.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        registerHeader.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/register header.png"))); // NOI18N
+        titleContainer.add(registerHeader, new java.awt.GridBagConstraints());
 
-        logo.setBackground(navBar.getBackground());
-        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/navLogo.png"))); // NOI18N
-        logo.setIconTextGap(0);
+        getContentPane().add(titleContainer, java.awt.BorderLayout.PAGE_START);
 
-        javax.swing.GroupLayout logoContainerLayout = new javax.swing.GroupLayout(logoContainer);
-        logoContainer.setLayout(logoContainerLayout);
-        logoContainerLayout.setHorizontalGroup(
-            logoContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(logoContainerLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        logoContainerLayout.setVerticalGroup(
-            logoContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(logo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        registerContainer.setBackground(new java.awt.Color(255, 250, 205));
+        registerContainer.setPreferredSize(new java.awt.Dimension(900, 575));
+        registerContainer.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        navBar.add(logoContainer);
+        fullNameLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        fullNameLabel.setText("Full Name [First, Last]:");
+        registerContainer.add(fullNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 49, -1, -1));
 
-        navigations.setBackground(navBar.getBackground());
-        navigations.setPreferredSize(new java.awt.Dimension(875, 100));
-        java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 20, 25);
-        flowLayout1.setAlignOnBaseline(true);
-        navigations.setLayout(flowLayout1);
+        jScrollPane12.setHorizontalScrollBar(null);
+        jScrollPane12.setViewportView(fullName);
 
-        filler.setBackground(navBar.getBackground());
-        filler.setPreferredSize(new java.awt.Dimension(100, 50));
+        registerContainer.add(jScrollPane12, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 247, -1));
 
-        javax.swing.GroupLayout fillerLayout = new javax.swing.GroupLayout(filler);
-        filler.setLayout(fillerLayout);
-        fillerLayout.setHorizontalGroup(
-            fillerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        fillerLayout.setVerticalGroup(
-            fillerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
-        );
+        currentAddressLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        currentAddressLabel.setText("Current Address:");
+        registerContainer.add(currentAddressLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 49, -1, -1));
 
-        navigations.add(filler);
+        jScrollPane2.setHorizontalScrollBar(null);
+        jScrollPane2.setViewportView(currentAddress);
 
-        aboutUs.setBackground(navBar.getBackground());
-        aboutUs.setPreferredSize(new java.awt.Dimension(100, 40));
-        aboutUs.setLayout(new java.awt.GridBagLayout());
+        registerContainer.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 80, 280, -1));
 
-        aboutUsButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        aboutUsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us.png"))); // NOI18N
-        aboutUsButton.setText("About Us");
-        aboutUsButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                aboutUsButtonMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                aboutUsButtonMouseExited(evt);
-            }
-        });
-        aboutUsButton.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                aboutUsButtonKeyPressed(evt);
-            }
-        });
-        aboutUs.add(aboutUsButton, new java.awt.GridBagConstraints());
+        usernameLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        usernameLabel.setText("Username:");
+        registerContainer.add(usernameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, -1, -1));
 
-        navigations.add(aboutUs);
+        jScrollPane10.setHorizontalScrollBar(null);
+        jScrollPane10.setViewportView(username);
 
-        FAQ.setBackground(navBar.getBackground());
-        FAQ.setPreferredSize(new java.awt.Dimension(100, 40));
-        FAQ.setLayout(new java.awt.GridBagLayout());
+        registerContainer.add(jScrollPane10, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 150, 247, -1));
 
-        faqButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        faqButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/FAQs.png"))); // NOI18N
-        faqButton.setText("FAQs");
-        faqButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                faqButtonMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                faqButtonMouseExited(evt);
-            }
-        });
-        faqButton.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                faqButtonKeyPressed(evt);
+        occupationLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        occupationLabel.setText("Occupation:");
+        registerContainer.add(occupationLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 118, -1, -1));
+
+        jScrollPane8.setHorizontalScrollBar(null);
+        jScrollPane8.setViewportView(occupation);
+
+        registerContainer.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 150, 282, -1));
+
+        contactNumber.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        contactNumber.setText("Contact Number:");
+        registerContainer.add(contactNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, -1, -1));
+
+        jScrollPane3.setHorizontalScrollBar(null);
+        jScrollPane3.setViewportView(contactNum);
+
+        registerContainer.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 220, 247, -1));
+
+        companyNameLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        companyNameLabel.setText("Company Name:");
+        registerContainer.add(companyNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 187, -1, -1));
+
+        jScrollPane9.setHorizontalScrollBar(null);
+        jScrollPane9.setViewportView(companyName);
+
+        registerContainer.add(jScrollPane9, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 219, 282, -1));
+
+        emailAddressLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        emailAddressLabel.setText("Email Address:");
+        registerContainer.add(emailAddressLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 260, -1, -1));
+
+        jScrollPane4.setHorizontalScrollBar(null);
+        jScrollPane4.setViewportView(emailAddress);
+
+        registerContainer.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 290, 247, -1));
+
+        workTypeLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        workTypeLabel.setText("Work Type:");
+        registerContainer.add(workTypeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 256, -1, -1));
+
+        workType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        workType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                workTypeActionPerformed(evt);
             }
         });
-        FAQ.add(faqButton, new java.awt.GridBagConstraints());
+        registerContainer.add(workType, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 290, 280, -1));
 
-        navigations.add(FAQ);
+        passwordLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        passwordLabel.setText("Password:");
+        registerContainer.add(passwordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 330, -1, -1));
 
-        Pets.setBackground(navBar.getBackground());
-        Pets.setPreferredSize(new java.awt.Dimension(100, 40));
-        Pets.setLayout(new java.awt.GridBagLayout());
+        jScrollPane5.setHorizontalScrollBar(null);
+        jScrollPane5.setViewportView(password);
 
-        petsButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        petsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets.png"))); // NOI18N
-        petsButton.setText("Pets");
-        petsButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                petsButtonMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                petsButtonMouseExited(evt);
-            }
-        });
-        petsButton.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                petsButtonKeyPressed(evt);
-            }
-        });
-        Pets.add(petsButton, new java.awt.GridBagConstraints());
+        registerContainer.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, 247, -1));
 
-        navigations.add(Pets);
+        birthdateLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        birthdateLabel.setText("Birthday (dd/mm/yyyy)");
+        registerContainer.add(birthdateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 325, -1, -1));
 
-        Login.setBackground(navBar.getBackground());
-        Login.setPreferredSize(new java.awt.Dimension(150, 60));
-        Login.setLayout(new java.awt.GridBagLayout());
+        jScrollPane11.setHorizontalScrollBar(null);
+        jScrollPane11.setViewportView(birthdate);
 
-        loginButton.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        loginButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/login.png"))); // NOI18N
-        loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                loginButtonMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                loginButtonMouseExited(evt);
-            }
-        });
-        loginButton.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                loginButtonKeyPressed(evt);
-            }
-        });
-        Login.add(loginButton, new java.awt.GridBagConstraints());
+        registerContainer.add(jScrollPane11, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 357, 102, -1));
 
-        navigations.add(Login);
+        confirmPasswordLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        confirmPasswordLabel.setText("Confirm Password:");
+        registerContainer.add(confirmPasswordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 400, -1, -1));
 
-        Register.setBackground(navBar.getBackground());
-        Register.setPreferredSize(new java.awt.Dimension(150, 60));
-        Register.setLayout(new java.awt.GridBagLayout());
+        jScrollPane6.setHorizontalScrollBar(null);
+        jScrollPane6.setViewportView(confirmPassword);
 
-        registerButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/register.png"))); // NOI18N
+        registerContainer.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 430, 247, -1));
+
+        registerButton.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        registerButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/register acc.png"))); // NOI18N
         registerButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 registerButtonMouseEntered(evt);
@@ -231,176 +220,103 @@ public class Register extends javax.swing.JFrame {
                 registerButtonMouseExited(evt);
             }
         });
-        registerButton.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                registerButtonKeyPressed(evt);
-            }
-        });
-        Register.add(registerButton, new java.awt.GridBagConstraints());
+        registerContainer.add(registerButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 403, -1, -1));
 
-        navigations.add(Register);
+        loginDescription.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        loginDescription.setText("Already have an account? ");
+        registerContainer.add(loginDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 480, -1, -1));
 
-        navBar.add(navigations);
-
-        getContentPane().add(navBar, java.awt.BorderLayout.PAGE_START);
-
-        body.setBackground(new java.awt.Color(255, 251, 209));
-        body.setBorder(new javax.swing.border.MatteBorder(null));
-        body.setPreferredSize(new java.awt.Dimension(1270, 695));
-        body.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        slogan.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
-        slogan.setForeground(new java.awt.Color(51, 51, 255));
-        slogan.setText("<html> <head> <style> p {     font-family: 'Comic Sans MS', cursive;     font-size: 60px;     color: #000000; /* Black text */     text-align: center;     margin-top: 50px;     text-shadow:          -1px -1px 0 #ffffff,           1px -1px 0 #ffffff,         -1px 1px 0 #ffffff,         1px 1px 0 #ffffff; /* White border */ } </style> </head> <body> <p>Connecting Hearts with Paws</p> </body> </html> ");
-        body.add(slogan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 670, 260));
-
-        description.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        description.setText("<html> <head> <style> p { \tfont-family: 'Open Sans', sans-serif;             font-size: 14px;             color: #000000;             text-align: justify;             margin-top: 20px;             max-width: 100%;             margin-left: auto;             margin-right: auto; \t\t\t} \t\t</style> \t</head> \t<body> \t\t<p>Finding a loving home for every furry friend is our mission. <br>             <br>With \"Furever ComFUNion,\" adopting/rehoming a pet becomes an effortless and joyful experience. <br><br>             Make a lasting impact—bring joy to an animal's life and enrich your own by giving a pet a forever home today. <br>             <br>With Furever ComFUNion, the perfect companion is just a few clicks away.</p> \t</body> </html>");
-        body.add(description, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 350, 520, 270));
-
-        adoptedCounter.setFont(new java.awt.Font("Tahoma", 1, 72)); // NOI18N
-        adoptedCounter.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        adoptedCounter.setText("100");
-        adoptedCounter.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                badgeKeyPressed(evt);
-            }
-        });
-        body.add(adoptedCounter, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 240, 220, 120));
-
-        adoptedLabel.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        adoptedLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        adoptedLabel.setText("Pets are adopted");
-        adoptedLabel.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                badgeKeyPressed(evt);
-            }
-        });
-        body.add(adoptedLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 490, 320, 50));
-
-        badge.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/badge2.png"))); // NOI18N
-        badge.addMouseListener(new java.awt.event.MouseAdapter() {
+        loginButton.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        loginButton.setForeground(new java.awt.Color(99, 71, 12));
+        loginButton.setText("<html>\n<u>Login here</u>\n</html>");
+        loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                badgeMouseEntered(evt);
+                loginButtonMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                badgeMouseExited(evt);
+                loginButtonMouseExited(evt);
             }
         });
-        badge.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                badgeKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                badgeKeyReleased(evt);
+        registerContainer.add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(715, 480, -1, -1));
+
+        day.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        day.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dayActionPerformed(evt);
             }
         });
-        body.add(badge, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 100, -1, -1));
+        registerContainer.add(day, new org.netbeans.lib.awtextra.AbsoluteConstraints(627, 357, 53, -1));
 
-        bulletin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/bulletin.png"))); // NOI18N
-        body.add(bulletin, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, 650, 410));
+        month.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        month.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                monthActionPerformed(evt);
+            }
+        });
+        registerContainer.add(month, new org.netbeans.lib.awtextra.AbsoluteConstraints(687, 357, 53, -1));
 
-        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
-        body.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
+        year.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        year.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                yearActionPerformed(evt);
+            }
+        });
+        registerContainer.add(year, new org.netbeans.lib.awtextra.AbsoluteConstraints(747, 357, 53, -1));
 
-        getContentPane().add(body, java.awt.BorderLayout.CENTER);
+        errorMessage.setText("Lagayan ng error message");
+        registerContainer.add(errorMessage, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 500, -1, -1));
+
+        errorMessageContainer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/success error container.png"))); // NOI18N
+        registerContainer.add(errorMessageContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 470, 280, 80));
+
+        registerBg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/register bg.png"))); // NOI18N
+        registerBg.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        registerBg.setMaximumSize(new java.awt.Dimension(650, 650));
+        registerBg.setMinimumSize(new java.awt.Dimension(650, 650));
+        registerBg.setPreferredSize(new java.awt.Dimension(650, 650));
+        registerContainer.add(registerBg, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 660, 560));
+
+        getContentPane().add(registerContainer, java.awt.BorderLayout.CENTER);
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void registerButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_registerButtonKeyPressed
+    private void workTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workTypeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_registerButtonKeyPressed
+    }//GEN-LAST:event_workTypeActionPerformed
 
-    private void loginButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_loginButtonKeyPressed
+    private void yearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_loginButtonKeyPressed
+    }//GEN-LAST:event_yearActionPerformed
 
-    private void petsButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_petsButtonKeyPressed
+    private void monthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_petsButtonKeyPressed
-
-    private void faqButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_faqButtonKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_faqButtonKeyPressed
-
-    private void aboutUsButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_aboutUsButtonKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_aboutUsButtonKeyPressed
-
-    private void badgeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_badgeKeyPressed
-        // TODO add your handling code here:
-        // This will show the records of the adopted pets
-    }//GEN-LAST:event_badgeKeyPressed
+    }//GEN-LAST:event_monthActionPerformed
 
     private void loginButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseEntered
         // TODO add your handling code here:
-        loginButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/login hover.png")));
+        loginButton.setForeground(Color.RED);
     }//GEN-LAST:event_loginButtonMouseEntered
+
+    private void dayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dayActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dayActionPerformed
 
     private void loginButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseExited
         // TODO add your handling code here:
-        loginButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/login.png")));
+        loginButton.setForeground(new java.awt.Color(99, 71, 12));
     }//GEN-LAST:event_loginButtonMouseExited
 
     private void registerButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerButtonMouseEntered
         // TODO add your handling code here:
-        registerButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/register hover.png")));
+        registerButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/register acc hover.png")));
     }//GEN-LAST:event_registerButtonMouseEntered
 
     private void registerButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerButtonMouseExited
         // TODO add your handling code here:
-        registerButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/register.png")));
+        registerButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/register acc.png")));
     }//GEN-LAST:event_registerButtonMouseExited
-
-    private void petsButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petsButtonMouseEntered
-        // TODO add your handling code here:
-        petsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets hover.png")));
-    }//GEN-LAST:event_petsButtonMouseEntered
-
-    private void petsButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petsButtonMouseExited
-        // TODO add your handling code here:
-        petsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets.png")));
-    }//GEN-LAST:event_petsButtonMouseExited
-
-    private void faqButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_faqButtonMouseEntered
-        // TODO add your handling code here:
-        faqButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/FAQs hover.png")));
-    }//GEN-LAST:event_faqButtonMouseEntered
-
-    private void faqButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_faqButtonMouseExited
-        // TODO add your handling code here:
-        faqButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/FAQs.png")));
-    }//GEN-LAST:event_faqButtonMouseExited
-
-    private void aboutUsButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutUsButtonMouseEntered
-        // TODO add your handling code here:
-        aboutUsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us hover.png")));
-    }//GEN-LAST:event_aboutUsButtonMouseEntered
-
-    private void aboutUsButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutUsButtonMouseExited
-        // TODO add your handling code here:
-        aboutUsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us.png")));
-    }//GEN-LAST:event_aboutUsButtonMouseExited
-
-    private void badgeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_badgeKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_badgeKeyReleased
-
-    private void badgeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_badgeMouseEntered
-        // TODO add your handling code here:
-        badge.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/badge2 hover.png")));
-        adoptedCounter.setForeground(java.awt.Color.yellow);
-        adoptedLabel.setForeground(java.awt.Color.yellow);
-    }//GEN-LAST:event_badgeMouseEntered
-
-    private void badgeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_badgeMouseExited
-        // TODO add your handling code here:
-        badge.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/badge2.png")));
-        adoptedCounter.setForeground(java.awt.Color.black);
-        adoptedLabel.setForeground(java.awt.Color.black);
-    }//GEN-LAST:event_badgeMouseExited
 
     /**
      * @param args the command line arguments
@@ -428,37 +344,6 @@ public class Register extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Register.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -469,29 +354,49 @@ public class Register extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel FAQ;
-    private javax.swing.JPanel Login;
-    private javax.swing.JPanel Pets;
-    private javax.swing.JPanel Register;
-    private javax.swing.JPanel aboutUs;
-    private javax.swing.JLabel aboutUsButton;
-    private javax.swing.JLabel adoptedCounter;
-    private javax.swing.JLabel adoptedLabel;
-    private javax.swing.JLabel background;
-    private javax.swing.JLabel badge;
-    private javax.swing.JPanel body;
-    private javax.swing.JLabel bulletin;
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JLabel description;
-    private javax.swing.JLabel faqButton;
-    private javax.swing.JPanel filler;
+    private javax.swing.JTextPane birthdate;
+    private javax.swing.JLabel birthdateLabel;
+    private javax.swing.JTextPane companyName;
+    private javax.swing.JLabel companyNameLabel;
+    private javax.swing.JTextPane confirmPassword;
+    private javax.swing.JLabel confirmPasswordLabel;
+    private javax.swing.JTextPane contactNum;
+    private javax.swing.JLabel contactNumber;
+    private javax.swing.JTextPane currentAddress;
+    private javax.swing.JLabel currentAddressLabel;
+    private javax.swing.JComboBox<String> day;
+    private javax.swing.JTextPane emailAddress;
+    private javax.swing.JLabel emailAddressLabel;
+    private javax.swing.JLabel errorMessage;
+    private javax.swing.JLabel errorMessageContainer;
+    private javax.swing.JTextPane fullName;
+    private javax.swing.JLabel fullNameLabel;
+    private javax.swing.JScrollPane jScrollPane10;
+    private javax.swing.JScrollPane jScrollPane11;
+    private javax.swing.JScrollPane jScrollPane12;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JLabel loginButton;
-    private javax.swing.JLabel logo;
-    private javax.swing.JPanel logoContainer;
-    private javax.swing.JPanel navBar;
-    private javax.swing.JPanel navigations;
-    private javax.swing.JLabel petsButton;
+    private javax.swing.JLabel loginDescription;
+    private javax.swing.JComboBox<String> month;
+    private javax.swing.JTextPane occupation;
+    private javax.swing.JLabel occupationLabel;
+    private javax.swing.JTextPane password;
+    private javax.swing.JLabel passwordLabel;
+    private javax.swing.JLabel registerBg;
     private javax.swing.JLabel registerButton;
-    private javax.swing.JLabel slogan;
+    private javax.swing.JPanel registerContainer;
+    private javax.swing.JLabel registerHeader;
+    private javax.swing.JPanel titleContainer;
+    private javax.swing.JTextPane username;
+    private javax.swing.JLabel usernameLabel;
+    private javax.swing.JComboBox<String> workType;
+    private javax.swing.JLabel workTypeLabel;
+    private javax.swing.JComboBox<String> year;
     // End of variables declaration//GEN-END:variables
 }
