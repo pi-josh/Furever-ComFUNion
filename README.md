@@ -2,6 +2,8 @@
 
 ![Logo](logos/logo1.png) ![Logo](logos/logo2.png)
 
+---
+
 ## Overview
 
 "Furever ComFUNion" is an extensive database system designed to streamline the adoption and rehoming process for animals with fur and paws. Our system offers a range of features including:
@@ -12,6 +14,8 @@
 
 The database maintains comprehensive profiles for adoptable animals, detailing their species, breed, age, and any special needs. It also tracks the status of prospective adopters' appointments and transactions. Additionally, the system allows clients to schedule appointments for adoptions or rehoming, subject to veterinarian approval. In summary, "Furever ComFUNion" serves as a centralized platform connecting animals in need of homes with loving adopters, ensuring a smooth and efficient adoption and rehoming process for all parties involved.
 
+---
+
 ## Business Rules
 
 - Each application requires a veterinarian to manage it.
@@ -19,6 +23,8 @@ The database maintains comprehensive profiles for adoptable animals, detailing t
 - Veterinarians' services are not exclusive to a single application.
 - Each pet has its own appointment.
 - Clients can adopt and rehome animals, and vice versa.
+
+---
 
 ## Documentation
 
@@ -40,6 +46,18 @@ The database maintains comprehensive profiles for adoptable animals, detailing t
 
 [Link to the Data Dictionary](https://docs.google.com/spreadsheets/d/1VVqiiR2KJIW1gC9mhwUaOY1MfFndEEd2-GYizXBWOpQ/edit?usp=sharing)
 
+---
+
+## Technology Stack
+
+To implement the "Furever ComFUNion" system, we have chosen the following technologies:
+
+- **NetBeans IDE 8.2**: An integrated development environment used for developing with Java, particularly helpful for managing large projects with its extensive set of tools and plugins.
+- **Java Swing**: A GUI widget toolkit for Java, which provides a robust set of components for building graphical user interfaces.
+- **MySQL**: A widely-used relational database management system that offers reliability, performance, and ease of use, ideal for managing the comprehensive profiles and data required by our system.
+
+---
+
 ## Authors
 
 This project was created by the following students from the Faculty of the College of Computer and Information Sciences, Polytechnic University of the Philippines, Sta. Mesa, Manila, in partial fulfillment of the course COMP 010 – Information Management:
@@ -52,3 +70,7 @@ This project was created by the following students from the Faculty of the Colle
 **BSIT 2-3**
 
 **April, 2024**
+
+---
+
+![NetBeans](https://img.shields.io/badge/NetBeans-8.2-brightgreen) ![Java Swing](https://img.shields.io/badge/Java%20Swing-%E2%98%85%E2%98%85%E2%98%85%E2%98%85%E2%98%85-brightgreen) ![MySQL](https://img.shields.io/badge/MySQL-5.7-blue)
