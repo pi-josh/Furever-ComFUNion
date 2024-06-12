@@ -144,7 +144,6 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Resources/about us.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="About Us"/>
                   </Properties>
                   <Events>
                     <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="aboutUsButtonMouseEntered"/>
@@ -179,7 +178,6 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Resources/FAQs.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="FAQs"/>
                   </Properties>
                   <Events>
                     <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="faqButtonMouseEntered"/>
@@ -214,7 +212,6 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Resources/pets.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Pets"/>
                   </Properties>
                   <Events>
                     <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="petsButtonMouseEntered"/>

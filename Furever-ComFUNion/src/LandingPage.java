@@ -2,10 +2,7 @@ import Views.Login;
 import Views.Register;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
-import javafx.scene.paint.Color;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -132,7 +129,6 @@ public class LandingPage extends javax.swing.JFrame {
 
         aboutUsButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         aboutUsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us.png"))); // NOI18N
-        aboutUsButton.setText("About Us");
         aboutUsButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 aboutUsButtonMouseEntered(evt);
@@ -156,7 +152,6 @@ public class LandingPage extends javax.swing.JFrame {
 
         faqButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         faqButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/FAQs.png"))); // NOI18N
-        faqButton.setText("FAQs");
         faqButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 faqButtonMouseEntered(evt);
@@ -180,7 +175,6 @@ public class LandingPage extends javax.swing.JFrame {
 
         petsButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         petsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets.png"))); // NOI18N
-        petsButton.setText("Pets");
         petsButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 petsButtonMouseEntered(evt);
