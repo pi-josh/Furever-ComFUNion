@@ -81,28 +81,37 @@ public class UserLoggedIn extends javax.swing.JFrame {
         bulletin = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
         aboutUsBody = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        devs = new javax.swing.JLabel();
+        businessRules = new javax.swing.JLabel();
+        aboutUsPanel = new javax.swing.JLabel();
         background1 = new javax.swing.JLabel();
         FAQsBody = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        next = new javax.swing.JLabel();
+        FAQsPanel = new javax.swing.JLabel();
         background2 = new javax.swing.JLabel();
         petsBody = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        petPrev = new javax.swing.JLabel();
+        petNext = new javax.swing.JLabel();
+        petPanel1 = new javax.swing.JLabel();
+        petPanel2 = new javax.swing.JLabel();
+        petPanel3 = new javax.swing.JLabel();
+        petHeader = new javax.swing.JLabel();
         background3 = new javax.swing.JLabel();
         vetsBody = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        vetsPanel = new javax.swing.JLabel();
         background4 = new javax.swing.JLabel();
         applicationBody = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         background5 = new javax.swing.JLabel();
         profileBody = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
+        profilePanel = new javax.swing.JLabel();
         background6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Furever ComFUNion");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setPreferredSize(new java.awt.Dimension(1370, 879));
+        setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(1370, 880));
         setResizable(false);
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -113,6 +122,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         navBar.setBackground(new java.awt.Color(194, 144, 69));
         navBar.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
+        navBar.setMinimumSize(new java.awt.Dimension(1370, 140));
+        navBar.setPreferredSize(new java.awt.Dimension(1370, 140));
         navBar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         username.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -183,6 +194,17 @@ public class UserLoggedIn extends javax.swing.JFrame {
         logo.setBackground(navBar.getBackground());
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/navLogo.png"))); // NOI18N
         logo.setIconTextGap(0);
+        logo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                logoMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                logoMouseReleased(evt);
+            }
+        });
         navBar.add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, -1, -1));
 
         homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/home click.png"))); // NOI18N
@@ -296,7 +318,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         homeBody.setBackground(new java.awt.Color(255, 251, 209));
         homeBody.setBorder(new javax.swing.border.MatteBorder(null));
-        homeBody.setPreferredSize(new java.awt.Dimension(1270, 695));
+        homeBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         homeBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         slogan.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
@@ -353,67 +375,92 @@ public class UserLoggedIn extends javax.swing.JFrame {
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
         homeBody.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
 
-        getContentPane().add(homeBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 139, 1370, 815));
+        getContentPane().add(homeBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 139, 1370, 740));
 
         aboutUsBody.setBackground(new java.awt.Color(255, 251, 209));
         aboutUsBody.setBorder(new javax.swing.border.MatteBorder(null));
-        aboutUsBody.setPreferredSize(new java.awt.Dimension(1270, 695));
+        aboutUsBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         aboutUsBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        jLabel1.setText("About Us");
-        aboutUsBody.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 340, -1, -1));
+        devs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us dev (1).png"))); // NOI18N
+        aboutUsBody.add(devs, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 540, -1, 200));
+
+        businessRules.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us business rule (1).png"))); // NOI18N
+        aboutUsBody.add(businessRules, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 540, 400, 200));
+
+        aboutUsPanel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us panel (1).png"))); // NOI18N
+        aboutUsBody.add(aboutUsPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 80, 810, 660));
 
         background1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
         aboutUsBody.add(background1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
 
-        getContentPane().add(aboutUsBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 139, 1370, 815));
+        getContentPane().add(aboutUsBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 139, 1370, 740));
 
         FAQsBody.setBackground(new java.awt.Color(255, 251, 209));
         FAQsBody.setBorder(new javax.swing.border.MatteBorder(null));
-        FAQsBody.setPreferredSize(new java.awt.Dimension(1270, 695));
+        FAQsBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         FAQsBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        jLabel2.setText("FAQs");
-        FAQsBody.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 330, -1, -1));
+        next.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/next button (1).png"))); // NOI18N
+        FAQsBody.add(next, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 580, 350, 100));
+
+        FAQsPanel.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+        FAQsPanel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/FAQs panel (1).png"))); // NOI18N
+        FAQsBody.add(FAQsPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, 960, 640));
 
         background2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
         FAQsBody.add(background2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
 
-        getContentPane().add(FAQsBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 139, 1370, 815));
+        getContentPane().add(FAQsBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 139, 1370, 740));
 
         petsBody.setBackground(new java.awt.Color(255, 251, 209));
         petsBody.setBorder(new javax.swing.border.MatteBorder(null));
-        petsBody.setPreferredSize(new java.awt.Dimension(1270, 695));
+        petsBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         petsBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        jLabel3.setText("Pets");
-        petsBody.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 350, -1, -1));
+        petPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/prev button (1).png"))); // NOI18N
+        petsBody.add(petPrev, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 590, 350, 100));
+
+        petNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/next button (1).png"))); // NOI18N
+        petsBody.add(petNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 590, 350, 100));
+
+        petPanel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets panel (1).png"))); // NOI18N
+        petsBody.add(petPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 400, 530));
+
+        petPanel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets panel (1).png"))); // NOI18N
+        petPanel2.setPreferredSize(new java.awt.Dimension(400, 400));
+        petsBody.add(petPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 90, 400, 530));
+
+        petPanel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets panel (1).png"))); // NOI18N
+        petsBody.add(petPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 90, 400, 530));
+
+        petHeader.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+        petHeader.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        petHeader.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets header.png"))); // NOI18N
+        petsBody.add(petHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 250, 90));
 
         background3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
         petsBody.add(background3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
 
-        getContentPane().add(petsBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 139, 1370, 815));
+        getContentPane().add(petsBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 139, 1370, 740));
 
         vetsBody.setBackground(new java.awt.Color(255, 251, 209));
         vetsBody.setBorder(new javax.swing.border.MatteBorder(null));
-        vetsBody.setPreferredSize(new java.awt.Dimension(1270, 695));
+        vetsBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         vetsBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        jLabel4.setText("Veterinarians");
-        vetsBody.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 340, -1, -1));
+        vetsPanel.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+        vetsPanel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/vets panel (1).png"))); // NOI18N
+        vetsBody.add(vetsPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, -1, -1));
 
         background4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
         vetsBody.add(background4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
 
-        getContentPane().add(vetsBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 139, 1370, 815));
+        getContentPane().add(vetsBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 139, 1370, 740));
 
         applicationBody.setBackground(new java.awt.Color(255, 251, 209));
         applicationBody.setBorder(new javax.swing.border.MatteBorder(null));
-        applicationBody.setPreferredSize(new java.awt.Dimension(1270, 695));
+        applicationBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         applicationBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
@@ -423,21 +470,21 @@ public class UserLoggedIn extends javax.swing.JFrame {
         background5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
         applicationBody.add(background5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
 
-        getContentPane().add(applicationBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 139, 1370, 815));
+        getContentPane().add(applicationBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 139, 1370, 740));
 
         profileBody.setBackground(new java.awt.Color(255, 251, 209));
         profileBody.setBorder(new javax.swing.border.MatteBorder(null));
-        profileBody.setPreferredSize(new java.awt.Dimension(1270, 695));
+        profileBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         profileBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        jLabel6.setText("Profile");
-        profileBody.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 320, -1, -1));
+        profilePanel.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+        profilePanel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/profile panel (1).png"))); // NOI18N
+        profileBody.add(profilePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, -1, -1));
 
         background6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
         profileBody.add(background6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
 
-        getContentPane().add(profileBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 139, 1370, 815));
+        getContentPane().add(profileBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 139, 1370, 740));
 
         pack();
         setLocationRelativeTo(null);
@@ -964,6 +1011,21 @@ public class UserLoggedIn extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formMouseEntered
 
+    private void logoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoMouseClicked
+        // TODO add your handling code here:
+        homeButton();
+    }//GEN-LAST:event_logoMouseClicked
+
+    private void logoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoMousePressed
+        // TODO add your handling code here:
+        homeButton();
+    }//GEN-LAST:event_logoMousePressed
+
+    private void logoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoMouseReleased
+        // TODO add your handling code here:
+        homeButton();
+    }//GEN-LAST:event_logoMouseReleased
+
     /**
      * @param args the command line arguments
      */
@@ -1002,8 +1064,10 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel FAQsBody;
+    private javax.swing.JLabel FAQsPanel;
     private javax.swing.JPanel aboutUsBody;
     private javax.swing.JLabel aboutUsButton;
+    private javax.swing.JLabel aboutUsPanel;
     private javax.swing.JLabel adoptedCounter;
     private javax.swing.JLabel adoptedLabel;
     private javax.swing.JPanel applicationBody;
@@ -1017,29 +1081,35 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel background6;
     private javax.swing.JLabel badge;
     private javax.swing.JLabel bulletin;
+    private javax.swing.JLabel businessRules;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel clickbg;
     private javax.swing.JLabel description;
+    private javax.swing.JLabel devs;
     private javax.swing.JLabel faqButton;
     private javax.swing.JPanel homeBody;
     private javax.swing.JLabel homeButton;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel line;
     private javax.swing.JLabel logo;
     private javax.swing.JPanel navBar;
+    private javax.swing.JLabel next;
     private javax.swing.JLabel petButton;
+    private javax.swing.JLabel petHeader;
+    private javax.swing.JLabel petNext;
+    private javax.swing.JLabel petPanel1;
+    private javax.swing.JLabel petPanel2;
+    private javax.swing.JLabel petPanel3;
+    private javax.swing.JLabel petPrev;
     private javax.swing.JPanel petsBody;
     private javax.swing.JPanel profileBody;
     private javax.swing.JLabel profileCollar;
     private javax.swing.JLabel profileHead;
+    private javax.swing.JLabel profilePanel;
     private javax.swing.JLabel slogan;
     private javax.swing.JLabel username;
     private javax.swing.JLabel vetButton;
     private javax.swing.JPanel vetsBody;
+    private javax.swing.JLabel vetsPanel;
     // End of variables declaration//GEN-END:variables
 }
