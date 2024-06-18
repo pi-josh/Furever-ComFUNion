@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
  * @author joshu
  */
 public class Register extends javax.swing.JFrame {
+    private boolean registerClosed;
 
     /**
      * Creates new form Register
@@ -35,6 +36,14 @@ public class Register extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+    
+    public boolean getRegisterClosed() {
+        return registerClosed;
+    }
+    
+    public void setRegisterClosed(boolean state) {
+        registerClosed = state;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -47,6 +56,7 @@ public class Register extends javax.swing.JFrame {
 
         titleContainer = new javax.swing.JPanel();
         registerHeader = new javax.swing.JLabel();
+        backButton = new javax.swing.JLabel();
         registerContainer = new javax.swing.JPanel();
         fullNameLabel = new javax.swing.JLabel();
         jScrollPane12 = new javax.swing.JScrollPane();
@@ -94,11 +104,25 @@ public class Register extends javax.swing.JFrame {
 
         titleContainer.setBackground(new java.awt.Color(194, 144, 69));
         titleContainer.setPreferredSize(new java.awt.Dimension(900, 75));
-        titleContainer.setLayout(new java.awt.GridBagLayout());
+        titleContainer.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         registerHeader.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         registerHeader.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/register header.png"))); // NOI18N
-        titleContainer.add(registerHeader, new java.awt.GridBagConstraints());
+        titleContainer.add(registerHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 1, -1, -1));
+
+        backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button (1).png"))); // NOI18N
+        backButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                backButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                backButtonMouseExited(evt);
+            }
+        });
+        titleContainer.add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 10, 40, 40));
 
         getContentPane().add(titleContainer, java.awt.BorderLayout.PAGE_START);
 
@@ -305,6 +329,21 @@ public class Register extends javax.swing.JFrame {
         registerButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/register acc.png")));
     }//GEN-LAST:event_registerButtonMouseExited
 
+    private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_backButtonMouseClicked
+
+    private void backButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseEntered
+        // TODO add your handling code here:
+        backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button hover (1).png")));
+    }//GEN-LAST:event_backButtonMouseEntered
+
+    private void backButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseExited
+        // TODO add your handling code here:
+        backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button (1).png")));
+    }//GEN-LAST:event_backButtonMouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -341,6 +380,7 @@ public class Register extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel backButton;
     private javax.swing.JTextPane birthdate;
     private javax.swing.JLabel birthdateLabel;
     private javax.swing.JTextPane companyName;

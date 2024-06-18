@@ -24,7 +24,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private boolean vetsClicked;
     private boolean applicationClicked;
     private boolean profileClicked;
-    private boolean start = true;
     private int FAQsPanelCounter = 4000001;
     /**
      * Creates new form Main
@@ -112,7 +111,10 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetsPanel = new javax.swing.JLabel();
         background4 = new javax.swing.JLabel();
         applicationBody = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
+        adoptButton = new javax.swing.JLabel();
+        rehomeButton = new javax.swing.JLabel();
+        editButton = new javax.swing.JLabel();
+        applicationPanel = new javax.swing.JLabel();
         background5 = new javax.swing.JLabel();
         profileBody = new javax.swing.JPanel();
         profilePanel = new javax.swing.JLabel();
@@ -367,11 +369,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
         adoptedCounter.setFont(new java.awt.Font("Tahoma", 1, 72)); // NOI18N
         adoptedCounter.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         adoptedCounter.setText("100");
-        adoptedCounter.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                badgeKeyPressed(evt);
-            }
-        });
         homeBody.add(adoptedCounter, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 240, 220, 120));
 
         adoptedLabel.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
@@ -386,19 +383,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         badge.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/badge2.png"))); // NOI18N
         badge.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                badgeMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 badgeMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 badgeMouseExited(evt);
-            }
-        });
-        badge.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                badgeKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                badgeKeyReleased(evt);
             }
         });
         homeBody.add(badge, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 100, -1, -1));
@@ -567,9 +559,42 @@ public class UserLoggedIn extends javax.swing.JFrame {
         applicationBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         applicationBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        jLabel5.setText("Application");
-        applicationBody.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 340, -1, -1));
+        adoptButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/adopt button (1).png"))); // NOI18N
+        adoptButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                adoptButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                adoptButtonMouseExited(evt);
+            }
+        });
+        applicationBody.add(adoptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 40, -1, -1));
+
+        rehomeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/rehome button (1).png"))); // NOI18N
+        rehomeButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                rehomeButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                rehomeButtonMouseExited(evt);
+            }
+        });
+        applicationBody.add(rehomeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 40, -1, -1));
+
+        editButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (1).png"))); // NOI18N
+        editButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editButtonMouseExited(evt);
+            }
+        });
+        applicationBody.add(editButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 170, 90, 90));
+
+        applicationPanel.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+        applicationPanel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/application panel (1).png"))); // NOI18N
+        applicationBody.add(applicationPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, 1000, 580));
 
         background5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
         applicationBody.add(background5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
@@ -969,10 +994,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // This will show the records of the adopted pets
     }//GEN-LAST:event_badgeKeyPressed
 
-    private void badgeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_badgeKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_badgeKeyReleased
-
     private void badgeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_badgeMouseExited
         // TODO add your handling code here:
         badge.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/badge2.png")));
@@ -1087,6 +1108,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
             homeClick.setVisible(true);
             homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/home hover.png")));
             line.setBackground(new java.awt.Color(255, 251, 209));
+            homeClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png")));
         }
     }//GEN-LAST:event_homeButtonMouseEntered
 
@@ -1344,6 +1366,41 @@ public class UserLoggedIn extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_exitButtonMouseClicked
 
+    private void adoptButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adoptButtonMouseEntered
+        // TODO add your handling code here:
+        adoptButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/adopt button hover (1).png")));
+    }//GEN-LAST:event_adoptButtonMouseEntered
+
+    private void adoptButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adoptButtonMouseExited
+        // TODO add your handling code here:
+        adoptButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/adopt button (1).png")));
+    }//GEN-LAST:event_adoptButtonMouseExited
+
+    private void rehomeButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rehomeButtonMouseEntered
+        // TODO add your handling code here:
+        rehomeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/rehome button hover (1).png")));
+    }//GEN-LAST:event_rehomeButtonMouseEntered
+
+    private void rehomeButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rehomeButtonMouseExited
+        // TODO add your handling code here:
+        rehomeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/rehome button (1).png")));
+    }//GEN-LAST:event_rehomeButtonMouseExited
+
+    private void editButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButtonMouseEntered
+        // TODO add your handling code here:
+        editButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button hover (1).png")));
+    }//GEN-LAST:event_editButtonMouseEntered
+
+    private void editButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButtonMouseExited
+        // TODO add your handling code here:
+        editButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (1).png")));
+    }//GEN-LAST:event_editButtonMouseExited
+
+    private void badgeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_badgeMouseClicked
+        // TODO add your handling code here:
+        petButton();
+    }//GEN-LAST:event_badgeMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1396,11 +1453,13 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel aboutUsButton;
     private javax.swing.JLabel aboutUsClick;
     private javax.swing.JLabel aboutUsPanel;
+    private javax.swing.JLabel adoptButton;
     private javax.swing.JLabel adoptedCounter;
     private javax.swing.JLabel adoptedLabel;
     private javax.swing.JPanel applicationBody;
     private javax.swing.JLabel applicationButton;
     private javax.swing.JLabel applicationClick;
+    private javax.swing.JLabel applicationPanel;
     private javax.swing.JLabel background;
     private javax.swing.JLabel background1;
     private javax.swing.JLabel background2;
@@ -1414,13 +1473,13 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel description;
     private javax.swing.JLabel devs;
+    private javax.swing.JLabel editButton;
     private javax.swing.JLabel exitButton;
     private javax.swing.JLabel faqButton;
     private javax.swing.JLabel faqClick;
     private javax.swing.JPanel homeBody;
     private javax.swing.JLabel homeButton;
     private javax.swing.JLabel homeClick;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel line;
     private javax.swing.JLabel logo;
     private javax.swing.JPanel navBar;
@@ -1439,6 +1498,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel profileCollar;
     private javax.swing.JLabel profileHead;
     private javax.swing.JLabel profilePanel;
+    private javax.swing.JLabel rehomeButton;
     private javax.swing.JLabel slogan;
     private javax.swing.JLabel username;
     private javax.swing.JLabel vetButton;
