@@ -10,16 +10,36 @@ import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 
 /**
  *
  * @author joshu
  */
 public class Login extends javax.swing.JFrame {
-
+    private JFrame landingPageFrame;
     /**
      * Creates new form Register
      */
+    public Login(JFrame landingPageFrame) {
+        initComponents();
+        this.landingPageFrame = landingPageFrame;
+        setVisible(true);
+        
+        // Window logo
+        ImageIcon icon1 = null;
+        try {
+            icon1 = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Resources/logo2.png")));
+            if (icon1.getImageLoadStatus() == MediaTracker.ERRORED) {
+                throw new NullPointerException("Image not found or cannot be loaded.");
+            }
+            this.setIconImage(icon1.getImage());
+        } catch (NullPointerException e) {
+            System.err.println("Error: Image not found. " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
     public Login() {
         initComponents();
         
@@ -36,6 +56,7 @@ public class Login extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -113,6 +134,9 @@ public class Login extends javax.swing.JFrame {
 
         loginButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/login acc.png"))); // NOI18N
         loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                loginButtonMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 loginButtonMouseEntered(evt);
             }
@@ -209,6 +233,18 @@ public class Login extends javax.swing.JFrame {
             super.processKeyEvent(evt);
         }
     }//GEN-LAST:event_usernameKeyPressed
+
+    private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
+        // TODO add your handling code here:
+        String tempUsername = "admin";
+        String tempPassword = "admin";
+        
+        if(username.getText().equals(tempUsername) && password.getText().equals(tempPassword)) {
+            this.setVisible(false);
+            landingPageFrame.setVisible(false);
+            new UserLoggedIn().setVisible(true);
+        }
+    }//GEN-LAST:event_loginButtonMouseClicked
 
     /**
      * @param args the command line arguments
