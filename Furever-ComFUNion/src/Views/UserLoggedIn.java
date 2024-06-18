@@ -25,6 +25,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private boolean applicationClicked;
     private boolean profileClicked;
     private boolean start = true;
+    private int FAQsPanelCounter = 4000001;
     /**
      * Creates new form Main
      */
@@ -32,7 +33,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         initComponents();
         
         // default 
-        clickbg.setLocation(420, 50);
+        
         defaultWindow();
         
         // Window logo
@@ -62,16 +63,22 @@ public class UserLoggedIn extends javax.swing.JFrame {
         navBar = new javax.swing.JPanel();
         username = new javax.swing.JLabel();
         applicationButton = new javax.swing.JLabel();
+        applicationClick = new javax.swing.JLabel();
         vetButton = new javax.swing.JLabel();
+        vetClick = new javax.swing.JLabel();
         petButton = new javax.swing.JLabel();
+        petClick = new javax.swing.JLabel();
         logo = new javax.swing.JLabel();
         homeButton = new javax.swing.JLabel();
+        homeClick = new javax.swing.JLabel();
         aboutUsButton = new javax.swing.JLabel();
+        aboutUsClick = new javax.swing.JLabel();
         faqButton = new javax.swing.JLabel();
+        faqClick = new javax.swing.JLabel();
         profileHead = new javax.swing.JLabel();
         profileCollar = new javax.swing.JLabel();
-        clickbg = new javax.swing.JLabel();
         line = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         homeBody = new javax.swing.JPanel();
         slogan = new javax.swing.JLabel();
         description = new javax.swing.JLabel();
@@ -86,8 +93,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
         aboutUsPanel = new javax.swing.JLabel();
         background1 = new javax.swing.JLabel();
         FAQsBody = new javax.swing.JPanel();
+        prev = new javax.swing.JLabel();
         next = new javax.swing.JLabel();
-        FAQsPanel = new javax.swing.JLabel();
+        FAQsPanel1 = new javax.swing.JLabel();
+        FAQsPanel2 = new javax.swing.JLabel();
+        FAQsPanel3 = new javax.swing.JLabel();
+        FAQsPanel4 = new javax.swing.JLabel();
         background2 = new javax.swing.JLabel();
         petsBody = new javax.swing.JPanel();
         petPrev = new javax.swing.JLabel();
@@ -111,13 +122,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         setTitle("Furever ComFUNion");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1370, 880));
         setResizable(false);
-        addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                formMouseEntered(evt);
-            }
-        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         navBar.setBackground(new java.awt.Color(194, 144, 69));
@@ -128,7 +133,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         username.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         username.setText("name rito");
-        navBar.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(1245, 75, -1, -1));
+        navBar.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(1225, 75, -1, -1));
 
         applicationButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/application.png"))); // NOI18N
         applicationButton.setToolTipText("");
@@ -151,6 +156,9 @@ public class UserLoggedIn extends javax.swing.JFrame {
         });
         navBar.add(applicationButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 45, -1, -1));
 
+        applicationClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg 2.png"))); // NOI18N
+        navBar.add(applicationClick, new org.netbeans.lib.awtextra.AbsoluteConstraints(1015, 20, -1, -1));
+
         vetButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/vets.png"))); // NOI18N
         vetButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -171,6 +179,9 @@ public class UserLoggedIn extends javax.swing.JFrame {
         });
         navBar.add(vetButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(913, 65, -1, -1));
 
+        vetClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png"))); // NOI18N
+        navBar.add(vetClick, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 50, -1, -1));
+
         petButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets.png"))); // NOI18N
         petButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -190,6 +201,9 @@ public class UserLoggedIn extends javax.swing.JFrame {
             }
         });
         navBar.add(petButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(793, 65, -1, -1));
+
+        petClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png"))); // NOI18N
+        navBar.add(petClick, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 50, -1, -1));
 
         logo.setBackground(navBar.getBackground());
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/navLogo.png"))); // NOI18N
@@ -227,6 +241,9 @@ public class UserLoggedIn extends javax.swing.JFrame {
         });
         navBar.add(homeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 65, -1, -1));
 
+        homeClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png"))); // NOI18N
+        navBar.add(homeClick, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 50, -1, -1));
+
         aboutUsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us.png"))); // NOI18N
         aboutUsButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -246,6 +263,9 @@ public class UserLoggedIn extends javax.swing.JFrame {
             }
         });
         navBar.add(aboutUsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(555, 65, -1, -1));
+
+        aboutUsClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png"))); // NOI18N
+        navBar.add(aboutUsClick, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 50, -1, -1));
 
         faqButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/FAQs.png"))); // NOI18N
         faqButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -267,6 +287,9 @@ public class UserLoggedIn extends javax.swing.JFrame {
         });
         navBar.add(faqButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(673, 65, -1, -1));
 
+        faqClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png"))); // NOI18N
+        navBar.add(faqClick, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 50, -1, -1));
+
         profileHead.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/head.png"))); // NOI18N
         profileHead.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -279,7 +302,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 profileHeadMouseExited(evt);
             }
         });
-        navBar.add(profileHead, new org.netbeans.lib.awtextra.AbsoluteConstraints(1247, 10, -1, -1));
+        navBar.add(profileHead, new org.netbeans.lib.awtextra.AbsoluteConstraints(1227, 10, -1, -1));
 
         profileCollar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/collar.png"))); // NOI18N
         profileCollar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -293,10 +316,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 profileCollarMouseExited(evt);
             }
         });
-        navBar.add(profileCollar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 55, -1, -1));
-
-        clickbg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png"))); // NOI18N
-        navBar.add(clickbg, new org.netbeans.lib.awtextra.AbsoluteConstraints(-2000, 50, -1, -1));
+        navBar.add(profileCollar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 55, -1, -1));
 
         line.setBackground(new java.awt.Color(255, 251, 209));
         line.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -313,6 +333,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         );
 
         navBar.add(line, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 109, 1370, 30));
+        navBar.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1330, 10, 30, 30));
 
         getContentPane().add(navBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 140));
 
@@ -324,11 +345,11 @@ public class UserLoggedIn extends javax.swing.JFrame {
         slogan.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
         slogan.setForeground(new java.awt.Color(51, 51, 255));
         slogan.setText("<html> <head> <style> p {     font-family: 'Comic Sans MS', cursive;     font-size: 60px;     color: #000000; /* Black text */     text-align: center;     margin-top: 50px;     text-shadow:          -1px -1px 0 #ffffff,           1px -1px 0 #ffffff,         -1px 1px 0 #ffffff,         1px 1px 0 #ffffff; /* White border */ } </style> </head> <body> <p>Connecting Hearts with Paws</p> </body> </html> ");
-        homeBody.add(slogan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 670, 260));
+        homeBody.add(slogan, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 670, 260));
 
         description.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         description.setText("<html> <head> <style> p { \tfont-family: 'Open Sans', sans-serif;             font-size: 14px;             color: #000000;             text-align: justify;             margin-top: 20px;             max-width: 100%;             margin-left: auto;             margin-right: auto; \t\t\t} \t\t</style> \t</head> \t<body> \t\t<p>Finding a loving home for every furry friend is our mission. <br>             <br>With \"Furever ComFUNion,\" adopting/rehoming a pet becomes an effortless and joyful experience. <br><br>             Make a lasting impact—bring joy to an animal's life and enrich your own by giving a pet a forever home today. <br>             <br>With Furever ComFUNion, the perfect companion is just a few clicks away.</p> \t</body> </html>");
-        homeBody.add(description, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 350, 520, 270));
+        homeBody.add(description, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 350, 520, 270));
 
         adoptedCounter.setFont(new java.awt.Font("Tahoma", 1, 72)); // NOI18N
         adoptedCounter.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -338,7 +359,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 badgeKeyPressed(evt);
             }
         });
-        homeBody.add(adoptedCounter, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 240, 220, 120));
+        homeBody.add(adoptedCounter, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 240, 220, 120));
 
         adoptedLabel.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         adoptedLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -348,7 +369,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 badgeKeyPressed(evt);
             }
         });
-        homeBody.add(adoptedLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 490, 320, 50));
+        homeBody.add(adoptedLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 490, 320, 50));
 
         badge.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/badge2.png"))); // NOI18N
         badge.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -367,10 +388,10 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 badgeKeyReleased(evt);
             }
         });
-        homeBody.add(badge, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 100, -1, -1));
+        homeBody.add(badge, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 100, -1, -1));
 
         bulletin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/bulletin.png"))); // NOI18N
-        homeBody.add(bulletin, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, 650, 410));
+        homeBody.add(bulletin, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, 650, 410));
 
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
         homeBody.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
@@ -383,13 +404,29 @@ public class UserLoggedIn extends javax.swing.JFrame {
         aboutUsBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         devs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us dev (1).png"))); // NOI18N
-        aboutUsBody.add(devs, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 540, -1, 200));
+        devs.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                devsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                devsMouseExited(evt);
+            }
+        });
+        aboutUsBody.add(devs, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 545, -1, 200));
 
         businessRules.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us business rule (1).png"))); // NOI18N
-        aboutUsBody.add(businessRules, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 540, 400, 200));
+        businessRules.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                businessRulesMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                businessRulesMouseExited(evt);
+            }
+        });
+        aboutUsBody.add(businessRules, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 545, 400, 200));
 
         aboutUsPanel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us panel (1).png"))); // NOI18N
-        aboutUsBody.add(aboutUsPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 80, 810, 660));
+        aboutUsBody.add(aboutUsPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, 850, 780));
 
         background1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
         aboutUsBody.add(background1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
@@ -401,12 +438,50 @@ public class UserLoggedIn extends javax.swing.JFrame {
         FAQsBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         FAQsBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        next.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/next button (1).png"))); // NOI18N
-        FAQsBody.add(next, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 580, 350, 100));
+        prev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/prev button (1).png"))); // NOI18N
+        prev.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                prevMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                prevMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                prevMouseExited(evt);
+            }
+        });
+        FAQsBody.add(prev, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 610, 350, 120));
 
-        FAQsPanel.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        FAQsPanel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/FAQs panel (1).png"))); // NOI18N
-        FAQsBody.add(FAQsPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, 960, 640));
+        next.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/next button (1).png"))); // NOI18N
+        next.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                nextMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                nextMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                nextMouseExited(evt);
+            }
+        });
+        FAQsBody.add(next, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 620, 350, 100));
+
+        FAQsPanel1.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+        FAQsPanel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/FAQs_1.png"))); // NOI18N
+        FAQsBody.add(FAQsPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(195, 20, 1000, 700));
+
+        FAQsPanel2.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+        FAQsPanel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/FAQs_2.png"))); // NOI18N
+        FAQsBody.add(FAQsPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(195, 20, 1000, 700));
+
+        FAQsPanel3.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+        FAQsPanel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/FAQs_3.png"))); // NOI18N
+        FAQsBody.add(FAQsPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(195, 20, 1000, 700));
+
+        FAQsPanel4.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+        FAQsPanel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/FAQs_4.png"))); // NOI18N
+        FAQsPanel4.setLabelFor(FAQsPanel4);
+        FAQsBody.add(FAQsPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(195, 20, 1000, 700));
 
         background2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
         FAQsBody.add(background2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
@@ -419,9 +494,25 @@ public class UserLoggedIn extends javax.swing.JFrame {
         petsBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         petPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/prev button (1).png"))); // NOI18N
-        petsBody.add(petPrev, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 590, 350, 100));
+        petPrev.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                petPrevMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                petPrevMouseExited(evt);
+            }
+        });
+        petsBody.add(petPrev, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 580, 350, 120));
 
         petNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/next button (1).png"))); // NOI18N
+        petNext.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                petNextMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                petNextMouseExited(evt);
+            }
+        });
         petsBody.add(petNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 590, 350, 100));
 
         petPanel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets panel (1).png"))); // NOI18N
@@ -451,7 +542,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         vetsPanel.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         vetsPanel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/vets panel (1).png"))); // NOI18N
-        vetsBody.add(vetsPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, -1, -1));
+        vetsBody.add(vetsPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(195, 20, -1, 700));
 
         background4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
         vetsBody.add(background4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
@@ -479,7 +570,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         profilePanel.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         profilePanel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/profile panel (1).png"))); // NOI18N
-        profileBody.add(profilePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, -1, -1));
+        profileBody.add(profilePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(195, 40, -1, -1));
 
         background6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
         profileBody.add(background6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
@@ -490,15 +581,36 @@ public class UserLoggedIn extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void defaultWindow() {       
+    private void defaultWindow() {   
+        // set visiblity
+        homeBody.setVisible(true);
+        aboutUsBody.setVisible(false);
+        FAQsBody.setVisible(false);
+        petsBody.setVisible(false);
+        vetsBody.setVisible(false);
+        applicationBody.setVisible(false);
+        profileBody.setVisible(false);
+        
         // click bg
-        clickbg.setLocation(420, 50);
+        homeClick.setVisible(true);
+        aboutUsClick.setVisible(false);
+        faqClick.setVisible(false);
+        petClick.setVisible(false);
+        vetClick.setVisible(false);
+        applicationClick.setVisible(false);
+        
         
         // set clickability
         homeClicked = true;
         
         // button icons
         homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/home click.png")));
+        
+        // for FAQs panels' visibility
+        FAQsPanel1.setVisible(true);
+        FAQsPanel2.setVisible(false);
+        FAQsPanel3.setVisible(false);
+        FAQsPanel4.setVisible(false);
     }
     
     private void homeButton() {
@@ -511,10 +623,16 @@ public class UserLoggedIn extends javax.swing.JFrame {
         applicationBody.setVisible(false);
         profileBody.setVisible(false);
         
-        // click bg 
-        clickbg.setVisible(true);
-        clickbg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png")));
-        clickbg.setLocation(420, 50);
+        // click bg
+        homeClick.setVisible(true);
+        aboutUsClick.setVisible(false);
+        faqClick.setVisible(false);
+        petClick.setVisible(false);
+        vetClick.setVisible(false);
+        applicationClick.setVisible(false);
+        
+        
+        
         
         // set clickability
         homeClicked = true;
@@ -548,10 +666,16 @@ public class UserLoggedIn extends javax.swing.JFrame {
         applicationBody.setVisible(false);
         profileBody.setVisible(false);
         
-        // click bg position
-        clickbg.setVisible(true);
-        clickbg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png")));
-        clickbg.setLocation(540, 50);
+        // click bg
+        homeClick.setVisible(false);
+        aboutUsClick.setVisible(true);
+        faqClick.setVisible(false);
+        petClick.setVisible(false);
+        vetClick.setVisible(false);
+        applicationClick.setVisible(false);
+        
+        
+        
 
         // set clickability
         homeClicked = false;
@@ -585,10 +709,16 @@ public class UserLoggedIn extends javax.swing.JFrame {
         applicationBody.setVisible(false);
         profileBody.setVisible(false);
         
-        // click bg position
-        clickbg.setVisible(true);
-        clickbg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png")));
-        clickbg.setLocation(660, 50);
+        // click bg
+        homeClick.setVisible(false);
+        aboutUsClick.setVisible(false);
+        faqClick.setVisible(true);
+        petClick.setVisible(false);
+        vetClick.setVisible(false);
+        applicationClick.setVisible(false);
+        
+        
+
         
         // set clickability
         homeClicked = false;
@@ -622,10 +752,16 @@ public class UserLoggedIn extends javax.swing.JFrame {
         applicationBody.setVisible(false);
         profileBody.setVisible(false);
         
-        // click bg position
-        clickbg.setVisible(true);
-        clickbg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png")));
-        clickbg.setLocation(780, 50);
+        // click bg
+        homeClick.setVisible(false);
+        aboutUsClick.setVisible(false);
+        faqClick.setVisible(false);
+        petClick.setVisible(true);
+        vetClick.setVisible(false);
+        applicationClick.setVisible(false);
+        
+        
+
         
         // set clickability
         homeClicked = false;
@@ -659,10 +795,16 @@ public class UserLoggedIn extends javax.swing.JFrame {
         applicationBody.setVisible(false);
         profileBody.setVisible(false);
         
-        // click bg position
-        clickbg.setVisible(true);
-        clickbg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png")));
-        clickbg.setLocation(900, 50);
+        // click bg
+        homeClick.setVisible(false);
+        aboutUsClick.setVisible(false);
+        faqClick.setVisible(false);
+        petClick.setVisible(false);
+        vetClick.setVisible(true);
+        applicationClick.setVisible(false);
+        
+        
+
         
         // set clickability
         homeClicked = false;
@@ -696,10 +838,15 @@ public class UserLoggedIn extends javax.swing.JFrame {
         applicationBody.setVisible(true);
         profileBody.setVisible(false);
         
-        // click bg position
-        clickbg.setVisible(true);
-        clickbg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg 2.png")));
-        clickbg.setLocation(1015, 20);
+        
+        // click bg
+        homeClick.setVisible(false);
+        aboutUsClick.setVisible(false);
+        faqClick.setVisible(false);
+        petClick.setVisible(false);
+        vetClick.setVisible(false);
+        applicationClick.setVisible(true);
+
         
         // set clickability
         homeClicked = false;
@@ -734,7 +881,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
         profileBody.setVisible(true);
         
         // click bg
-        clickbg.setVisible(false);
+        homeClick.setVisible(false);
+        aboutUsClick.setVisible(false);
+        faqClick.setVisible(false);
+        petClick.setVisible(false);
+        vetClick.setVisible(false);
+        applicationClick.setVisible(false);
        
         
         // set clickability
@@ -757,6 +909,42 @@ public class UserLoggedIn extends javax.swing.JFrame {
         profileCollar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/collar click.png")));
         
         username.setForeground(Color.YELLOW);
+    }
+    
+    private void FAQsChangePanel(String button) {
+        if(button.equals("next")) {
+            FAQsPanelCounter++;
+        } else if(button.equals("prev")) {
+            FAQsPanelCounter--;
+        }
+        int counter = Math.abs(FAQsPanelCounter) % 4;
+        System.out.println(counter);
+        switch(counter) {
+            case 1:
+                FAQsPanel1.setVisible(true);
+                FAQsPanel2.setVisible(false);
+                FAQsPanel3.setVisible(false);
+                FAQsPanel4.setVisible(false);
+                break;
+            case 2:
+                FAQsPanel1.setVisible(false);
+                FAQsPanel2.setVisible(true);
+                FAQsPanel3.setVisible(false);
+                FAQsPanel4.setVisible(false);
+                break;
+            case 3:
+                FAQsPanel1.setVisible(false);
+                FAQsPanel2.setVisible(false);
+                FAQsPanel3.setVisible(true);
+                FAQsPanel4.setVisible(false);
+                break;
+            default:
+                FAQsPanel1.setVisible(false);
+                FAQsPanel2.setVisible(false);
+                FAQsPanel3.setVisible(false);
+                FAQsPanel4.setVisible(true);
+                break;
+        }
     }
     
     private void badgeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_badgeKeyPressed
@@ -785,6 +973,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private void faqButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_faqButtonMouseExited
         // TODO add your handling code here:
         if(!FAQsClicked) {
+            faqClick.setVisible(false);
             faqButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/FAQs.png")));
         }
     }//GEN-LAST:event_faqButtonMouseExited
@@ -792,6 +981,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private void faqButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_faqButtonMouseEntered
         // TODO add your handling code here:
         if(!FAQsClicked) {
+            faqClick.setVisible(true);
             faqButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/FAQs hover.png")));
         }
     }//GEN-LAST:event_faqButtonMouseEntered
@@ -799,6 +989,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private void aboutUsButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutUsButtonMouseExited
         // TODO add your handling code here:
         if(!aboutUsClicked) {
+            aboutUsClick.setVisible(false);
             aboutUsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us.png")));
         }
     }//GEN-LAST:event_aboutUsButtonMouseExited
@@ -806,6 +997,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private void aboutUsButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutUsButtonMouseEntered
         // TODO add your handling code here:
         if(!aboutUsClicked) {
+            aboutUsClick.setVisible(true);
             aboutUsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us hover.png")));
         }
     }//GEN-LAST:event_aboutUsButtonMouseEntered
@@ -813,6 +1005,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private void petButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petButtonMouseExited
         // TODO add your handling code here:
         if(!petsClicked) {
+            petClick.setVisible(false);
             petButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets.png")));
         }
     }//GEN-LAST:event_petButtonMouseExited
@@ -820,6 +1013,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private void petButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petButtonMouseEntered
         // TODO add your handling code here:
         if(!petsClicked) {
+            petClick.setVisible(true);
             petButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets hover.png")));
         }
     }//GEN-LAST:event_petButtonMouseEntered
@@ -827,6 +1021,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private void vetButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vetButtonMouseExited
         // TODO add your handling code here:
         if(!vetsClicked) {
+            vetClick.setVisible(false);
             vetButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/vets.png")));
         }
     }//GEN-LAST:event_vetButtonMouseExited
@@ -834,6 +1029,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private void vetButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vetButtonMouseEntered
         // TODO add your handling code here:
         if(!vetsClicked) {
+            vetClick.setVisible(true);
             vetButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/vets hover.png")));
         }
     }//GEN-LAST:event_vetButtonMouseEntered
@@ -841,13 +1037,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private void applicationButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applicationButtonMouseExited
         // TODO add your handling code here:
         if(!applicationClicked) {
+            applicationClick.setVisible(false);
             applicationButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/application.png")));
         }
     }//GEN-LAST:event_applicationButtonMouseExited
 
     private void applicationButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applicationButtonMouseEntered
-        // TODO add your handling code here:
         if(!applicationClicked) {
+            applicationClick.setVisible(true);
             applicationButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/application hover.png")));
         }
     }//GEN-LAST:event_applicationButtonMouseEntered
@@ -855,6 +1052,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private void homeButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseEntered
         // TODO add your handling code here:
         if(!homeClicked) {
+            homeClick.setVisible(true);
             homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/home hover.png")));
         }
     }//GEN-LAST:event_homeButtonMouseEntered
@@ -862,12 +1060,19 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private void homeButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseExited
         // TODO add your handling code here:
         if(!homeClicked) {
+            homeClick.setVisible(false);
             homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/home.png")));
         }
     }//GEN-LAST:event_homeButtonMouseExited
 
     private void faqButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_faqButtonMouseClicked
         // TODO add your handling code here:
+        // for FAQs panels' visibility
+        FAQsPanel1.setVisible(true);
+        FAQsPanel2.setVisible(false);
+        FAQsPanel3.setVisible(false);
+        FAQsPanel4.setVisible(false);
+        FAQsPanelCounter = 4000001;
         faqButton();
     }//GEN-LAST:event_faqButtonMouseClicked
 
@@ -1003,14 +1208,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
         applicationButton();
     }//GEN-LAST:event_applicationButtonMouseReleased
 
-    private void formMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseEntered
-        // TODO add your handling code here:
-        if(start) {
-            clickbg.setLocation(420, 50);
-            start = false;
-        }
-    }//GEN-LAST:event_formMouseEntered
-
     private void logoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoMouseClicked
         // TODO add your handling code here:
         homeButton();
@@ -1025,6 +1222,78 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // TODO add your handling code here:
         homeButton();
     }//GEN-LAST:event_logoMouseReleased
+
+    private void businessRulesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_businessRulesMouseEntered
+        // TODO add your handling code here:
+        businessRules.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us business rule hover.png")));
+    }//GEN-LAST:event_businessRulesMouseEntered
+
+    private void businessRulesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_businessRulesMouseExited
+        // TODO add your handling code here:
+        businessRules.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us business rule (1).png")));
+    }//GEN-LAST:event_businessRulesMouseExited
+
+    private void devsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_devsMouseEntered
+        // TODO add your handling code here:
+        devs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us dev hover.png")));
+    }//GEN-LAST:event_devsMouseEntered
+
+    private void devsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_devsMouseExited
+        // TODO add your handling code here:
+        devs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us dev (1).png")));
+    }//GEN-LAST:event_devsMouseExited
+
+    private void prevMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_prevMouseEntered
+        // TODO add your handling code here:
+        prev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/prev button hover (1).png")));
+    }//GEN-LAST:event_prevMouseEntered
+
+    private void prevMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_prevMouseExited
+        // TODO add your handling code here:
+        prev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/prev button (1).png")));
+    }//GEN-LAST:event_prevMouseExited
+
+    private void nextMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nextMouseEntered
+        // TODO add your handling code here:
+        next.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/next button hover (1).png")));
+    }//GEN-LAST:event_nextMouseEntered
+
+    private void nextMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nextMouseExited
+        // TODO add your handling code here:
+        next.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/next button (1).png")));
+    }//GEN-LAST:event_nextMouseExited
+
+    private void petPrevMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petPrevMouseExited
+        // TODO add your handling code here:
+        petPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/prev button (1).png")));
+    }//GEN-LAST:event_petPrevMouseExited
+
+    private void petPrevMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petPrevMouseEntered
+        // TODO add your handling code here:
+        petPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/prev button hover (1).png")));
+    }//GEN-LAST:event_petPrevMouseEntered
+
+    private void petNextMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petNextMouseEntered
+        // TODO add your handling code here:
+        petNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/next button hover (1).png")));
+    }//GEN-LAST:event_petNextMouseEntered
+
+    private void petNextMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petNextMouseExited
+        // TODO add your handling code here:
+        petNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/next button (1).png")));
+    }//GEN-LAST:event_petNextMouseExited
+
+    private void nextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nextMouseClicked
+        // TODO add your handling code here:
+        FAQsChangePanel("next");
+        faqButton();
+    }//GEN-LAST:event_nextMouseClicked
+
+    private void prevMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_prevMouseClicked
+        // TODO add your handling code here:
+        FAQsChangePanel("prev");
+        faqButton();
+    }//GEN-LAST:event_prevMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1053,6 +1322,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1064,14 +1339,19 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel FAQsBody;
-    private javax.swing.JLabel FAQsPanel;
+    private javax.swing.JLabel FAQsPanel1;
+    private javax.swing.JLabel FAQsPanel2;
+    private javax.swing.JLabel FAQsPanel3;
+    private javax.swing.JLabel FAQsPanel4;
     private javax.swing.JPanel aboutUsBody;
     private javax.swing.JLabel aboutUsButton;
+    private javax.swing.JLabel aboutUsClick;
     private javax.swing.JLabel aboutUsPanel;
     private javax.swing.JLabel adoptedCounter;
     private javax.swing.JLabel adoptedLabel;
     private javax.swing.JPanel applicationBody;
     private javax.swing.JLabel applicationButton;
+    private javax.swing.JLabel applicationClick;
     private javax.swing.JLabel background;
     private javax.swing.JLabel background1;
     private javax.swing.JLabel background2;
@@ -1083,18 +1363,21 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel bulletin;
     private javax.swing.JLabel businessRules;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JLabel clickbg;
     private javax.swing.JLabel description;
     private javax.swing.JLabel devs;
     private javax.swing.JLabel faqButton;
+    private javax.swing.JLabel faqClick;
     private javax.swing.JPanel homeBody;
     private javax.swing.JLabel homeButton;
+    private javax.swing.JLabel homeClick;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel line;
     private javax.swing.JLabel logo;
     private javax.swing.JPanel navBar;
     private javax.swing.JLabel next;
     private javax.swing.JLabel petButton;
+    private javax.swing.JLabel petClick;
     private javax.swing.JLabel petHeader;
     private javax.swing.JLabel petNext;
     private javax.swing.JLabel petPanel1;
@@ -1102,6 +1385,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel petPanel3;
     private javax.swing.JLabel petPrev;
     private javax.swing.JPanel petsBody;
+    private javax.swing.JLabel prev;
     private javax.swing.JPanel profileBody;
     private javax.swing.JLabel profileCollar;
     private javax.swing.JLabel profileHead;
@@ -1109,6 +1393,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel slogan;
     private javax.swing.JLabel username;
     private javax.swing.JLabel vetButton;
+    private javax.swing.JLabel vetClick;
     private javax.swing.JPanel vetsBody;
     private javax.swing.JLabel vetsPanel;
     // End of variables declaration//GEN-END:variables

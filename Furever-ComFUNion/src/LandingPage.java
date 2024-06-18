@@ -29,7 +29,6 @@ public class LandingPage extends javax.swing.JFrame {
         initComponents();
         
         // default 
-        clickbg.setLocation(515, 50);
         defaultWindow();
         
         // Window logo
@@ -48,7 +47,10 @@ public class LandingPage extends javax.swing.JFrame {
     
     private void defaultWindow() {       
         // click bg
-        clickbg.setLocation(515, 50);
+        homeClick.setVisible(true);
+        aboutUsClick.setVisible(false);
+        faqClick.setVisible(false);
+        petClick.setVisible(false);
         
         // set clickability
         homeClicked = true;
@@ -64,10 +66,12 @@ public class LandingPage extends javax.swing.JFrame {
         FAQsBody.setVisible(false);
         petsBody.setVisible(false);
         
-        // click bg 
-        clickbg.setVisible(true);
-        clickbg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png")));
-        clickbg.setLocation(515, 50);
+        // click bg
+        homeClick.setVisible(true);
+        aboutUsClick.setVisible(false);
+        faqClick.setVisible(false);
+        petClick.setVisible(false);
+
         
         // set clickability
         homeClicked = true;
@@ -89,10 +93,12 @@ public class LandingPage extends javax.swing.JFrame {
         FAQsBody.setVisible(false);
         petsBody.setVisible(false);
         
-        // click bg position
-        clickbg.setVisible(true);
-        clickbg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png")));
-        clickbg.setLocation(635, 50);
+        // click bg
+        homeClick.setVisible(false);
+        aboutUsClick.setVisible(true);
+        faqClick.setVisible(false);
+        petClick.setVisible(false);
+            
 
         // set clickability
         homeClicked = false;
@@ -114,10 +120,12 @@ public class LandingPage extends javax.swing.JFrame {
         FAQsBody.setVisible(true);
         petsBody.setVisible(false);
         
-        // click bg position
-        clickbg.setVisible(true);
-        clickbg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png")));
-        clickbg.setLocation(755, 50);
+        // click bg
+        homeClick.setVisible(false);
+        aboutUsClick.setVisible(false);
+        faqClick.setVisible(true);
+        petClick.setVisible(false);
+
         
         // set clickability
         homeClicked = false;
@@ -139,10 +147,12 @@ public class LandingPage extends javax.swing.JFrame {
         FAQsBody.setVisible(false);
         petsBody.setVisible(true);
         
-        // click bg position
-        clickbg.setVisible(true);
-        clickbg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png")));
-        clickbg.setLocation(875, 50);
+        // click bg
+        homeClick.setVisible(false);
+        aboutUsClick.setVisible(false);
+        faqClick.setVisible(false);
+        petClick.setVisible(true);
+
         
         // set clickability
         homeClicked = false;
@@ -170,12 +180,15 @@ public class LandingPage extends javax.swing.JFrame {
         navBar = new javax.swing.JPanel();
         logo = new javax.swing.JLabel();
         homeButton = new javax.swing.JLabel();
+        homeClick = new javax.swing.JLabel();
         aboutUsButton = new javax.swing.JLabel();
+        aboutUsClick = new javax.swing.JLabel();
         faqButton = new javax.swing.JLabel();
+        faqClick = new javax.swing.JLabel();
         petButton = new javax.swing.JLabel();
+        petClick = new javax.swing.JLabel();
         loginButton = new javax.swing.JLabel();
         registerButton = new javax.swing.JLabel();
-        clickbg = new javax.swing.JLabel();
         line = new javax.swing.JPanel();
         homeBody = new javax.swing.JPanel();
         slogan = new javax.swing.JLabel();
@@ -208,13 +221,7 @@ public class LandingPage extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMinimumSize(new java.awt.Dimension(1370, 879));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1370, 879));
         setResizable(false);
-        addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                formMouseEntered(evt);
-            }
-        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         navBar.setBackground(new java.awt.Color(194, 144, 69));
@@ -256,6 +263,9 @@ public class LandingPage extends javax.swing.JFrame {
         });
         navBar.add(homeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 65, -1, -1));
 
+        homeClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png"))); // NOI18N
+        navBar.add(homeClick, new org.netbeans.lib.awtextra.AbsoluteConstraints(515, 50, -1, -1));
+
         aboutUsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us.png"))); // NOI18N
         aboutUsButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -275,6 +285,9 @@ public class LandingPage extends javax.swing.JFrame {
             }
         });
         navBar.add(aboutUsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 65, -1, -1));
+
+        aboutUsClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png"))); // NOI18N
+        navBar.add(aboutUsClick, new org.netbeans.lib.awtextra.AbsoluteConstraints(635, 50, -1, -1));
 
         faqButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/FAQs.png"))); // NOI18N
         faqButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -296,6 +309,9 @@ public class LandingPage extends javax.swing.JFrame {
         });
         navBar.add(faqButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 65, -1, -1));
 
+        faqClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png"))); // NOI18N
+        navBar.add(faqClick, new org.netbeans.lib.awtextra.AbsoluteConstraints(755, 50, -1, -1));
+
         petButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets.png"))); // NOI18N
         petButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -315,6 +331,9 @@ public class LandingPage extends javax.swing.JFrame {
             }
         });
         navBar.add(petButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 65, -1, -1));
+
+        petClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png"))); // NOI18N
+        navBar.add(petClick, new org.netbeans.lib.awtextra.AbsoluteConstraints(875, 50, -1, -1));
 
         loginButton.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         loginButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/login.png"))); // NOI18N
@@ -354,9 +373,6 @@ public class LandingPage extends javax.swing.JFrame {
             }
         });
         navBar.add(registerButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 45, -1, -1));
-
-        clickbg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png"))); // NOI18N
-        navBar.add(clickbg, new org.netbeans.lib.awtextra.AbsoluteConstraints(-2000, 50, -1, -1));
 
         line.setBackground(new java.awt.Color(255, 251, 209));
         line.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -447,7 +463,7 @@ public class LandingPage extends javax.swing.JFrame {
         aboutUsBody.add(businessRules, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 540, 400, 200));
 
         aboutUsPanel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us panel (1).png"))); // NOI18N
-        aboutUsBody.add(aboutUsPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 80, 810, 660));
+        aboutUsBody.add(aboutUsPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, 850, 780));
 
         background2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
         aboutUsBody.add(background2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
@@ -540,124 +556,8 @@ public class LandingPage extends javax.swing.JFrame {
 
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
         // TODO add your handling code here:
-        new Login().setVisible(true);
+        new Login(this).setVisible(true);
     }//GEN-LAST:event_loginButtonMouseClicked
-
-    private void homeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseClicked
-        // TODO add your handling code here:
-        homeButton();
-    }//GEN-LAST:event_homeButtonMouseClicked
-
-    private void homeButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseEntered
-        // TODO add your handling code here:
-        if(!homeClicked) {
-            homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/home hover.png")));
-        }
-    }//GEN-LAST:event_homeButtonMouseEntered
-
-    private void homeButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseExited
-        // TODO add your handling code here:
-        if(!homeClicked) {
-            homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/home.png")));
-        }
-    }//GEN-LAST:event_homeButtonMouseExited
-
-    private void homeButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMousePressed
-        // TODO add your handling code here:
-        homeButton();
-    }//GEN-LAST:event_homeButtonMousePressed
-
-    private void homeButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseReleased
-        // TODO add your handling code here:
-        homeButton();
-    }//GEN-LAST:event_homeButtonMouseReleased
-
-    private void aboutUsButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutUsButtonMouseClicked
-        // TODO add your handling code here:
-        aboutUsButton();
-    }//GEN-LAST:event_aboutUsButtonMouseClicked
-
-    private void aboutUsButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutUsButtonMouseEntered
-        // TODO add your handling code here:
-        if(!aboutUsClicked) {
-            aboutUsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us hover.png")));
-        }
-    }//GEN-LAST:event_aboutUsButtonMouseEntered
-
-    private void aboutUsButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutUsButtonMouseExited
-        // TODO add your handling code here:
-        if(!aboutUsClicked) {
-            aboutUsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us.png")));
-        }
-    }//GEN-LAST:event_aboutUsButtonMouseExited
-
-    private void aboutUsButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutUsButtonMousePressed
-        // TODO add your handling code here:
-        aboutUsButton();
-    }//GEN-LAST:event_aboutUsButtonMousePressed
-
-    private void aboutUsButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutUsButtonMouseReleased
-        // TODO add your handling code here:
-        aboutUsButton();
-    }//GEN-LAST:event_aboutUsButtonMouseReleased
-
-    private void faqButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_faqButtonMouseClicked
-        // TODO add your handling code here:
-        faqButton();
-    }//GEN-LAST:event_faqButtonMouseClicked
-
-    private void faqButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_faqButtonMouseEntered
-        // TODO add your handling code here:
-        if(!FAQsClicked) {
-            faqButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/FAQs hover.png")));
-        }
-    }//GEN-LAST:event_faqButtonMouseEntered
-
-    private void faqButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_faqButtonMouseExited
-        // TODO add your handling code here:
-        if(!FAQsClicked) {
-            faqButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/FAQs.png")));
-        }
-    }//GEN-LAST:event_faqButtonMouseExited
-
-    private void faqButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_faqButtonMousePressed
-        // TODO add your handling code here:
-        faqButton();
-    }//GEN-LAST:event_faqButtonMousePressed
-
-    private void faqButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_faqButtonMouseReleased
-        // TODO add your handling code here:
-        faqButton();
-    }//GEN-LAST:event_faqButtonMouseReleased
-
-    private void petButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petButtonMouseClicked
-        // TODO add your handling code here:
-        petButton();
-    }//GEN-LAST:event_petButtonMouseClicked
-
-    private void petButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petButtonMouseEntered
-        // TODO add your handling code here:
-        if(!petsClicked) {
-            petButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets hover.png")));
-        }
-    }//GEN-LAST:event_petButtonMouseEntered
-
-    private void petButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petButtonMouseExited
-        // TODO add your handling code here:
-        if(!petsClicked) {
-            petButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets.png")));
-        }
-    }//GEN-LAST:event_petButtonMouseExited
-
-    private void petButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petButtonMousePressed
-        // TODO add your handling code here:
-        petButton();
-    }//GEN-LAST:event_petButtonMousePressed
-
-    private void petButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petButtonMouseReleased
-        // TODO add your handling code here:
-        petButton();
-    }//GEN-LAST:event_petButtonMouseReleased
 
     private void logoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoMouseClicked
         // TODO add your handling code here:
@@ -707,13 +607,130 @@ public class LandingPage extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_badgeKeyReleased
 
-    private void formMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseEntered
+    private void homeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseClicked
         // TODO add your handling code here:
-        if(start) {
-            clickbg.setLocation(515, 50);
-            start = false;
+        homeButton();
+    }//GEN-LAST:event_homeButtonMouseClicked
+
+    private void homeButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseEntered
+        // TODO add your handling code here:
+        if(!homeClicked) {
+            homeClick.setVisible(true);
+            homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/home hover.png")));
         }
-    }//GEN-LAST:event_formMouseEntered
+    }//GEN-LAST:event_homeButtonMouseEntered
+
+    private void homeButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseExited
+        // TODO add your handling code here:
+        if(!homeClicked) {
+            homeClick.setVisible(false);
+            homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/home.png")));
+        }
+    }//GEN-LAST:event_homeButtonMouseExited
+
+    private void homeButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMousePressed
+        // TODO add your handling code here:
+        homeButton();
+    }//GEN-LAST:event_homeButtonMousePressed
+
+    private void homeButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseReleased
+        // TODO add your handling code here:
+        homeButton();
+    }//GEN-LAST:event_homeButtonMouseReleased
+
+    private void aboutUsButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutUsButtonMouseClicked
+        // TODO add your handling code here:
+        aboutUsButton();
+    }//GEN-LAST:event_aboutUsButtonMouseClicked
+
+    private void aboutUsButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutUsButtonMouseEntered
+        // TODO add your handling code here:
+        if(!aboutUsClicked) {
+            aboutUsClick.setVisible(true);
+            aboutUsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us hover.png")));
+        }
+    }//GEN-LAST:event_aboutUsButtonMouseEntered
+
+    private void aboutUsButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutUsButtonMouseExited
+        // TODO add your handling code here:
+        if(!aboutUsClicked) {
+            aboutUsClick.setVisible(false);
+            aboutUsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us.png")));
+        }
+    }//GEN-LAST:event_aboutUsButtonMouseExited
+
+    private void aboutUsButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutUsButtonMousePressed
+        // TODO add your handling code here:
+        aboutUsButton();
+    }//GEN-LAST:event_aboutUsButtonMousePressed
+
+    private void aboutUsButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutUsButtonMouseReleased
+        // TODO add your handling code here:
+        aboutUsButton();
+    }//GEN-LAST:event_aboutUsButtonMouseReleased
+
+    private void faqButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_faqButtonMouseClicked
+        // TODO add your handling code here:
+        // for FAQs panels' visibility
+        faqButton();
+    }//GEN-LAST:event_faqButtonMouseClicked
+
+    private void faqButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_faqButtonMouseEntered
+        // TODO add your handling code here:
+        if(!FAQsClicked) {
+            faqClick.setVisible(true);
+            faqButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/FAQs hover.png")));
+        }
+    }//GEN-LAST:event_faqButtonMouseEntered
+
+    private void faqButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_faqButtonMouseExited
+        // TODO add your handling code here:
+        if(!FAQsClicked) {
+            faqClick.setVisible(false);
+            faqButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/FAQs.png")));
+        }
+    }//GEN-LAST:event_faqButtonMouseExited
+
+    private void faqButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_faqButtonMousePressed
+        // TODO add your handling code here:
+        faqButton();
+    }//GEN-LAST:event_faqButtonMousePressed
+
+    private void faqButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_faqButtonMouseReleased
+        // TODO add your handling code here:
+        faqButton();
+    }//GEN-LAST:event_faqButtonMouseReleased
+
+    private void petButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petButtonMouseClicked
+        // TODO add your handling code here:
+        petButton();
+    }//GEN-LAST:event_petButtonMouseClicked
+
+    private void petButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petButtonMouseEntered
+        // TODO add your handling code here:
+        if(!petsClicked) {
+            petClick.setVisible(true);
+            petButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets hover.png")));
+        }
+    }//GEN-LAST:event_petButtonMouseEntered
+
+    private void petButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petButtonMouseExited
+        // TODO add your handling code here:
+        if(!petsClicked) {
+            petClick.setVisible(false);
+            petButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets.png")));
+        }
+    }//GEN-LAST:event_petButtonMouseExited
+
+    private void petButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petButtonMousePressed
+        // TODO add your handling code here:
+        petButton();
+    }//GEN-LAST:event_petButtonMousePressed
+
+    private void petButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petButtonMouseReleased
+        // TODO add your handling code here:
+        petButton();
+    }//GEN-LAST:event_petButtonMouseReleased
 
     /**
      * @param args the command line arguments
@@ -756,6 +773,7 @@ public class LandingPage extends javax.swing.JFrame {
     private javax.swing.JLabel FAQsPanel;
     private javax.swing.JPanel aboutUsBody;
     private javax.swing.JLabel aboutUsButton;
+    private javax.swing.JLabel aboutUsClick;
     private javax.swing.JLabel aboutUsPanel;
     private javax.swing.JLabel adoptedCounter;
     private javax.swing.JLabel adoptedLabel;
@@ -767,18 +785,20 @@ public class LandingPage extends javax.swing.JFrame {
     private javax.swing.JLabel bulletin;
     private javax.swing.JLabel businessRules;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JLabel clickbg;
     private javax.swing.JLabel description;
     private javax.swing.JLabel devs;
     private javax.swing.JLabel faqButton;
+    private javax.swing.JLabel faqClick;
     private javax.swing.JPanel homeBody;
     private javax.swing.JLabel homeButton;
+    private javax.swing.JLabel homeClick;
     private javax.swing.JPanel line;
     private javax.swing.JLabel loginButton;
     private javax.swing.JLabel logo;
     private javax.swing.JPanel navBar;
     private javax.swing.JLabel next;
     private javax.swing.JLabel petButton;
+    private javax.swing.JLabel petClick;
     private javax.swing.JLabel petHeader;
     private javax.swing.JLabel petNext;
     private javax.swing.JLabel petPanel1;
