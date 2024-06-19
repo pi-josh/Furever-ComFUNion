@@ -77,6 +77,7 @@ public class Login extends javax.swing.JFrame {
     private void initComponents() {
 
         titleContainer = new javax.swing.JPanel();
+        minimizeButton = new javax.swing.JLabel();
         backButton = new javax.swing.JLabel();
         loginHeader = new javax.swing.JLabel();
         registerContainer = new javax.swing.JPanel();
@@ -98,6 +99,8 @@ public class Login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Login");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -105,6 +108,20 @@ public class Login extends javax.swing.JFrame {
         titleContainer.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         titleContainer.setPreferredSize(new java.awt.Dimension(900, 75));
         titleContainer.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        minimizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/minimize button (1).png"))); // NOI18N
+        minimizeButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                minimizeButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                minimizeButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                minimizeButtonMouseExited(evt);
+            }
+        });
+        titleContainer.add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(815, 10, 40, 20));
 
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button (1).png"))); // NOI18N
         backButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -118,7 +135,7 @@ public class Login extends javax.swing.JFrame {
                 backButtonMouseExited(evt);
             }
         });
-        titleContainer.add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 10, 40, 40));
+        titleContainer.add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(855, 5, 40, 40));
 
         loginHeader.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         loginHeader.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/login header.png"))); // NOI18N
@@ -127,6 +144,7 @@ public class Login extends javax.swing.JFrame {
         getContentPane().add(titleContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         registerContainer.setBackground(new java.awt.Color(255, 250, 205));
+        registerContainer.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 1, 0, new java.awt.Color(0, 0, 0)));
         registerContainer.setPreferredSize(new java.awt.Dimension(500, 575));
         registerContainer.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -179,6 +197,9 @@ public class Login extends javax.swing.JFrame {
         registerButton.setForeground(new java.awt.Color(74, 54, 13));
         registerButton.setText("<html>\n<u>Register here</u>\n</html>");
         registerButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                registerButtonMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 registerButtonMouseEntered(evt);
             }
@@ -207,18 +228,19 @@ public class Login extends javax.swing.JFrame {
         registerContainer.add(loginFormBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 470, 500));
 
         design.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/login paw prints.png"))); // NOI18N
-        registerContainer.add(design, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 610));
+        registerContainer.add(design, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 0, 499, 609));
 
-        getContentPane().add(registerContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 75, -1, 610));
+        getContentPane().add(registerContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 75, 500, 610));
 
         loginDescription.setBackground(new java.awt.Color(221, 237, 250));
+        loginDescription.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(0, 0, 0)));
         loginDescription.setPreferredSize(new java.awt.Dimension(400, 500));
         loginDescription.setLayout(new java.awt.GridBagLayout());
 
         loginPic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/login pic.png"))); // NOI18N
         loginDescription.add(loginPic, new java.awt.GridBagConstraints());
 
-        getContentPane().add(loginDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 75, -1, 610));
+        getContentPane().add(loginDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 75, 400, 610));
 
         pack();
         setLocationRelativeTo(null);
@@ -287,6 +309,28 @@ public class Login extends javax.swing.JFrame {
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button (1).png")));
     }//GEN-LAST:event_backButtonMouseExited
 
+    private void registerButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerButtonMouseClicked
+        // TODO add your handling code here:
+        this.setVisible(false);
+        Register register = new Register();
+        register.setVisible(true);
+    }//GEN-LAST:event_registerButtonMouseClicked
+
+    private void minimizeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeButtonMouseClicked
+        // TODO add your handling code here:
+        this.setState(JFrame.ICONIFIED);
+    }//GEN-LAST:event_minimizeButtonMouseClicked
+
+    private void minimizeButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeButtonMouseEntered
+        // TODO add your handling code here:
+        minimizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/minimize button hover (1).png")));
+    }//GEN-LAST:event_minimizeButtonMouseEntered
+
+    private void minimizeButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeButtonMouseExited
+        // TODO add your handling code here:
+        minimizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/minimize button (1).png")));
+    }//GEN-LAST:event_minimizeButtonMouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -335,6 +379,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel loginHeader;
     private javax.swing.JLabel loginPic;
     private javax.swing.JLabel logo;
+    private javax.swing.JLabel minimizeButton;
     private javax.swing.JPasswordField password;
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JLabel registerButton;
