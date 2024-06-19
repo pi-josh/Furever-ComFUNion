@@ -32,8 +32,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     public UserLoggedIn() {
         initComponents();
         
-        // default 
-        
+        // default
         defaultWindow();
         
         // Window logo
@@ -139,6 +138,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         setTitle("Furever ComFUNion");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(1370, 880));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -382,7 +382,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         getContentPane().add(navBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 140));
 
         homeBody.setBackground(new java.awt.Color(255, 251, 209));
-        homeBody.setBorder(new javax.swing.border.MatteBorder(null));
+        homeBody.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
         homeBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         homeBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -428,12 +428,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
         homeBody.add(bulletin, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, 650, 410));
 
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
-        homeBody.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
+        homeBody.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 1366, 738));
 
         getContentPane().add(homeBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 139, 1370, 740));
 
         aboutUsBody.setBackground(new java.awt.Color(255, 251, 209));
-        aboutUsBody.setBorder(new javax.swing.border.MatteBorder(null));
+        aboutUsBody.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
         aboutUsBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         aboutUsBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -468,12 +468,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
         aboutUsBody.add(aboutUsPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, 850, 780));
 
         background1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
-        aboutUsBody.add(background1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
+        aboutUsBody.add(background1, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 1366, 738));
 
         getContentPane().add(aboutUsBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 139, 1370, 740));
 
         FAQsBody.setBackground(new java.awt.Color(255, 251, 209));
-        FAQsBody.setBorder(new javax.swing.border.MatteBorder(null));
+        FAQsBody.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
         FAQsBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         FAQsBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -523,12 +523,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
         FAQsBody.add(FAQsPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(195, 20, 1000, 700));
 
         background2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
-        FAQsBody.add(background2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
+        FAQsBody.add(background2, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 1366, 738));
 
         getContentPane().add(FAQsBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 139, 1370, 740));
 
         petsBody.setBackground(new java.awt.Color(255, 251, 209));
-        petsBody.setBorder(new javax.swing.border.MatteBorder(null));
+        petsBody.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
         petsBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         petsBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -609,12 +609,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
         petsBody.add(petHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 250, 90));
 
         background3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
-        petsBody.add(background3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
+        petsBody.add(background3, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 1366, 738));
 
         getContentPane().add(petsBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 139, 1370, 740));
 
         vetsBody.setBackground(new java.awt.Color(255, 251, 209));
-        vetsBody.setBorder(new javax.swing.border.MatteBorder(null));
+        vetsBody.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
         vetsBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         vetsBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -623,12 +623,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetsBody.add(vetsPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(195, 20, -1, 700));
 
         background4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
-        vetsBody.add(background4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
+        vetsBody.add(background4, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 1366, 738));
 
         getContentPane().add(vetsBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 139, 1370, 740));
 
         applicationBody.setBackground(new java.awt.Color(255, 251, 209));
-        applicationBody.setBorder(new javax.swing.border.MatteBorder(null));
+        applicationBody.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
         applicationBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         applicationBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -670,12 +670,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
         applicationBody.add(applicationPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, 1000, 580));
 
         background5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
-        applicationBody.add(background5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
+        applicationBody.add(background5, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 1366, 738));
 
         getContentPane().add(applicationBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 139, 1370, 740));
 
         profileBody.setBackground(new java.awt.Color(255, 251, 209));
-        profileBody.setBorder(new javax.swing.border.MatteBorder(null));
+        profileBody.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
         profileBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         profileBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -684,7 +684,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         profileBody.add(profilePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(195, 40, -1, -1));
 
         background6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
-        profileBody.add(background6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
+        profileBody.add(background6, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 1366, 738));
 
         getContentPane().add(profileBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 139, 1370, 740));
 

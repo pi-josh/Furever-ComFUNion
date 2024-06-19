@@ -2,8 +2,11 @@ import Views.Login;
 import Views.Register;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.Timer;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -24,6 +27,7 @@ public class LandingPage extends javax.swing.JFrame {
     private boolean loginClicked = true;
     private boolean registerClicked = true;
     private int FAQsPanelCounter = 4000001;
+    private Timer timer;
     
     /**
      * Creates new form Main
@@ -31,7 +35,7 @@ public class LandingPage extends javax.swing.JFrame {
     public LandingPage() {
         initComponents();
         
-        // default 
+        // default
         defaultWindow();
         
         // Window logo
@@ -46,11 +50,27 @@ public class LandingPage extends javax.swing.JFrame {
             System.err.println("Error: Image not found. " + e.getMessage());
             e.printStackTrace();
         }
+        
+        // Create a timer to stop the GIF after 6 seconds
+        timer = new Timer(10000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                timer.stop(); // Stop the timer
+                startupAnimationPanel.setVisible(false);
+                navBar.setVisible(true);
+                homeBody.setVisible(true);
+            }
+        });
+        timer.setRepeats(false); // Ensure the timer only runs once
+
+        // Start the timer
+        timer.start();
     }
     
     private void defaultWindow() {   
         // set visiblity
-        homeBody.setVisible(true);
+        navBar.setVisible(false);
+        homeBody.setVisible(false);
         aboutUsBody.setVisible(false);
         FAQsBody.setVisible(false);
         petsBody.setVisible(false);
@@ -237,6 +257,8 @@ public class LandingPage extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        startupAnimationPanel = new javax.swing.JPanel();
+        startupAnimation = new javax.swing.JLabel();
         navBar = new javax.swing.JPanel();
         logo = new javax.swing.JLabel();
         line = new javax.swing.JPanel();
@@ -254,7 +276,6 @@ public class LandingPage extends javax.swing.JFrame {
         minimizeButton = new javax.swing.JLabel();
         homeBody = new javax.swing.JPanel();
         slogan = new javax.swing.JLabel();
-        description = new javax.swing.JLabel();
         adoptedCounter = new javax.swing.JLabel();
         adoptedLabel = new javax.swing.JLabel();
         badge = new javax.swing.JLabel();
@@ -287,9 +308,18 @@ public class LandingPage extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMinimumSize(new java.awt.Dimension(1370, 879));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1370, 880));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        startupAnimationPanel.setBackground(new java.awt.Color(0, 0, 0));
+        startupAnimationPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
+        startupAnimationPanel.setPreferredSize(new java.awt.Dimension(1370, 880));
+        startupAnimationPanel.setLayout(new java.awt.GridBagLayout());
+
+        startupAnimation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/startup.gif"))); // NOI18N
+        startupAnimationPanel.add(startupAnimation, new java.awt.GridBagConstraints());
+
+        getContentPane().add(startupAnimationPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 880));
 
         navBar.setBackground(new java.awt.Color(194, 144, 69));
         navBar.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
@@ -478,17 +508,14 @@ public class LandingPage extends javax.swing.JFrame {
         getContentPane().add(navBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 140));
 
         homeBody.setBackground(new java.awt.Color(255, 251, 209));
-        homeBody.setBorder(new javax.swing.border.MatteBorder(null));
+        homeBody.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
+        homeBody.setMinimumSize(new java.awt.Dimension(1368, 800));
+        homeBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         homeBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        slogan.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
-        slogan.setForeground(new java.awt.Color(51, 51, 255));
-        slogan.setText("<html> <head> <style> p {     font-family: 'Comic Sans MS', cursive;     font-size: 60px;     color: #000000; /* Black text */     text-align: center;     margin-top: 50px;     text-shadow:          -1px -1px 0 #ffffff,           1px -1px 0 #ffffff,         -1px 1px 0 #ffffff,         1px 1px 0 #ffffff; /* White border */ } </style> </head> <body> <p>Connecting Hearts with Paws</p> </body> </html> ");
-        homeBody.add(slogan, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 670, 260));
-
-        description.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        description.setText("<html> <head> <style> p { \tfont-family: 'Open Sans', sans-serif;             font-size: 14px;             color: #000000;             text-align: justify;             margin-top: 20px;             max-width: 100%;             margin-left: auto;             margin-right: auto; \t\t\t} \t\t</style> \t</head> \t<body> \t\t<p>Finding a loving home for every furry friend is our mission. <br>             <br>With \"Furever ComFUNion,\" adopting/rehoming a pet becomes an effortless and joyful experience. <br><br>             Make a lasting impact—bring joy to an animal's life and enrich your own by giving a pet a forever home today. <br>             <br>With Furever ComFUNion, the perfect companion is just a few clicks away.</p> \t</body> </html>");
-        homeBody.add(description, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 350, 520, 270));
+        slogan.setForeground(new java.awt.Color(255, 255, 255));
+        slogan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/slogan (1).png"))); // NOI18N
+        homeBody.add(slogan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 700, 220));
 
         adoptedCounter.setFont(new java.awt.Font("Tahoma", 1, 72)); // NOI18N
         adoptedCounter.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -520,15 +547,15 @@ public class LandingPage extends javax.swing.JFrame {
         homeBody.add(badge, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 100, -1, -1));
 
         bulletin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/bulletin.png"))); // NOI18N
-        homeBody.add(bulletin, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, 650, 410));
+        homeBody.add(bulletin, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, 616, 405));
 
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
-        homeBody.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
+        homeBody.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 1366, 738));
 
         getContentPane().add(homeBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 139, 1370, 740));
 
         aboutUsBody.setBackground(new java.awt.Color(255, 251, 209));
-        aboutUsBody.setBorder(new javax.swing.border.MatteBorder(null));
+        aboutUsBody.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
         aboutUsBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         aboutUsBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -558,12 +585,13 @@ public class LandingPage extends javax.swing.JFrame {
         aboutUsBody.add(aboutUsPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, 850, 780));
 
         background1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
-        aboutUsBody.add(background1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
+        aboutUsBody.add(background1, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 1366, 738));
 
         getContentPane().add(aboutUsBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 139, 1370, 740));
 
         FAQsBody.setBackground(new java.awt.Color(255, 251, 209));
-        FAQsBody.setBorder(new javax.swing.border.MatteBorder(null));
+        FAQsBody.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
+        FAQsBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         FAQsBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         prev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/prev button (1).png"))); // NOI18N
@@ -611,12 +639,13 @@ public class LandingPage extends javax.swing.JFrame {
         FAQsBody.add(FAQsPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(195, 20, 1000, 700));
 
         background2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
-        FAQsBody.add(background2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
+        FAQsBody.add(background2, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 1366, 738));
 
         getContentPane().add(FAQsBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 139, 1370, 740));
 
         petsBody.setBackground(new java.awt.Color(255, 251, 209));
-        petsBody.setBorder(new javax.swing.border.MatteBorder(null));
+        petsBody.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
+        petsBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         petsBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         petPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/prev button (1).png"))); // NOI18N
@@ -657,7 +686,7 @@ public class LandingPage extends javax.swing.JFrame {
         petsBody.add(petHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 250, 90));
 
         background3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
-        petsBody.add(background3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
+        petsBody.add(background3, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 1366, 738));
 
         getContentPane().add(petsBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 139, 1370, 740));
 
@@ -1052,7 +1081,6 @@ public class LandingPage extends javax.swing.JFrame {
     private javax.swing.JLabel bulletin;
     private javax.swing.JLabel businessRules;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JLabel description;
     private javax.swing.JLabel devs;
     private javax.swing.JLabel exitButton;
     private javax.swing.JLabel faqButton;
@@ -1078,5 +1106,7 @@ public class LandingPage extends javax.swing.JFrame {
     private javax.swing.JLabel prev;
     private javax.swing.JLabel registerButton;
     private javax.swing.JLabel slogan;
+    private javax.swing.JLabel startupAnimation;
+    private javax.swing.JPanel startupAnimationPanel;
     // End of variables declaration//GEN-END:variables
 }

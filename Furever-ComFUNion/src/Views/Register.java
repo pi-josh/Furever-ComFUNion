@@ -103,6 +103,7 @@ public class Register extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Register");
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(900, 685));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -308,9 +309,9 @@ public class Register extends javax.swing.JFrame {
 
         registerBg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/register bg.png"))); // NOI18N
         registerBg.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        registerContainer.add(registerBg, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 660, 560));
+        registerContainer.add(registerBg, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 25, 660, 560));
 
-        getContentPane().add(registerContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 75, -1, 578));
+        getContentPane().add(registerContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 75, -1, 610));
 
         pack();
         setLocationRelativeTo(null);
