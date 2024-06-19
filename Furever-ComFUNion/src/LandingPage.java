@@ -2,7 +2,11 @@ import Views.Login;
 import Views.Register;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.Timer;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -23,6 +27,7 @@ public class LandingPage extends javax.swing.JFrame {
     private boolean loginClicked = true;
     private boolean registerClicked = true;
     private int FAQsPanelCounter = 4000001;
+    private Timer timer;
     
     /**
      * Creates new form Main
@@ -30,7 +35,7 @@ public class LandingPage extends javax.swing.JFrame {
     public LandingPage() {
         initComponents();
         
-        // default 
+        // default
         defaultWindow();
         
         // Window logo
@@ -45,11 +50,27 @@ public class LandingPage extends javax.swing.JFrame {
             System.err.println("Error: Image not found. " + e.getMessage());
             e.printStackTrace();
         }
+        
+        // Create a timer to stop the GIF after 6 seconds
+        timer = new Timer(10000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                timer.stop(); // Stop the timer
+                startupAnimationPanel.setVisible(false);
+                navBar.setVisible(true);
+                homeBody.setVisible(true);
+            }
+        });
+        timer.setRepeats(false); // Ensure the timer only runs once
+
+        // Start the timer
+        timer.start();
     }
     
     private void defaultWindow() {   
         // set visiblity
-        homeBody.setVisible(true);
+        navBar.setVisible(false);
+        homeBody.setVisible(false);
         aboutUsBody.setVisible(false);
         FAQsBody.setVisible(false);
         petsBody.setVisible(false);
@@ -86,8 +107,8 @@ public class LandingPage extends javax.swing.JFrame {
         aboutUsClick.setVisible(false);
         faqClick.setVisible(false);
         petClick.setVisible(false);
-        homeClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg dark.png")));
-        line.setBackground(new java.awt.Color(226, 204, 163));
+        homeClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png")));
+        line.setBackground(new java.awt.Color(255, 251, 209));
         
         
         // set clickability
@@ -115,8 +136,8 @@ public class LandingPage extends javax.swing.JFrame {
         aboutUsClick.setVisible(true);
         faqClick.setVisible(false);
         petClick.setVisible(false);
-        aboutUsClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg dark.png")));
-        line.setBackground(new java.awt.Color(226, 204, 163));
+        aboutUsClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png")));
+        line.setBackground(new java.awt.Color(255, 251, 209));
         
 
         // set clickability
@@ -144,8 +165,8 @@ public class LandingPage extends javax.swing.JFrame {
         aboutUsClick.setVisible(false);
         faqClick.setVisible(true);
         petClick.setVisible(false);
-        faqClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg dark.png")));
-        line.setBackground(new java.awt.Color(226, 204, 163));
+        faqClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png")));
+        line.setBackground(new java.awt.Color(255, 251, 209));
 
         
         // set clickability
@@ -173,8 +194,8 @@ public class LandingPage extends javax.swing.JFrame {
         aboutUsClick.setVisible(false);
         faqClick.setVisible(false);
         petClick.setVisible(true);
-        petClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg dark.png")));
-        line.setBackground(new java.awt.Color(226, 204, 163));
+        petClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png")));
+        line.setBackground(new java.awt.Color(255, 251, 209));
 
         
         // set clickability
@@ -236,6 +257,8 @@ public class LandingPage extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        startupAnimationPanel = new javax.swing.JPanel();
+        startupAnimation = new javax.swing.JLabel();
         navBar = new javax.swing.JPanel();
         logo = new javax.swing.JLabel();
         line = new javax.swing.JPanel();
@@ -250,9 +273,9 @@ public class LandingPage extends javax.swing.JFrame {
         loginButton = new javax.swing.JLabel();
         registerButton = new javax.swing.JLabel();
         exitButton = new javax.swing.JLabel();
+        minimizeButton = new javax.swing.JLabel();
         homeBody = new javax.swing.JPanel();
         slogan = new javax.swing.JLabel();
-        description = new javax.swing.JLabel();
         adoptedCounter = new javax.swing.JLabel();
         adoptedLabel = new javax.swing.JLabel();
         badge = new javax.swing.JLabel();
@@ -288,6 +311,16 @@ public class LandingPage extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        startupAnimationPanel.setBackground(new java.awt.Color(0, 0, 0));
+        startupAnimationPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
+        startupAnimationPanel.setPreferredSize(new java.awt.Dimension(1370, 880));
+        startupAnimationPanel.setLayout(new java.awt.GridBagLayout());
+
+        startupAnimation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/startup.gif"))); // NOI18N
+        startupAnimationPanel.add(startupAnimation, new java.awt.GridBagConstraints());
+
+        getContentPane().add(startupAnimationPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 880));
+
         navBar.setBackground(new java.awt.Color(194, 144, 69));
         navBar.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
         navBar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -307,7 +340,7 @@ public class LandingPage extends javax.swing.JFrame {
         });
         navBar.add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, -1, -1));
 
-        line.setBackground(new java.awt.Color(226, 204, 163));
+        line.setBackground(new java.awt.Color(255, 251, 209));
         line.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 1, 1, new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout lineLayout = new javax.swing.GroupLayout(line);
@@ -343,7 +376,7 @@ public class LandingPage extends javax.swing.JFrame {
         });
         navBar.add(homeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 65, -1, -1));
 
-        homeClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg dark.png"))); // NOI18N
+        homeClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png"))); // NOI18N
         navBar.add(homeClick, new org.netbeans.lib.awtextra.AbsoluteConstraints(515, 50, -1, -1));
 
         aboutUsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us.png"))); // NOI18N
@@ -456,22 +489,33 @@ public class LandingPage extends javax.swing.JFrame {
                 exitButtonMouseExited(evt);
             }
         });
-        navBar.add(exitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1320, 10, 40, 40));
+        navBar.add(exitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1325, 5, 40, 40));
+
+        minimizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/minimize button (1).png"))); // NOI18N
+        minimizeButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                minimizeButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                minimizeButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                minimizeButtonMouseExited(evt);
+            }
+        });
+        navBar.add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1285, 10, 40, 20));
 
         getContentPane().add(navBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 140));
 
         homeBody.setBackground(new java.awt.Color(255, 251, 209));
-        homeBody.setBorder(new javax.swing.border.MatteBorder(null));
+        homeBody.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
+        homeBody.setMinimumSize(new java.awt.Dimension(1368, 800));
+        homeBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         homeBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        slogan.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
-        slogan.setForeground(new java.awt.Color(51, 51, 255));
-        slogan.setText("<html> <head> <style> p {     font-family: 'Comic Sans MS', cursive;     font-size: 60px;     color: #000000; /* Black text */     text-align: center;     margin-top: 50px;     text-shadow:          -1px -1px 0 #ffffff,           1px -1px 0 #ffffff,         -1px 1px 0 #ffffff,         1px 1px 0 #ffffff; /* White border */ } </style> </head> <body> <p>Connecting Hearts with Paws</p> </body> </html> ");
-        homeBody.add(slogan, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 670, 260));
-
-        description.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        description.setText("<html> <head> <style> p { \tfont-family: 'Open Sans', sans-serif;             font-size: 14px;             color: #000000;             text-align: justify;             margin-top: 20px;             max-width: 100%;             margin-left: auto;             margin-right: auto; \t\t\t} \t\t</style> \t</head> \t<body> \t\t<p>Finding a loving home for every furry friend is our mission. <br>             <br>With \"Furever ComFUNion,\" adopting/rehoming a pet becomes an effortless and joyful experience. <br><br>             Make a lasting impact—bring joy to an animal's life and enrich your own by giving a pet a forever home today. <br>             <br>With Furever ComFUNion, the perfect companion is just a few clicks away.</p> \t</body> </html>");
-        homeBody.add(description, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 350, 520, 270));
+        slogan.setForeground(new java.awt.Color(255, 255, 255));
+        slogan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/slogan (1).png"))); // NOI18N
+        homeBody.add(slogan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 700, 220));
 
         adoptedCounter.setFont(new java.awt.Font("Tahoma", 1, 72)); // NOI18N
         adoptedCounter.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -503,15 +547,15 @@ public class LandingPage extends javax.swing.JFrame {
         homeBody.add(badge, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 100, -1, -1));
 
         bulletin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/bulletin.png"))); // NOI18N
-        homeBody.add(bulletin, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, 650, 410));
+        homeBody.add(bulletin, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, 616, 405));
 
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
-        homeBody.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
+        homeBody.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 1366, 738));
 
         getContentPane().add(homeBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 139, 1370, 740));
 
         aboutUsBody.setBackground(new java.awt.Color(255, 251, 209));
-        aboutUsBody.setBorder(new javax.swing.border.MatteBorder(null));
+        aboutUsBody.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
         aboutUsBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         aboutUsBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -541,12 +585,13 @@ public class LandingPage extends javax.swing.JFrame {
         aboutUsBody.add(aboutUsPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, 850, 780));
 
         background1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
-        aboutUsBody.add(background1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
+        aboutUsBody.add(background1, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 1366, 738));
 
         getContentPane().add(aboutUsBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 139, 1370, 740));
 
         FAQsBody.setBackground(new java.awt.Color(255, 251, 209));
-        FAQsBody.setBorder(new javax.swing.border.MatteBorder(null));
+        FAQsBody.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
+        FAQsBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         FAQsBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         prev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/prev button (1).png"))); // NOI18N
@@ -594,12 +639,13 @@ public class LandingPage extends javax.swing.JFrame {
         FAQsBody.add(FAQsPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(195, 20, 1000, 700));
 
         background2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
-        FAQsBody.add(background2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
+        FAQsBody.add(background2, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 1366, 738));
 
         getContentPane().add(FAQsBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 139, 1370, 740));
 
         petsBody.setBackground(new java.awt.Color(255, 251, 209));
-        petsBody.setBorder(new javax.swing.border.MatteBorder(null));
+        petsBody.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
+        petsBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         petsBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         petPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/prev button (1).png"))); // NOI18N
@@ -640,7 +686,7 @@ public class LandingPage extends javax.swing.JFrame {
         petsBody.add(petHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 250, 90));
 
         background3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
-        petsBody.add(background3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 740));
+        petsBody.add(background3, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 1366, 738));
 
         getContentPane().add(petsBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 139, 1370, 740));
 
@@ -736,8 +782,8 @@ public class LandingPage extends javax.swing.JFrame {
         if(!homeClicked) {
             homeClick.setVisible(true);
             homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/home hover.png")));
-            line.setBackground(new java.awt.Color(255, 251, 209));
-            homeClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png")));
+            line.setBackground(new java.awt.Color(226, 204, 163));
+            homeClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg dark.png")));
         }
     }//GEN-LAST:event_homeButtonMouseEntered
 
@@ -746,7 +792,7 @@ public class LandingPage extends javax.swing.JFrame {
         if(!homeClicked) {
             homeClick.setVisible(false);
             homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/home.png")));
-            line.setBackground(new java.awt.Color(226, 204, 163));
+            line.setBackground(new java.awt.Color(255, 251, 209));
         }
     }//GEN-LAST:event_homeButtonMouseExited
 
@@ -770,8 +816,8 @@ public class LandingPage extends javax.swing.JFrame {
         if(!aboutUsClicked) {
             aboutUsClick.setVisible(true);
             aboutUsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us hover.png")));
-            line.setBackground(new java.awt.Color(255, 251, 209));
-            aboutUsClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png")));
+            line.setBackground(new java.awt.Color(226, 204, 163));
+            aboutUsClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg dark.png")));
         }
     }//GEN-LAST:event_aboutUsButtonMouseEntered
 
@@ -780,7 +826,7 @@ public class LandingPage extends javax.swing.JFrame {
         if(!aboutUsClicked) {
             aboutUsClick.setVisible(false);
             aboutUsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us.png")));
-            line.setBackground(new java.awt.Color(226, 204, 163));
+            line.setBackground(new java.awt.Color(255, 251, 209));
         }
     }//GEN-LAST:event_aboutUsButtonMouseExited
 
@@ -810,8 +856,8 @@ public class LandingPage extends javax.swing.JFrame {
         if(!FAQsClicked) {
             faqClick.setVisible(true);
             faqButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/FAQs hover.png")));
-            line.setBackground(new java.awt.Color(255, 251, 209));
-            faqClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png")));
+            line.setBackground(new java.awt.Color(226, 204, 163));
+            faqClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg dark.png")));
         }
     }//GEN-LAST:event_faqButtonMouseEntered
 
@@ -820,7 +866,7 @@ public class LandingPage extends javax.swing.JFrame {
         if(!FAQsClicked) {
             faqClick.setVisible(false);
             faqButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/FAQs.png")));
-            line.setBackground(new java.awt.Color(226, 204, 163));
+            line.setBackground(new java.awt.Color(255, 251, 209));
         }
     }//GEN-LAST:event_faqButtonMouseExited
 
@@ -844,8 +890,8 @@ public class LandingPage extends javax.swing.JFrame {
         if(!petsClicked) {
             petClick.setVisible(true);
             petButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets hover.png")));
-            line.setBackground(new java.awt.Color(255, 251, 209));
-            petClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png")));
+            line.setBackground(new java.awt.Color(226, 204, 163));
+            petClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg dark.png")));
         }
     }//GEN-LAST:event_petButtonMouseEntered
 
@@ -854,7 +900,7 @@ public class LandingPage extends javax.swing.JFrame {
         if(!petsClicked) {
             petClick.setVisible(false);
             petButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets.png")));
-            line.setBackground(new java.awt.Color(226, 204, 163));
+            line.setBackground(new java.awt.Color(255, 251, 209));
         }
     }//GEN-LAST:event_petButtonMouseExited
 
@@ -964,6 +1010,21 @@ public class LandingPage extends javax.swing.JFrame {
         petNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/next button (1).png")));
     }//GEN-LAST:event_petNextMouseExited
 
+    private void minimizeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeButtonMouseClicked
+        // TODO add your handling code here:
+        this.setState(JFrame.ICONIFIED);
+    }//GEN-LAST:event_minimizeButtonMouseClicked
+
+    private void minimizeButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeButtonMouseEntered
+        // TODO add your handling code here:
+        minimizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/minimize button hover (1).png")));
+    }//GEN-LAST:event_minimizeButtonMouseEntered
+
+    private void minimizeButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeButtonMouseExited
+        // TODO add your handling code here:
+        minimizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/minimize button (1).png")));
+    }//GEN-LAST:event_minimizeButtonMouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -1020,7 +1081,6 @@ public class LandingPage extends javax.swing.JFrame {
     private javax.swing.JLabel bulletin;
     private javax.swing.JLabel businessRules;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JLabel description;
     private javax.swing.JLabel devs;
     private javax.swing.JLabel exitButton;
     private javax.swing.JLabel faqButton;
@@ -1031,6 +1091,7 @@ public class LandingPage extends javax.swing.JFrame {
     private javax.swing.JPanel line;
     private javax.swing.JLabel loginButton;
     private javax.swing.JLabel logo;
+    private javax.swing.JLabel minimizeButton;
     private javax.swing.JPanel navBar;
     private javax.swing.JLabel next;
     private javax.swing.JLabel petButton;
@@ -1045,5 +1106,7 @@ public class LandingPage extends javax.swing.JFrame {
     private javax.swing.JLabel prev;
     private javax.swing.JLabel registerButton;
     private javax.swing.JLabel slogan;
+    private javax.swing.JLabel startupAnimation;
+    private javax.swing.JPanel startupAnimationPanel;
     // End of variables declaration//GEN-END:variables
 }
