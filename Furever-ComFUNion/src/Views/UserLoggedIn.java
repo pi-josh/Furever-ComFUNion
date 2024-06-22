@@ -2,6 +2,8 @@ package Views;
 
 import Models.Pet;
 import Models.PetSamples;
+import Models.VetSamples;
+import Models.Veterinarian;
 import java.awt.Color;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
@@ -14,12 +16,12 @@ import javax.swing.JFrame;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author joshu
  */
 public class UserLoggedIn extends javax.swing.JFrame {
+
     // buttons clickability
     private boolean homeClicked;
     private boolean aboutUsClicked;
@@ -29,31 +31,32 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private boolean applicationClicked;
     private boolean profileClicked;
     private int FAQsPanelCounter = 4000001;
-    
+
     // Sample pets
     ArrayList<Pet> pets;
     private int totalPets;
     private int petIndex = 0;
-    
+
+    // Sample vets
+    ArrayList<Veterinarian> vets;
+    private int totalVets;
+    private int vetIndex = 0;
+    private boolean vetStart = true;
+    private boolean vetEnd = false;
+
     /**
      * Creates new form Main
      */
     public UserLoggedIn() {
-        
+
         // alisin na lang pagkatapos
-        PetSamples petSamples = new PetSamples();
-        this.pets = petSamples.getAllPets();
-        totalPets = pets.size();
-        
-        for(Pet pet : pets) {
-            System.out.println(pet.getPetName() + " " + pet.getPetAge() + " " + pet.getPetSex());
-        }
-        
+        samples();
+
         initComponents();
-        
+
         // default
         defaultWindow();
-        
+
         // Window logo
         ImageIcon icon1 = null;
         try {
@@ -139,6 +142,18 @@ public class UserLoggedIn extends javax.swing.JFrame {
         petHeader = new javax.swing.JLabel();
         background3 = new javax.swing.JLabel();
         vetsBody = new javax.swing.JPanel();
+        vetName1 = new javax.swing.JLabel();
+        vetName2 = new javax.swing.JLabel();
+        vetName3 = new javax.swing.JLabel();
+        vetName4 = new javax.swing.JLabel();
+        vetName5 = new javax.swing.JLabel();
+        vetName6 = new javax.swing.JLabel();
+        vetContact1 = new javax.swing.JLabel();
+        vetContact2 = new javax.swing.JLabel();
+        vetContact3 = new javax.swing.JLabel();
+        vetContact4 = new javax.swing.JLabel();
+        vetContact5 = new javax.swing.JLabel();
+        vetContact6 = new javax.swing.JLabel();
         vetPrev = new javax.swing.JLabel();
         vetNext = new javax.swing.JLabel();
         vetsPanel = new javax.swing.JLabel();
@@ -180,6 +195,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         day = new javax.swing.JComboBox<>();
         month = new javax.swing.JComboBox<>();
         year = new javax.swing.JComboBox<>();
+        profilePicture = new javax.swing.JLabel();
         profileName = new javax.swing.JLabel();
         profileUsername = new javax.swing.JLabel();
         profileContactNum = new javax.swing.JLabel();
@@ -640,6 +656,54 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetsBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         vetsBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        vetName1.setForeground(new java.awt.Color(255, 255, 255));
+        vetName1.setText("Pangalan ni Vet1");
+        vetsBody.add(vetName1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 240, 120, 20));
+
+        vetName2.setForeground(new java.awt.Color(255, 255, 255));
+        vetName2.setText("Pangalan ni Vet2");
+        vetsBody.add(vetName2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 300, 120, 20));
+
+        vetName3.setForeground(new java.awt.Color(255, 255, 255));
+        vetName3.setText("Pangalan ni Vet3");
+        vetsBody.add(vetName3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 360, 120, 20));
+
+        vetName4.setForeground(new java.awt.Color(255, 255, 255));
+        vetName4.setText("Pangalan ni Vet4");
+        vetsBody.add(vetName4, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 420, 120, 20));
+
+        vetName5.setForeground(new java.awt.Color(255, 255, 255));
+        vetName5.setText("Pangalan ni Vet5");
+        vetsBody.add(vetName5, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 480, 120, 20));
+
+        vetName6.setForeground(new java.awt.Color(255, 255, 255));
+        vetName6.setText("Pangalan ni Vet6");
+        vetsBody.add(vetName6, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 540, 120, 20));
+
+        vetContact1.setForeground(new java.awt.Color(255, 255, 255));
+        vetContact1.setText("Contact ni Vet1");
+        vetsBody.add(vetContact1, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 240, 120, 20));
+
+        vetContact2.setForeground(new java.awt.Color(255, 255, 255));
+        vetContact2.setText("Contact ni Vet2");
+        vetsBody.add(vetContact2, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 300, 120, 20));
+
+        vetContact3.setForeground(new java.awt.Color(255, 255, 255));
+        vetContact3.setText("Contact ni Vet3");
+        vetsBody.add(vetContact3, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 360, 120, 20));
+
+        vetContact4.setForeground(new java.awt.Color(255, 255, 255));
+        vetContact4.setText("Contact ni Vet4");
+        vetsBody.add(vetContact4, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 420, 120, 20));
+
+        vetContact5.setForeground(new java.awt.Color(255, 255, 255));
+        vetContact5.setText("Contact ni Vet5");
+        vetsBody.add(vetContact5, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 480, 120, 20));
+
+        vetContact6.setForeground(new java.awt.Color(255, 255, 255));
+        vetContact6.setText("Contact ni Vet6");
+        vetsBody.add(vetContact6, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 540, 120, 20));
+
         vetPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/prev button (1).png"))); // NOI18N
         vetPrev.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -931,6 +995,9 @@ public class UserLoggedIn extends javax.swing.JFrame {
         });
         profileBody.add(year, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 600, 53, -1));
 
+        profilePicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/sampeProfilePicture.jpg"))); // NOI18N
+        profileBody.add(profilePicture, new org.netbeans.lib.awtextra.AbsoluteConstraints(242, 50, 260, 245));
+
         profileName.setText("Joshua C. Macatunao");
         profileBody.add(profileName, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 380, -1, -1));
 
@@ -1044,7 +1111,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void defaultWindow() {   
+    private void defaultWindow() {
         // set visiblity
         homeBody.setVisible(true);
         aboutUsBody.setVisible(false);
@@ -1053,7 +1120,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetsBody.setVisible(false);
         applicationBody.setVisible(false);
         profileBody.setVisible(false);
-        
+
         // click bg
         homeClick.setVisible(true);
         aboutUsClick.setVisible(false);
@@ -1061,21 +1128,38 @@ public class UserLoggedIn extends javax.swing.JFrame {
         petClick.setVisible(false);
         vetClick.setVisible(false);
         applicationClick.setVisible(false);
-        
-        
+
         // set clickability
         homeClicked = true;
-        
+
         // button icons
         homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/home click.png")));
-        
+
         // for FAQs panels' visibility
         FAQsPanel1.setVisible(true);
         FAQsPanel2.setVisible(false);
         FAQsPanel3.setVisible(false);
         FAQsPanel4.setVisible(false);
     }
-    
+
+    private void samples() {
+        PetSamples petSamples = new PetSamples();
+        this.pets = petSamples.getAllPets();
+        totalPets = pets.size();
+
+        for (Pet pet : pets) {
+            System.out.println(pet.getPetName() + " " + pet.getPetAge() + " " + pet.getPetSex());
+        }
+
+        VetSamples vetSamples = new VetSamples();
+        this.vets = vetSamples.getAllVeterinarians();
+        totalVets = vets.size();
+
+        for (Veterinarian vet : vets) {
+            System.out.println(vet.getVetFullName() + " " + vet.getVetCellNum());
+        }
+    }
+
     private void homeButton() {
         // set visiblity
         homeBody.setVisible(true);
@@ -1085,7 +1169,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetsBody.setVisible(false);
         applicationBody.setVisible(false);
         profileBody.setVisible(false);
-        
+
         // click bg
         homeClick.setVisible(true);
         aboutUsClick.setVisible(false);
@@ -1094,9 +1178,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetClick.setVisible(false);
         applicationClick.setVisible(false);
         homeClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png")));
-        line.setBackground(new java.awt.Color(255,251,209));
-        
-        
+        line.setBackground(new java.awt.Color(255, 251, 209));
+
         // set clickability
         homeClicked = true;
         aboutUsClicked = false;
@@ -1105,7 +1188,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetsClicked = false;
         applicationClicked = false;
         profileClicked = false;
-        
+
         // button icons
         homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/home click.png")));
         aboutUsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us.png")));
@@ -1115,10 +1198,10 @@ public class UserLoggedIn extends javax.swing.JFrame {
         applicationButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/application.png")));
         profileHead.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/head.png")));
         profileCollar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/collar.png")));
-        
+
         username.setForeground(Color.BLACK);
     }
-    
+
     private void aboutUsButton() {
         // set visiblity
         homeBody.setVisible(false);
@@ -1128,7 +1211,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetsBody.setVisible(false);
         applicationBody.setVisible(false);
         profileBody.setVisible(false);
-        
+
         // click bg
         homeClick.setVisible(false);
         aboutUsClick.setVisible(true);
@@ -1137,8 +1220,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetClick.setVisible(false);
         applicationClick.setVisible(false);
         aboutUsClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png")));
-        line.setBackground(new java.awt.Color(255,251,209));
-        
+        line.setBackground(new java.awt.Color(255, 251, 209));
 
         // set clickability
         homeClicked = false;
@@ -1148,7 +1230,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetsClicked = false;
         applicationClicked = false;
         profileClicked = false;
-        
+
         // button icons
         homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/home.png")));
         aboutUsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us click.png")));
@@ -1158,10 +1240,10 @@ public class UserLoggedIn extends javax.swing.JFrame {
         applicationButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/application.png")));
         profileHead.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/head.png")));
         profileCollar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/collar.png")));
-        
+
         username.setForeground(Color.BLACK);
     }
-    
+
     private void faqButton() {
         // set visiblity
         homeBody.setVisible(false);
@@ -1171,7 +1253,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetsBody.setVisible(false);
         applicationBody.setVisible(false);
         profileBody.setVisible(false);
-        
+
         // click bg
         homeClick.setVisible(false);
         aboutUsClick.setVisible(false);
@@ -1180,9 +1262,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetClick.setVisible(false);
         applicationClick.setVisible(false);
         faqClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png")));
-        line.setBackground(new java.awt.Color(255,251,209));
+        line.setBackground(new java.awt.Color(255, 251, 209));
 
-        
         // set clickability
         homeClicked = false;
         aboutUsClicked = false;
@@ -1191,7 +1272,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetsClicked = false;
         applicationClicked = false;
         profileClicked = false;
-        
+
         // button icons
         homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/home.png")));
         aboutUsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us.png")));
@@ -1201,14 +1282,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
         applicationButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/application.png")));
         profileHead.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/head.png")));
         profileCollar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/collar.png")));
-        
+
         username.setForeground(Color.BLACK);
     }
-    
+
     private void petButton() {
         // initialize pet panel
         petProfilesReset();
-        
+
         // set visiblity
         homeBody.setVisible(false);
         aboutUsBody.setVisible(false);
@@ -1218,7 +1299,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         applicationBody.setVisible(false);
         profileBody.setVisible(false);
         petPrev.setVisible(false);  // hide prev button since there's no previous profile to show yet
-        
+
         // click bg
         homeClick.setVisible(false);
         aboutUsClick.setVisible(false);
@@ -1227,9 +1308,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetClick.setVisible(false);
         applicationClick.setVisible(false);
         petClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png")));
-        line.setBackground(new java.awt.Color(255,251,209));
+        line.setBackground(new java.awt.Color(255, 251, 209));
 
-        
         // set clickability
         homeClicked = false;
         aboutUsClicked = false;
@@ -1238,7 +1318,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetsClicked = false;
         applicationClicked = false;
         profileClicked = false;
-        
+
         // button icons
         homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/home.png")));
         aboutUsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us.png")));
@@ -1248,11 +1328,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
         applicationButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/application.png")));
         profileHead.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/head.png")));
         profileCollar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/collar.png")));
-        
+
         username.setForeground(Color.BLACK);
     }
-    
+
     private void vetButton() {
+        // intialize vets panel
+        vetProfilesReset();
+
         // set visiblity
         homeBody.setVisible(false);
         aboutUsBody.setVisible(false);
@@ -1261,7 +1344,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetsBody.setVisible(true);
         applicationBody.setVisible(false);
         profileBody.setVisible(false);
-        
+
         // click bg
         homeClick.setVisible(false);
         aboutUsClick.setVisible(false);
@@ -1270,9 +1353,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetClick.setVisible(true);
         applicationClick.setVisible(false);
         vetClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png")));
-        line.setBackground(new java.awt.Color(255,251,209));
+        line.setBackground(new java.awt.Color(255, 251, 209));
 
-        
         // set clickability
         homeClicked = false;
         aboutUsClicked = false;
@@ -1281,7 +1363,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetsClicked = true;
         applicationClicked = false;
         profileClicked = false;
-        
+
         // button icons
         homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/home.png")));
         aboutUsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us.png")));
@@ -1291,10 +1373,10 @@ public class UserLoggedIn extends javax.swing.JFrame {
         applicationButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/application.png")));
         profileHead.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/head.png")));
         profileCollar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/collar.png")));
-        
+
         username.setForeground(Color.BLACK);
     }
-    
+
     private void applicationButton() {
         // set visibility
         homeBody.setVisible(false);
@@ -1304,8 +1386,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetsBody.setVisible(false);
         applicationBody.setVisible(true);
         profileBody.setVisible(false);
-        
-        
+
         // click bg
         homeClick.setVisible(false);
         aboutUsClick.setVisible(false);
@@ -1314,9 +1395,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetClick.setVisible(false);
         applicationClick.setVisible(true);
         applicationClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg 2.png")));
-        line.setBackground(new java.awt.Color(255,251,209));
-        
-        
+        line.setBackground(new java.awt.Color(255, 251, 209));
+
         // set clickability
         homeClicked = false;
         aboutUsClicked = false;
@@ -1325,7 +1405,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetsClicked = false;
         applicationClicked = true;
         profileClicked = false;
-        
+
         // button icons
         homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/home.png")));
         aboutUsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us.png")));
@@ -1335,10 +1415,10 @@ public class UserLoggedIn extends javax.swing.JFrame {
         applicationButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/application click.png")));
         profileHead.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/head.png")));
         profileCollar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/collar.png")));
-        
+
         username.setForeground(Color.BLACK);
     }
-    
+
     private void profileButton() {
         // set visibility
         homeBody.setVisible(false);
@@ -1348,7 +1428,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetsBody.setVisible(false);
         applicationBody.setVisible(false);
         profileBody.setVisible(true);
-        
+
         // click bg
         homeClick.setVisible(false);
         aboutUsClick.setVisible(false);
@@ -1356,10 +1436,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
         petClick.setVisible(false);
         vetClick.setVisible(false);
         applicationClick.setVisible(false);
-        line.setBackground(new java.awt.Color(255,251,209));
-        
-        
-        
+        line.setBackground(new java.awt.Color(255, 251, 209));
+
         // set clickability
         homeClicked = false;
         aboutUsClicked = false;
@@ -1368,7 +1446,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetsClicked = false;
         applicationClicked = false;
         profileClicked = true;
-        
+
         // button icons
         homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/home.png")));
         aboutUsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us.png")));
@@ -1378,19 +1456,19 @@ public class UserLoggedIn extends javax.swing.JFrame {
         applicationButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/application.png")));
         profileHead.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/head click.png")));
         profileCollar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/collar click.png")));
-        
+
         username.setForeground(Color.YELLOW);
     }
-    
+
     private void FAQsChangePanel(String button) {
-        if(button.equals("next")) {
+        if (button.equals("next")) {
             FAQsPanelCounter++;
-        } else if(button.equals("prev")) {
+        } else if (button.equals("prev")) {
             FAQsPanelCounter--;
         }
         int counter = Math.abs(FAQsPanelCounter) % 4;
         System.out.println(counter);
-        switch(counter) {
+        switch (counter) {
             case 1:
                 FAQsPanel1.setVisible(true);
                 FAQsPanel2.setVisible(false);
@@ -1417,74 +1495,195 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 break;
         }
     }
-    
+
     private void petProfiles() {
         // Pet Panel 1
-        if(totalPets >= 1) {
+        if (totalPets >= 1) {
             petName1.setText(pets.get(petIndex).getPetName());
             petAge1.setText(String.valueOf(pets.get(petIndex).getPetAge()) + " months");
             petGender1.setText(pets.get(petIndex).getPetSex());
             petImg1.setIcon(new javax.swing.ImageIcon(getClass().getResource(pets.get(petIndex).getPicURL())));
             petIndex++;
         }
-        
+
         // Pet Panel 2
-        if(totalPets >= 2) {
+        if (totalPets >= 2) {
             petName2.setText(pets.get(petIndex).getPetName());
             petAge2.setText(String.valueOf(pets.get(petIndex).getPetAge()) + " months");
             petGender2.setText(pets.get(petIndex).getPetSex());
             petImg2.setIcon(new javax.swing.ImageIcon(getClass().getResource(pets.get(petIndex).getPicURL())));
             petIndex++;
         }
-        
+
         // Pet Panel 3
-        if(totalPets >= 3) {
+        if (totalPets >= 3) {
             petName3.setText(pets.get(petIndex).getPetName());
             petAge3.setText(String.valueOf(pets.get(petIndex).getPetAge()) + " months");
             petGender3.setText(pets.get(petIndex).getPetSex());
             petImg3.setIcon(new javax.swing.ImageIcon(getClass().getResource(pets.get(petIndex).getPicURL())));
         }
     }
-    
+
     private void petProfilesReset() {
         //totalPets = 0;
         // totalPets = 1;
         // totalPets = 2;
         // totalPets = 3;
-        
+
         // reset the index of pet
         petIndex = 0;
-        
+
         // hide the pet panel, profile and info holders
-        if(totalPets < 1) {
+        if (totalPets < 1) {
             petPanel1.setVisible(false);
             petImg1.setVisible(false);
             petName1.setVisible(false);
             petAge1.setVisible(false);
             petGender1.setVisible(false);
         }
-        if(totalPets < 2) {
+        if (totalPets < 2) {
             petPanel2.setVisible(false);
             petImg2.setVisible(false);
             petName2.setVisible(false);
             petAge2.setVisible(false);
             petGender2.setVisible(false);
         }
-        if(totalPets < 3) {
+        if (totalPets < 3) {
             petPanel3.setVisible(false);
             petImg3.setVisible(false);
             petName3.setVisible(false);
             petAge3.setVisible(false);
             petGender3.setVisible(false);
         }
-        
-        if(totalPets < 4) {
+
+        if (totalPets < 4) {
             // hide the buttons
             petPrev.setVisible(false);
             petNext.setVisible(false);
         }
     }
-    
+
+    private void vetProfiles() {
+        // Vet Panel 1
+        if (totalVets >= 1) {
+            vetName1.setText(vets.get(vetIndex).getVetFullName());
+            vetContact1.setText(vets.get(vetIndex).getVetCellNum());
+        }
+        vetIndex++;
+
+        // Vet Panel 2
+        if (totalVets >= 2) {
+            vetName2.setText(vets.get(vetIndex).getVetFullName());
+            vetContact2.setText(vets.get(vetIndex).getVetCellNum());
+        }
+        vetIndex++;
+
+        // Vet Panel 3
+        if (totalVets >= 3) {
+            vetName3.setText(vets.get(vetIndex).getVetFullName());
+            vetContact3.setText(vets.get(vetIndex).getVetCellNum());
+        }
+        vetIndex++;
+
+        // Vet Panel 4
+        if (totalVets >= 4) {
+            vetName4.setText(vets.get(vetIndex).getVetFullName());
+            vetContact4.setText(vets.get(vetIndex).getVetCellNum());
+        }
+        vetIndex++;
+
+        // Vet Panel 5
+        if (totalVets >= 5) {
+            vetName5.setText(vets.get(vetIndex).getVetFullName());
+            vetContact5.setText(vets.get(vetIndex).getVetCellNum());
+        }
+        vetIndex++;
+
+        // Vet Panel 6
+        if (totalVets >= 6) {
+            vetName6.setText(vets.get(vetIndex).getVetFullName());
+            vetContact6.setText(vets.get(vetIndex).getVetCellNum());
+        }
+        vetIndex++;
+    }
+
+    private void vetProfilesReset() {
+        // totalVets = 0;
+        // totalVets = 1;
+        // totalVets = 2;
+        // totalVets = 3;
+        // totalVets = 4;
+        // totalVets = 5;
+
+        // reset the index of pet
+        if (!vetsClicked) {
+            vetIndex = 0;
+            totalVets = vets.size();
+        }
+
+        // hide the pet panel, profile and info holders
+        if (totalVets < 1) {
+            vetName1.setVisible(false);
+            vetContact1.setVisible(false);
+        } else {
+            vetName1.setVisible(true);
+            vetContact1.setVisible(true);
+        }
+        
+        if (totalVets < 2) {
+            vetName2.setVisible(false);
+            vetContact2.setVisible(false);
+        } else {
+            vetName2.setVisible(true);
+            vetContact2.setVisible(true);
+        }
+        
+        if (totalVets < 3) {
+            vetName3.setVisible(false);
+            vetContact3.setVisible(false);
+        } else {
+            vetName3.setVisible(true);
+            vetContact3.setVisible(true);
+        }
+
+        if (totalVets < 4) {
+            vetName4.setVisible(false);
+            vetContact4.setVisible(false);
+        } else {
+            vetName4.setVisible(true);
+            vetContact4.setVisible(true);
+        }
+
+        if (totalVets < 5) {
+            vetName5.setVisible(false);
+            vetContact5.setVisible(false);
+        } else {
+            vetName5.setVisible(true);
+            vetContact5.setVisible(true);
+        }
+
+        if (totalVets < 6) {
+            vetName6.setVisible(false);
+            vetContact6.setVisible(false);
+        } else {
+            vetName6.setVisible(true);
+            vetContact6.setVisible(true);
+        }
+
+        // hide the button
+        if (vetIndex == 0) {
+            vetPrev.setVisible(false);
+        } else {
+            vetPrev.setVisible(true);
+        }
+        
+        if (totalVets < 7) {
+            vetNext.setVisible(false);
+        } else {
+            vetNext.setVisible(true);
+        }
+    }
+
     private void applicationEditVisibility(boolean edit) {
         editButton.setVisible(!edit);
         cancelButton.setVisible(edit);
@@ -1495,14 +1694,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
         deleteButton4.setVisible(edit);
         deleteButton5.setVisible(edit);
     }
-    
+
     private void profileEditVisibility(boolean edit) {
         // buttons
         profileEditButton.setVisible(!edit);
         profileDeleteButton.setVisible(!edit);
         profileCancelButton.setVisible(edit);
         profileConfirmButton.setVisible(edit);
-        
+
         // labels
         profileName.setVisible(!edit);
         profileUsername.setVisible(!edit);
@@ -1514,7 +1713,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         profileCompany.setVisible(!edit);
         profileWorkType.setVisible(!edit);
         profileBirthday.setVisible(!edit);
-        
+
         // text fields
         fullName.setVisible(edit);
         username1.setVisible(edit);
@@ -1529,7 +1728,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         day.setVisible(edit);
         month.setVisible(edit);
         year.setVisible(edit);
-        
+
         // scrolls
         fullNameScroll.setVisible(edit);
         usernameScroll.setVisible(edit);
@@ -1540,7 +1739,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         companyScroll.setVisible(edit);
         birthdayScroll.setVisible(edit);
     }
-    
+
     private void badgeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_badgeKeyPressed
         // TODO add your handling code here:
         // This will show the records of the adopted pets
@@ -1562,7 +1761,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void faqButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_faqButtonMouseExited
         // TODO add your handling code here:
-        if(!FAQsClicked) {
+        if (!FAQsClicked) {
             faqClick.setVisible(false);
             faqButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/FAQs.png")));
             line.setBackground(new java.awt.Color(255, 251, 209));
@@ -1571,7 +1770,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void faqButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_faqButtonMouseEntered
         // TODO add your handling code here:
-        if(!FAQsClicked) {
+        if (!FAQsClicked) {
             faqClick.setVisible(true);
             faqButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/FAQs hover.png")));
             line.setBackground(new java.awt.Color(226, 204, 163));
@@ -1581,7 +1780,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void aboutUsButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutUsButtonMouseExited
         // TODO add your handling code here:
-        if(!aboutUsClicked) {
+        if (!aboutUsClicked) {
             aboutUsClick.setVisible(false);
             aboutUsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us.png")));
             line.setBackground(new java.awt.Color(255, 251, 209));
@@ -1590,7 +1789,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void aboutUsButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutUsButtonMouseEntered
         // TODO add your handling code here:
-        if(!aboutUsClicked) {
+        if (!aboutUsClicked) {
             aboutUsClick.setVisible(true);
             aboutUsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us hover.png")));
             line.setBackground(new java.awt.Color(226, 204, 163));
@@ -1600,7 +1799,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void petButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petButtonMouseExited
         // TODO add your handling code here:
-        if(!petsClicked) {
+        if (!petsClicked) {
             petClick.setVisible(false);
             petButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets.png")));
             line.setBackground(new java.awt.Color(255, 251, 209));
@@ -1609,7 +1808,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void petButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petButtonMouseEntered
         // TODO add your handling code here:
-        if(!petsClicked) {
+        if (!petsClicked) {
             petClick.setVisible(true);
             petButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets hover.png")));
             line.setBackground(new java.awt.Color(226, 204, 163));
@@ -1619,7 +1818,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void vetButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vetButtonMouseExited
         // TODO add your handling code here:
-        if(!vetsClicked) {
+        if (!vetsClicked) {
             vetClick.setVisible(false);
             vetButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/vets.png")));
             line.setBackground(new java.awt.Color(255, 251, 209));
@@ -1628,7 +1827,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void vetButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vetButtonMouseEntered
         // TODO add your handling code here:
-        if(!vetsClicked) {
+        if (!vetsClicked) {
             vetClick.setVisible(true);
             vetButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/vets hover.png")));
             line.setBackground(new java.awt.Color(226, 204, 163));
@@ -1638,7 +1837,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void applicationButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applicationButtonMouseExited
         // TODO add your handling code here:
-        if(!applicationClicked) {
+        if (!applicationClicked) {
             applicationClick.setVisible(false);
             applicationButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/application.png")));
             line.setBackground(new java.awt.Color(255, 251, 209));
@@ -1646,7 +1845,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     }//GEN-LAST:event_applicationButtonMouseExited
 
     private void applicationButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applicationButtonMouseEntered
-        if(!applicationClicked) {
+        if (!applicationClicked) {
             applicationClick.setVisible(true);
             applicationButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/application hover.png")));
             line.setBackground(new java.awt.Color(226, 204, 163));
@@ -1656,7 +1855,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void homeButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseEntered
         // TODO add your handling code here:
-        if(!homeClicked) {
+        if (!homeClicked) {
             homeClick.setVisible(true);
             homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/home hover.png")));
             line.setBackground(new java.awt.Color(226, 204, 163));
@@ -1666,7 +1865,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void homeButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseExited
         // TODO add your handling code here:
-        if(!homeClicked) {
+        if (!homeClicked) {
             homeClick.setVisible(false);
             homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/home.png")));
             line.setBackground(new java.awt.Color(255, 251, 209));
@@ -1675,7 +1874,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void profileCollarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileCollarMouseEntered
         // TODO add your handling code here:
-        if(!profileClicked) {
+        if (!profileClicked) {
             profileCollar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/collar hover.png")));
             profileHead.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/head hover.png")));
             username.setForeground(Color.YELLOW);
@@ -1684,7 +1883,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void profileCollarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileCollarMouseExited
         // TODO add your handling code here:
-        if(!profileClicked) {
+        if (!profileClicked) {
             profileCollar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/collar.png")));
             profileHead.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/head.png")));
             username.setForeground(Color.BLACK);
@@ -1693,7 +1892,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void profileHeadMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileHeadMouseEntered
         // TODO add your handling code here:
-        if(!profileClicked) {
+        if (!profileClicked) {
             profileCollar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/collar hover.png")));
             profileHead.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/head hover.png")));
             username.setForeground(Color.YELLOW);
@@ -1702,7 +1901,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void profileHeadMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileHeadMouseExited
         // TODO add your handling code here:
-        if(!profileClicked) {
+        if (!profileClicked) {
             profileCollar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/collar.png")));
             profileHead.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/head.png")));
             username.setForeground(Color.BLACK);
@@ -1711,28 +1910,28 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void aboutUsButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutUsButtonMousePressed
         // TODO add your handling code here:
-        if(!aboutUsClicked) {
+        if (!aboutUsClicked) {
             aboutUsButton();
         }
     }//GEN-LAST:event_aboutUsButtonMousePressed
 
     private void homeButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMousePressed
         // TODO add your handling code here:
-        if(!homeClicked) {
+        if (!homeClicked) {
             homeButton();
         }
     }//GEN-LAST:event_homeButtonMousePressed
 
     private void faqButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_faqButtonMousePressed
         // TODO add your handling code here:
-        if(!FAQsClicked) {
+        if (!FAQsClicked) {
             faqButton();
         }
     }//GEN-LAST:event_faqButtonMousePressed
 
     private void petButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petButtonMousePressed
         // TODO add your handling code here:
-        if(!petsClicked) {
+        if (!petsClicked) {
             petButton();
             petProfiles();
         }
@@ -1740,14 +1939,15 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void vetButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vetButtonMousePressed
         // TODO add your handling code here:
-        if(!vetsClicked) {
+        if (!vetsClicked) {
             vetButton();
+            vetProfiles();
         }
     }//GEN-LAST:event_vetButtonMousePressed
 
     private void applicationButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applicationButtonMousePressed
         // TODO add your handling code here:
-        if(!applicationClicked) {
+        if (!applicationClicked) {
             applicationButton();
             applicationEditVisibility(false);
         }
@@ -1755,7 +1955,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void logoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoMousePressed
         // TODO add your handling code here:
-        if(!homeClicked) {
+        if (!homeClicked) {
             homeButton();
         }
     }//GEN-LAST:event_logoMousePressed
@@ -1904,12 +2104,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void petPrevMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petPrevMouseClicked
         // TODO add your handling code here:
-        if(petIndex == 3) {
+        if (petIndex == 3) {
             petNext.setVisible(true);
             petPrev.setVisible(false);
         }
-        
-        if(petIndex > 2) {
+
+        if (petIndex > 2) {
             petIndex -= 3;
             petProfiles();
         }
@@ -1917,21 +2117,23 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void petNextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petNextMouseClicked
         // TODO add your handling code here:
-        if(petIndex < totalPets) {
+        if (petIndex < totalPets) {
             petIndex -= 1;
             petProfiles();
         }
-        
-        if(petIndex == totalPets - 1) {
+
+        if (petIndex == totalPets - 1) {
             petNext.setVisible(false);
-        } else if(petIndex == 3) {
+        }
+        
+        if (petIndex == 3) {
             petPrev.setVisible(true);
         }
     }//GEN-LAST:event_petNextMouseClicked
 
     private void profileHeadMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileHeadMousePressed
         // TODO add your handling code here:
-        if(!profileClicked) {
+        if (!profileClicked) {
             profileButton();
             profileEditVisibility(false);
         }
@@ -1939,7 +2141,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void profileCollarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileCollarMousePressed
         // TODO add your handling code here:
-        if(!profileClicked) {
+        if (!profileClicked) {
             profileButton();
             profileEditVisibility(false);
         }
@@ -1947,13 +2149,24 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void badgeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_badgeMousePressed
         // TODO add your handling code here:
-        if(!petsClicked) {
+        if (!petsClicked) {
             petButton();
         }
     }//GEN-LAST:event_badgeMousePressed
 
     private void vetPrevMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vetPrevMouseClicked
         // TODO add your handling code here:
+        if (vetIndex > 5) {
+            vetIndex -= 12;
+            totalVets += 6;  
+            vetProfilesReset();
+            vetProfiles();
+        }
+        
+        if (vetIndex == 6) {
+            vetNext.setVisible(true);
+            vetPrev.setVisible(false);
+        }
     }//GEN-LAST:event_vetPrevMouseClicked
 
     private void vetPrevMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vetPrevMouseEntered
@@ -1968,6 +2181,19 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void vetNextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vetNextMouseClicked
         // TODO add your handling code here:
+        if (vetIndex == 6) {
+            vetPrev.setVisible(true);
+        }
+        
+        if (vetIndex < totalVets) {
+            totalVets -= 6;
+            vetProfilesReset();
+            vetProfiles();
+        }
+
+        if (vetIndex == totalVets - 1) {
+            vetNext.setVisible(false);
+        } 
     }//GEN-LAST:event_vetNextMouseClicked
 
     private void vetNextMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vetNextMouseEntered
@@ -1996,13 +2222,13 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void applicationNextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applicationNextMouseClicked
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_applicationNextMouseClicked
 
     private void applicationNextMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applicationNextMouseEntered
         // TODO add your handling code here:
         applicationNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/next button hover (1).png")));
-        
+
     }//GEN-LAST:event_applicationNextMouseEntered
 
     private void applicationNextMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applicationNextMouseExited
@@ -2193,7 +2419,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private void profileCancelButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileCancelButtonMouseEntered
         // TODO add your handling code here:
         profileCancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/cancel button hover (2).png")));
-        
+
     }//GEN-LAST:event_profileCancelButtonMouseEntered
 
     private void profileCancelButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileCancelButtonMouseExited
@@ -2365,6 +2591,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel profileOccupation;
     private javax.swing.JLabel profilePanel;
     private javax.swing.JLabel profilePassword;
+    private javax.swing.JLabel profilePicture;
     private javax.swing.JLabel profileUsername;
     private javax.swing.JLabel profileWorkType;
     private javax.swing.JLabel rehomeButton;
@@ -2374,6 +2601,18 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JScrollPane usernameScroll;
     private javax.swing.JLabel vetButton;
     private javax.swing.JLabel vetClick;
+    private javax.swing.JLabel vetContact1;
+    private javax.swing.JLabel vetContact2;
+    private javax.swing.JLabel vetContact3;
+    private javax.swing.JLabel vetContact4;
+    private javax.swing.JLabel vetContact5;
+    private javax.swing.JLabel vetContact6;
+    private javax.swing.JLabel vetName1;
+    private javax.swing.JLabel vetName2;
+    private javax.swing.JLabel vetName3;
+    private javax.swing.JLabel vetName4;
+    private javax.swing.JLabel vetName5;
+    private javax.swing.JLabel vetName6;
     private javax.swing.JLabel vetNext;
     private javax.swing.JLabel vetPrev;
     private javax.swing.JPanel vetsBody;
