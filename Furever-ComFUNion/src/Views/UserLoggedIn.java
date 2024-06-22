@@ -1,8 +1,11 @@
 package Views;
 
+import Models.Pet;
+import Models.PetSamples;
 import java.awt.Color;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -26,10 +29,26 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private boolean applicationClicked;
     private boolean profileClicked;
     private int FAQsPanelCounter = 4000001;
+    
+    // Sample pets
+    ArrayList<Pet> pets;
+    private int totalPets;
+    private int petIndex = 0;
+    
     /**
      * Creates new form Main
      */
     public UserLoggedIn() {
+        
+        // alisin na lang pagkatapos
+        PetSamples petSamples = new PetSamples();
+        this.pets = petSamples.getAllPets();
+        totalPets = pets.size();
+        
+        for(Pet pet : pets) {
+            System.out.println(pet.getPetName() + " " + pet.getPetAge() + " " + pet.getPetSex());
+        }
+        
         initComponents();
         
         // default
@@ -164,14 +183,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/navLogo.png"))); // NOI18N
         logo.setIconTextGap(0);
         logo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                logoMouseClicked(evt);
-            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 logoMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                logoMouseReleased(evt);
             }
         });
         navBar.add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, -1, -1));
@@ -208,9 +221,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/home click.png"))); // NOI18N
         homeButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                homeButtonMouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 homeButtonMouseEntered(evt);
             }
@@ -220,9 +230,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 homeButtonMousePressed(evt);
             }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                homeButtonMouseReleased(evt);
-            }
         });
         navBar.add(homeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 65, -1, -1));
 
@@ -231,9 +238,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         aboutUsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us.png"))); // NOI18N
         aboutUsButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                aboutUsButtonMouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 aboutUsButtonMouseEntered(evt);
             }
@@ -243,9 +247,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 aboutUsButtonMousePressed(evt);
             }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                aboutUsButtonMouseReleased(evt);
-            }
         });
         navBar.add(aboutUsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 65, -1, -1));
 
@@ -254,9 +255,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         faqButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/FAQs.png"))); // NOI18N
         faqButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                faqButtonMouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 faqButtonMouseEntered(evt);
             }
@@ -266,9 +264,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 faqButtonMousePressed(evt);
             }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                faqButtonMouseReleased(evt);
-            }
         });
         navBar.add(faqButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 65, -1, -1));
 
@@ -277,9 +272,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         petButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets.png"))); // NOI18N
         petButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                petButtonMouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 petButtonMouseEntered(evt);
             }
@@ -289,9 +281,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 petButtonMousePressed(evt);
             }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                petButtonMouseReleased(evt);
-            }
         });
         navBar.add(petButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 65, -1, -1));
 
@@ -300,9 +289,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         vetButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/vets.png"))); // NOI18N
         vetButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                vetButtonMouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 vetButtonMouseEntered(evt);
             }
@@ -311,9 +297,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 vetButtonMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                vetButtonMouseReleased(evt);
             }
         });
         navBar.add(vetButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 65, -1, -1));
@@ -324,9 +307,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
         applicationButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/application.png"))); // NOI18N
         applicationButton.setToolTipText("");
         applicationButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                applicationButtonMouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 applicationButtonMouseEntered(evt);
             }
@@ -335,9 +315,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 applicationButtonMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                applicationButtonMouseReleased(evt);
             }
         });
         navBar.add(applicationButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 45, -1, -1));
@@ -351,28 +328,28 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         profileHead.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/head.png"))); // NOI18N
         profileHead.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                profileHeadMouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 profileHeadMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 profileHeadMouseExited(evt);
             }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                profileHeadMousePressed(evt);
+            }
         });
         navBar.add(profileHead, new org.netbeans.lib.awtextra.AbsoluteConstraints(1207, 10, -1, -1));
 
         profileCollar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/collar.png"))); // NOI18N
         profileCollar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                profileCollarMouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 profileCollarMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 profileCollarMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                profileCollarMousePressed(evt);
             }
         });
         navBar.add(profileCollar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1180, 55, -1, -1));
@@ -406,14 +383,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         badge.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/badge2.png"))); // NOI18N
         badge.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                badgeMouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 badgeMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 badgeMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                badgeMousePressed(evt);
             }
         });
         homeBody.add(badge, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 100, -1, -1));
@@ -529,6 +506,9 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         petPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/prev button (1).png"))); // NOI18N
         petPrev.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                petPrevMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 petPrevMouseEntered(evt);
             }
@@ -540,6 +520,9 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         petNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/next button (1).png"))); // NOI18N
         petNext.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                petNextMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 petNextMouseEntered(evt);
             }
@@ -550,53 +533,50 @@ public class UserLoggedIn extends javax.swing.JFrame {
         petsBody.add(petNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 590, 350, 100));
 
         petImg1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        petImg1.setText("DOG");
         petsBody.add(petImg1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 185, 220, 200));
 
         petImg2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        petImg2.setText("CAT");
         petsBody.add(petImg2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 185, 220, 200));
 
         petImg3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        petImg3.setText("CAPYBARA");
         petsBody.add(petImg3, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 185, 220, 200));
 
         petName1.setText("Pet Name");
-        petsBody.add(petName1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 440, -1, -1));
+        petsBody.add(petName1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 455, -1, -1));
 
         petName2.setText("Pet Name");
-        petsBody.add(petName2, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 440, -1, -1));
+        petsBody.add(petName2, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 455, -1, -1));
 
         petName3.setText("Pet Name");
-        petsBody.add(petName3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 440, -1, -1));
+        petsBody.add(petName3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 455, -1, -1));
 
         petAge1.setText("Age");
-        petsBody.add(petAge1, new org.netbeans.lib.awtextra.AbsoluteConstraints(265, 480, -1, -1));
+        petsBody.add(petAge1, new org.netbeans.lib.awtextra.AbsoluteConstraints(265, 490, -1, -1));
 
         petAge2.setText("Age");
-        petsBody.add(petAge2, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 480, -1, -1));
+        petsBody.add(petAge2, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 490, -1, -1));
 
         petAge3.setText("Age");
-        petsBody.add(petAge3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1085, 480, -1, -1));
+        petsBody.add(petAge3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1085, 490, -1, -1));
 
         petGender1.setText("Gender");
-        petsBody.add(petGender1, new org.netbeans.lib.awtextra.AbsoluteConstraints(255, 520, -1, -1));
+        petsBody.add(petGender1, new org.netbeans.lib.awtextra.AbsoluteConstraints(255, 525, -1, -1));
 
         petGender2.setText("Gender");
-        petsBody.add(petGender2, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 520, -1, -1));
+        petsBody.add(petGender2, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 525, -1, -1));
 
         petGender3.setText("Gender");
-        petsBody.add(petGender3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1075, 520, -1, -1));
+        petsBody.add(petGender3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1075, 525, -1, -1));
 
         petPanel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets panel (1).png"))); // NOI18N
         petsBody.add(petPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 400, 530));
 
         petPanel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets panel (1).png"))); // NOI18N
-        petPanel2.setPreferredSize(new java.awt.Dimension(400, 400));
-        petsBody.add(petPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 90, 400, 530));
+        petsBody.add(petPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 90, 400, 530));
 
         petPanel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets panel (1).png"))); // NOI18N
-        petsBody.add(petPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 90, 400, 530));
+        petPanel3.setPreferredSize(new java.awt.Dimension(400, 400));
+        petsBody.add(petPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 90, 400, 530));
 
         petHeader.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         petHeader.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -849,6 +829,9 @@ public class UserLoggedIn extends javax.swing.JFrame {
     }
     
     private void petButton() {
+        // reset the pet index
+        petIndex = 0;
+        
         // set visiblity
         homeBody.setVisible(false);
         aboutUsBody.setVisible(false);
@@ -857,6 +840,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetsBody.setVisible(false);
         applicationBody.setVisible(false);
         profileBody.setVisible(false);
+        petPrev.setVisible(false);  // hide prev button since there's no previous profile to show yet
         
         // click bg
         homeClick.setVisible(false);
@@ -1057,6 +1041,28 @@ public class UserLoggedIn extends javax.swing.JFrame {
         }
     }
     
+    private void petProfiles() {
+        // Pet Panel 1
+        petName1.setText(pets.get(petIndex).getPetName());
+        petAge1.setText(String.valueOf(pets.get(petIndex).getPetAge()));
+        petGender1.setText(pets.get(petIndex).getPetSex());
+        petImg1.setIcon(new javax.swing.ImageIcon(getClass().getResource(pets.get(petIndex).getPicURL())));
+        petIndex++;
+        
+        // Pet Panel 2
+        petName2.setText(pets.get(petIndex).getPetName());
+        petAge2.setText(String.valueOf(pets.get(petIndex).getPetAge()));
+        petGender2.setText(pets.get(petIndex).getPetSex());
+        petImg2.setIcon(new javax.swing.ImageIcon(getClass().getResource(pets.get(petIndex).getPicURL())));
+        petIndex++;
+        
+        // Pet Panel 3
+        petName3.setText(pets.get(petIndex).getPetName());
+        petAge3.setText(String.valueOf(pets.get(petIndex).getPetAge()));
+        petGender3.setText(pets.get(petIndex).getPetSex());
+        petImg3.setIcon(new javax.swing.ImageIcon(getClass().getResource(pets.get(petIndex).getPicURL())));
+    }
+    
     private void badgeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_badgeKeyPressed
         // TODO add your handling code here:
         // This will show the records of the adopted pets
@@ -1189,38 +1195,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_homeButtonMouseExited
 
-    private void faqButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_faqButtonMouseClicked
-        // TODO add your handling code here:
-        // for FAQs panels' visibility
-        FAQsPanel1.setVisible(true);
-        FAQsPanel2.setVisible(false);
-        FAQsPanel3.setVisible(false);
-        FAQsPanel4.setVisible(false);
-        FAQsPanelCounter = 4000001;
-        faqButton();
-    }//GEN-LAST:event_faqButtonMouseClicked
-
-    private void petButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petButtonMouseClicked
-        // TODO add your handling code here:
-        petButton();
-    }//GEN-LAST:event_petButtonMouseClicked
-
-    private void vetButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vetButtonMouseClicked
-        // TODO add your handling code here:
-        vetButton();
-    }//GEN-LAST:event_vetButtonMouseClicked
-
-    private void applicationButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applicationButtonMouseClicked
-        // TODO add your handling code here:
-        applicationButton();
-    }//GEN-LAST:event_applicationButtonMouseClicked
-
-    private void profileCollarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileCollarMouseClicked
-        // TODO add your handling code here:
-        profileButton();
-        
-    }//GEN-LAST:event_profileCollarMouseClicked
-
     private void profileCollarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileCollarMouseEntered
         // TODO add your handling code here:
         if(!profileClicked) {
@@ -1257,95 +1231,55 @@ public class UserLoggedIn extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_profileHeadMouseExited
 
-    private void profileHeadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileHeadMouseClicked
-        // TODO add your handling code here:
-        profileButton();
-    }//GEN-LAST:event_profileHeadMouseClicked
-
     private void aboutUsButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutUsButtonMousePressed
         // TODO add your handling code here:
-        aboutUsButton();
+        if(!aboutUsClicked) {
+            aboutUsButton();
+        }
     }//GEN-LAST:event_aboutUsButtonMousePressed
-
-    private void aboutUsButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutUsButtonMouseReleased
-        // TODO add your handling code here:
-        aboutUsButton();
-    }//GEN-LAST:event_aboutUsButtonMouseReleased
 
     private void homeButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMousePressed
         // TODO add your handling code here:
-        homeButton();
+        if(!homeClicked) {
+            homeButton();
+        }
     }//GEN-LAST:event_homeButtonMousePressed
-
-    private void homeButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseReleased
-        // TODO add your handling code here:
-        homeButton();
-    }//GEN-LAST:event_homeButtonMouseReleased
 
     private void faqButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_faqButtonMousePressed
         // TODO add your handling code here:
-        faqButton();
+        if(!FAQsClicked) {
+            faqButton();
+        }
     }//GEN-LAST:event_faqButtonMousePressed
-
-    private void faqButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_faqButtonMouseReleased
-        // TODO add your handling code here:
-        faqButton();
-    }//GEN-LAST:event_faqButtonMouseReleased
-
-    private void homeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseClicked
-        // TODO add your handling code here:
-        homeButton();
-    }//GEN-LAST:event_homeButtonMouseClicked
-
-    private void aboutUsButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutUsButtonMouseClicked
-        // TODO add your handling code here:
-        aboutUsButton();
-    }//GEN-LAST:event_aboutUsButtonMouseClicked
 
     private void petButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petButtonMousePressed
         // TODO add your handling code here:
-        petButton();
+        if(!petsClicked) {
+            petButton();
+            petProfiles();
+        }
     }//GEN-LAST:event_petButtonMousePressed
-
-    private void petButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petButtonMouseReleased
-        // TODO add your handling code here:
-        petButton();
-    }//GEN-LAST:event_petButtonMouseReleased
 
     private void vetButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vetButtonMousePressed
         // TODO add your handling code here:
-        vetButton();
+        if(!vetsClicked) {
+            vetButton();
+        }
     }//GEN-LAST:event_vetButtonMousePressed
-
-    private void vetButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vetButtonMouseReleased
-        // TODO add your handling code here:
-        vetButton();
-    }//GEN-LAST:event_vetButtonMouseReleased
 
     private void applicationButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applicationButtonMousePressed
         // TODO add your handling code here:
-        applicationButton();
+        if(!applicationClicked) {
+            applicationButton();
+        }
     }//GEN-LAST:event_applicationButtonMousePressed
-
-    private void applicationButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applicationButtonMouseReleased
-        // TODO add your handling code here:
-        applicationButton();
-    }//GEN-LAST:event_applicationButtonMouseReleased
-
-    private void logoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoMouseClicked
-        // TODO add your handling code here:
-        homeButton();
-    }//GEN-LAST:event_logoMouseClicked
 
     private void logoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoMousePressed
         // TODO add your handling code here:
-        homeButton();
+        if(!homeClicked) {
+            homeButton();
+        }
     }//GEN-LAST:event_logoMousePressed
-
-    private void logoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoMouseReleased
-        // TODO add your handling code here:
-        homeButton();
-    }//GEN-LAST:event_logoMouseReleased
 
     private void businessRulesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_businessRulesMouseEntered
         // TODO add your handling code here:
@@ -1464,11 +1398,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
         editButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (1).png")));
     }//GEN-LAST:event_editButtonMouseExited
 
-    private void badgeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_badgeMouseClicked
-        // TODO add your handling code here:
-        petButton();
-    }//GEN-LAST:event_badgeMouseClicked
-
     private void minimizeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeButtonMouseClicked
         // TODO add your handling code here:
         this.setState(JFrame.ICONIFIED);
@@ -1493,6 +1422,54 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // TODO add your handling code here:
         new BusinessRules().setVisible(true);
     }//GEN-LAST:event_businessRulesMouseClicked
+
+    private void petPrevMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petPrevMouseClicked
+        // TODO add your handling code here:
+        if(petIndex == 3) {
+            petNext.setVisible(true);
+            petPrev.setVisible(false);
+        }
+        
+        if(petIndex > 2) {
+            petIndex -= 3;
+            petProfiles();
+        }
+    }//GEN-LAST:event_petPrevMouseClicked
+
+    private void petNextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petNextMouseClicked
+        // TODO add your handling code here:
+        if(petIndex < totalPets) {
+            petIndex -= 1;
+            petProfiles();
+        }
+        
+        if(petIndex == totalPets - 1) {
+            petNext.setVisible(false);
+        } else if(petIndex == 3) {
+            petPrev.setVisible(true);
+        }
+    }//GEN-LAST:event_petNextMouseClicked
+
+    private void profileHeadMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileHeadMousePressed
+        // TODO add your handling code here:
+        if(!profileClicked) {
+            profileButton();
+        }
+    }//GEN-LAST:event_profileHeadMousePressed
+
+    private void profileCollarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileCollarMousePressed
+        // TODO add your handling code here:
+        if(!profileClicked) {
+            profileButton();
+        }
+    }//GEN-LAST:event_profileCollarMousePressed
+
+    private void badgeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_badgeMousePressed
+        // TODO add your handling code here:
+        if(!petsClicked) {
+            petButton();
+        }
+    }//GEN-LAST:event_badgeMousePressed
 
     /**
      * @param args the command line arguments
