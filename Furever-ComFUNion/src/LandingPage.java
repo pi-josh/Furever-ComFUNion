@@ -1,3 +1,4 @@
+import Views.ExitDialog;
 import Views.Login;
 import Views.Register;
 import java.awt.MediaTracker;
@@ -52,7 +53,7 @@ public class LandingPage extends javax.swing.JFrame {
         }
         
         // Create a timer to stop the GIF after 6 seconds
-        timer = new Timer(10000, new ActionListener() {
+        timer = new Timer(9000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 timer.stop(); // Stop the timer
@@ -759,7 +760,7 @@ public class LandingPage extends javax.swing.JFrame {
 
     private void exitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButtonMouseClicked
         // TODO add your handling code here:
-        System.exit(0);
+        new ExitDialog(this).setVisible(true);
     }//GEN-LAST:event_exitButtonMouseClicked
 
     private void exitButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButtonMouseEntered

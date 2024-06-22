@@ -81,14 +81,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
         profileCollar = new javax.swing.JLabel();
         homeBody = new javax.swing.JPanel();
         slogan = new javax.swing.JLabel();
-        description = new javax.swing.JLabel();
         adoptedCounter = new javax.swing.JLabel();
         adoptedLabel = new javax.swing.JLabel();
         badge = new javax.swing.JLabel();
         bulletin = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
         aboutUsBody = new javax.swing.JPanel();
-        overview = new javax.swing.JLabel();
         devs = new javax.swing.JLabel();
         businessRules = new javax.swing.JLabel();
         aboutUsPanel = new javax.swing.JLabel();
@@ -391,10 +389,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
         slogan.setText("<html> <head> <style> p {     font-family: 'Comic Sans MS', cursive;     font-size: 60px;     color: #000000; /* Black text */     text-align: center;     margin-top: 50px;     text-shadow:          -1px -1px 0 #ffffff,           1px -1px 0 #ffffff,         -1px 1px 0 #ffffff,         1px 1px 0 #ffffff; /* White border */ } </style> </head> <body> <p>Connecting Hearts with Paws</p> </body> </html> ");
         homeBody.add(slogan, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 670, 260));
 
-        description.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        description.setText("<html> <head> <style> p { \tfont-family: 'Open Sans', sans-serif;             font-size: 14px;             color: #000000;             text-align: justify;             margin-top: 20px;             max-width: 100%;             margin-left: auto;             margin-right: auto; \t\t\t} \t\t</style> \t</head> \t<body> \t\t<p>Finding a loving home for every furry friend is our mission. <br>             <br>With \"Furever ComFUNion,\" adopting/rehoming a pet becomes an effortless and joyful experience. <br><br>             Make a lasting impact—bring joy to an animal's life and enrich your own by giving a pet a forever home today. <br>             <br>With Furever ComFUNion, the perfect companion is just a few clicks away.</p> \t</body> </html>");
-        homeBody.add(description, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 350, 520, 270));
-
         adoptedCounter.setFont(new java.awt.Font("Tahoma", 1, 72)); // NOI18N
         adoptedCounter.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         adoptedCounter.setText("100");
@@ -437,13 +431,11 @@ public class UserLoggedIn extends javax.swing.JFrame {
         aboutUsBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         aboutUsBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        overview.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        overview.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        overview.setText("<html>\n<center>\nKAMI ANG MAGIGITING<br>\nNA PROGRAMMERIST<br>\nNG BSIT 2-3\n</center>\n</html>");
-        aboutUsBody.add(overview, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 200, 550, 330));
-
         devs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us dev (1).png"))); // NOI18N
         devs.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                devsMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 devsMouseEntered(evt);
             }
@@ -455,6 +447,9 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         businessRules.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us business rule (1).png"))); // NOI18N
         businessRules.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                businessRulesMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 businessRulesMouseEntered(evt);
             }
@@ -465,7 +460,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         aboutUsBody.add(businessRules, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 545, 400, 200));
 
         aboutUsPanel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/about us panel (1).png"))); // NOI18N
-        aboutUsBody.add(aboutUsPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, 850, 780));
+        aboutUsBody.add(aboutUsPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, 850, 780));
 
         background1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
         aboutUsBody.add(background1, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 1366, 738));
@@ -641,7 +636,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 adoptButtonMouseExited(evt);
             }
         });
-        applicationBody.add(adoptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 40, -1, -1));
+        applicationBody.add(adoptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 20, 280, 70));
 
         rehomeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/rehome button (1).png"))); // NOI18N
         rehomeButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -652,7 +647,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 rehomeButtonMouseExited(evt);
             }
         });
-        applicationBody.add(rehomeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 40, -1, -1));
+        applicationBody.add(rehomeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 20, 280, 70));
 
         editButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (1).png"))); // NOI18N
         editButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -663,11 +658,11 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 editButtonMouseExited(evt);
             }
         });
-        applicationBody.add(editButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 170, 90, 90));
+        applicationBody.add(editButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 110, 90, 90));
 
         applicationPanel.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         applicationPanel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/application panel (1).png"))); // NOI18N
-        applicationBody.add(applicationPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, 1000, 580));
+        applicationBody.add(applicationPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, 1000, 640));
 
         background5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
         applicationBody.add(background5, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 1366, 738));
@@ -1436,7 +1431,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void exitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButtonMouseClicked
         // TODO add your handling code here:
-        System.exit(0);
+        new ExitDialog(this).setVisible(true);
     }//GEN-LAST:event_exitButtonMouseClicked
 
     private void adoptButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adoptButtonMouseEntered
@@ -1488,6 +1483,16 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // TODO add your handling code here:
         minimizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/minimize button (1).png")));
     }//GEN-LAST:event_minimizeButtonMouseExited
+
+    private void devsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_devsMouseClicked
+        // TODO add your handling code here:
+        new Devs().setVisible(true);
+    }//GEN-LAST:event_devsMouseClicked
+
+    private void businessRulesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_businessRulesMouseClicked
+        // TODO add your handling code here:
+        new BusinessRules().setVisible(true);
+    }//GEN-LAST:event_businessRulesMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1559,7 +1564,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel bulletin;
     private javax.swing.JLabel businessRules;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JLabel description;
     private javax.swing.JLabel devs;
     private javax.swing.JLabel editButton;
     private javax.swing.JLabel exitButton;
@@ -1573,7 +1577,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel minimizeButton;
     private javax.swing.JPanel navBar;
     private javax.swing.JLabel next;
-    private javax.swing.JLabel overview;
     private javax.swing.JLabel petAge1;
     private javax.swing.JLabel petAge2;
     private javax.swing.JLabel petAge3;
