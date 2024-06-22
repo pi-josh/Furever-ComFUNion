@@ -139,15 +139,62 @@ public class UserLoggedIn extends javax.swing.JFrame {
         petHeader = new javax.swing.JLabel();
         background3 = new javax.swing.JLabel();
         vetsBody = new javax.swing.JPanel();
+        vetPrev = new javax.swing.JLabel();
+        vetNext = new javax.swing.JLabel();
         vetsPanel = new javax.swing.JLabel();
         background4 = new javax.swing.JLabel();
         applicationBody = new javax.swing.JPanel();
+        editButton = new javax.swing.JLabel();
+        cancelButton = new javax.swing.JLabel();
+        confirmButton = new javax.swing.JLabel();
+        deleteButton1 = new javax.swing.JLabel();
+        deleteButton2 = new javax.swing.JLabel();
+        deleteButton3 = new javax.swing.JLabel();
+        deleteButton4 = new javax.swing.JLabel();
+        deleteButton5 = new javax.swing.JLabel();
+        applicationPrev = new javax.swing.JLabel();
+        applicationNext = new javax.swing.JLabel();
         adoptButton = new javax.swing.JLabel();
         rehomeButton = new javax.swing.JLabel();
-        editButton = new javax.swing.JLabel();
         applicationPanel = new javax.swing.JLabel();
         background5 = new javax.swing.JLabel();
         profileBody = new javax.swing.JPanel();
+        fullNameScroll = new javax.swing.JScrollPane();
+        fullName = new javax.swing.JTextPane();
+        usernameScroll = new javax.swing.JScrollPane();
+        username1 = new javax.swing.JTextPane();
+        contactNumScroll = new javax.swing.JScrollPane();
+        contactNum = new javax.swing.JTextPane();
+        emailAddressScroll = new javax.swing.JScrollPane();
+        emailAddress = new javax.swing.JTextPane();
+        password = new javax.swing.JPasswordField();
+        currentAddressScroll = new javax.swing.JScrollPane();
+        currentAddress = new javax.swing.JTextPane();
+        occupationScroll = new javax.swing.JScrollPane();
+        occupation = new javax.swing.JTextPane();
+        companyScroll = new javax.swing.JScrollPane();
+        companyName = new javax.swing.JTextPane();
+        workType = new javax.swing.JComboBox<>();
+        birthdayScroll = new javax.swing.JScrollPane();
+        birthdate = new javax.swing.JTextPane();
+        day = new javax.swing.JComboBox<>();
+        month = new javax.swing.JComboBox<>();
+        year = new javax.swing.JComboBox<>();
+        profileName = new javax.swing.JLabel();
+        profileUsername = new javax.swing.JLabel();
+        profileContactNum = new javax.swing.JLabel();
+        profileEmailAddress = new javax.swing.JLabel();
+        profilePassword = new javax.swing.JLabel();
+        profileAddress = new javax.swing.JLabel();
+        profileOccupation = new javax.swing.JLabel();
+        profileCompany = new javax.swing.JLabel();
+        profileWorkType = new javax.swing.JLabel();
+        profileBirthday = new javax.swing.JLabel();
+        profileDeleteButton = new javax.swing.JLabel();
+        profileEditButton = new javax.swing.JLabel();
+        profileCancelButton = new javax.swing.JLabel();
+        profileConfirmButton = new javax.swing.JLabel();
+        logoutButton = new javax.swing.JLabel();
         profilePanel = new javax.swing.JLabel();
         background6 = new javax.swing.JLabel();
 
@@ -572,7 +619,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         petsBody.add(petPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 400, 530));
 
         petPanel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets panel (1).png"))); // NOI18N
-        petsBody.add(petPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 90, 400, 530));
+        petsBody.add(petPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 90, 400, 530));
 
         petPanel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets panel (1).png"))); // NOI18N
         petPanel3.setPreferredSize(new java.awt.Dimension(400, 400));
@@ -593,9 +640,37 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetsBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         vetsBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        vetPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/prev button (1).png"))); // NOI18N
+        vetPrev.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                vetPrevMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                vetPrevMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                vetPrevMouseExited(evt);
+            }
+        });
+        vetsBody.add(vetPrev, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 620, 350, 120));
+
+        vetNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/next button (1).png"))); // NOI18N
+        vetNext.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                vetNextMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                vetNextMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                vetNextMouseExited(evt);
+            }
+        });
+        vetsBody.add(vetNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 630, 350, 100));
+
         vetsPanel.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         vetsPanel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/vets panel (1).png"))); // NOI18N
-        vetsBody.add(vetsPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(195, 20, -1, 700));
+        vetsBody.add(vetsPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(195, 15, -1, 710));
 
         background4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
         vetsBody.add(background4, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 1366, 738));
@@ -607,6 +682,146 @@ public class UserLoggedIn extends javax.swing.JFrame {
         applicationBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         applicationBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        editButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (1).png"))); // NOI18N
+        editButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editButtonMouseExited(evt);
+            }
+        });
+        applicationBody.add(editButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 110, 90, 90));
+
+        cancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/cancel button (1).png"))); // NOI18N
+        cancelButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cancelButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                cancelButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                cancelButtonMouseExited(evt);
+            }
+        });
+        applicationBody.add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 110, 90, 90));
+
+        confirmButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/confirm button (1).png"))); // NOI18N
+        confirmButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                confirmButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                confirmButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                confirmButtonMouseExited(evt);
+            }
+        });
+        applicationBody.add(confirmButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 110, 90, 90));
+
+        deleteButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/delete button (1).png"))); // NOI18N
+        deleteButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteButton1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                deleteButton1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                deleteButton1MouseExited(evt);
+            }
+        });
+        applicationBody.add(deleteButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1125, 280, 50, 50));
+
+        deleteButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/delete button (1).png"))); // NOI18N
+        deleteButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteButton2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                deleteButton2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                deleteButton2MouseExited(evt);
+            }
+        });
+        applicationBody.add(deleteButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1125, 342, 50, 50));
+
+        deleteButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/delete button (1).png"))); // NOI18N
+        deleteButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteButton3MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                deleteButton3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                deleteButton3MouseExited(evt);
+            }
+        });
+        applicationBody.add(deleteButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1125, 405, 50, 50));
+
+        deleteButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/delete button (1).png"))); // NOI18N
+        deleteButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteButton4MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                deleteButton4MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                deleteButton4MouseExited(evt);
+            }
+        });
+        applicationBody.add(deleteButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1125, 468, 50, 50));
+
+        deleteButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/delete button (1).png"))); // NOI18N
+        deleteButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteButton5MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                deleteButton5MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                deleteButton5MouseExited(evt);
+            }
+        });
+        applicationBody.add(deleteButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1125, 530, 50, 50));
+
+        applicationPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/prev button (1).png"))); // NOI18N
+        applicationPrev.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                applicationPrevMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                applicationPrevMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                applicationPrevMouseExited(evt);
+            }
+        });
+        applicationBody.add(applicationPrev, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 620, 350, 120));
+
+        applicationNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/next button (1).png"))); // NOI18N
+        applicationNext.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                applicationNextMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                applicationNextMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                applicationNextMouseExited(evt);
+            }
+        });
+        applicationBody.add(applicationNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 630, 350, 100));
+
         adoptButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/adopt button (1).png"))); // NOI18N
         adoptButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -616,7 +831,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 adoptButtonMouseExited(evt);
             }
         });
-        applicationBody.add(adoptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 20, 280, 70));
+        applicationBody.add(adoptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 20, 250, 70));
 
         rehomeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/rehome button (1).png"))); // NOI18N
         rehomeButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -627,18 +842,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 rehomeButtonMouseExited(evt);
             }
         });
-        applicationBody.add(rehomeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 20, 280, 70));
-
-        editButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (1).png"))); // NOI18N
-        editButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                editButtonMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                editButtonMouseExited(evt);
-            }
-        });
-        applicationBody.add(editButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 110, 90, 90));
+        applicationBody.add(rehomeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 20, 250, 70));
 
         applicationPanel.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         applicationPanel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/application panel (1).png"))); // NOI18N
@@ -654,9 +858,182 @@ public class UserLoggedIn extends javax.swing.JFrame {
         profileBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         profileBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        fullNameScroll.setHorizontalScrollBar(null);
+        fullNameScroll.setViewportView(fullName);
+
+        profileBody.add(fullNameScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 380, 247, -1));
+
+        usernameScroll.setHorizontalScrollBar(null);
+        usernameScroll.setViewportView(username1);
+
+        profileBody.add(usernameScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 430, 247, -1));
+
+        contactNumScroll.setHorizontalScrollBar(null);
+        contactNumScroll.setViewportView(contactNum);
+
+        profileBody.add(contactNumScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 490, 247, -1));
+
+        emailAddressScroll.setHorizontalScrollBar(null);
+        emailAddressScroll.setViewportView(emailAddress);
+
+        profileBody.add(emailAddressScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 540, 247, -1));
+        profileBody.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 590, 247, -1));
+
+        currentAddressScroll.setHorizontalScrollBar(null);
+        currentAddressScroll.setViewportView(currentAddress);
+
+        profileBody.add(currentAddressScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 390, 280, -1));
+
+        occupationScroll.setHorizontalScrollBar(null);
+        occupationScroll.setViewportView(occupation);
+
+        profileBody.add(occupationScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 440, 240, -1));
+
+        companyScroll.setHorizontalScrollBar(null);
+        companyScroll.setViewportView(companyName);
+
+        profileBody.add(companyScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 490, 260, -1));
+
+        workType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        workType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                workTypeActionPerformed(evt);
+            }
+        });
+        profileBody.add(workType, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 550, 230, -1));
+
+        birthdayScroll.setHorizontalScrollBar(null);
+        birthdayScroll.setViewportView(birthdate);
+
+        profileBody.add(birthdayScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 600, 102, -1));
+
+        day.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        day.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dayActionPerformed(evt);
+            }
+        });
+        profileBody.add(day, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 600, 53, -1));
+
+        month.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        month.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                monthActionPerformed(evt);
+            }
+        });
+        profileBody.add(month, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 600, 53, -1));
+
+        year.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        year.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                yearActionPerformed(evt);
+            }
+        });
+        profileBody.add(year, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 600, 53, -1));
+
+        profileName.setText("Joshua C. Macatunao");
+        profileBody.add(profileName, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 380, -1, -1));
+
+        profileUsername.setText("icedew07_");
+        profileBody.add(profileUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 440, -1, -1));
+
+        profileContactNum.setText("+639458722802");
+        profileBody.add(profileContactNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 490, -1, -1));
+
+        profileEmailAddress.setText("joshua.macatunao007@gmail.com");
+        profileBody.add(profileEmailAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 550, -1, -1));
+
+        profilePassword.setText("pogiako123");
+        profileBody.add(profilePassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 590, -1, -1));
+
+        profileAddress.setText("Mandaluyong City, Metro Manila");
+        profileBody.add(profileAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 390, -1, -1));
+
+        profileOccupation.setText("Software Engineer");
+        profileBody.add(profileOccupation, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 440, -1, -1));
+
+        profileCompany.setText("Google");
+        profileBody.add(profileCompany, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 500, -1, -1));
+
+        profileWorkType.setText("No Travel");
+        profileBody.add(profileWorkType, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 550, -1, -1));
+
+        profileBirthday.setText("2003-09-07");
+        profileBody.add(profileBirthday, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 600, -1, -1));
+
+        profileDeleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/delete button (2).png"))); // NOI18N
+        profileDeleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                profileDeleteButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                profileDeleteButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                profileDeleteButtonMouseExited(evt);
+            }
+        });
+        profileBody.add(profileDeleteButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 250, 70, 70));
+
+        profileEditButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (2).png"))); // NOI18N
+        profileEditButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                profileEditButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                profileEditButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                profileEditButtonMouseExited(evt);
+            }
+        });
+        profileBody.add(profileEditButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 250, 70, 70));
+
+        profileCancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/cancel button (2).png"))); // NOI18N
+        profileCancelButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                profileCancelButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                profileCancelButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                profileCancelButtonMouseExited(evt);
+            }
+        });
+        profileBody.add(profileCancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 250, 70, 70));
+
+        profileConfirmButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/confirm button (2).png"))); // NOI18N
+        profileConfirmButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                profileConfirmButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                profileConfirmButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                profileConfirmButtonMouseExited(evt);
+            }
+        });
+        profileBody.add(profileConfirmButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 250, 70, 70));
+
+        logoutButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/logout button (1).png"))); // NOI18N
+        logoutButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                logoutButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                logoutButtonMouseExited(evt);
+            }
+        });
+        profileBody.add(logoutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 245, 250, 80));
+
         profilePanel.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         profilePanel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/profile panel (1).png"))); // NOI18N
-        profileBody.add(profilePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(195, 40, -1, -1));
+        profileBody.add(profilePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 10, 1080, 720));
 
         background6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
         profileBody.add(background6, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 1366, 738));
@@ -829,8 +1206,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
     }
     
     private void petButton() {
-        // reset the pet index
-        petIndex = 0;
+        // initialize pet panel
+        petProfilesReset();
         
         // set visiblity
         homeBody.setVisible(false);
@@ -1043,24 +1420,125 @@ public class UserLoggedIn extends javax.swing.JFrame {
     
     private void petProfiles() {
         // Pet Panel 1
-        petName1.setText(pets.get(petIndex).getPetName());
-        petAge1.setText(String.valueOf(pets.get(petIndex).getPetAge()));
-        petGender1.setText(pets.get(petIndex).getPetSex());
-        petImg1.setIcon(new javax.swing.ImageIcon(getClass().getResource(pets.get(petIndex).getPicURL())));
-        petIndex++;
+        if(totalPets >= 1) {
+            petName1.setText(pets.get(petIndex).getPetName());
+            petAge1.setText(String.valueOf(pets.get(petIndex).getPetAge()) + " months");
+            petGender1.setText(pets.get(petIndex).getPetSex());
+            petImg1.setIcon(new javax.swing.ImageIcon(getClass().getResource(pets.get(petIndex).getPicURL())));
+            petIndex++;
+        }
         
         // Pet Panel 2
-        petName2.setText(pets.get(petIndex).getPetName());
-        petAge2.setText(String.valueOf(pets.get(petIndex).getPetAge()));
-        petGender2.setText(pets.get(petIndex).getPetSex());
-        petImg2.setIcon(new javax.swing.ImageIcon(getClass().getResource(pets.get(petIndex).getPicURL())));
-        petIndex++;
+        if(totalPets >= 2) {
+            petName2.setText(pets.get(petIndex).getPetName());
+            petAge2.setText(String.valueOf(pets.get(petIndex).getPetAge()) + " months");
+            petGender2.setText(pets.get(petIndex).getPetSex());
+            petImg2.setIcon(new javax.swing.ImageIcon(getClass().getResource(pets.get(petIndex).getPicURL())));
+            petIndex++;
+        }
         
         // Pet Panel 3
-        petName3.setText(pets.get(petIndex).getPetName());
-        petAge3.setText(String.valueOf(pets.get(petIndex).getPetAge()));
-        petGender3.setText(pets.get(petIndex).getPetSex());
-        petImg3.setIcon(new javax.swing.ImageIcon(getClass().getResource(pets.get(petIndex).getPicURL())));
+        if(totalPets >= 3) {
+            petName3.setText(pets.get(petIndex).getPetName());
+            petAge3.setText(String.valueOf(pets.get(petIndex).getPetAge()) + " months");
+            petGender3.setText(pets.get(petIndex).getPetSex());
+            petImg3.setIcon(new javax.swing.ImageIcon(getClass().getResource(pets.get(petIndex).getPicURL())));
+        }
+    }
+    
+    private void petProfilesReset() {
+        //totalPets = 0;
+        // totalPets = 1;
+        // totalPets = 2;
+        // totalPets = 3;
+        
+        // reset the index of pet
+        petIndex = 0;
+        
+        // hide the pet panel, profile and info holders
+        if(totalPets < 1) {
+            petPanel1.setVisible(false);
+            petImg1.setVisible(false);
+            petName1.setVisible(false);
+            petAge1.setVisible(false);
+            petGender1.setVisible(false);
+        }
+        if(totalPets < 2) {
+            petPanel2.setVisible(false);
+            petImg2.setVisible(false);
+            petName2.setVisible(false);
+            petAge2.setVisible(false);
+            petGender2.setVisible(false);
+        }
+        if(totalPets < 3) {
+            petPanel3.setVisible(false);
+            petImg3.setVisible(false);
+            petName3.setVisible(false);
+            petAge3.setVisible(false);
+            petGender3.setVisible(false);
+        }
+        
+        if(totalPets < 4) {
+            // hide the buttons
+            petPrev.setVisible(false);
+            petNext.setVisible(false);
+        }
+    }
+    
+    private void applicationEditVisibility(boolean edit) {
+        editButton.setVisible(!edit);
+        cancelButton.setVisible(edit);
+        confirmButton.setVisible(edit);
+        deleteButton1.setVisible(edit);
+        deleteButton2.setVisible(edit);
+        deleteButton3.setVisible(edit);
+        deleteButton4.setVisible(edit);
+        deleteButton5.setVisible(edit);
+    }
+    
+    private void profileEditVisibility(boolean edit) {
+        // buttons
+        profileEditButton.setVisible(!edit);
+        profileDeleteButton.setVisible(!edit);
+        profileCancelButton.setVisible(edit);
+        profileConfirmButton.setVisible(edit);
+        
+        // labels
+        profileName.setVisible(!edit);
+        profileUsername.setVisible(!edit);
+        profileContactNum.setVisible(!edit);
+        profileEmailAddress.setVisible(!edit);
+        profilePassword.setVisible(!edit);
+        profileAddress.setVisible(!edit);
+        profileOccupation.setVisible(!edit);
+        profileCompany.setVisible(!edit);
+        profileWorkType.setVisible(!edit);
+        profileBirthday.setVisible(!edit);
+        
+        // text fields
+        fullName.setVisible(edit);
+        username1.setVisible(edit);
+        contactNum.setVisible(edit);
+        emailAddress.setVisible(edit);
+        password.setVisible(edit);
+        currentAddress.setVisible(edit);
+        occupation.setVisible(edit);
+        companyName.setVisible(edit);
+        workType.setVisible(edit);
+        birthdate.setVisible(edit);
+        day.setVisible(edit);
+        month.setVisible(edit);
+        year.setVisible(edit);
+        
+        // scrolls
+        fullNameScroll.setVisible(edit);
+        usernameScroll.setVisible(edit);
+        contactNumScroll.setVisible(edit);
+        emailAddressScroll.setVisible(edit);
+        currentAddressScroll.setVisible(edit);
+        occupationScroll.setVisible(edit);
+        companyScroll.setVisible(edit);
+        birthdayScroll.setVisible(edit);
     }
     
     private void badgeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_badgeKeyPressed
@@ -1271,6 +1749,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(!applicationClicked) {
             applicationButton();
+            applicationEditVisibility(false);
         }
     }//GEN-LAST:event_applicationButtonMousePressed
 
@@ -1454,6 +1933,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(!profileClicked) {
             profileButton();
+            profileEditVisibility(false);
         }
     }//GEN-LAST:event_profileHeadMousePressed
 
@@ -1461,6 +1941,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(!profileClicked) {
             profileButton();
+            profileEditVisibility(false);
         }
     }//GEN-LAST:event_profileCollarMousePressed
 
@@ -1470,6 +1951,271 @@ public class UserLoggedIn extends javax.swing.JFrame {
             petButton();
         }
     }//GEN-LAST:event_badgeMousePressed
+
+    private void vetPrevMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vetPrevMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_vetPrevMouseClicked
+
+    private void vetPrevMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vetPrevMouseEntered
+        // TODO add your handling code here:
+        vetPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/prev button hover (1).png")));
+    }//GEN-LAST:event_vetPrevMouseEntered
+
+    private void vetPrevMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vetPrevMouseExited
+        // TODO add your handling code here:
+        vetPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/prev button (1).png")));
+    }//GEN-LAST:event_vetPrevMouseExited
+
+    private void vetNextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vetNextMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_vetNextMouseClicked
+
+    private void vetNextMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vetNextMouseEntered
+        // TODO add your handling code here:
+        vetNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/next button hover (1).png")));
+    }//GEN-LAST:event_vetNextMouseEntered
+
+    private void vetNextMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vetNextMouseExited
+        // TODO add your handling code here:
+        vetNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/next button (1).png")));
+    }//GEN-LAST:event_vetNextMouseExited
+
+    private void applicationPrevMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applicationPrevMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_applicationPrevMouseClicked
+
+    private void applicationPrevMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applicationPrevMouseEntered
+        // TODO add your handling code here:
+        applicationPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/prev button hover (1).png")));
+    }//GEN-LAST:event_applicationPrevMouseEntered
+
+    private void applicationPrevMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applicationPrevMouseExited
+        // TODO add your handling code here:
+        applicationPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/prev button (1).png")));
+    }//GEN-LAST:event_applicationPrevMouseExited
+
+    private void applicationNextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applicationNextMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_applicationNextMouseClicked
+
+    private void applicationNextMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applicationNextMouseEntered
+        // TODO add your handling code here:
+        applicationNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/next button hover (1).png")));
+        
+    }//GEN-LAST:event_applicationNextMouseEntered
+
+    private void applicationNextMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applicationNextMouseExited
+        // TODO add your handling code here:
+        applicationNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/next button (1).png")));
+    }//GEN-LAST:event_applicationNextMouseExited
+
+    private void cancelButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseEntered
+        // TODO add your handling code here:
+        cancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/cancel button hover (1).png")));
+    }//GEN-LAST:event_cancelButtonMouseEntered
+
+    private void cancelButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseExited
+        // TODO add your handling code here:
+        cancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/cancel button (1).png")));
+    }//GEN-LAST:event_cancelButtonMouseExited
+
+    private void confirmButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmButtonMouseEntered
+        // TODO add your handling code here:
+        confirmButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/confirm button hover (1).png")));
+    }//GEN-LAST:event_confirmButtonMouseEntered
+
+    private void confirmButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmButtonMouseExited
+        // TODO add your handling code here:
+        confirmButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/confirm button (1).png")));
+    }//GEN-LAST:event_confirmButtonMouseExited
+
+    private void deleteButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton1MouseClicked
+        // TODO add your handling code here:
+        new ConfirmationDialog().setVisible(true);
+    }//GEN-LAST:event_deleteButton1MouseClicked
+
+    private void deleteButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton1MouseEntered
+        // TODO add your handling code here:
+        deleteButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/delete button hover (1).png")));
+    }//GEN-LAST:event_deleteButton1MouseEntered
+
+    private void deleteButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton1MouseExited
+        // TODO add your handling code here:
+        deleteButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/delete button (1).png")));
+    }//GEN-LAST:event_deleteButton1MouseExited
+
+    private void deleteButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton2MouseClicked
+        // TODO add your handling code here:
+        new ConfirmationDialog().setVisible(true);
+    }//GEN-LAST:event_deleteButton2MouseClicked
+
+    private void deleteButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton2MouseEntered
+        // TODO add your handling code here:
+        deleteButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/delete button hover (1).png")));
+    }//GEN-LAST:event_deleteButton2MouseEntered
+
+    private void deleteButton2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton2MouseExited
+        // TODO add your handling code here:
+        deleteButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/delete button (1).png")));
+    }//GEN-LAST:event_deleteButton2MouseExited
+
+    private void deleteButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton3MouseClicked
+        // TODO add your handling code here:
+        new ConfirmationDialog().setVisible(true);
+    }//GEN-LAST:event_deleteButton3MouseClicked
+
+    private void deleteButton3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton3MouseEntered
+        // TODO add your handling code here:
+        deleteButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/delete button hover (1).png")));
+    }//GEN-LAST:event_deleteButton3MouseEntered
+
+    private void deleteButton3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton3MouseExited
+        // TODO add your handling code here:
+        deleteButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/delete button (1).png")));
+    }//GEN-LAST:event_deleteButton3MouseExited
+
+    private void deleteButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton4MouseClicked
+        // TODO add your handling code here:
+        new ConfirmationDialog().setVisible(true);
+    }//GEN-LAST:event_deleteButton4MouseClicked
+
+    private void deleteButton4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton4MouseEntered
+        // TODO add your handling code here:
+        deleteButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/delete button hover (1).png")));
+    }//GEN-LAST:event_deleteButton4MouseEntered
+
+    private void deleteButton4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton4MouseExited
+        // TODO add your handling code here:
+        deleteButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/delete button (1).png")));
+    }//GEN-LAST:event_deleteButton4MouseExited
+
+    private void deleteButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton5MouseClicked
+        // TODO add your handling code here:
+        new ConfirmationDialog().setVisible(true);
+    }//GEN-LAST:event_deleteButton5MouseClicked
+
+    private void deleteButton5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton5MouseEntered
+        // TODO add your handling code here:
+        deleteButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/delete button hover (1).png")));
+    }//GEN-LAST:event_deleteButton5MouseEntered
+
+    private void deleteButton5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton5MouseExited
+        // TODO add your handling code here:
+        deleteButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/delete button (1).png")));
+    }//GEN-LAST:event_deleteButton5MouseExited
+
+    private void editButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButtonMouseClicked
+        // TODO add your handling code here:
+        applicationEditVisibility(true);
+    }//GEN-LAST:event_editButtonMouseClicked
+
+    private void confirmButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmButtonMouseClicked
+        // TODO add your handling code here:
+        new ConfirmationDialog().setVisible(true);
+        applicationEditVisibility(false);
+    }//GEN-LAST:event_confirmButtonMouseClicked
+
+    private void cancelButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseClicked
+        // TODO add your handling code here:
+        new ConfirmationDialog().setVisible(true);
+        applicationEditVisibility(false);
+    }//GEN-LAST:event_cancelButtonMouseClicked
+
+    private void profileEditButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileEditButtonMouseClicked
+        // TODO add your handling code here:
+        profileEditVisibility(true);
+    }//GEN-LAST:event_profileEditButtonMouseClicked
+
+    private void profileEditButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileEditButtonMouseEntered
+        // TODO add your handling code here:
+        profileEditButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button hover (2).png")));
+    }//GEN-LAST:event_profileEditButtonMouseEntered
+
+    private void profileEditButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileEditButtonMouseExited
+        // TODO add your handling code here:
+        profileEditButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (2).png")));
+    }//GEN-LAST:event_profileEditButtonMouseExited
+
+    private void profileDeleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileDeleteButtonMouseClicked
+        // TODO add your handling code here:
+        new ConfirmationDialog().setVisible(true);
+    }//GEN-LAST:event_profileDeleteButtonMouseClicked
+
+    private void profileDeleteButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileDeleteButtonMouseEntered
+        // TODO add your handling code here:
+        profileDeleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/delete button hover (2).png")));
+    }//GEN-LAST:event_profileDeleteButtonMouseEntered
+
+    private void profileDeleteButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileDeleteButtonMouseExited
+        // TODO add your handling code here:
+        profileDeleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/delete button (2).png")));
+    }//GEN-LAST:event_profileDeleteButtonMouseExited
+
+    private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
+        // TODO add your handling code here:
+        this.setVisible(false);
+        new LandingPage(true).setVisible(true);
+    }//GEN-LAST:event_logoutButtonMouseClicked
+
+    private void logoutButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseEntered
+        // TODO add your handling code here:
+        logoutButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/logout button hover (1).png")));
+    }//GEN-LAST:event_logoutButtonMouseEntered
+
+    private void logoutButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseExited
+        // TODO add your handling code here:
+        logoutButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/logout button (1).png")));
+    }//GEN-LAST:event_logoutButtonMouseExited
+
+    private void profileConfirmButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileConfirmButtonMouseClicked
+        // TODO add your handling code here:
+        new ConfirmationDialog().setVisible(true);
+        profileEditVisibility(false);
+    }//GEN-LAST:event_profileConfirmButtonMouseClicked
+
+    private void profileConfirmButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileConfirmButtonMouseEntered
+        // TODO add your handling code here:
+        profileConfirmButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/confirm button hover (2).png")));
+    }//GEN-LAST:event_profileConfirmButtonMouseEntered
+
+    private void profileConfirmButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileConfirmButtonMouseExited
+        // TODO add your handling code here:
+        profileConfirmButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/confirm button (2).png")));
+    }//GEN-LAST:event_profileConfirmButtonMouseExited
+
+    private void profileCancelButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileCancelButtonMouseClicked
+        // TODO add your handling code here:
+        new ConfirmationDialog().setVisible(true);
+        profileEditVisibility(false);
+    }//GEN-LAST:event_profileCancelButtonMouseClicked
+
+    private void profileCancelButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileCancelButtonMouseEntered
+        // TODO add your handling code here:
+        profileCancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/cancel button hover (2).png")));
+        
+    }//GEN-LAST:event_profileCancelButtonMouseEntered
+
+    private void profileCancelButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileCancelButtonMouseExited
+        // TODO add your handling code here:
+        profileCancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/cancel button (2).png")));
+    }//GEN-LAST:event_profileCancelButtonMouseExited
+
+    private void workTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workTypeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_workTypeActionPerformed
+
+    private void dayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dayActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dayActionPerformed
+
+    private void monthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_monthActionPerformed
+
+    private void yearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_yearActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1529,7 +2275,9 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JPanel applicationBody;
     private javax.swing.JLabel applicationButton;
     private javax.swing.JLabel applicationClick;
+    private javax.swing.JLabel applicationNext;
     private javax.swing.JLabel applicationPanel;
+    private javax.swing.JLabel applicationPrev;
     private javax.swing.JLabel background;
     private javax.swing.JLabel background1;
     private javax.swing.JLabel background2;
@@ -1538,22 +2286,47 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel background5;
     private javax.swing.JLabel background6;
     private javax.swing.JLabel badge;
+    private javax.swing.JTextPane birthdate;
+    private javax.swing.JScrollPane birthdayScroll;
     private javax.swing.JLabel bulletin;
     private javax.swing.JLabel businessRules;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JLabel cancelButton;
+    private javax.swing.JTextPane companyName;
+    private javax.swing.JScrollPane companyScroll;
+    private javax.swing.JLabel confirmButton;
+    private javax.swing.JTextPane contactNum;
+    private javax.swing.JScrollPane contactNumScroll;
+    private javax.swing.JTextPane currentAddress;
+    private javax.swing.JScrollPane currentAddressScroll;
+    private javax.swing.JComboBox<String> day;
+    private javax.swing.JLabel deleteButton1;
+    private javax.swing.JLabel deleteButton2;
+    private javax.swing.JLabel deleteButton3;
+    private javax.swing.JLabel deleteButton4;
+    private javax.swing.JLabel deleteButton5;
     private javax.swing.JLabel devs;
     private javax.swing.JLabel editButton;
+    private javax.swing.JTextPane emailAddress;
+    private javax.swing.JScrollPane emailAddressScroll;
     private javax.swing.JLabel exitButton;
     private javax.swing.JLabel faqButton;
     private javax.swing.JLabel faqClick;
+    private javax.swing.JTextPane fullName;
+    private javax.swing.JScrollPane fullNameScroll;
     private javax.swing.JPanel homeBody;
     private javax.swing.JLabel homeButton;
     private javax.swing.JLabel homeClick;
     private javax.swing.JPanel line;
     private javax.swing.JLabel logo;
+    private javax.swing.JLabel logoutButton;
     private javax.swing.JLabel minimizeButton;
+    private javax.swing.JComboBox<String> month;
     private javax.swing.JPanel navBar;
     private javax.swing.JLabel next;
+    private javax.swing.JTextPane occupation;
+    private javax.swing.JScrollPane occupationScroll;
+    private javax.swing.JPasswordField password;
     private javax.swing.JLabel petAge1;
     private javax.swing.JLabel petAge2;
     private javax.swing.JLabel petAge3;
@@ -1576,16 +2349,36 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel petPrev;
     private javax.swing.JPanel petsBody;
     private javax.swing.JLabel prev;
+    private javax.swing.JLabel profileAddress;
+    private javax.swing.JLabel profileBirthday;
     private javax.swing.JPanel profileBody;
+    private javax.swing.JLabel profileCancelButton;
     private javax.swing.JLabel profileCollar;
+    private javax.swing.JLabel profileCompany;
+    private javax.swing.JLabel profileConfirmButton;
+    private javax.swing.JLabel profileContactNum;
+    private javax.swing.JLabel profileDeleteButton;
+    private javax.swing.JLabel profileEditButton;
+    private javax.swing.JLabel profileEmailAddress;
     private javax.swing.JLabel profileHead;
+    private javax.swing.JLabel profileName;
+    private javax.swing.JLabel profileOccupation;
     private javax.swing.JLabel profilePanel;
+    private javax.swing.JLabel profilePassword;
+    private javax.swing.JLabel profileUsername;
+    private javax.swing.JLabel profileWorkType;
     private javax.swing.JLabel rehomeButton;
     private javax.swing.JLabel slogan;
     private javax.swing.JLabel username;
+    private javax.swing.JTextPane username1;
+    private javax.swing.JScrollPane usernameScroll;
     private javax.swing.JLabel vetButton;
     private javax.swing.JLabel vetClick;
+    private javax.swing.JLabel vetNext;
+    private javax.swing.JLabel vetPrev;
     private javax.swing.JPanel vetsBody;
     private javax.swing.JLabel vetsPanel;
+    private javax.swing.JComboBox<String> workType;
+    private javax.swing.JComboBox<String> year;
     // End of variables declaration//GEN-END:variables
 }

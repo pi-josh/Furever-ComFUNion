@@ -109,7 +109,7 @@ public class ExitDialog extends javax.swing.JFrame {
                 yesButtonMouseExited(evt);
             }
         });
-        exitDialogPanel.add(yesButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 185, 180, 70));
+        exitDialogPanel.add(yesButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 185, 230, 70));
 
         noButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/no button (1).png"))); // NOI18N
         noButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -123,12 +123,12 @@ public class ExitDialog extends javax.swing.JFrame {
                 noButtonMouseExited(evt);
             }
         });
-        exitDialogPanel.add(noButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 185, 180, 70));
+        exitDialogPanel.add(noButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 185, 230, 70));
 
         exitDialog.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/warning dialog (1).png"))); // NOI18N
-        exitDialogPanel.add(exitDialog, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 2, 496, 296));
+        exitDialogPanel.add(exitDialog, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 2, 550, 296));
 
-        getContentPane().add(exitDialogPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 300));
+        getContentPane().add(exitDialogPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 300));
 
         getAccessibleContext().setAccessibleName("Devs");
 
