@@ -1,14 +1,14 @@
 package Views;
 
-import Views.ExitDialog;
-import Views.Login;
-import Views.Register;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.Timer;
 
 /*
@@ -22,13 +22,17 @@ import javax.swing.Timer;
  * @author joshu
  */
 public class LandingPage extends javax.swing.JFrame {
+    // sub frames
+    private Login login;
+    private Register register;
+    private ExitDialog exitDialog;
+    private JPanel glassPane;
+    
     // buttons clickability
     private boolean homeClicked;
     private boolean aboutUsClicked;
     private boolean FAQsClicked;
     private boolean petsClicked;
-    private boolean loginClicked = true;
-    private boolean registerClicked = true;
     private int FAQsPanelCounter = 4000001;
     private Timer timer;
     
@@ -57,7 +61,7 @@ public class LandingPage extends javax.swing.JFrame {
         
         if(!logout) {
             // Create a timer to stop the GIF after 6 seconds
-            timer = new Timer(10000, new ActionListener() {
+            timer = new Timer(0, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     startupAnimationPanel.setVisible(false);
@@ -75,6 +79,32 @@ public class LandingPage extends javax.swing.JFrame {
             navBar.setVisible(true);
             homeBody.setVisible(true);
         }
+        
+        // glass pane to block out any interaction within the main frame when opening a sub frame
+        glassPane = new JPanel();
+        glassPane.setOpaque(false);
+        glassPane.setVisible(false);
+        glassPane.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // brings the active sub frame on the front and add a system beep to notify
+                if (exitDialog != null && exitDialog.isVisible() && !exitDialog.getBounds().contains(e.getPoint())) {
+                    exitDialog.toFront();
+                    Toolkit.getDefaultToolkit().beep(); // Play default system beep
+                }
+            }
+        });
+
+        setGlassPane(glassPane);
+    }
+    
+    // getters
+    public Login getLogin() {
+        return login;
+    }
+    
+    public Register getRegister() {
+        return register;
     }
     
     private void defaultWindow() {   
@@ -716,15 +746,21 @@ public class LandingPage extends javax.swing.JFrame {
 
     private void registerButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerButtonMouseClicked
         // TODO add your handling code here:
-        boolean registerClosed = false;
-        if(registerClicked) {
-            registerClicked = false;
-            Register register = new Register();
-            register.setVisible(true);
-            registerClosed = register.getRegisterClosed();
+        if (login != null) {
+            if(login.getRegister() != null) {
+                register= login.getRegister();
+            }
+            login.setVisible(false);
         }
-        if(registerClosed) {
-            registerClicked = true;
+        
+        if (register == null) {
+            register = new Register(this);
+            register.setVisible(true);
+        } else if (!register.isVisible()) {
+            register.setVisible(true);
+        } else {
+            register.toFront();
+            register.requestFocus();
         }
     }//GEN-LAST:event_registerButtonMouseClicked
 
@@ -740,15 +776,21 @@ public class LandingPage extends javax.swing.JFrame {
 
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
         // TODO add your handling code here:
-        boolean loginClosed = false;
-        if(loginClicked) {
-            loginClicked = false;
-            Login login = new Login(this);
-            login.setVisible(true);
-            loginClosed = login.getLoginClosed();
+        if (register != null ){
+            if(register.getLogin() != null) {
+                login = register.getLogin();
+            }
+            register.setVisible(false);
         }
-        if(loginClosed) {
-            loginClicked = true;
+        if (login == null) {
+            login = new Login(this);
+            login.setVisible(true);
+        } else if (!login.isVisible()) {
+            login.setVisible(true);
+        }
+        else {
+            login.toFront();
+            login.requestFocus();
         }
     }//GEN-LAST:event_loginButtonMouseClicked
 
@@ -769,7 +811,14 @@ public class LandingPage extends javax.swing.JFrame {
 
     private void exitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButtonMouseClicked
         // TODO add your handling code here:
-        new ExitDialog(this).setVisible(true);
+        if (exitDialog == null || !exitDialog.isVisible()) {
+            exitDialog = new ExitDialog(this, null);
+            exitDialog.setVisible(true);
+            glassPane.setVisible(true);
+        } else {
+            exitDialog.toFront();
+            exitDialog.requestFocus();
+        }
     }//GEN-LAST:event_exitButtonMouseClicked
 
     private void exitButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButtonMouseEntered

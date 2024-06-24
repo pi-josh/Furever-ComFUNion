@@ -24,6 +24,8 @@ import javax.swing.JFrame;
  * @author joshu
  */
 public class UserLoggedIn extends javax.swing.JFrame {
+    // sub frames
+    
 
     // buttons clickability
     private boolean homeClicked;
@@ -2110,7 +2112,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void exitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButtonMouseClicked
         // TODO add your handling code here:
-        new ExitDialog(this).setVisible(true);
+        new ExitDialog(null, this).setVisible(true);
     }//GEN-LAST:event_exitButtonMouseClicked
 
     private void adoptButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adoptButtonMouseEntered

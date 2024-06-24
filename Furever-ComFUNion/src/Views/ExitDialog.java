@@ -5,28 +5,34 @@
  */
 package Views;
 
-import java.awt.Color;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  *
  * @author joshu
  */
 public class ExitDialog extends javax.swing.JFrame {
-    private JFrame exitDialogFrame;
-    private boolean loginClosed = false;
+    private LandingPage landingPage;
+    private UserLoggedIn userLoggedIn;
+    private JPanel glassPane;
     
     /**
      * Creates new form Register
+     * @param landingPage
+     * @param userLoggedIn
      */
-    public ExitDialog(JFrame exitDialogFrame) {
+    public ExitDialog(LandingPage landingPage, UserLoggedIn userLoggedIn) {
+        if(landingPage != null) {
+            this.landingPage = landingPage;
+        }
+        if(userLoggedIn != null) {
+            this.userLoggedIn = userLoggedIn;
+        }
+        
         initComponents();
-        this.exitDialogFrame = exitDialogFrame;
-        setVisible(true);
         
         // Window logo
         ImageIcon icon1 = null;
@@ -58,15 +64,6 @@ public class ExitDialog extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
-    public boolean getLoginClosed() {
-        return loginClosed;
-    }
-    
-    public void setLoginClosed(boolean state) {
-        loginClosed = state;
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -148,7 +145,7 @@ public class ExitDialog extends javax.swing.JFrame {
 
     private void yesButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_yesButtonMouseClicked
         // TODO add your handling code here:
-        this.setVisible(false);
+        this.dispose();
         System.exit(0);
     }//GEN-LAST:event_yesButtonMouseClicked
 
@@ -164,6 +161,10 @@ public class ExitDialog extends javax.swing.JFrame {
 
     private void noButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_noButtonMouseClicked
         // TODO add your handling code here:
+        if (landingPage != null) {
+            glassPane = (JPanel) landingPage.getGlassPane();
+            glassPane.setVisible(false);
+        }
         this.setVisible(false);
     }//GEN-LAST:event_noButtonMouseClicked
 

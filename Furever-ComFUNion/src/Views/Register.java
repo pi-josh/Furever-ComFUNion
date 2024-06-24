@@ -19,10 +19,39 @@ import javax.swing.JFrame;
  * @author joshu
  */
 public class Register extends javax.swing.JFrame {
-    private boolean registerClosed;
+    private LandingPage landingPage;
+    private Login login;
+    
     /**
      * Creates new form Register
      */
+    public Register(LandingPage landingPage) {
+        this.landingPage = landingPage;
+        login = landingPage.getLogin();
+        
+        initComponents();
+        setVisible(true);
+        // action listener for year and month to dynamically adjust days
+        year.addActionListener(new ComboBoxActionListener());
+        month.addActionListener(new ComboBoxActionListener());
+        
+        // populate the combo boxes
+        populateComboBoxes();
+        
+        // Window logo
+        ImageIcon icon1 = null;
+        try {
+            icon1 = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Resources/logo2.png")));
+            if (icon1.getImageLoadStatus() == MediaTracker.ERRORED) {
+                throw new NullPointerException("Image not found or cannot be loaded.");
+            }
+            this.setIconImage(icon1.getImage());
+        } catch (NullPointerException e) {
+            System.err.println("Error: Image not found. " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
     public Register() {
         initComponents();
         // action listener for year and month to dynamically adjust days
@@ -44,8 +73,11 @@ public class Register extends javax.swing.JFrame {
             System.err.println("Error: Image not found. " + e.getMessage());
             e.printStackTrace();
         }
-        
-        
+    }
+    
+    // getters
+    public Login getLogin() {
+        return login;
     }
     
     private void populateComboBoxes() {
@@ -106,15 +138,7 @@ public class Register extends javax.swing.JFrame {
             }
         }
     }
-    
-    public boolean getRegisterClosed() {
-        return registerClosed;
-    }
-    
-    public void setRegisterClosed(boolean state) {
-        registerClosed = state;
-    }
-
+  
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -205,7 +229,7 @@ public class Register extends javax.swing.JFrame {
         getContentPane().add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(855, 5, 40, 40));
 
         titleContainer.setBackground(new java.awt.Color(194, 144, 69));
-        titleContainer.setBorder(new javax.swing.border.MatteBorder(null));
+        titleContainer.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
         titleContainer.setPreferredSize(new java.awt.Dimension(900, 75));
         titleContainer.setLayout(new java.awt.GridBagLayout());
 
@@ -216,7 +240,7 @@ public class Register extends javax.swing.JFrame {
         getContentPane().add(titleContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         registerContainer.setBackground(new java.awt.Color(255, 250, 205));
-        registerContainer.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 1, 1, new java.awt.Color(0, 0, 0)));
+        registerContainer.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 2, 2, 2, new java.awt.Color(0, 0, 0)));
         registerContainer.setPreferredSize(new java.awt.Dimension(900, 575));
         registerContainer.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -376,7 +400,7 @@ public class Register extends javax.swing.JFrame {
         registerBg.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         registerContainer.add(registerBg, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 25, 660, 560));
 
-        getContentPane().add(registerContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 75, -1, 610));
+        getContentPane().add(registerContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 75, 900, 610));
 
         pack();
         setLocationRelativeTo(null);
@@ -435,9 +459,21 @@ public class Register extends javax.swing.JFrame {
 
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
         // TODO add your handling code here:
-        this.setVisible(false);
-        Login login = new Login();
-        login.setVisible(true);
+        if (landingPage != null) {
+            login = landingPage.getLogin();
+        }
+        
+        if (login == null) {
+            login = new Login(landingPage);
+            login.setVisible(true);
+        } else if (!login.isVisible()) {
+            login.setVisible(true);
+        }
+        else {
+            login.toFront();
+            login.requestFocus();
+        }
+        this.dispose();
     }//GEN-LAST:event_loginButtonMouseClicked
 
     private void minimizeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeButtonMouseClicked

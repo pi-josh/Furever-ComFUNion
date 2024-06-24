@@ -14,8 +14,6 @@ import javax.swing.ImageIcon;
  * @author joshu
  */
 public class ConfirmationDialog extends javax.swing.JFrame {
-    private boolean loginClosed = false;
-    
     /**
      * Creates new form Register
      */
@@ -34,14 +32,6 @@ public class ConfirmationDialog extends javax.swing.JFrame {
             System.err.println("Error: Image not found. " + e.getMessage());
             e.printStackTrace();
         }
-    }
-    
-    public boolean getLoginClosed() {
-        return loginClosed;
-    }
-    
-    public void setLoginClosed(boolean state) {
-        loginClosed = state;
     }
 
     /**
@@ -128,7 +118,7 @@ public class ConfirmationDialog extends javax.swing.JFrame {
 
     private void noButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_noButtonMouseClicked
         // TODO add your handling code here:
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_noButtonMouseClicked
 
     private void noButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_noButtonMouseEntered
