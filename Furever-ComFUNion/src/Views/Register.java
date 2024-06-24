@@ -8,6 +8,9 @@ package Views;
 import java.awt.Color;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.YearMonth;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -17,12 +20,17 @@ import javax.swing.JFrame;
  */
 public class Register extends javax.swing.JFrame {
     private boolean registerClosed;
-
     /**
      * Creates new form Register
      */
     public Register() {
         initComponents();
+        // action listener for year and month to dynamically adjust days
+        year.addActionListener(new ComboBoxActionListener());
+        month.addActionListener(new ComboBoxActionListener());
+        
+        // populate the combo boxes
+        populateComboBoxes();
         
         // Window logo
         ImageIcon icon1 = null;
@@ -35,6 +43,67 @@ public class Register extends javax.swing.JFrame {
         } catch (NullPointerException e) {
             System.err.println("Error: Image not found. " + e.getMessage());
             e.printStackTrace();
+        }
+        
+        
+    }
+    
+    private void populateComboBoxes() {
+        // Populate worktype combobox
+        workType.addItem("Travel");
+        workType.addItem("No Travel");
+
+        // Populate year combobox
+        int currentYear = YearMonth.now().getYear();
+        for (int y = 1960; y <= currentYear; y++) {
+            String yearValue = String.valueOf(y);
+            year.addItem(yearValue);
+        }
+
+        // Populate month combobox
+        for (int m = 1; m <= 12; m++) {
+            String monthValue = String.valueOf(m);
+            month.addItem(monthValue);
+        }
+
+        // Initially populate day combobox based on current year and month
+        updateDays();
+    }
+
+    private class ComboBoxActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            updateDays();
+        }
+    }
+
+    private void updateDays() {
+        Object selectedYearObj = year.getSelectedItem();
+        Object selectedMonthObj = month.getSelectedItem();
+
+        if (selectedYearObj != null && selectedMonthObj != null) {
+            Integer selectedYear;
+            Integer selectedMonth;
+
+            if (selectedYearObj instanceof String) {
+                selectedYear = Integer.parseInt((String) selectedYearObj);
+            } else {
+                selectedYear = (Integer) selectedYearObj;
+            }
+
+            if (selectedMonthObj instanceof String) {
+                selectedMonth = Integer.parseInt((String) selectedMonthObj);
+            } else {
+                selectedMonth = (Integer) selectedMonthObj;
+            }
+
+            YearMonth yearMonth = YearMonth.of(selectedYear, selectedMonth);
+            int daysInMonth = yearMonth.lengthOfMonth();
+            day.removeAllItems();
+            for (int d = 1; d <= daysInMonth; d++) {
+                String dayValue = String.valueOf(d);
+                day.addItem(dayValue);
+            }
         }
     }
     
@@ -55,6 +124,7 @@ public class Register extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jProgressBar1 = new javax.swing.JProgressBar();
         minimizeButton = new javax.swing.JLabel();
         backButton = new javax.swing.JLabel();
         titleContainer = new javax.swing.JPanel();
@@ -93,9 +163,9 @@ public class Register extends javax.swing.JFrame {
         registerButton = new javax.swing.JLabel();
         loginDescription = new javax.swing.JLabel();
         loginButton = new javax.swing.JLabel();
-        day = new javax.swing.JComboBox<>();
-        month = new javax.swing.JComboBox<>();
         year = new javax.swing.JComboBox<>();
+        month = new javax.swing.JComboBox<>();
+        day = new javax.swing.JComboBox<>();
         errorMessage = new javax.swing.JLabel();
         errorMessageContainer = new javax.swing.JLabel();
         registerBg = new javax.swing.JLabel();
@@ -103,7 +173,6 @@ public class Register extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Register");
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(900, 685));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -218,7 +287,6 @@ public class Register extends javax.swing.JFrame {
         workTypeLabel.setText("Work Type:");
         registerContainer.add(workTypeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 256, -1, -1));
 
-        workType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         workType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 workTypeActionPerformed(evt);
@@ -232,13 +300,13 @@ public class Register extends javax.swing.JFrame {
         registerContainer.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, 247, -1));
 
         birthdateLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        birthdateLabel.setText("Birthday (dd/mm/yyyy)");
+        birthdateLabel.setText("Birthday (yyyy-mm-dd)");
         registerContainer.add(birthdateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 325, -1, -1));
 
         jScrollPane11.setHorizontalScrollBar(null);
         jScrollPane11.setViewportView(birthdate);
 
-        registerContainer.add(jScrollPane11, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 357, 102, -1));
+        registerContainer.add(jScrollPane11, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 357, 90, -1));
 
         confirmPasswordLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         confirmPasswordLabel.setText("Confirm Password:");
@@ -277,29 +345,26 @@ public class Register extends javax.swing.JFrame {
         });
         registerContainer.add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(715, 480, -1, -1));
 
-        day.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        day.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dayActionPerformed(evt);
-            }
-        });
-        registerContainer.add(day, new org.netbeans.lib.awtextra.AbsoluteConstraints(627, 357, 53, -1));
-
-        month.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        month.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                monthActionPerformed(evt);
-            }
-        });
-        registerContainer.add(month, new org.netbeans.lib.awtextra.AbsoluteConstraints(687, 357, 53, -1));
-
-        year.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         year.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 yearActionPerformed(evt);
             }
         });
-        registerContainer.add(year, new org.netbeans.lib.awtextra.AbsoluteConstraints(747, 357, 53, -1));
+        registerContainer.add(year, new org.netbeans.lib.awtextra.AbsoluteConstraints(615, 358, 70, -1));
+
+        month.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                monthActionPerformed(evt);
+            }
+        });
+        registerContainer.add(month, new org.netbeans.lib.awtextra.AbsoluteConstraints(689, 358, 53, -1));
+
+        day.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dayActionPerformed(evt);
+            }
+        });
+        registerContainer.add(day, new org.netbeans.lib.awtextra.AbsoluteConstraints(747, 358, 53, -1));
 
         errorMessage.setText("Lagayan ng error message");
         registerContainer.add(errorMessage, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 500, -1, -1));
@@ -444,6 +509,7 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JLabel errorMessageContainer;
     private javax.swing.JTextPane fullName;
     private javax.swing.JLabel fullNameLabel;
+    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane12;

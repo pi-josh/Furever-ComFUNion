@@ -7,6 +7,9 @@ import Models.Veterinarian;
 import java.awt.Color;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -41,8 +44,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
     ArrayList<Veterinarian> vets;
     private int totalVets;
     private int vetIndex = 0;
-    private boolean vetStart = true;
-    private boolean vetEnd = false;
 
     /**
      * Creates new form Main
@@ -53,6 +54,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         samples();
 
         initComponents();
+        comboBoxes();
 
         // default
         defaultWindow();
@@ -189,12 +191,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
         occupation = new javax.swing.JTextPane();
         companyScroll = new javax.swing.JScrollPane();
         companyName = new javax.swing.JTextPane();
-        workType = new javax.swing.JComboBox<>();
+        year = new javax.swing.JComboBox<>();
+        month = new javax.swing.JComboBox<>();
+        day = new javax.swing.JComboBox<>();
         birthdayScroll = new javax.swing.JScrollPane();
         birthdate = new javax.swing.JTextPane();
-        day = new javax.swing.JComboBox<>();
-        month = new javax.swing.JComboBox<>();
-        year = new javax.swing.JComboBox<>();
+        workType = new javax.swing.JComboBox<>();
         profilePicture = new javax.swing.JLabel();
         profileName = new javax.swing.JLabel();
         profileUsername = new javax.swing.JLabel();
@@ -958,28 +960,13 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         profileBody.add(companyScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 490, 260, -1));
 
-        workType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        workType.addActionListener(new java.awt.event.ActionListener() {
+        year.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                workTypeActionPerformed(evt);
+                yearActionPerformed(evt);
             }
         });
-        profileBody.add(workType, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 550, 230, -1));
+        profileBody.add(year, new org.netbeans.lib.awtextra.AbsoluteConstraints(995, 600, 70, -1));
 
-        birthdayScroll.setHorizontalScrollBar(null);
-        birthdayScroll.setViewportView(birthdate);
-
-        profileBody.add(birthdayScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 600, 102, -1));
-
-        day.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        day.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dayActionPerformed(evt);
-            }
-        });
-        profileBody.add(day, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 600, 53, -1));
-
-        month.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         month.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 monthActionPerformed(evt);
@@ -987,13 +974,24 @@ public class UserLoggedIn extends javax.swing.JFrame {
         });
         profileBody.add(month, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 600, 53, -1));
 
-        year.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        year.addActionListener(new java.awt.event.ActionListener() {
+        day.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                yearActionPerformed(evt);
+                dayActionPerformed(evt);
             }
         });
-        profileBody.add(year, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 600, 53, -1));
+        profileBody.add(day, new org.netbeans.lib.awtextra.AbsoluteConstraints(1128, 600, 53, -1));
+
+        birthdayScroll.setHorizontalScrollBar(null);
+        birthdayScroll.setViewportView(birthdate);
+
+        profileBody.add(birthdayScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 600, 90, -1));
+
+        workType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                workTypeActionPerformed(evt);
+            }
+        });
+        profileBody.add(workType, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 550, 240, -1));
 
         profilePicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/sampeProfilePicture.jpg"))); // NOI18N
         profileBody.add(profilePicture, new org.netbeans.lib.awtextra.AbsoluteConstraints(242, 50, 260, 245));
@@ -1140,6 +1138,74 @@ public class UserLoggedIn extends javax.swing.JFrame {
         FAQsPanel2.setVisible(false);
         FAQsPanel3.setVisible(false);
         FAQsPanel4.setVisible(false);
+    }
+    
+    private void comboBoxes() {
+        // action listener for year and month to dynamically adjust days
+        year.addActionListener(new ComboBoxActionListener());
+        month.addActionListener(new ComboBoxActionListener());
+        
+        // populate the combo boxes
+        populateComboBoxes();
+    }
+    
+    private void populateComboBoxes() {
+        // Populate worktype combobox
+        workType.addItem("Travel");
+        workType.addItem("No Travel");
+
+        // Populate year combobox
+        int currentYear = YearMonth.now().getYear();
+        for (int y = 1960; y <= currentYear; y++) {
+            String yearValue = String.valueOf(y);
+            year.addItem(yearValue);
+        }
+
+        // Populate month combobox
+        for (int m = 1; m <= 12; m++) {
+            String monthValue = String.valueOf(m);
+            month.addItem(monthValue);
+        }
+
+        // Initially populate day combobox based on current year and month
+        updateDays();
+    }
+
+    private class ComboBoxActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            updateDays();
+        }
+    }
+
+    private void updateDays() {
+        Object selectedYearObj = year.getSelectedItem();
+        Object selectedMonthObj = month.getSelectedItem();
+
+        if (selectedYearObj != null && selectedMonthObj != null) {
+            Integer selectedYear;
+            Integer selectedMonth;
+
+            if (selectedYearObj instanceof String) {
+                selectedYear = Integer.parseInt((String) selectedYearObj);
+            } else {
+                selectedYear = (Integer) selectedYearObj;
+            }
+
+            if (selectedMonthObj instanceof String) {
+                selectedMonth = Integer.parseInt((String) selectedMonthObj);
+            } else {
+                selectedMonth = (Integer) selectedMonthObj;
+            }
+
+            YearMonth yearMonth = YearMonth.of(selectedYear, selectedMonth);
+            int daysInMonth = yearMonth.lengthOfMonth();
+            day.removeAllItems();
+            for (int d = 1; d <= daysInMonth; d++) {
+                String dayValue = String.valueOf(d);
+                day.addItem(dayValue);
+            }
+        }
     }
 
     private void samples() {
@@ -2427,21 +2493,21 @@ public class UserLoggedIn extends javax.swing.JFrame {
         profileCancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/cancel button (2).png")));
     }//GEN-LAST:event_profileCancelButtonMouseExited
 
-    private void workTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workTypeActionPerformed
+    private void yearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_workTypeActionPerformed
-
-    private void dayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dayActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_dayActionPerformed
+    }//GEN-LAST:event_yearActionPerformed
 
     private void monthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_monthActionPerformed
 
-    private void yearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearActionPerformed
+    private void dayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dayActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_yearActionPerformed
+    }//GEN-LAST:event_dayActionPerformed
+
+    private void workTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workTypeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_workTypeActionPerformed
 
     /**
      * @param args the command line arguments
