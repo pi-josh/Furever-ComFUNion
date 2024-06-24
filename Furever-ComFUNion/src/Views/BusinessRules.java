@@ -5,27 +5,26 @@
  */
 package Views;
 
-import java.awt.Color;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  *
  * @author joshu
  */
 public class BusinessRules extends javax.swing.JFrame {
-    private JFrame landingPageFrame;
-    private boolean loginClosed = false;
+    // sub frames
+    private UserLoggedIn userLoggedIn;
+    private JPanel glassPane;
     
     /**
      * Creates new form Register
      */
-    public BusinessRules(JFrame landingPageFrame) {
+    public BusinessRules(UserLoggedIn userLoggedIn) {
         initComponents();
-        this.landingPageFrame = landingPageFrame;
+        this.userLoggedIn = userLoggedIn;
         setVisible(true);
         
         // Window logo
@@ -58,15 +57,6 @@ public class BusinessRules extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
-    public boolean getLoginClosed() {
-        return loginClosed;
-    }
-    
-    public void setLoginClosed(boolean state) {
-        loginClosed = state;
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -119,8 +109,11 @@ public class BusinessRules extends javax.swing.JFrame {
 
     private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
         // TODO add your handling code here:
+        if (userLoggedIn != null) {
+            glassPane = (JPanel) userLoggedIn.getGlassPane();
+            glassPane.setVisible(false);
+        }
         this.setVisible(false);
-        setLoginClosed(true);
     }//GEN-LAST:event_backButtonMouseClicked
 
     private void backButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseEntered

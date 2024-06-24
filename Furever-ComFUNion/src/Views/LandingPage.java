@@ -88,7 +88,7 @@ public class LandingPage extends javax.swing.JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // brings the active sub frame on the front and add a system beep to notify
-                if (exitDialog != null && exitDialog.isVisible() && !exitDialog.getBounds().contains(e.getPoint())) {
+                if (exitDialog != null && exitDialog.isVisible()) {
                     exitDialog.toFront();
                     Toolkit.getDefaultToolkit().beep(); // Play default system beep
                 }
@@ -748,7 +748,7 @@ public class LandingPage extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (login != null) {
             if(login.getRegister() != null) {
-                register= login.getRegister();
+                register = login.getRegister();
             }
             login.setVisible(false);
         }

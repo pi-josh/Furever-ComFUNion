@@ -15,6 +15,7 @@ import javax.swing.JPanel;
  * @author joshu
  */
 public class ExitDialog extends javax.swing.JFrame {
+    // sub frames
     private LandingPage landingPage;
     private UserLoggedIn userLoggedIn;
     private JPanel glassPane;
@@ -163,6 +164,11 @@ public class ExitDialog extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (landingPage != null) {
             glassPane = (JPanel) landingPage.getGlassPane();
+            glassPane.setVisible(false);
+        }
+        
+        if (userLoggedIn != null) {
+            glassPane = (JPanel) userLoggedIn.getGlassPane();
             glassPane.setVisible(false);
         }
         this.setVisible(false);
