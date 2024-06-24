@@ -17,15 +17,16 @@ import javax.swing.JFrame;
  * @author joshu
  */
 public class Login extends javax.swing.JFrame {
-    private JFrame landingPageFrame;
-    private boolean loginClosed = false;
+    private LandingPage landingPage;
+    private Register register;
     
     /**
      * Creates new form Register
      */
-    public Login(JFrame landingPageFrame) {
+    public Login(LandingPage landingPage) {
         initComponents();
-        this.landingPageFrame = landingPageFrame;
+        this.landingPage = landingPage;
+        register = landingPage.getRegister();
         setVisible(true);
         
         // Window logo
@@ -59,14 +60,11 @@ public class Login extends javax.swing.JFrame {
         }
     }
     
-    public boolean getLoginClosed() {
-        return loginClosed;
+    // getters
+    public Register getRegister() {
+        return register;
     }
     
-    public void setLoginClosed(boolean state) {
-        loginClosed = state;
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -80,7 +78,7 @@ public class Login extends javax.swing.JFrame {
         minimizeButton = new javax.swing.JLabel();
         backButton = new javax.swing.JLabel();
         loginHeader = new javax.swing.JLabel();
-        registerContainer = new javax.swing.JPanel();
+        loginContainer = new javax.swing.JPanel();
         usernameLabel = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         username = new javax.swing.JTextPane();
@@ -105,7 +103,7 @@ public class Login extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         titleContainer.setBackground(new java.awt.Color(194, 144, 69));
-        titleContainer.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        titleContainer.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 1, 2, new java.awt.Color(0, 0, 0)));
         titleContainer.setPreferredSize(new java.awt.Dimension(900, 75));
         titleContainer.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -143,14 +141,14 @@ public class Login extends javax.swing.JFrame {
 
         getContentPane().add(titleContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        registerContainer.setBackground(new java.awt.Color(255, 250, 205));
-        registerContainer.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 1, 0, new java.awt.Color(0, 0, 0)));
-        registerContainer.setPreferredSize(new java.awt.Dimension(500, 575));
-        registerContainer.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        loginContainer.setBackground(new java.awt.Color(255, 250, 205));
+        loginContainer.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 2, 2, 0, new java.awt.Color(0, 0, 0)));
+        loginContainer.setPreferredSize(new java.awt.Dimension(500, 575));
+        loginContainer.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         usernameLabel.setFont(new java.awt.Font("Tahoma", 0, 19)); // NOI18N
         usernameLabel.setText("Username:");
-        registerContainer.add(usernameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 200, -1, -1));
+        loginContainer.add(usernameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 200, -1, -1));
 
         jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         jScrollPane2.setHorizontalScrollBar(null);
@@ -162,18 +160,18 @@ public class Login extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(username);
 
-        registerContainer.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 230, 270, 29));
+        loginContainer.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 230, 270, 29));
 
         passwordLabel.setFont(new java.awt.Font("Tahoma", 0, 19)); // NOI18N
         passwordLabel.setText("Password:");
-        registerContainer.add(passwordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 270, -1, -1));
+        loginContainer.add(passwordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 270, -1, -1));
 
         password.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 passwordActionPerformed(evt);
             }
         });
-        registerContainer.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 300, 270, 30));
+        loginContainer.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 300, 270, 30));
 
         loginButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/login acc.png"))); // NOI18N
         loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -187,11 +185,11 @@ public class Login extends javax.swing.JFrame {
                 loginButtonMouseExited(evt);
             }
         });
-        registerContainer.add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 430, -1, 60));
+        loginContainer.add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 430, -1, 60));
 
         registerDescription.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         registerDescription.setText("Don't have an account yet?");
-        registerContainer.add(registerDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 500, -1, -1));
+        loginContainer.add(registerDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 500, -1, -1));
 
         registerButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         registerButton.setForeground(new java.awt.Color(74, 54, 13));
@@ -207,33 +205,33 @@ public class Login extends javax.swing.JFrame {
                 registerButtonMouseExited(evt);
             }
         });
-        registerContainer.add(registerButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 500, -1, -1));
+        loginContainer.add(registerButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 500, -1, -1));
 
         logo.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         logo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/logo.png"))); // NOI18N
         logo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        registerContainer.add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 210, 200));
+        loginContainer.add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 210, 200));
 
         errorMessage.setText("lagayan ng error message rito");
-        registerContainer.add(errorMessage, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 370, -1, -1));
+        loginContainer.add(errorMessage, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 370, -1, -1));
 
         errorMessageContainer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/login error container.png"))); // NOI18N
-        registerContainer.add(errorMessageContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 340, -1, -1));
+        loginContainer.add(errorMessageContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 340, -1, -1));
 
         loginFormBackground.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         loginFormBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/login form bg.png"))); // NOI18N
         loginFormBackground.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         loginFormBackground.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        registerContainer.add(loginFormBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 470, 500));
+        loginContainer.add(loginFormBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 470, 500));
 
         design.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/login paw prints.png"))); // NOI18N
-        registerContainer.add(design, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 0, 499, 609));
+        loginContainer.add(design, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 2, 496, 606));
 
-        getContentPane().add(registerContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 75, 500, 610));
+        getContentPane().add(loginContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 75, 500, 610));
 
         loginDescription.setBackground(new java.awt.Color(221, 237, 250));
-        loginDescription.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(0, 0, 0)));
+        loginDescription.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 2, 2, new java.awt.Color(0, 0, 0)));
         loginDescription.setPreferredSize(new java.awt.Dimension(400, 500));
         loginDescription.setLayout(new java.awt.GridBagLayout());
 
@@ -288,7 +286,7 @@ public class Login extends javax.swing.JFrame {
         
         if(username.getText().equals(tempUsername) && password.getText().equals(tempPassword)) {
             this.setVisible(false);
-            landingPageFrame.setVisible(false);
+            landingPage.setVisible(false);
             new UserLoggedIn().setVisible(true);
         }
     }//GEN-LAST:event_loginButtonMouseClicked
@@ -296,7 +294,6 @@ public class Login extends javax.swing.JFrame {
     private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
         // TODO add your handling code here:
         this.setVisible(false);
-        setLoginClosed(true);
     }//GEN-LAST:event_backButtonMouseClicked
 
     private void backButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseEntered
@@ -311,9 +308,19 @@ public class Login extends javax.swing.JFrame {
 
     private void registerButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerButtonMouseClicked
         // TODO add your handling code here:
-        this.setVisible(false);
-        Register register = new Register();
-        register.setVisible(true);
+        if (landingPage != null) {
+            register = landingPage.getRegister();
+        }
+        if (register == null) {
+            register = new Register(landingPage);
+            register.setVisible(true);
+        } else if (!register.isVisible()) {
+            register.setVisible(true);
+        } else {
+            register.toFront();
+            register.requestFocus();
+        }
+        this.dispose();
     }//GEN-LAST:event_registerButtonMouseClicked
 
     private void minimizeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeButtonMouseClicked
@@ -374,6 +381,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel errorMessageContainer;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel loginButton;
+    private javax.swing.JPanel loginContainer;
     private javax.swing.JPanel loginDescription;
     private javax.swing.JLabel loginFormBackground;
     private javax.swing.JLabel loginHeader;
@@ -383,7 +391,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPasswordField password;
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JLabel registerButton;
-    private javax.swing.JPanel registerContainer;
     private javax.swing.JLabel registerDescription;
     private javax.swing.JPanel titleContainer;
     private javax.swing.JTextPane username;

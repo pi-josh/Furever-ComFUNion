@@ -8,18 +8,22 @@ package Views;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
 /**
  *
  * @author joshu
  */
 public class ConfirmationDialog extends javax.swing.JFrame {
-    private boolean loginClosed = false;
+    // sub frames
+    private UserLoggedIn userLoggedIn;
+    private JPanel glassPane;
     
     /**
      * Creates new form Register
      */
-    public ConfirmationDialog() {
+    public ConfirmationDialog(UserLoggedIn userLoggedIn) {
+        this.userLoggedIn = userLoggedIn;
         initComponents();
         
         // Window logo
@@ -36,12 +40,21 @@ public class ConfirmationDialog extends javax.swing.JFrame {
         }
     }
     
-    public boolean getLoginClosed() {
-        return loginClosed;
-    }
-    
-    public void setLoginClosed(boolean state) {
-        loginClosed = state;
+    public ConfirmationDialog() {
+        initComponents();
+        
+        // Window logo
+        ImageIcon icon1 = null;
+        try {
+            icon1 = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Resources/logo2.png")));
+            if (icon1.getImageLoadStatus() == MediaTracker.ERRORED) {
+                throw new NullPointerException("Image not found or cannot be loaded.");
+            }
+            this.setIconImage(icon1.getImage());
+        } catch (NullPointerException e) {
+            System.err.println("Error: Image not found. " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -113,6 +126,10 @@ public class ConfirmationDialog extends javax.swing.JFrame {
 
     private void yesButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_yesButtonMouseClicked
         // TODO add your handling code here:
+        if (userLoggedIn != null) {
+            glassPane = (JPanel) userLoggedIn.getGlassPane();
+            glassPane.setVisible(false);
+        }
         this.setVisible(false);
     }//GEN-LAST:event_yesButtonMouseClicked
 
@@ -128,6 +145,10 @@ public class ConfirmationDialog extends javax.swing.JFrame {
 
     private void noButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_noButtonMouseClicked
         // TODO add your handling code here:
+        if (userLoggedIn != null) {
+            glassPane = (JPanel) userLoggedIn.getGlassPane();
+            glassPane.setVisible(false);
+        }
         this.setVisible(false);
     }//GEN-LAST:event_noButtonMouseClicked
 

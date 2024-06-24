@@ -7,9 +7,15 @@ import Models.Veterinarian;
 import java.awt.Color;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -21,6 +27,24 @@ import javax.swing.JFrame;
  * @author joshu
  */
 public class UserLoggedIn extends javax.swing.JFrame {
+    // sub frames
+    private ExitDialog exitDialog;
+    private ConfirmationDialog confirmationDialog;
+    private BusinessRules businessRulesFrame;
+    private Devs devsFrame;
+    private Adopt adopt;
+    private Rehome rehome;
+    private JPanel glassPane;
+    
+    // for pet current panel temp info holder
+    private boolean petPanel1Clicked = false;
+    private String petURL1;
+    private String petURL2;
+    private String petURL3;
+    private String tempPetURL;
+    private String tempPetName;
+    private String tempPetAge;
+    private String tempPetGender;
 
     // buttons clickability
     private boolean homeClicked;
@@ -41,8 +65,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
     ArrayList<Veterinarian> vets;
     private int totalVets;
     private int vetIndex = 0;
-    private boolean vetStart = true;
-    private boolean vetEnd = false;
 
     /**
      * Creates new form Main
@@ -53,6 +75,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         samples();
 
         initComponents();
+        comboBoxes();
 
         // default
         defaultWindow();
@@ -69,6 +92,52 @@ public class UserLoggedIn extends javax.swing.JFrame {
             System.err.println("Error: Image not found. " + e.getMessage());
             e.printStackTrace();
         }
+        
+        // glass pane to block out any interaction within the main frame when opening a sub frame
+        glassPane = new JPanel();
+        glassPane.setOpaque(false);
+        glassPane.setVisible(false);
+        glassPane.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // brings the active sub frame on the front and add a system beep to notify
+                
+                // for exit dialog
+                if (exitDialog != null && exitDialog.isVisible()) {
+                    exitDialog.toFront();
+                    Toolkit.getDefaultToolkit().beep();
+                }
+                
+                // for business rules in about us panel
+                if (businessRulesFrame != null && businessRulesFrame.isVisible()) {
+                    businessRulesFrame.toFront();
+                    Toolkit.getDefaultToolkit().beep();
+                }
+                
+                // for devs in about us panel
+                if (devsFrame != null && devsFrame.isVisible()) {
+                    devsFrame.toFront();
+                    Toolkit.getDefaultToolkit().beep();
+                }
+                
+                // for confirmation dialog
+                if (confirmationDialog != null && confirmationDialog.isVisible()) {
+                    confirmationDialog.toFront();
+                    Toolkit.getDefaultToolkit().beep();
+                }
+            }
+        });
+
+        setGlassPane(glassPane);
+    }
+    
+    // getters
+    public Adopt getAdopt() {
+        return adopt;
+    }
+    
+    public Rehome getRehome() {
+        return rehome;
     }
 
     /**
@@ -140,6 +209,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         petPanel2 = new javax.swing.JLabel();
         petPanel3 = new javax.swing.JLabel();
         petHeader = new javax.swing.JLabel();
+        backButton = new javax.swing.JLabel();
         background3 = new javax.swing.JLabel();
         vetsBody = new javax.swing.JPanel();
         vetName1 = new javax.swing.JLabel();
@@ -189,12 +259,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
         occupation = new javax.swing.JTextPane();
         companyScroll = new javax.swing.JScrollPane();
         companyName = new javax.swing.JTextPane();
-        workType = new javax.swing.JComboBox<>();
+        year = new javax.swing.JComboBox<>();
+        month = new javax.swing.JComboBox<>();
+        day = new javax.swing.JComboBox<>();
         birthdayScroll = new javax.swing.JScrollPane();
         birthdate = new javax.swing.JTextPane();
-        day = new javax.swing.JComboBox<>();
-        month = new javax.swing.JComboBox<>();
-        year = new javax.swing.JComboBox<>();
+        workType = new javax.swing.JComboBox<>();
         profilePicture = new javax.swing.JLabel();
         profileName = new javax.swing.JLabel();
         profileUsername = new javax.swing.JLabel();
@@ -632,19 +702,42 @@ public class UserLoggedIn extends javax.swing.JFrame {
         petsBody.add(petGender3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1075, 525, -1, -1));
 
         petPanel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets panel (1).png"))); // NOI18N
+        petPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                petPanel1MouseClicked(evt);
+            }
+        });
         petsBody.add(petPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 400, 530));
 
         petPanel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets panel (1).png"))); // NOI18N
+        petPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                petPanel2MouseClicked(evt);
+            }
+        });
         petsBody.add(petPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 90, 400, 530));
 
         petPanel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets panel (1).png"))); // NOI18N
         petPanel3.setPreferredSize(new java.awt.Dimension(400, 400));
+        petPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                petPanel3MouseClicked(evt);
+            }
+        });
         petsBody.add(petPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 90, 400, 530));
 
         petHeader.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         petHeader.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         petHeader.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets header.png"))); // NOI18N
         petsBody.add(petHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 250, 90));
+
+        backButton.setText("Back");
+        backButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backButtonMouseClicked(evt);
+            }
+        });
+        petsBody.add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 60, -1, -1));
 
         background3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
         petsBody.add(background3, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 1366, 738));
@@ -888,6 +981,9 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         adoptButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/adopt button (1).png"))); // NOI18N
         adoptButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                adoptButtonMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 adoptButtonMouseEntered(evt);
             }
@@ -899,6 +995,9 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         rehomeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/rehome button (1).png"))); // NOI18N
         rehomeButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rehomeButtonMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 rehomeButtonMouseEntered(evt);
             }
@@ -958,28 +1057,13 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         profileBody.add(companyScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 490, 260, -1));
 
-        workType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        workType.addActionListener(new java.awt.event.ActionListener() {
+        year.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                workTypeActionPerformed(evt);
+                yearActionPerformed(evt);
             }
         });
-        profileBody.add(workType, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 550, 230, -1));
+        profileBody.add(year, new org.netbeans.lib.awtextra.AbsoluteConstraints(995, 600, 70, -1));
 
-        birthdayScroll.setHorizontalScrollBar(null);
-        birthdayScroll.setViewportView(birthdate);
-
-        profileBody.add(birthdayScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 600, 102, -1));
-
-        day.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        day.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dayActionPerformed(evt);
-            }
-        });
-        profileBody.add(day, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 600, 53, -1));
-
-        month.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         month.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 monthActionPerformed(evt);
@@ -987,13 +1071,24 @@ public class UserLoggedIn extends javax.swing.JFrame {
         });
         profileBody.add(month, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 600, 53, -1));
 
-        year.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        year.addActionListener(new java.awt.event.ActionListener() {
+        day.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                yearActionPerformed(evt);
+                dayActionPerformed(evt);
             }
         });
-        profileBody.add(year, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 600, 53, -1));
+        profileBody.add(day, new org.netbeans.lib.awtextra.AbsoluteConstraints(1128, 600, 53, -1));
+
+        birthdayScroll.setHorizontalScrollBar(null);
+        birthdayScroll.setViewportView(birthdate);
+
+        profileBody.add(birthdayScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 600, 90, -1));
+
+        workType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                workTypeActionPerformed(evt);
+            }
+        });
+        profileBody.add(workType, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 550, 240, -1));
 
         profilePicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/sampeProfilePicture.jpg"))); // NOI18N
         profileBody.add(profilePicture, new org.netbeans.lib.awtextra.AbsoluteConstraints(242, 50, 260, 245));
@@ -1140,6 +1235,74 @@ public class UserLoggedIn extends javax.swing.JFrame {
         FAQsPanel2.setVisible(false);
         FAQsPanel3.setVisible(false);
         FAQsPanel4.setVisible(false);
+    }
+    
+    private void comboBoxes() {
+        // action listener for year and month to dynamically adjust days
+        year.addActionListener(new ComboBoxActionListener());
+        month.addActionListener(new ComboBoxActionListener());
+        
+        // populate the combo boxes
+        populateComboBoxes();
+    }
+    
+    private void populateComboBoxes() {
+        // Populate worktype combobox
+        workType.addItem("Travel");
+        workType.addItem("No Travel");
+
+        // Populate year combobox
+        int currentYear = YearMonth.now().getYear();
+        for (int y = 1960; y <= currentYear; y++) {
+            String yearValue = String.valueOf(y);
+            year.addItem(yearValue);
+        }
+
+        // Populate month combobox
+        for (int m = 1; m <= 12; m++) {
+            String monthValue = String.valueOf(m);
+            month.addItem(monthValue);
+        }
+
+        // Initially populate day combobox based on current year and month
+        updateDays();
+    }
+
+    private class ComboBoxActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            updateDays();
+        }
+    }
+
+    private void updateDays() {
+        Object selectedYearObj = year.getSelectedItem();
+        Object selectedMonthObj = month.getSelectedItem();
+
+        if (selectedYearObj != null && selectedMonthObj != null) {
+            Integer selectedYear;
+            Integer selectedMonth;
+
+            if (selectedYearObj instanceof String) {
+                selectedYear = Integer.parseInt((String) selectedYearObj);
+            } else {
+                selectedYear = (Integer) selectedYearObj;
+            }
+
+            if (selectedMonthObj instanceof String) {
+                selectedMonth = Integer.parseInt((String) selectedMonthObj);
+            } else {
+                selectedMonth = (Integer) selectedMonthObj;
+            }
+
+            YearMonth yearMonth = YearMonth.of(selectedYear, selectedMonth);
+            int daysInMonth = yearMonth.lengthOfMonth();
+            day.removeAllItems();
+            for (int d = 1; d <= daysInMonth; d++) {
+                String dayValue = String.valueOf(d);
+                day.addItem(dayValue);
+            }
+        }
     }
 
     private void samples() {
@@ -1291,6 +1454,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         petProfilesReset();
 
         // set visiblity
+        backButton.setVisible(false);
         homeBody.setVisible(false);
         aboutUsBody.setVisible(false);
         FAQsBody.setVisible(false);
@@ -1503,6 +1667,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
             petAge1.setText(String.valueOf(pets.get(petIndex).getPetAge()) + " months");
             petGender1.setText(pets.get(petIndex).getPetSex());
             petImg1.setIcon(new javax.swing.ImageIcon(getClass().getResource(pets.get(petIndex).getPicURL())));
+            petURL1 = pets.get(petIndex).getPicURL();
             petIndex++;
         }
 
@@ -1512,6 +1677,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
             petAge2.setText(String.valueOf(pets.get(petIndex).getPetAge()) + " months");
             petGender2.setText(pets.get(petIndex).getPetSex());
             petImg2.setIcon(new javax.swing.ImageIcon(getClass().getResource(pets.get(petIndex).getPicURL())));
+            petURL2 = pets.get(petIndex).getPicURL();
             petIndex++;
         }
 
@@ -1521,6 +1687,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
             petAge3.setText(String.valueOf(pets.get(petIndex).getPetAge()) + " months");
             petGender3.setText(pets.get(petIndex).getPetSex());
             petImg3.setIcon(new javax.swing.ImageIcon(getClass().getResource(pets.get(petIndex).getPicURL())));
+            petURL3 = pets.get(petIndex).getPicURL();
         }
     }
 
@@ -1738,6 +1905,68 @@ public class UserLoggedIn extends javax.swing.JFrame {
         occupationScroll.setVisible(edit);
         companyScroll.setVisible(edit);
         birthdayScroll.setVisible(edit);
+    }
+    
+    private void hidePetPanels(boolean hide) {
+        backButton.setVisible(!hide);
+        
+        petPanel2.setVisible(hide);
+        petImg2.setVisible(hide);
+        petName2.setVisible(hide);
+        petAge2.setVisible(hide);
+        petGender2.setVisible(hide);
+        
+        petPanel3.setVisible(hide);
+        petImg3.setVisible(hide);
+        petName3.setVisible(hide);
+        petAge3.setVisible(hide);
+        petGender3.setVisible(hide);
+        
+        if(petPrev.isVisible()) {
+            petPrev.setVisible(hide);
+        } else if(petIndex > 2) {
+            petPrev.setVisible(hide);
+        }
+        
+        if(petNext.isVisible()) {
+            petNext.setVisible(hide);
+        } else if(petIndex < totalPets - 1) {
+            petNext.setVisible(hide);
+        }
+    }
+    
+    private void setCurrentPetPanel(int panel) {
+        if(!petPanel1Clicked) {
+            tempPetURL = petURL1;
+            tempPetName = petName1.getText();
+            tempPetAge = petAge1.getText();
+            tempPetGender = petGender1.getText();
+            petPanel1Clicked = true;
+            
+            System.out.println(tempPetName);
+        }
+        
+        switch (panel) {
+            case 1:
+                break;
+            case 2:
+                petName1.setText(petName2.getText());
+                petAge1.setText(petAge2.getText());
+                petGender1.setText(petGender2.getText());
+                petImg1.setIcon(new javax.swing.ImageIcon(getClass().getResource(petURL2)));
+                break;
+            case 3:
+                petName1.setText(petName3.getText());
+                petAge1.setText(petAge3.getText());
+                petGender1.setText(petGender3.getText());
+                petImg1.setIcon(new javax.swing.ImageIcon(getClass().getResource(petURL3)));
+                break;
+            default:
+                petName1.setText(tempPetName);
+                petAge1.setText(tempPetAge);
+                petGender1.setText(tempPetGender);
+                petImg1.setIcon(new javax.swing.ImageIcon(getClass().getResource(tempPetURL)));
+        }
     }
 
     private void badgeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_badgeKeyPressed
@@ -2044,7 +2273,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void exitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButtonMouseClicked
         // TODO add your handling code here:
-        new ExitDialog(this).setVisible(true);
+        if (exitDialog == null || !exitDialog.isVisible()) {
+            exitDialog = new ExitDialog(null, this);
+            exitDialog.setVisible(true);
+            glassPane.setVisible(true);
+        } else {
+            exitDialog.toFront();
+            exitDialog.requestFocus();
+        }
     }//GEN-LAST:event_exitButtonMouseClicked
 
     private void adoptButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adoptButtonMouseEntered
@@ -2094,12 +2330,26 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void devsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_devsMouseClicked
         // TODO add your handling code here:
-        new Devs().setVisible(true);
+        if (devsFrame == null || !devsFrame.isVisible()) {
+            devsFrame = new Devs(this);
+            devsFrame.setVisible(true);
+            glassPane.setVisible(true);
+        } else {
+            devsFrame.toFront();
+            devsFrame.requestFocus();
+        }
     }//GEN-LAST:event_devsMouseClicked
 
     private void businessRulesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_businessRulesMouseClicked
         // TODO add your handling code here:
-        new BusinessRules().setVisible(true);
+        if (businessRulesFrame == null || !businessRulesFrame.isVisible()) {
+            businessRulesFrame = new BusinessRules(this);
+            businessRulesFrame.setVisible(true);
+            glassPane.setVisible(true);
+        } else {
+            businessRulesFrame.toFront();
+            businessRulesFrame.requestFocus();
+        }
     }//GEN-LAST:event_businessRulesMouseClicked
 
     private void petPrevMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petPrevMouseClicked
@@ -2110,6 +2360,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         }
 
         if (petIndex > 2) {
+            petNext.setVisible(true);
             petIndex -= 3;
             petProfiles();
         }
@@ -2258,7 +2509,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void deleteButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton1MouseClicked
         // TODO add your handling code here:
-        new ConfirmationDialog().setVisible(true);
+        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
+            confirmationDialog = new ConfirmationDialog(this);
+            confirmationDialog.setVisible(true);
+            glassPane.setVisible(true);
+        } else {
+            confirmationDialog.toFront();
+            confirmationDialog.requestFocus();
+        }
     }//GEN-LAST:event_deleteButton1MouseClicked
 
     private void deleteButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton1MouseEntered
@@ -2273,7 +2531,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void deleteButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton2MouseClicked
         // TODO add your handling code here:
-        new ConfirmationDialog().setVisible(true);
+        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
+            confirmationDialog = new ConfirmationDialog(this);
+            confirmationDialog.setVisible(true);
+            glassPane.setVisible(true);
+        } else {
+            confirmationDialog.toFront();
+            confirmationDialog.requestFocus();
+        }
     }//GEN-LAST:event_deleteButton2MouseClicked
 
     private void deleteButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton2MouseEntered
@@ -2288,7 +2553,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void deleteButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton3MouseClicked
         // TODO add your handling code here:
-        new ConfirmationDialog().setVisible(true);
+        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
+            confirmationDialog = new ConfirmationDialog(this);
+            confirmationDialog.setVisible(true);
+            glassPane.setVisible(true);
+        } else {
+            confirmationDialog.toFront();
+            confirmationDialog.requestFocus();
+        }
     }//GEN-LAST:event_deleteButton3MouseClicked
 
     private void deleteButton3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton3MouseEntered
@@ -2303,7 +2575,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void deleteButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton4MouseClicked
         // TODO add your handling code here:
-        new ConfirmationDialog().setVisible(true);
+        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
+            confirmationDialog = new ConfirmationDialog(this);
+            confirmationDialog.setVisible(true);
+            glassPane.setVisible(true);
+        } else {
+            confirmationDialog.toFront();
+            confirmationDialog.requestFocus();
+        }
     }//GEN-LAST:event_deleteButton4MouseClicked
 
     private void deleteButton4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton4MouseEntered
@@ -2318,7 +2597,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void deleteButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton5MouseClicked
         // TODO add your handling code here:
-        new ConfirmationDialog().setVisible(true);
+        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
+            confirmationDialog = new ConfirmationDialog(this);
+            confirmationDialog.setVisible(true);
+            glassPane.setVisible(true);
+        } else {
+            confirmationDialog.toFront();
+            confirmationDialog.requestFocus();
+        }
     }//GEN-LAST:event_deleteButton5MouseClicked
 
     private void deleteButton5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton5MouseEntered
@@ -2338,13 +2624,27 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void confirmButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmButtonMouseClicked
         // TODO add your handling code here:
-        new ConfirmationDialog().setVisible(true);
+        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
+            confirmationDialog = new ConfirmationDialog(this);
+            confirmationDialog.setVisible(true);
+            glassPane.setVisible(true);
+        } else {
+            confirmationDialog.toFront();
+            confirmationDialog.requestFocus();
+        }
         applicationEditVisibility(false);
     }//GEN-LAST:event_confirmButtonMouseClicked
 
     private void cancelButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseClicked
         // TODO add your handling code here:
-        new ConfirmationDialog().setVisible(true);
+        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
+            confirmationDialog = new ConfirmationDialog(this);
+            confirmationDialog.setVisible(true);
+            glassPane.setVisible(true);
+        } else {
+            confirmationDialog.toFront();
+            confirmationDialog.requestFocus();
+        }
         applicationEditVisibility(false);
     }//GEN-LAST:event_cancelButtonMouseClicked
 
@@ -2365,7 +2665,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void profileDeleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileDeleteButtonMouseClicked
         // TODO add your handling code here:
-        new ConfirmationDialog().setVisible(true);
+        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
+            confirmationDialog = new ConfirmationDialog(this);
+            confirmationDialog.setVisible(true);
+            glassPane.setVisible(true);
+        } else {
+            confirmationDialog.toFront();
+            confirmationDialog.requestFocus();
+        }
     }//GEN-LAST:event_profileDeleteButtonMouseClicked
 
     private void profileDeleteButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileDeleteButtonMouseEntered
@@ -2380,6 +2687,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
         // TODO add your handling code here:
+        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
+            confirmationDialog = new ConfirmationDialog(this);
+            confirmationDialog.setVisible(true);
+            glassPane.setVisible(true);
+        } else {
+            confirmationDialog.toFront();
+            confirmationDialog.requestFocus();
+        }
         this.setVisible(false);
         new LandingPage(true).setVisible(true);
     }//GEN-LAST:event_logoutButtonMouseClicked
@@ -2396,7 +2711,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void profileConfirmButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileConfirmButtonMouseClicked
         // TODO add your handling code here:
-        new ConfirmationDialog().setVisible(true);
+        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
+            confirmationDialog = new ConfirmationDialog(this);
+            confirmationDialog.setVisible(true);
+            glassPane.setVisible(true);
+        } else {
+            confirmationDialog.toFront();
+            confirmationDialog.requestFocus();
+        }
         profileEditVisibility(false);
     }//GEN-LAST:event_profileConfirmButtonMouseClicked
 
@@ -2412,7 +2734,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void profileCancelButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileCancelButtonMouseClicked
         // TODO add your handling code here:
-        new ConfirmationDialog().setVisible(true);
+        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
+            confirmationDialog = new ConfirmationDialog(this);
+            confirmationDialog.setVisible(true);
+            glassPane.setVisible(true);
+        } else {
+            confirmationDialog.toFront();
+            confirmationDialog.requestFocus();
+        }
         profileEditVisibility(false);
     }//GEN-LAST:event_profileCancelButtonMouseClicked
 
@@ -2427,21 +2756,86 @@ public class UserLoggedIn extends javax.swing.JFrame {
         profileCancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/cancel button (2).png")));
     }//GEN-LAST:event_profileCancelButtonMouseExited
 
-    private void workTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workTypeActionPerformed
+    private void yearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_workTypeActionPerformed
-
-    private void dayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dayActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_dayActionPerformed
+    }//GEN-LAST:event_yearActionPerformed
 
     private void monthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_monthActionPerformed
 
-    private void yearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearActionPerformed
+    private void dayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dayActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_yearActionPerformed
+    }//GEN-LAST:event_dayActionPerformed
+
+    private void workTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workTypeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_workTypeActionPerformed
+
+    private void rehomeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rehomeButtonMouseClicked
+        // TODO add your handling code here:
+        if (adopt != null) {
+            if(adopt.getRehome() != null) {
+                rehome = adopt.getRehome();
+            }
+            adopt.setVisible(false);
+        }
+        
+        if (rehome == null) {
+            rehome = new Rehome(this);
+            rehome.setVisible(true);
+        } else if (!rehome.isVisible()) {
+            rehome.setVisible(true);
+        } else {
+            rehome.toFront();
+            rehome.requestFocus();
+        }
+    }//GEN-LAST:event_rehomeButtonMouseClicked
+
+    private void adoptButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adoptButtonMouseClicked
+        // TODO add your handling code here:
+        if (rehome != null ){
+            if(rehome.getAdopt() != null) {
+                adopt = rehome.getAdopt();
+            }
+            rehome.setVisible(false);
+        }
+        if (adopt == null) {
+            adopt = new Adopt(this);
+            adopt.setVisible(true);
+        } else if (!adopt.isVisible()) {
+            adopt.setVisible(true);
+        }
+        else {
+            adopt.toFront();
+            adopt.requestFocus();
+        }
+    }//GEN-LAST:event_adoptButtonMouseClicked
+
+    private void petPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petPanel1MouseClicked
+        // TODO add your handling code here:
+        setCurrentPetPanel(1);
+        hidePetPanels(false);
+    }//GEN-LAST:event_petPanel1MouseClicked
+
+    private void petPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petPanel2MouseClicked
+        // TODO add your handling code here:
+        setCurrentPetPanel(2);
+        hidePetPanels(false);
+    }//GEN-LAST:event_petPanel2MouseClicked
+
+    private void petPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petPanel3MouseClicked
+        // TODO add your handling code here:
+        setCurrentPetPanel(3);
+        hidePetPanels(false);
+    }//GEN-LAST:event_petPanel3MouseClicked
+
+    private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
+        // TODO add your handling code here:
+        setCurrentPetPanel(0);
+        hidePetPanels(true);
+        petPanel1Clicked = false;
+    }//GEN-LAST:event_backButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -2468,13 +2862,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(UserLoggedIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
@@ -2504,6 +2891,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel applicationNext;
     private javax.swing.JLabel applicationPanel;
     private javax.swing.JLabel applicationPrev;
+    private javax.swing.JLabel backButton;
     private javax.swing.JLabel background;
     private javax.swing.JLabel background1;
     private javax.swing.JLabel background2;
