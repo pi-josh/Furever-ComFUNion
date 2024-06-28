@@ -10,6 +10,7 @@ import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.time.YearMonth;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -30,7 +31,14 @@ public class Register extends javax.swing.JFrame {
         login = landingPage.getLogin();
         
         initComponents();
+        
+        // hide the passcode entry
+        passcodeScroll.setVisible(false);
+        passcodeLbl.setVisible(false);
+        passcode.setVisible(false);
+        
         setVisible(true);
+
         // action listener for year and month to dynamically adjust days
         year.addActionListener(new ComboBoxActionListener());
         month.addActionListener(new ComboBoxActionListener());
@@ -54,6 +62,13 @@ public class Register extends javax.swing.JFrame {
     
     public Register() {
         initComponents();
+        
+        // hide the passcode entry
+        passcodeScroll.setVisible(false);
+        passcodeLbl.setVisible(false);
+        passcode.setVisible(false);
+        
+        
         // action listener for year and month to dynamically adjust days
         year.addActionListener(new ComboBoxActionListener());
         month.addActionListener(new ComboBoxActionListener());
@@ -138,6 +153,10 @@ public class Register extends javax.swing.JFrame {
             }
         }
     }
+    
+    private void registerButtonActionPerformed() {
+        System.out.println("nag-enter");
+    }
   
     /**
      * This method is called from within the constructor to initialize the form.
@@ -190,6 +209,10 @@ public class Register extends javax.swing.JFrame {
         year = new javax.swing.JComboBox<>();
         month = new javax.swing.JComboBox<>();
         day = new javax.swing.JComboBox<>();
+        askVet = new javax.swing.JCheckBox();
+        passcodeLbl = new javax.swing.JLabel();
+        passcodeScroll = new javax.swing.JScrollPane();
+        passcode = new javax.swing.JTextPane();
         errorMessage = new javax.swing.JLabel();
         errorMessageContainer = new javax.swing.JLabel();
         registerBg = new javax.swing.JLabel();
@@ -249,6 +272,12 @@ public class Register extends javax.swing.JFrame {
         registerContainer.add(fullNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 49, -1, -1));
 
         jScrollPane12.setHorizontalScrollBar(null);
+
+        fullName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
         jScrollPane12.setViewportView(fullName);
 
         registerContainer.add(jScrollPane12, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 247, -1));
@@ -258,6 +287,12 @@ public class Register extends javax.swing.JFrame {
         registerContainer.add(currentAddressLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 49, -1, -1));
 
         jScrollPane2.setHorizontalScrollBar(null);
+
+        currentAddress.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(currentAddress);
 
         registerContainer.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 80, 280, -1));
@@ -267,6 +302,12 @@ public class Register extends javax.swing.JFrame {
         registerContainer.add(usernameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, -1, -1));
 
         jScrollPane10.setHorizontalScrollBar(null);
+
+        username.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
         jScrollPane10.setViewportView(username);
 
         registerContainer.add(jScrollPane10, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 150, 247, -1));
@@ -276,6 +317,12 @@ public class Register extends javax.swing.JFrame {
         registerContainer.add(occupationLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 118, -1, -1));
 
         jScrollPane8.setHorizontalScrollBar(null);
+
+        occupation.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
         jScrollPane8.setViewportView(occupation);
 
         registerContainer.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 150, 282, -1));
@@ -285,6 +332,12 @@ public class Register extends javax.swing.JFrame {
         registerContainer.add(contactNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, -1, -1));
 
         jScrollPane3.setHorizontalScrollBar(null);
+
+        contactNum.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
         jScrollPane3.setViewportView(contactNum);
 
         registerContainer.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 220, 247, -1));
@@ -294,6 +347,12 @@ public class Register extends javax.swing.JFrame {
         registerContainer.add(companyNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 187, -1, -1));
 
         jScrollPane9.setHorizontalScrollBar(null);
+
+        companyName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
         jScrollPane9.setViewportView(companyName);
 
         registerContainer.add(jScrollPane9, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 219, 282, -1));
@@ -303,6 +362,12 @@ public class Register extends javax.swing.JFrame {
         registerContainer.add(emailAddressLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 260, -1, -1));
 
         jScrollPane4.setHorizontalScrollBar(null);
+
+        emailAddress.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
         jScrollPane4.setViewportView(emailAddress);
 
         registerContainer.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 290, 247, -1));
@@ -316,11 +381,22 @@ public class Register extends javax.swing.JFrame {
                 workTypeActionPerformed(evt);
             }
         });
+        workType.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
         registerContainer.add(workType, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 290, 280, -1));
 
         passwordLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         passwordLabel.setText("Password:");
         registerContainer.add(passwordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 330, -1, -1));
+
+        password.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
         registerContainer.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, 247, -1));
 
         birthdateLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
@@ -328,6 +404,12 @@ public class Register extends javax.swing.JFrame {
         registerContainer.add(birthdateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 325, -1, -1));
 
         jScrollPane11.setHorizontalScrollBar(null);
+
+        birthdate.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
         jScrollPane11.setViewportView(birthdate);
 
         registerContainer.add(jScrollPane11, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 357, 90, -1));
@@ -335,11 +417,20 @@ public class Register extends javax.swing.JFrame {
         confirmPasswordLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         confirmPasswordLabel.setText("Confirm Password:");
         registerContainer.add(confirmPasswordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 400, -1, -1));
+
+        confirmPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
         registerContainer.add(confirmPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 430, 247, -1));
 
         registerButton.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         registerButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/register acc.png"))); // NOI18N
         registerButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                registerButtonMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 registerButtonMouseEntered(evt);
             }
@@ -347,15 +438,15 @@ public class Register extends javax.swing.JFrame {
                 registerButtonMouseExited(evt);
             }
         });
-        registerContainer.add(registerButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 403, -1, -1));
+        registerContainer.add(registerButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 490, -1, -1));
 
         loginDescription.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         loginDescription.setText("Already have an account? ");
-        registerContainer.add(loginDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 480, -1, -1));
+        registerContainer.add(loginDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 560, -1, -1));
 
         loginButton.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         loginButton.setForeground(new java.awt.Color(99, 71, 12));
-        loginButton.setText("<html>\n<u>Login here</u>\n</html>");
+        loginButton.setText("<html> <u>Login here</u> </html>");
         loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 loginButtonMouseClicked(evt);
@@ -367,7 +458,7 @@ public class Register extends javax.swing.JFrame {
                 loginButtonMouseExited(evt);
             }
         });
-        registerContainer.add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(715, 480, -1, -1));
+        registerContainer.add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(715, 560, -1, -1));
 
         year.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -389,6 +480,29 @@ public class Register extends javax.swing.JFrame {
             }
         });
         registerContainer.add(day, new org.netbeans.lib.awtextra.AbsoluteConstraints(747, 358, 53, -1));
+
+        askVet.setText("Are you a veterinarian?");
+        askVet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                askVetActionPerformed(evt);
+            }
+        });
+        registerContainer.add(askVet, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 390, -1, -1));
+
+        passcodeLbl.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        passcodeLbl.setText("Passcode:");
+        registerContainer.add(passcodeLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 420, -1, -1));
+
+        passcodeScroll.setHorizontalScrollBar(null);
+
+        passcode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
+        passcodeScroll.setViewportView(passcode);
+
+        registerContainer.add(passcodeScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 450, 282, -1));
 
         errorMessage.setText("Lagayan ng error message");
         registerContainer.add(errorMessage, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 500, -1, -1));
@@ -459,6 +573,7 @@ public class Register extends javax.swing.JFrame {
 
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
         // TODO add your handling code here:
+        // to make sure that login form or register form is mutually exclusive
         if (landingPage != null) {
             login = landingPage.getLogin();
         }
@@ -490,6 +605,43 @@ public class Register extends javax.swing.JFrame {
         // TODO add your handling code here:
         minimizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/minimize button (1).png")));
     }//GEN-LAST:event_minimizeButtonMouseExited
+
+    private void askVetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_askVetActionPerformed
+        // TODO add your handling code here:
+        if (askVet.isSelected()) {
+            passcodeScroll.setVisible(true);
+            passcodeLbl.setVisible(true);
+            passcode.setVisible(true);
+        } else {
+            passcodeScroll.setVisible(false);
+            passcodeLbl.setVisible(false);
+            passcode.setVisible(false);
+        }
+    }//GEN-LAST:event_askVetActionPerformed
+
+    private void registerButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerButtonMouseClicked
+        // TODO add your handling code here:
+        registerButtonActionPerformed();
+    }//GEN-LAST:event_registerButtonMouseClicked
+
+    private void enterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_enterTabKeyPressed
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+        switch (evt.getKeyChar()) {
+            case KeyEvent.VK_ENTER:
+                // Ignore the event if it is the Enter key
+                evt.consume();
+                registerButtonActionPerformed();
+                break;
+            case KeyEvent.VK_TAB:
+                evt.consume();
+                break;
+            default:
+                // Otherwise, handle the event normally
+                super.processKeyEvent(evt);
+                break;
+        }
+    }//GEN-LAST:event_enterTabKeyPressed
 
     /**
      * @param args the command line arguments
@@ -527,6 +679,7 @@ public class Register extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox askVet;
     private javax.swing.JLabel backButton;
     private javax.swing.JTextPane birthdate;
     private javax.swing.JLabel birthdateLabel;
@@ -560,6 +713,9 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> month;
     private javax.swing.JTextPane occupation;
     private javax.swing.JLabel occupationLabel;
+    private javax.swing.JTextPane passcode;
+    private javax.swing.JLabel passcodeLbl;
+    private javax.swing.JScrollPane passcodeScroll;
     private javax.swing.JPasswordField password;
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JLabel registerBg;

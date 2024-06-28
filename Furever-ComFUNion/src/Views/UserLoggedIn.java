@@ -9,6 +9,7 @@ import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.YearMonth;
@@ -252,7 +253,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
         contactNum = new javax.swing.JTextPane();
         emailAddressScroll = new javax.swing.JScrollPane();
         emailAddress = new javax.swing.JTextPane();
-        password = new javax.swing.JPasswordField();
         currentAddressScroll = new javax.swing.JScrollPane();
         currentAddress = new javax.swing.JTextPane();
         occupationScroll = new javax.swing.JScrollPane();
@@ -265,6 +265,10 @@ public class UserLoggedIn extends javax.swing.JFrame {
         birthdayScroll = new javax.swing.JScrollPane();
         birthdate = new javax.swing.JTextPane();
         workType = new javax.swing.JComboBox<>();
+        passwordLabel = new javax.swing.JLabel();
+        password = new javax.swing.JPasswordField();
+        confirmPasswordLabel = new javax.swing.JLabel();
+        confirmPassword = new javax.swing.JPasswordField();
         profilePicture = new javax.swing.JLabel();
         profileName = new javax.swing.JLabel();
         profileUsername = new javax.swing.JLabel();
@@ -1022,37 +1026,77 @@ public class UserLoggedIn extends javax.swing.JFrame {
         profileBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         fullNameScroll.setHorizontalScrollBar(null);
+
+        fullName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
         fullNameScroll.setViewportView(fullName);
 
         profileBody.add(fullNameScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 380, 247, -1));
 
         usernameScroll.setHorizontalScrollBar(null);
+
+        username1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
         usernameScroll.setViewportView(username1);
 
         profileBody.add(usernameScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 430, 247, -1));
 
         contactNumScroll.setHorizontalScrollBar(null);
+
+        contactNum.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
         contactNumScroll.setViewportView(contactNum);
 
         profileBody.add(contactNumScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 490, 247, -1));
 
         emailAddressScroll.setHorizontalScrollBar(null);
+
+        emailAddress.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
         emailAddressScroll.setViewportView(emailAddress);
 
         profileBody.add(emailAddressScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 540, 247, -1));
-        profileBody.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 590, 247, -1));
 
         currentAddressScroll.setHorizontalScrollBar(null);
+        currentAddressScroll.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
         currentAddressScroll.setViewportView(currentAddress);
 
         profileBody.add(currentAddressScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 390, 280, -1));
 
         occupationScroll.setHorizontalScrollBar(null);
+
+        occupation.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
         occupationScroll.setViewportView(occupation);
 
         profileBody.add(occupationScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 440, 240, -1));
 
         companyScroll.setHorizontalScrollBar(null);
+
+        companyName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
         companyScroll.setViewportView(companyName);
 
         profileBody.add(companyScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 490, 260, -1));
@@ -1079,6 +1123,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
         profileBody.add(day, new org.netbeans.lib.awtextra.AbsoluteConstraints(1128, 600, 53, -1));
 
         birthdayScroll.setHorizontalScrollBar(null);
+
+        birthdate.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
         birthdayScroll.setViewportView(birthdate);
 
         profileBody.add(birthdayScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 600, 90, -1));
@@ -1088,7 +1138,34 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 workTypeActionPerformed(evt);
             }
         });
+        workType.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
         profileBody.add(workType, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 550, 240, -1));
+
+        passwordLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        passwordLabel.setText("Password:");
+        profileBody.add(passwordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 570, -1, -1));
+
+        password.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
+        profileBody.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 590, 247, -1));
+
+        confirmPasswordLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        confirmPasswordLabel.setText("Confirm Password:");
+        profileBody.add(confirmPasswordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 620, -1, -1));
+
+        confirmPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
+        profileBody.add(confirmPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 640, 247, -1));
 
         profilePicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/sampeProfilePicture.jpg"))); // NOI18N
         profileBody.add(profilePicture, new org.netbeans.lib.awtextra.AbsoluteConstraints(242, 50, 260, 245));
@@ -1707,26 +1784,48 @@ public class UserLoggedIn extends javax.swing.JFrame {
             petName1.setVisible(false);
             petAge1.setVisible(false);
             petGender1.setVisible(false);
+        } else {
+            petPanel1.setVisible(true);
+            petImg1.setVisible(true);
+            petName1.setVisible(true);
+            petAge1.setVisible(true);
+            petGender1.setVisible(true);
         }
+        
         if (totalPets < 2) {
             petPanel2.setVisible(false);
             petImg2.setVisible(false);
             petName2.setVisible(false);
             petAge2.setVisible(false);
             petGender2.setVisible(false);
+        } else {
+            petPanel2.setVisible(true);
+            petImg2.setVisible(true);
+            petName2.setVisible(true);
+            petAge2.setVisible(true);
+            petGender2.setVisible(true);
         }
+        
         if (totalPets < 3) {
             petPanel3.setVisible(false);
             petImg3.setVisible(false);
             petName3.setVisible(false);
             petAge3.setVisible(false);
             petGender3.setVisible(false);
+        } else {
+            petPanel3.setVisible(true);
+            petImg3.setVisible(true);
+            petName3.setVisible(true);
+            petAge3.setVisible(true);
+            petGender3.setVisible(true);
         }
 
         if (totalPets < 4) {
             // hide the buttons
             petPrev.setVisible(false);
             petNext.setVisible(false);
+        } else {
+            petNext.setVisible(true);
         }
     }
 
@@ -1886,7 +1985,10 @@ public class UserLoggedIn extends javax.swing.JFrame {
         username1.setVisible(edit);
         contactNum.setVisible(edit);
         emailAddress.setVisible(edit);
+        passwordLabel.setVisible(edit);
+        confirmPasswordLabel.setVisible(edit);
         password.setVisible(edit);
+        confirmPassword.setVisible(edit);
         currentAddress.setVisible(edit);
         occupation.setVisible(edit);
         companyName.setVisible(edit);
@@ -2837,6 +2939,23 @@ public class UserLoggedIn extends javax.swing.JFrame {
         petPanel1Clicked = false;
     }//GEN-LAST:event_backButtonMouseClicked
 
+    private void enterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_enterTabKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyChar()) {
+            case KeyEvent.VK_ENTER:
+                // Ignore the event if it is the Enter key
+                evt.consume();
+                break;
+            case KeyEvent.VK_TAB:
+                evt.consume();
+                break;
+            default:
+                // Otherwise, handle the event normally
+                super.processKeyEvent(evt);
+                break;
+        }
+    }//GEN-LAST:event_enterTabKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -2909,6 +3028,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JTextPane companyName;
     private javax.swing.JScrollPane companyScroll;
     private javax.swing.JLabel confirmButton;
+    private javax.swing.JPasswordField confirmPassword;
+    private javax.swing.JLabel confirmPasswordLabel;
     private javax.swing.JTextPane contactNum;
     private javax.swing.JScrollPane contactNumScroll;
     private javax.swing.JTextPane currentAddress;
@@ -2941,6 +3062,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JTextPane occupation;
     private javax.swing.JScrollPane occupationScroll;
     private javax.swing.JPasswordField password;
+    private javax.swing.JLabel passwordLabel;
     private javax.swing.JLabel petAge1;
     private javax.swing.JLabel petAge2;
     private javax.swing.JLabel petAge3;
