@@ -65,6 +65,19 @@ public class Login extends javax.swing.JFrame {
         return register;
     }
     
+    private void loginButtonActionPerformed() {
+        System.out.println("nag-enter");
+        
+        String tempUsername = "admin";
+        String tempPassword = "admin";
+        
+        if(username.getText().equals(tempUsername) && password.getText().equals(tempPassword)) {
+            this.setVisible(false);
+            landingPage.setVisible(false);
+            new UserLoggedIn().setVisible(true);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -166,9 +179,9 @@ public class Login extends javax.swing.JFrame {
         passwordLabel.setText("Password:");
         loginContainer.add(passwordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 270, -1, -1));
 
-        password.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordActionPerformed(evt);
+        password.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                passwordKeyPressed(evt);
             }
         });
         loginContainer.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 300, 270, 30));
@@ -244,10 +257,6 @@ public class Login extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordActionPerformed
-
     private void loginButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseEntered
         // TODO add your handling code here:
         loginButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/login acc hover.png")));
@@ -270,25 +279,25 @@ public class Login extends javax.swing.JFrame {
 
     private void usernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameKeyPressed
         // TODO add your handling code here:
-        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
-            // Ignore the event if it is the Enter key
-            evt.consume();
-        } else {
-            // Otherwise, handle the event normally
-            super.processKeyEvent(evt);
+        switch (evt.getKeyChar()) {
+            case KeyEvent.VK_ENTER:
+                // Ignore the event if it is the Enter key
+                evt.consume();
+                loginButtonActionPerformed();
+                break;
+            case KeyEvent.VK_TAB:
+                evt.consume();
+                break;
+            default:
+                // Otherwise, handle the event normally
+                super.processKeyEvent(evt);
+                break;
         }
     }//GEN-LAST:event_usernameKeyPressed
 
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
         // TODO add your handling code here:
-        String tempUsername = "admin";
-        String tempPassword = "admin";
-        
-        if(username.getText().equals(tempUsername) && password.getText().equals(tempPassword)) {
-            this.setVisible(false);
-            landingPage.setVisible(false);
-            new UserLoggedIn().setVisible(true);
-        }
+        loginButtonActionPerformed();
     }//GEN-LAST:event_loginButtonMouseClicked
 
     private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
@@ -308,6 +317,7 @@ public class Login extends javax.swing.JFrame {
 
     private void registerButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerButtonMouseClicked
         // TODO add your handling code here:
+        // to make sure that login form or register form is mutually exclusive
         if (landingPage != null) {
             register = landingPage.getRegister();
         }
@@ -337,6 +347,24 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         minimizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/minimize button (1).png")));
     }//GEN-LAST:event_minimizeButtonMouseExited
+
+    private void passwordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyChar()) {
+            case KeyEvent.VK_ENTER:
+                // Ignore the event if it is the Enter key
+                evt.consume();
+                loginButtonActionPerformed();
+                break;
+            case KeyEvent.VK_TAB:
+                evt.consume();
+                break;
+            default:
+                // Otherwise, handle the event normally
+                super.processKeyEvent(evt);
+                break;
+        }
+    }//GEN-LAST:event_passwordKeyPressed
 
     /**
      * @param args the command line arguments

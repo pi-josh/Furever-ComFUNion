@@ -7,6 +7,7 @@ package Views;
 
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
+import java.util.concurrent.CountDownLatch;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
@@ -15,15 +16,21 @@ import javax.swing.JPanel;
  * @author joshu
  */
 public class ConfirmationDialog extends javax.swing.JFrame {
+    // for user response
+    boolean userResponse;
+    CountDownLatch latch;
+    
     // sub frames
     private UserLoggedIn userLoggedIn;
     private JPanel glassPane;
     
     /**
      * Creates new form Register
+     * @param userLoggedIn
      */
-    public ConfirmationDialog(UserLoggedIn userLoggedIn) {
+    public ConfirmationDialog(UserLoggedIn userLoggedIn, CountDownLatch latch) {
         this.userLoggedIn = userLoggedIn;
+        this.latch = latch;
         initComponents();
         
         // Window logo
@@ -55,6 +62,11 @@ public class ConfirmationDialog extends javax.swing.JFrame {
             System.err.println("Error: Image not found. " + e.getMessage());
             e.printStackTrace();
         }
+    }
+    
+    // getter method
+    public boolean getUserResponse() {
+        return userResponse;
     }
 
     /**
@@ -130,6 +142,8 @@ public class ConfirmationDialog extends javax.swing.JFrame {
             glassPane = (JPanel) userLoggedIn.getGlassPane();
             glassPane.setVisible(false);
         }
+        userResponse = true;
+        latch.countDown(); // Release the latch
         this.setVisible(false);
     }//GEN-LAST:event_yesButtonMouseClicked
 
@@ -149,6 +163,8 @@ public class ConfirmationDialog extends javax.swing.JFrame {
             glassPane = (JPanel) userLoggedIn.getGlassPane();
             glassPane.setVisible(false);
         }
+        userResponse = false;
+        latch.countDown(); // Release the latch
         this.setVisible(false);
     }//GEN-LAST:event_noButtonMouseClicked
 

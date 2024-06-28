@@ -9,13 +9,16 @@ import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -27,6 +30,9 @@ import javax.swing.JPanel;
  * @author joshu
  */
 public class UserLoggedIn extends javax.swing.JFrame {
+    // for confirmation dialog
+    boolean userResponse;
+    
     // sub frames
     private ExitDialog exitDialog;
     private ConfirmationDialog confirmationDialog;
@@ -252,7 +258,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
         contactNum = new javax.swing.JTextPane();
         emailAddressScroll = new javax.swing.JScrollPane();
         emailAddress = new javax.swing.JTextPane();
-        password = new javax.swing.JPasswordField();
         currentAddressScroll = new javax.swing.JScrollPane();
         currentAddress = new javax.swing.JTextPane();
         occupationScroll = new javax.swing.JScrollPane();
@@ -265,6 +270,10 @@ public class UserLoggedIn extends javax.swing.JFrame {
         birthdayScroll = new javax.swing.JScrollPane();
         birthdate = new javax.swing.JTextPane();
         workType = new javax.swing.JComboBox<>();
+        passwordLabel = new javax.swing.JLabel();
+        password = new javax.swing.JPasswordField();
+        confirmPasswordLabel = new javax.swing.JLabel();
+        confirmPassword = new javax.swing.JPasswordField();
         profilePicture = new javax.swing.JLabel();
         profileName = new javax.swing.JLabel();
         profileUsername = new javax.swing.JLabel();
@@ -666,13 +675,13 @@ public class UserLoggedIn extends javax.swing.JFrame {
         petsBody.add(petNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 590, 350, 100));
 
         petImg1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        petsBody.add(petImg1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 185, 220, 200));
+        petsBody.add(petImg1, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 198, 190, 170));
 
         petImg2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        petsBody.add(petImg2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 185, 220, 200));
+        petsBody.add(petImg2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 198, 190, 170));
 
         petImg3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        petsBody.add(petImg3, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 185, 220, 200));
+        petsBody.add(petImg3, new org.netbeans.lib.awtextra.AbsoluteConstraints(995, 198, 190, 170));
 
         petName1.setText("Pet Name");
         petsBody.add(petName1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 455, -1, -1));
@@ -1022,37 +1031,77 @@ public class UserLoggedIn extends javax.swing.JFrame {
         profileBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         fullNameScroll.setHorizontalScrollBar(null);
+
+        fullName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
         fullNameScroll.setViewportView(fullName);
 
         profileBody.add(fullNameScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 380, 247, -1));
 
         usernameScroll.setHorizontalScrollBar(null);
+
+        username1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
         usernameScroll.setViewportView(username1);
 
         profileBody.add(usernameScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 430, 247, -1));
 
         contactNumScroll.setHorizontalScrollBar(null);
+
+        contactNum.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
         contactNumScroll.setViewportView(contactNum);
 
         profileBody.add(contactNumScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 490, 247, -1));
 
         emailAddressScroll.setHorizontalScrollBar(null);
+
+        emailAddress.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
         emailAddressScroll.setViewportView(emailAddress);
 
         profileBody.add(emailAddressScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 540, 247, -1));
-        profileBody.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 590, 247, -1));
 
         currentAddressScroll.setHorizontalScrollBar(null);
+        currentAddressScroll.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
         currentAddressScroll.setViewportView(currentAddress);
 
         profileBody.add(currentAddressScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 390, 280, -1));
 
         occupationScroll.setHorizontalScrollBar(null);
+
+        occupation.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
         occupationScroll.setViewportView(occupation);
 
         profileBody.add(occupationScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 440, 240, -1));
 
         companyScroll.setHorizontalScrollBar(null);
+
+        companyName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
         companyScroll.setViewportView(companyName);
 
         profileBody.add(companyScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 490, 260, -1));
@@ -1079,6 +1128,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
         profileBody.add(day, new org.netbeans.lib.awtextra.AbsoluteConstraints(1128, 600, 53, -1));
 
         birthdayScroll.setHorizontalScrollBar(null);
+
+        birthdate.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
         birthdayScroll.setViewportView(birthdate);
 
         profileBody.add(birthdayScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 600, 90, -1));
@@ -1088,10 +1143,37 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 workTypeActionPerformed(evt);
             }
         });
+        workType.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
         profileBody.add(workType, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 550, 240, -1));
 
-        profilePicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/sampeProfilePicture.jpg"))); // NOI18N
-        profileBody.add(profilePicture, new org.netbeans.lib.awtextra.AbsoluteConstraints(242, 50, 260, 245));
+        passwordLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        passwordLabel.setText("Password:");
+        profileBody.add(passwordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 570, -1, -1));
+
+        password.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
+        profileBody.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 590, 247, -1));
+
+        confirmPasswordLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        confirmPasswordLabel.setText("Confirm Password:");
+        profileBody.add(confirmPasswordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 620, -1, -1));
+
+        confirmPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                enterTabKeyPressed(evt);
+            }
+        });
+        profileBody.add(confirmPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 640, 247, -1));
+
+        profilePicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/profile pic.jpg"))); // NOI18N
+        profileBody.add(profilePicture, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 52, 259, 242));
 
         profileName.setText("Joshua C. Macatunao");
         profileBody.add(profileName, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 380, -1, -1));
@@ -1310,17 +1392,9 @@ public class UserLoggedIn extends javax.swing.JFrame {
         this.pets = petSamples.getAllPets();
         totalPets = pets.size();
 
-        for (Pet pet : pets) {
-            System.out.println(pet.getPetName() + " " + pet.getPetAge() + " " + pet.getPetSex());
-        }
-
         VetSamples vetSamples = new VetSamples();
         this.vets = vetSamples.getAllVeterinarians();
         totalVets = vets.size();
-
-        for (Veterinarian vet : vets) {
-            System.out.println(vet.getVetFullName() + " " + vet.getVetCellNum());
-        }
     }
 
     private void homeButton() {
@@ -1707,26 +1781,48 @@ public class UserLoggedIn extends javax.swing.JFrame {
             petName1.setVisible(false);
             petAge1.setVisible(false);
             petGender1.setVisible(false);
+        } else {
+            petPanel1.setVisible(true);
+            petImg1.setVisible(true);
+            petName1.setVisible(true);
+            petAge1.setVisible(true);
+            petGender1.setVisible(true);
         }
+        
         if (totalPets < 2) {
             petPanel2.setVisible(false);
             petImg2.setVisible(false);
             petName2.setVisible(false);
             petAge2.setVisible(false);
             petGender2.setVisible(false);
+        } else {
+            petPanel2.setVisible(true);
+            petImg2.setVisible(true);
+            petName2.setVisible(true);
+            petAge2.setVisible(true);
+            petGender2.setVisible(true);
         }
+        
         if (totalPets < 3) {
             petPanel3.setVisible(false);
             petImg3.setVisible(false);
             petName3.setVisible(false);
             petAge3.setVisible(false);
             petGender3.setVisible(false);
+        } else {
+            petPanel3.setVisible(true);
+            petImg3.setVisible(true);
+            petName3.setVisible(true);
+            petAge3.setVisible(true);
+            petGender3.setVisible(true);
         }
 
         if (totalPets < 4) {
             // hide the buttons
             petPrev.setVisible(false);
             petNext.setVisible(false);
+        } else {
+            petNext.setVisible(true);
         }
     }
 
@@ -1886,7 +1982,10 @@ public class UserLoggedIn extends javax.swing.JFrame {
         username1.setVisible(edit);
         contactNum.setVisible(edit);
         emailAddress.setVisible(edit);
+        passwordLabel.setVisible(edit);
+        confirmPasswordLabel.setVisible(edit);
         password.setVisible(edit);
+        confirmPassword.setVisible(edit);
         currentAddress.setVisible(edit);
         occupation.setVisible(edit);
         companyName.setVisible(edit);
@@ -1967,6 +2066,27 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 petGender1.setText(tempPetGender);
                 petImg1.setIcon(new javax.swing.ImageIcon(getClass().getResource(tempPetURL)));
         }
+    }
+    
+    public CountDownLatch countDownLatch() {
+        // Create a CountDownLatch
+        CountDownLatch latch = new CountDownLatch(1);
+
+        // Show the custom frame on the EDT
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                if (confirmationDialog == null || !confirmationDialog.isVisible()) {
+                    confirmationDialog = new ConfirmationDialog(UserLoggedIn.this, latch);
+                    confirmationDialog.setVisible(true);
+                    glassPane.setVisible(true);
+                } else {
+                    confirmationDialog.toFront();
+                    confirmationDialog.requestFocus();
+                }
+            }
+        });
+        return latch;
     }
 
     private void badgeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_badgeKeyPressed
@@ -2509,14 +2629,32 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void deleteButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton1MouseClicked
         // TODO add your handling code here:
-        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
-            confirmationDialog = new ConfirmationDialog(this);
-            confirmationDialog.setVisible(true);
-            glassPane.setVisible(true);
-        } else {
-            confirmationDialog.toFront();
-            confirmationDialog.requestFocus();
-        }
+        // Create a CountDownLatch
+        CountDownLatch latch = countDownLatch();
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Continue with code execution based on user's response
+                userResponse = confirmationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                        }
+                    }
+                });
+            }
+        }).start();
     }//GEN-LAST:event_deleteButton1MouseClicked
 
     private void deleteButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton1MouseEntered
@@ -2531,14 +2669,31 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void deleteButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton2MouseClicked
         // TODO add your handling code here:
-        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
-            confirmationDialog = new ConfirmationDialog(this);
-            confirmationDialog.setVisible(true);
-            glassPane.setVisible(true);
-        } else {
-            confirmationDialog.toFront();
-            confirmationDialog.requestFocus();
-        }
+        CountDownLatch latch = countDownLatch();
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Continue with code execution based on user's response
+                userResponse = confirmationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                        }
+                    }
+                });
+            }
+        }).start();
     }//GEN-LAST:event_deleteButton2MouseClicked
 
     private void deleteButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton2MouseEntered
@@ -2553,14 +2708,31 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void deleteButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton3MouseClicked
         // TODO add your handling code here:
-        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
-            confirmationDialog = new ConfirmationDialog(this);
-            confirmationDialog.setVisible(true);
-            glassPane.setVisible(true);
-        } else {
-            confirmationDialog.toFront();
-            confirmationDialog.requestFocus();
-        }
+        CountDownLatch latch = countDownLatch();
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Continue with code execution based on user's response
+                userResponse = confirmationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                        }
+                    }
+                });
+            }
+        }).start();
     }//GEN-LAST:event_deleteButton3MouseClicked
 
     private void deleteButton3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton3MouseEntered
@@ -2575,14 +2747,31 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void deleteButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton4MouseClicked
         // TODO add your handling code here:
-        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
-            confirmationDialog = new ConfirmationDialog(this);
-            confirmationDialog.setVisible(true);
-            glassPane.setVisible(true);
-        } else {
-            confirmationDialog.toFront();
-            confirmationDialog.requestFocus();
-        }
+        CountDownLatch latch = countDownLatch();
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Continue with code execution based on user's response
+                userResponse = confirmationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                        }
+                    }
+                });
+            }
+        }).start();
     }//GEN-LAST:event_deleteButton4MouseClicked
 
     private void deleteButton4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton4MouseEntered
@@ -2597,14 +2786,31 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void deleteButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton5MouseClicked
         // TODO add your handling code here:
-        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
-            confirmationDialog = new ConfirmationDialog(this);
-            confirmationDialog.setVisible(true);
-            glassPane.setVisible(true);
-        } else {
-            confirmationDialog.toFront();
-            confirmationDialog.requestFocus();
-        }
+        CountDownLatch latch = countDownLatch();
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Continue with code execution based on user's response
+                userResponse = confirmationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                        }
+                    }
+                });
+            }
+        }).start();
     }//GEN-LAST:event_deleteButton5MouseClicked
 
     private void deleteButton5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton5MouseEntered
@@ -2624,28 +2830,63 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void confirmButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmButtonMouseClicked
         // TODO add your handling code here:
-        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
-            confirmationDialog = new ConfirmationDialog(this);
-            confirmationDialog.setVisible(true);
-            glassPane.setVisible(true);
-        } else {
-            confirmationDialog.toFront();
-            confirmationDialog.requestFocus();
-        }
-        applicationEditVisibility(false);
+        CountDownLatch latch = countDownLatch();
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Continue with code execution based on user's response
+                userResponse = confirmationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                            applicationEditVisibility(false);
+                        }
+                    }
+                });
+            }
+        }).start();
     }//GEN-LAST:event_confirmButtonMouseClicked
 
     private void cancelButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseClicked
         // TODO add your handling code here:
-        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
-            confirmationDialog = new ConfirmationDialog(this);
-            confirmationDialog.setVisible(true);
-            glassPane.setVisible(true);
-        } else {
-            confirmationDialog.toFront();
-            confirmationDialog.requestFocus();
-        }
-        applicationEditVisibility(false);
+        // Create a CountDownLatch
+        CountDownLatch latch = countDownLatch();
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Continue with code execution based on user's response
+                userResponse = confirmationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                            applicationEditVisibility(false);
+                        }
+                    }
+                });
+            }
+        }).start();
     }//GEN-LAST:event_cancelButtonMouseClicked
 
     private void profileEditButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileEditButtonMouseClicked
@@ -2665,14 +2906,31 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void profileDeleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileDeleteButtonMouseClicked
         // TODO add your handling code here:
-        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
-            confirmationDialog = new ConfirmationDialog(this);
-            confirmationDialog.setVisible(true);
-            glassPane.setVisible(true);
-        } else {
-            confirmationDialog.toFront();
-            confirmationDialog.requestFocus();
-        }
+        CountDownLatch latch = countDownLatch();
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Continue with code execution based on user's response
+                userResponse = confirmationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                        }
+                    }
+                });
+            }
+        }).start();
     }//GEN-LAST:event_profileDeleteButtonMouseClicked
 
     private void profileDeleteButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileDeleteButtonMouseEntered
@@ -2686,17 +2944,34 @@ public class UserLoggedIn extends javax.swing.JFrame {
     }//GEN-LAST:event_profileDeleteButtonMouseExited
 
     private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
-        // TODO add your handling code here:
-        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
-            confirmationDialog = new ConfirmationDialog(this);
-            confirmationDialog.setVisible(true);
-            glassPane.setVisible(true);
-        } else {
-            confirmationDialog.toFront();
-            confirmationDialog.requestFocus();
-        }
-        this.setVisible(false);
-        new LandingPage(true).setVisible(true);
+        // TODO add your handling code here:     
+        CountDownLatch latch = countDownLatch();
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Continue with code execution based on user's response
+                userResponse = confirmationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                            UserLoggedIn.this.setVisible(false);
+                            new LandingPage(true).setVisible(true);
+                        }
+                    }
+                });
+            }
+        }).start();
     }//GEN-LAST:event_logoutButtonMouseClicked
 
     private void logoutButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseEntered
@@ -2710,16 +2985,48 @@ public class UserLoggedIn extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutButtonMouseExited
 
     private void profileConfirmButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileConfirmButtonMouseClicked
-        // TODO add your handling code here:
-        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
-            confirmationDialog = new ConfirmationDialog(this);
-            confirmationDialog.setVisible(true);
-            glassPane.setVisible(true);
-        } else {
-            confirmationDialog.toFront();
-            confirmationDialog.requestFocus();
-        }
-        profileEditVisibility(false);
+        // TODO add your handling code here
+        // Create a CountDownLatch
+        CountDownLatch latch = new CountDownLatch(1);
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                if (confirmationDialog == null || !confirmationDialog.isVisible()) {
+                    confirmationDialog = new ConfirmationDialog(UserLoggedIn.this, latch);
+                    confirmationDialog.setVisible(true);
+                    glassPane.setVisible(true);
+                } else {
+                    confirmationDialog.toFront();
+                    confirmationDialog.requestFocus();
+                }
+            }
+        });
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Continue with code execution based on user's response
+                userResponse = confirmationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                            profileEditVisibility(false);
+                        }
+                    }
+                });
+            }
+        }).start();
     }//GEN-LAST:event_profileConfirmButtonMouseClicked
 
     private void profileConfirmButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileConfirmButtonMouseEntered
@@ -2733,16 +3040,57 @@ public class UserLoggedIn extends javax.swing.JFrame {
     }//GEN-LAST:event_profileConfirmButtonMouseExited
 
     private void profileCancelButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileCancelButtonMouseClicked
-        // TODO add your handling code here:
+        // Create a CountDownLatch
+        CountDownLatch latch = new CountDownLatch(1);
+
+        // Show the custom frame and wait for the user's response
         if (confirmationDialog == null || !confirmationDialog.isVisible()) {
-            confirmationDialog = new ConfirmationDialog(this);
+            confirmationDialog = new ConfirmationDialog(this, latch);
             confirmationDialog.setVisible(true);
             glassPane.setVisible(true);
         } else {
             confirmationDialog.toFront();
             confirmationDialog.requestFocus();
         }
-        profileEditVisibility(false);
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                if (confirmationDialog == null || !confirmationDialog.isVisible()) {
+                    confirmationDialog = new ConfirmationDialog(UserLoggedIn.this, latch);
+                    confirmationDialog.setVisible(true);
+                    glassPane.setVisible(true);
+                } else {
+                    confirmationDialog.toFront();
+                    confirmationDialog.requestFocus();
+                }
+            }
+        });
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Continue with code execution based on user's response
+                userResponse = confirmationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                            profileEditVisibility(false);
+                        }
+                    }
+                });
+            }
+        }).start();
     }//GEN-LAST:event_profileCancelButtonMouseClicked
 
     private void profileCancelButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileCancelButtonMouseEntered
@@ -2837,6 +3185,23 @@ public class UserLoggedIn extends javax.swing.JFrame {
         petPanel1Clicked = false;
     }//GEN-LAST:event_backButtonMouseClicked
 
+    private void enterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_enterTabKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyChar()) {
+            case KeyEvent.VK_ENTER:
+                // Ignore the event if it is the Enter key
+                evt.consume();
+                break;
+            case KeyEvent.VK_TAB:
+                evt.consume();
+                break;
+            default:
+                // Otherwise, handle the event normally
+                super.processKeyEvent(evt);
+                break;
+        }
+    }//GEN-LAST:event_enterTabKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -2909,6 +3274,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JTextPane companyName;
     private javax.swing.JScrollPane companyScroll;
     private javax.swing.JLabel confirmButton;
+    private javax.swing.JPasswordField confirmPassword;
+    private javax.swing.JLabel confirmPasswordLabel;
     private javax.swing.JTextPane contactNum;
     private javax.swing.JScrollPane contactNumScroll;
     private javax.swing.JTextPane currentAddress;
@@ -2941,6 +3308,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JTextPane occupation;
     private javax.swing.JScrollPane occupationScroll;
     private javax.swing.JPasswordField password;
+    private javax.swing.JLabel passwordLabel;
     private javax.swing.JLabel petAge1;
     private javax.swing.JLabel petAge2;
     private javax.swing.JLabel petAge3;
