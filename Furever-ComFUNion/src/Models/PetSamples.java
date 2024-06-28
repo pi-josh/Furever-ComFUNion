@@ -16,7 +16,7 @@ public class PetSamples {
     private Pet cassyyy = new Pet(007, "Dog", "O", "NA", "S", 4, "Cassyyy", "M", 6, 6, "/Resources/sample pets/dog.jpg");
     private Pet gigi = new Pet(006, "Cat", "R", "NA", "M", 6, "Gigi", "F", 0, 5, "/Resources/sample pets/cat.jpg");
     private Pet hammy = new Pet(005, "Hamster", "O", "A", "T", 3, "Hammy", "M", 1, 5, "/Resources/sample pets/hamster.jpg");
-    private Pet adjie = new Pet(004, "Rabbit", "R", "NA", "T", 15, "Adjie", "M", 0, 4, "/Resources/sample pets/rabbit.jpg");
+    private Pet adjie = new Pet(004, "Rabbit", "R", "NA", "T", 15, "Adjie", "M", 0, 4, "/Resources/sample pets/rabbit.png");
     private Pet cooper = new Pet(003, "Dog", "O", "NA", "M", 7, "Cooper", "M", 2, 4, "/Resources/sample pets/dog.jpg");
     private Pet juswa = new Pet(002, "Cat", "O", "A", "L", 9, "Juswa", "M", 3, 4, "/Resources/sample pets/cat.jpg");
     private Pet raphael = new Pet(001, "Dog", "R", "A", "M", 2, "Raphael", "M", 0, 4, "/Resources/sample pets/dog.jpg");

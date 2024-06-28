@@ -14,9 +14,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -28,6 +30,9 @@ import javax.swing.JPanel;
  * @author joshu
  */
 public class UserLoggedIn extends javax.swing.JFrame {
+    // for confirmation dialog
+    boolean userResponse;
+    
     // sub frames
     private ExitDialog exitDialog;
     private ConfirmationDialog confirmationDialog;
@@ -670,13 +675,13 @@ public class UserLoggedIn extends javax.swing.JFrame {
         petsBody.add(petNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 590, 350, 100));
 
         petImg1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        petsBody.add(petImg1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 185, 220, 200));
+        petsBody.add(petImg1, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 198, 190, 170));
 
         petImg2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        petsBody.add(petImg2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 185, 220, 200));
+        petsBody.add(petImg2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 198, 190, 170));
 
         petImg3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        petsBody.add(petImg3, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 185, 220, 200));
+        petsBody.add(petImg3, new org.netbeans.lib.awtextra.AbsoluteConstraints(995, 198, 190, 170));
 
         petName1.setText("Pet Name");
         petsBody.add(petName1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 455, -1, -1));
@@ -1387,17 +1392,9 @@ public class UserLoggedIn extends javax.swing.JFrame {
         this.pets = petSamples.getAllPets();
         totalPets = pets.size();
 
-        for (Pet pet : pets) {
-            System.out.println(pet.getPetName() + " " + pet.getPetAge() + " " + pet.getPetSex());
-        }
-
         VetSamples vetSamples = new VetSamples();
         this.vets = vetSamples.getAllVeterinarians();
         totalVets = vets.size();
-
-        for (Veterinarian vet : vets) {
-            System.out.println(vet.getVetFullName() + " " + vet.getVetCellNum());
-        }
     }
 
     private void homeButton() {
@@ -2611,14 +2608,56 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void deleteButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton1MouseClicked
         // TODO add your handling code here:
+        // Create a CountDownLatch
+        CountDownLatch latch = new CountDownLatch(1);
+
+        // Show the custom frame and wait for the user's response
         if (confirmationDialog == null || !confirmationDialog.isVisible()) {
-            confirmationDialog = new ConfirmationDialog(this);
+            confirmationDialog = new ConfirmationDialog(this, latch);
             confirmationDialog.setVisible(true);
             glassPane.setVisible(true);
         } else {
             confirmationDialog.toFront();
             confirmationDialog.requestFocus();
         }
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                if (confirmationDialog == null || !confirmationDialog.isVisible()) {
+                    confirmationDialog = new ConfirmationDialog(UserLoggedIn.this, latch);
+                    confirmationDialog.setVisible(true);
+                    glassPane.setVisible(true);
+                } else {
+                    confirmationDialog.toFront();
+                    confirmationDialog.requestFocus();
+                }
+            }
+        });
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Continue with code execution based on user's response
+                userResponse = confirmationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                        }
+                    }
+                });
+            }
+        }).start();
     }//GEN-LAST:event_deleteButton1MouseClicked
 
     private void deleteButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton1MouseEntered
@@ -2633,14 +2672,46 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void deleteButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton2MouseClicked
         // TODO add your handling code here:
-        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
-            confirmationDialog = new ConfirmationDialog(this);
-            confirmationDialog.setVisible(true);
-            glassPane.setVisible(true);
-        } else {
-            confirmationDialog.toFront();
-            confirmationDialog.requestFocus();
-        }
+        // Create a CountDownLatch
+        CountDownLatch latch = new CountDownLatch(1);
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                if (confirmationDialog == null || !confirmationDialog.isVisible()) {
+                    confirmationDialog = new ConfirmationDialog(UserLoggedIn.this, latch);
+                    confirmationDialog.setVisible(true);
+                    glassPane.setVisible(true);
+                } else {
+                    confirmationDialog.toFront();
+                    confirmationDialog.requestFocus();
+                }
+            }
+        });
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Continue with code execution based on user's response
+                userResponse = confirmationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                        }
+                    }
+                });
+            }
+        }).start();
     }//GEN-LAST:event_deleteButton2MouseClicked
 
     private void deleteButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton2MouseEntered
@@ -2655,14 +2726,46 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void deleteButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton3MouseClicked
         // TODO add your handling code here:
-        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
-            confirmationDialog = new ConfirmationDialog(this);
-            confirmationDialog.setVisible(true);
-            glassPane.setVisible(true);
-        } else {
-            confirmationDialog.toFront();
-            confirmationDialog.requestFocus();
-        }
+        // Create a CountDownLatch
+        CountDownLatch latch = new CountDownLatch(1);
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                if (confirmationDialog == null || !confirmationDialog.isVisible()) {
+                    confirmationDialog = new ConfirmationDialog(UserLoggedIn.this, latch);
+                    confirmationDialog.setVisible(true);
+                    glassPane.setVisible(true);
+                } else {
+                    confirmationDialog.toFront();
+                    confirmationDialog.requestFocus();
+                }
+            }
+        });
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Continue with code execution based on user's response
+                userResponse = confirmationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                        }
+                    }
+                });
+            }
+        }).start();
     }//GEN-LAST:event_deleteButton3MouseClicked
 
     private void deleteButton3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton3MouseEntered
@@ -2677,14 +2780,46 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void deleteButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton4MouseClicked
         // TODO add your handling code here:
-        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
-            confirmationDialog = new ConfirmationDialog(this);
-            confirmationDialog.setVisible(true);
-            glassPane.setVisible(true);
-        } else {
-            confirmationDialog.toFront();
-            confirmationDialog.requestFocus();
-        }
+        // Create a CountDownLatch
+        CountDownLatch latch = new CountDownLatch(1);
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                if (confirmationDialog == null || !confirmationDialog.isVisible()) {
+                    confirmationDialog = new ConfirmationDialog(UserLoggedIn.this, latch);
+                    confirmationDialog.setVisible(true);
+                    glassPane.setVisible(true);
+                } else {
+                    confirmationDialog.toFront();
+                    confirmationDialog.requestFocus();
+                }
+            }
+        });
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Continue with code execution based on user's response
+                userResponse = confirmationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                        }
+                    }
+                });
+            }
+        }).start();
     }//GEN-LAST:event_deleteButton4MouseClicked
 
     private void deleteButton4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton4MouseEntered
@@ -2699,14 +2834,46 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void deleteButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton5MouseClicked
         // TODO add your handling code here:
-        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
-            confirmationDialog = new ConfirmationDialog(this);
-            confirmationDialog.setVisible(true);
-            glassPane.setVisible(true);
-        } else {
-            confirmationDialog.toFront();
-            confirmationDialog.requestFocus();
-        }
+        // Create a CountDownLatch
+        CountDownLatch latch = new CountDownLatch(1);
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                if (confirmationDialog == null || !confirmationDialog.isVisible()) {
+                    confirmationDialog = new ConfirmationDialog(UserLoggedIn.this, latch);
+                    confirmationDialog.setVisible(true);
+                    glassPane.setVisible(true);
+                } else {
+                    confirmationDialog.toFront();
+                    confirmationDialog.requestFocus();
+                }
+            }
+        });
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Continue with code execution based on user's response
+                userResponse = confirmationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                        }
+                    }
+                });
+            }
+        }).start();
     }//GEN-LAST:event_deleteButton5MouseClicked
 
     private void deleteButton5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton5MouseEntered
@@ -2726,28 +2893,92 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void confirmButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmButtonMouseClicked
         // TODO add your handling code here:
-        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
-            confirmationDialog = new ConfirmationDialog(this);
-            confirmationDialog.setVisible(true);
-            glassPane.setVisible(true);
-        } else {
-            confirmationDialog.toFront();
-            confirmationDialog.requestFocus();
-        }
-        applicationEditVisibility(false);
+        // Create a CountDownLatch
+        CountDownLatch latch = new CountDownLatch(1);
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                if (confirmationDialog == null || !confirmationDialog.isVisible()) {
+                    confirmationDialog = new ConfirmationDialog(UserLoggedIn.this, latch);
+                    confirmationDialog.setVisible(true);
+                    glassPane.setVisible(true);
+                } else {
+                    confirmationDialog.toFront();
+                    confirmationDialog.requestFocus();
+                }
+            }
+        });
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Continue with code execution based on user's response
+                userResponse = confirmationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                            applicationEditVisibility(false);
+                        }
+                    }
+                });
+            }
+        }).start();
     }//GEN-LAST:event_confirmButtonMouseClicked
 
     private void cancelButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseClicked
         // TODO add your handling code here:
-        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
-            confirmationDialog = new ConfirmationDialog(this);
-            confirmationDialog.setVisible(true);
-            glassPane.setVisible(true);
-        } else {
-            confirmationDialog.toFront();
-            confirmationDialog.requestFocus();
-        }
-        applicationEditVisibility(false);
+        // Create a CountDownLatch
+        CountDownLatch latch = new CountDownLatch(1);
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                if (confirmationDialog == null || !confirmationDialog.isVisible()) {
+                    confirmationDialog = new ConfirmationDialog(UserLoggedIn.this, latch);
+                    confirmationDialog.setVisible(true);
+                    glassPane.setVisible(true);
+                } else {
+                    confirmationDialog.toFront();
+                    confirmationDialog.requestFocus();
+                }
+            }
+        });
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Continue with code execution based on user's response
+                userResponse = confirmationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                            applicationEditVisibility(false);
+                        }
+                    }
+                });
+            }
+        }).start();
     }//GEN-LAST:event_cancelButtonMouseClicked
 
     private void profileEditButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileEditButtonMouseClicked
@@ -2767,14 +2998,46 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void profileDeleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileDeleteButtonMouseClicked
         // TODO add your handling code here:
-        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
-            confirmationDialog = new ConfirmationDialog(this);
-            confirmationDialog.setVisible(true);
-            glassPane.setVisible(true);
-        } else {
-            confirmationDialog.toFront();
-            confirmationDialog.requestFocus();
-        }
+        // Create a CountDownLatch
+        CountDownLatch latch = new CountDownLatch(1);
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                if (confirmationDialog == null || !confirmationDialog.isVisible()) {
+                    confirmationDialog = new ConfirmationDialog(UserLoggedIn.this, latch);
+                    confirmationDialog.setVisible(true);
+                    glassPane.setVisible(true);
+                } else {
+                    confirmationDialog.toFront();
+                    confirmationDialog.requestFocus();
+                }
+            }
+        });
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Continue with code execution based on user's response
+                userResponse = confirmationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                        }
+                    }
+                });
+            }
+        }).start();
     }//GEN-LAST:event_profileDeleteButtonMouseClicked
 
     private void profileDeleteButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileDeleteButtonMouseEntered
@@ -2788,17 +3051,50 @@ public class UserLoggedIn extends javax.swing.JFrame {
     }//GEN-LAST:event_profileDeleteButtonMouseExited
 
     private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
-        // TODO add your handling code here:
-        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
-            confirmationDialog = new ConfirmationDialog(this);
-            confirmationDialog.setVisible(true);
-            glassPane.setVisible(true);
-        } else {
-            confirmationDialog.toFront();
-            confirmationDialog.requestFocus();
-        }
-        this.setVisible(false);
-        new LandingPage(true).setVisible(true);
+        // TODO add your handling code here:     
+        // Create a CountDownLatch
+        CountDownLatch latch = new CountDownLatch(1);
+
+        // Show the custom frame on the EDT
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                if (confirmationDialog == null || !confirmationDialog.isVisible()) {
+                    confirmationDialog = new ConfirmationDialog(UserLoggedIn.this, latch);
+                    confirmationDialog.setVisible(true);
+                    glassPane.setVisible(true);
+                } else {
+                    confirmationDialog.toFront();
+                    confirmationDialog.requestFocus();
+                }
+            }
+        });
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Continue with code execution based on user's response
+                userResponse = confirmationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                            UserLoggedIn.this.setVisible(false);
+                            new LandingPage(true).setVisible(true);
+                        }
+                    }
+                });
+            }
+        }).start();
     }//GEN-LAST:event_logoutButtonMouseClicked
 
     private void logoutButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseEntered
@@ -2812,16 +3108,48 @@ public class UserLoggedIn extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutButtonMouseExited
 
     private void profileConfirmButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileConfirmButtonMouseClicked
-        // TODO add your handling code here:
-        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
-            confirmationDialog = new ConfirmationDialog(this);
-            confirmationDialog.setVisible(true);
-            glassPane.setVisible(true);
-        } else {
-            confirmationDialog.toFront();
-            confirmationDialog.requestFocus();
-        }
-        profileEditVisibility(false);
+        // TODO add your handling code here
+        // Create a CountDownLatch
+        CountDownLatch latch = new CountDownLatch(1);
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                if (confirmationDialog == null || !confirmationDialog.isVisible()) {
+                    confirmationDialog = new ConfirmationDialog(UserLoggedIn.this, latch);
+                    confirmationDialog.setVisible(true);
+                    glassPane.setVisible(true);
+                } else {
+                    confirmationDialog.toFront();
+                    confirmationDialog.requestFocus();
+                }
+            }
+        });
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Continue with code execution based on user's response
+                userResponse = confirmationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                            profileEditVisibility(false);
+                        }
+                    }
+                });
+            }
+        }).start();
     }//GEN-LAST:event_profileConfirmButtonMouseClicked
 
     private void profileConfirmButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileConfirmButtonMouseEntered
@@ -2835,16 +3163,57 @@ public class UserLoggedIn extends javax.swing.JFrame {
     }//GEN-LAST:event_profileConfirmButtonMouseExited
 
     private void profileCancelButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileCancelButtonMouseClicked
-        // TODO add your handling code here:
+        // Create a CountDownLatch
+        CountDownLatch latch = new CountDownLatch(1);
+
+        // Show the custom frame and wait for the user's response
         if (confirmationDialog == null || !confirmationDialog.isVisible()) {
-            confirmationDialog = new ConfirmationDialog(this);
+            confirmationDialog = new ConfirmationDialog(this, latch);
             confirmationDialog.setVisible(true);
             glassPane.setVisible(true);
         } else {
             confirmationDialog.toFront();
             confirmationDialog.requestFocus();
         }
-        profileEditVisibility(false);
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                if (confirmationDialog == null || !confirmationDialog.isVisible()) {
+                    confirmationDialog = new ConfirmationDialog(UserLoggedIn.this, latch);
+                    confirmationDialog.setVisible(true);
+                    glassPane.setVisible(true);
+                } else {
+                    confirmationDialog.toFront();
+                    confirmationDialog.requestFocus();
+                }
+            }
+        });
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Continue with code execution based on user's response
+                userResponse = confirmationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                            profileEditVisibility(false);
+                        }
+                    }
+                });
+            }
+        }).start();
     }//GEN-LAST:event_profileCancelButtonMouseClicked
 
     private void profileCancelButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileCancelButtonMouseEntered
