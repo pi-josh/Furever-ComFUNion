@@ -1807,12 +1807,12 @@
         <Component class="javax.swing.JLabel" name="profilePicture">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Resources/sampeProfilePicture.jpg"/>
+              <Image iconType="3" name="/Resources/profile pic.jpg"/>
             </Property>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="242" y="50" width="260" height="245"/>
+              <AbsoluteConstraints x="244" y="52" width="259" height="242"/>
             </Constraint>
           </Constraints>
         </Component>
