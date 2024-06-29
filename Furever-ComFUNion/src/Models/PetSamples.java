@@ -22,7 +22,7 @@ public class PetSamples {
     private Pet raphael = new Pet(001, "Dog", "R", "A", "M", 2, "Raphael", "M", 0, 4, "/Resources/sample pets/dog.png");
     
     public ArrayList<Pet> getAllPets() {
-        ArrayList<Pet> pets = new ArrayList();
+        ArrayList<Pet> pets = new ArrayList<>();
         
         pets.add(cassyyy);
         pets.add(gigi);
