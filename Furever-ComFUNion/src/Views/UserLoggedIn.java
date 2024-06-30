@@ -3,10 +3,7 @@ package Views;
 import Controllers.ConfirmationDialogController;
 import Controllers.ExitDialogController;
 import Models.Client;
-import Models.ClientSamples;
 import Models.Pet;
-import Models.PetSamples;
-import Models.VetSamples;
 import Models.Veterinarian;
 import java.awt.Color;
 import java.awt.MediaTracker;
@@ -1401,16 +1398,16 @@ public class UserLoggedIn extends javax.swing.JFrame {
     }
 
     private void samples() {
-        PetSamples petSamples = new PetSamples();
-        this.pets = petSamples.getAllPets();
+        Pet petSamples = new Pet();
+        this.pets = petSamples.getAllPetSamples();
         totalPets = pets.size();
 
-        VetSamples vetSamples = new VetSamples();
-        this.vets = vetSamples.getAllVeterinarians();
+        Veterinarian vetSamples = new Veterinarian();
+        this.vets = vetSamples.getAllVetSamples();
         totalVets = vets.size();
         
-        ClientSamples clientSamples = new ClientSamples();
-        this.clients = clientSamples.getAllClients();
+        Client clientSamples = new Client();
+        this.clients = clientSamples.getAllClientSamples();
         totalClients = clients.size();
     }
 
