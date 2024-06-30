@@ -6,6 +6,7 @@
 package Views;
 
 import Controllers.LoginController;
+import Controllers.RegisterController;
 import Models.User;
 import java.awt.Color;
 import java.awt.MediaTracker;
@@ -21,6 +22,9 @@ import javax.swing.JTextPane;
  * @author joshu
  */
 public class Login extends javax.swing.JFrame {
+    // controller
+    private RegisterController registerController;
+    
     // frames
     private LandingPage landingPage;
     private Register register;
@@ -115,6 +119,7 @@ public class Login extends javax.swing.JFrame {
         }
         if (register == null) {
             register = new Register(landingPage);
+            registerController = new RegisterController(register);
             register.setVisible(true);
         } else if (!register.isVisible()) {
             register.setVisible(true);

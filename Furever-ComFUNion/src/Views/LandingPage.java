@@ -2,6 +2,7 @@ package Views;
 
 import Controllers.ExitDialogController;
 import Controllers.LoginController;
+import Controllers.RegisterController;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -27,6 +28,7 @@ public class LandingPage extends javax.swing.JFrame {
     // controllers
     ExitDialogController exitController;
     LoginController loginController;
+    RegisterController registerController;
     
     // sub frames
     private Login login;
@@ -761,6 +763,7 @@ public class LandingPage extends javax.swing.JFrame {
         
         if (register == null) {
             register = new Register(this);
+            registerController = new RegisterController(register);
             register.setVisible(true);
         } else if (!register.isVisible()) {
             register.setVisible(true);
