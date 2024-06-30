@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Main;
+
 
 import Views.LandingPage;
-import Views.UserLoggedIn;
+// import Views.UserLoggedIn;
 
 /**
  *
@@ -14,9 +14,10 @@ import Views.UserLoggedIn;
  */
 public class Main {
     public static void main(String[] args) {
-        LandingPage landingPage = new LandingPage(true);
-        UserLoggedIn userLoggedIn = new UserLoggedIn();
+        LandingPage landingPage = new LandingPage(false);
         landingPage.setVisible(true);
+        
+        // UserLoggedIn userLoggedIn = new UserLoggedIn();
         // userLoggedIn.setVisible(true);
     }
 }

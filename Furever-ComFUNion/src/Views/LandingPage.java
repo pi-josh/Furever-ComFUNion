@@ -1,6 +1,7 @@
 package Views;
 
 import Controllers.ExitDialogController;
+import Controllers.LoginController;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -24,7 +25,8 @@ import javax.swing.Timer;
  */
 public class LandingPage extends javax.swing.JFrame {
     // controllers
-    ExitDialogController controller;
+    ExitDialogController exitController;
+    LoginController loginController;
     
     // sub frames
     private Login login;
@@ -65,7 +67,7 @@ public class LandingPage extends javax.swing.JFrame {
         
         if(!logout) {
             // Create a timer to stop the GIF after 6 seconds
-            timer = new Timer(15000, new ActionListener() {
+            timer = new Timer(0, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     startupAnimationPanel.setVisible(false);
@@ -788,6 +790,7 @@ public class LandingPage extends javax.swing.JFrame {
         }
         if (login == null) {
             login = new Login(this);
+            loginController = new LoginController(login);
             login.setVisible(true);
         } else if (!login.isVisible()) {
             login.setVisible(true);
@@ -817,7 +820,7 @@ public class LandingPage extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (exitDialog == null || !exitDialog.isVisible()) {
             exitDialog = new ExitDialog(this, null);
-            controller = new ExitDialogController(exitDialog, this, null);
+            exitController = new ExitDialogController(exitDialog, this, null);
             exitDialog.setVisible(true);
             glassPane.setVisible(true);
         } else {

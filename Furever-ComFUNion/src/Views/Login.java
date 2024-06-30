@@ -5,48 +5,51 @@
  */
 package Views;
 
+import Controllers.LoginController;
+import Models.User;
 import java.awt.Color;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextPane;
 
 /**
  *
  * @author joshu
  */
 public class Login extends javax.swing.JFrame {
+    // frames
     private LandingPage landingPage;
     private Register register;
-    
-    /**
-     * Creates new form Register
-     */
+   
+
     public Login(LandingPage landingPage) {
         initComponents();
         this.landingPage = landingPage;
         register = landingPage.getRegister();
         setVisible(true);
-        
+
         // Window logo
-        ImageIcon icon1 = null;
-        try {
-            icon1 = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Resources/logo2.png")));
-            if (icon1.getImageLoadStatus() == MediaTracker.ERRORED) {
-                throw new NullPointerException("Image not found or cannot be loaded.");
-            }
-            this.setIconImage(icon1.getImage());
-        } catch (NullPointerException e) {
-            System.err.println("Error: Image not found. " + e.getMessage());
-            e.printStackTrace();
-        }
+        setWindowIcon();
+        
+        resetErrorMessage();
     }
     
+    // Default constructor
     public Login() {
         initComponents();
         
+        // controller
+        LoginController controller = new LoginController(this);
+        
         // Window logo
+        setWindowIcon();
+    }
+
+    private void setWindowIcon() {
         ImageIcon icon1 = null;
         try {
             icon1 = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Resources/logo2.png")));
@@ -60,22 +63,70 @@ public class Login extends javax.swing.JFrame {
         }
     }
     
-    // getters
     public Register getRegister() {
         return register;
     }
     
-    private void loginButtonActionPerformed() {
-        System.out.println("nag-enter");
-        
-        String tempUsername = "admin";
-        String tempPassword = "admin";
-        
-        if(username.getText().equals(tempUsername) && password.getText().equals(tempPassword)) {
+    // Getters for UI components
+    public JLabel getBackButton() {
+        return backButton;
+    }
+
+    public JLabel getLoginButton() {
+        return loginButton;
+    }
+
+    public JLabel getRegisterButton() {
+        return registerButton;
+    }
+
+    public JTextPane getUsernameField() {
+        return username;
+    }
+
+    public JPasswordField getPasswordField() {
+        return password;
+    }
+
+    public JLabel getMinimizeButton() {
+        return minimizeButton;
+    }
+
+    // Event handling methods
+    public void loginButtonActionPerformed() {
+        String enteredUsername = username.getText();
+        String enteredPassword = new String(password.getPassword());
+
+        // Simulate authentication (replace with actual logic)
+        User user = new User("admin", "admin");
+        if (user.authenticate(enteredUsername, enteredPassword)) {
             this.setVisible(false);
             landingPage.setVisible(false);
             new UserLoggedIn().setVisible(true);
+        } else {
+            errorMessage.setText("Invalid username or password");
+            errorMessage.setForeground(Color.RED);
         }
+    }
+
+    public void registerButtonMouseClicked(java.awt.event.MouseEvent evt) {
+        if (landingPage != null) {
+            register = landingPage.getRegister();
+        }
+        if (register == null) {
+            register = new Register(landingPage);
+            register.setVisible(true);
+        } else if (!register.isVisible()) {
+            register.setVisible(true);
+        } else {
+            register.toFront();
+            register.requestFocus();
+        }
+        this.dispose();
+    }
+    
+    public void resetErrorMessage() {
+        errorMessage.setText(""); // Reset the error message label
     }
     
     /**
@@ -165,12 +216,6 @@ public class Login extends javax.swing.JFrame {
 
         jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         jScrollPane2.setHorizontalScrollBar(null);
-
-        username.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                usernameKeyPressed(evt);
-            }
-        });
         jScrollPane2.setViewportView(username);
 
         loginContainer.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 230, 270, 29));
@@ -178,26 +223,9 @@ public class Login extends javax.swing.JFrame {
         passwordLabel.setFont(new java.awt.Font("Tahoma", 0, 19)); // NOI18N
         passwordLabel.setText("Password:");
         loginContainer.add(passwordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 270, -1, -1));
-
-        password.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                passwordKeyPressed(evt);
-            }
-        });
         loginContainer.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 300, 270, 30));
 
         loginButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/login acc.png"))); // NOI18N
-        loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                loginButtonMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                loginButtonMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                loginButtonMouseExited(evt);
-            }
-        });
         loginContainer.add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 430, -1, 60));
 
         registerDescription.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -207,17 +235,6 @@ public class Login extends javax.swing.JFrame {
         registerButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         registerButton.setForeground(new java.awt.Color(74, 54, 13));
         registerButton.setText("<html>\n<u>Register here</u>\n</html>");
-        registerButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                registerButtonMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                registerButtonMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                registerButtonMouseExited(evt);
-            }
-        });
         loginContainer.add(registerButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 500, -1, -1));
 
         logo.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -257,49 +274,6 @@ public class Login extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void loginButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseEntered
-        // TODO add your handling code here:
-        loginButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/login acc hover.png")));
-    }//GEN-LAST:event_loginButtonMouseEntered
-
-    private void loginButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseExited
-        // TODO add your handling code here:
-        loginButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/login acc.png")));
-    }//GEN-LAST:event_loginButtonMouseExited
-
-    private void registerButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerButtonMouseEntered
-        // TODO add your handling code here:
-        registerButton.setForeground(Color.RED);
-    }//GEN-LAST:event_registerButtonMouseEntered
-
-    private void registerButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerButtonMouseExited
-        // TODO add your handling code here:
-        registerButton.setForeground(new java.awt.Color(99, 71, 12));
-    }//GEN-LAST:event_registerButtonMouseExited
-
-    private void usernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameKeyPressed
-        // TODO add your handling code here:
-        switch (evt.getKeyChar()) {
-            case KeyEvent.VK_ENTER:
-                // Ignore the event if it is the Enter key
-                evt.consume();
-                loginButtonActionPerformed();
-                break;
-            case KeyEvent.VK_TAB:
-                evt.consume();
-                break;
-            default:
-                // Otherwise, handle the event normally
-                super.processKeyEvent(evt);
-                break;
-        }
-    }//GEN-LAST:event_usernameKeyPressed
-
-    private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
-        // TODO add your handling code here:
-        loginButtonActionPerformed();
-    }//GEN-LAST:event_loginButtonMouseClicked
-
     private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
         // TODO add your handling code here:
         this.setVisible(false);
@@ -315,24 +289,6 @@ public class Login extends javax.swing.JFrame {
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button (1).png")));
     }//GEN-LAST:event_backButtonMouseExited
 
-    private void registerButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerButtonMouseClicked
-        // TODO add your handling code here:
-        // to make sure that login form or register form is mutually exclusive
-        if (landingPage != null) {
-            register = landingPage.getRegister();
-        }
-        if (register == null) {
-            register = new Register(landingPage);
-            register.setVisible(true);
-        } else if (!register.isVisible()) {
-            register.setVisible(true);
-        } else {
-            register.toFront();
-            register.requestFocus();
-        }
-        this.dispose();
-    }//GEN-LAST:event_registerButtonMouseClicked
-
     private void minimizeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeButtonMouseClicked
         // TODO add your handling code here:
         this.setState(JFrame.ICONIFIED);
@@ -347,24 +303,6 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         minimizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/minimize button (1).png")));
     }//GEN-LAST:event_minimizeButtonMouseExited
-
-    private void passwordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordKeyPressed
-        // TODO add your handling code here:
-        switch (evt.getKeyChar()) {
-            case KeyEvent.VK_ENTER:
-                // Ignore the event if it is the Enter key
-                evt.consume();
-                loginButtonActionPerformed();
-                break;
-            case KeyEvent.VK_TAB:
-                evt.consume();
-                break;
-            default:
-                // Otherwise, handle the event normally
-                super.processKeyEvent(evt);
-                break;
-        }
-    }//GEN-LAST:event_passwordKeyPressed
 
     /**
      * @param args the command line arguments
