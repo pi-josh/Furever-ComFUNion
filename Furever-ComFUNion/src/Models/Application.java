@@ -24,7 +24,9 @@ public class Application {
     private int clientID;
     private String vetID;
     
-    public Application(int applicationID, String applicationType, Date appointDate, String appointTime, String appointPlace, String appointStatus, int clientID, String vetID) {
+    public Application(int applicationID, String applicationType, Date appointDate,
+                       String appointTime, String appointPlace, String appointStatus,
+                       int clientID, String vetID) {
         this.applicationID = applicationID;
         this.applicationType = applicationType;
         this.appointDate = appointDate;

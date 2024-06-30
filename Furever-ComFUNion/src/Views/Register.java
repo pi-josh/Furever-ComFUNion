@@ -5,78 +5,56 @@
  */
 package Views;
 
-import java.awt.Color;
+import Controllers.LoginController;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.time.YearMonth;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
+import javax.swing.*;
 
 /**
  *
  * @author joshu
  */
 public class Register extends javax.swing.JFrame {
+    // controller
+    private LoginController loginController;
+    
+    // frames
     private LandingPage landingPage;
     private Login login;
-    
-    /**
-     * Creates new form Register
-     */
+
+    // Constructor with LandingPage parameter
     public Register(LandingPage landingPage) {
         this.landingPage = landingPage;
         login = landingPage.getLogin();
-        
         initComponents();
-        
-        // hide the passcode entry
-        passcodeScroll.setVisible(false);
-        passcodeLbl.setVisible(false);
-        passcode.setVisible(false);
-        
-        setVisible(true);
-
-        // action listener for year and month to dynamically adjust days
-        year.addActionListener(new ComboBoxActionListener());
-        month.addActionListener(new ComboBoxActionListener());
-        
-        // populate the combo boxes
-        populateComboBoxes();
-        
-        // Window logo
-        ImageIcon icon1 = null;
-        try {
-            icon1 = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Resources/logo2.png")));
-            if (icon1.getImageLoadStatus() == MediaTracker.ERRORED) {
-                throw new NullPointerException("Image not found or cannot be loaded.");
-            }
-            this.setIconImage(icon1.getImage());
-        } catch (NullPointerException e) {
-            System.err.println("Error: Image not found. " + e.getMessage());
-            e.printStackTrace();
-        }
+        initializeForm();
+        errorMessage.setText("");
     }
-    
+
+    // Default constructor
     public Register() {
         initComponents();
-        
-        // hide the passcode entry
+        initializeForm();
+    }
+
+    private void initializeForm() {
+        // Common initialization for both constructors
         passcodeScroll.setVisible(false);
         passcodeLbl.setVisible(false);
         passcode.setVisible(false);
-        
-        
-        // action listener for year and month to dynamically adjust days
+
         year.addActionListener(new ComboBoxActionListener());
         month.addActionListener(new ComboBoxActionListener());
-        
-        // populate the combo boxes
+
         populateComboBoxes();
-        
-        // Window logo
+        setWindowIcon();
+    }
+    
+    private void setWindowIcon() {
         ImageIcon icon1 = null;
         try {
             icon1 = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Resources/logo2.png")));
@@ -93,6 +71,117 @@ public class Register extends javax.swing.JFrame {
     // getters
     public Login getLogin() {
         return login;
+    }
+    
+    // Getter methods for all components
+    public javax.swing.JCheckBox getAskVetCheckBox() {
+        return askVet;
+    }
+
+    public JLabel getBackButton() {
+        return backButton;
+    }
+
+    public JTextPane getBirthdate() {
+        return birthdate;
+    }
+
+    public JTextPane getCompanyName() {
+        return companyName;
+    }
+
+
+    public JPasswordField getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public JTextPane getContactNum() {
+        return contactNum;
+    }
+
+    public JLabel getContactNumber() {
+        return contactNumber;
+    }
+
+    public JTextPane getCurrentAddress() {
+        return currentAddress;
+    }
+
+    public JComboBox<String> getDay() {
+        return day;
+    }
+
+    public JTextPane getEmailAddress() {
+        return emailAddress;
+    }
+
+    public JLabel getErrorMessage() {
+        return errorMessage;
+    }
+
+    public JTextPane getFullName() {
+        return fullName;
+    }
+
+    public JLabel getLoginButton() {
+        return loginButton;
+    }
+    
+    public JLabel getMinimizeButton() {
+        return minimizeButton;
+    }
+
+    public JComboBox<String> getMonth() {
+        return month;
+    }
+
+    public JTextPane getOccupation() {
+        return occupation;
+    }
+
+
+    public JTextPane getPasscode() {
+        return passcode;
+    }
+
+    public JLabel getPasscodeLbl() {
+        return passcodeLbl;
+    }
+
+    public JScrollPane getPasscodeScroll() {
+        return passcodeScroll;
+    }
+
+    public JPasswordField getPassword() {
+        return password;
+    }
+
+    public JLabel getPasswordLabel() {
+        return passwordLabel;
+    }
+
+    public JLabel getRegisterBg() {
+        return registerBg;
+    }
+
+    public JLabel getRegisterButton() {
+        return registerButton;
+    }
+
+    public JTextPane getUsername() {
+        return username;
+    }
+
+    public JComboBox<String> getWorkType() {
+        return workType;
+    }
+
+    public JComboBox<String> getYear() {
+        return year;
+    }
+
+    public boolean isVet() {
+        return askVet.isSelected();
     }
     
     private void populateComboBoxes() {
@@ -154,6 +243,26 @@ public class Register extends javax.swing.JFrame {
         }
     }
     
+    public void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {
+        if (landingPage != null) {
+            login = landingPage.getLogin();
+        }
+        
+        if (login == null) {
+            login = new Login(landingPage);
+            loginController = new LoginController(login);
+            login.setVisible(true);
+        } else if (!login.isVisible()) {
+            login.setVisible(true);
+        }
+        else {
+            login.toFront();
+            login.requestFocus();
+        }
+        this.dispose();
+    }
+
+    
     private void registerButtonActionPerformed() {
         System.out.println("nag-enter");
     }
@@ -167,7 +276,6 @@ public class Register extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jProgressBar1 = new javax.swing.JProgressBar();
         minimizeButton = new javax.swing.JLabel();
         backButton = new javax.swing.JLabel();
         titleContainer = new javax.swing.JPanel();
@@ -224,31 +332,9 @@ public class Register extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         minimizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/minimize button (1).png"))); // NOI18N
-        minimizeButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                minimizeButtonMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                minimizeButtonMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                minimizeButtonMouseExited(evt);
-            }
-        });
         getContentPane().add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(815, 10, 40, 20));
 
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button (1).png"))); // NOI18N
-        backButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                backButtonMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                backButtonMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                backButtonMouseExited(evt);
-            }
-        });
         getContentPane().add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(855, 5, 40, 40));
 
         titleContainer.setBackground(new java.awt.Color(194, 144, 69));
@@ -272,12 +358,6 @@ public class Register extends javax.swing.JFrame {
         registerContainer.add(fullNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 49, -1, -1));
 
         jScrollPane12.setHorizontalScrollBar(null);
-
-        fullName.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                enterTabKeyPressed(evt);
-            }
-        });
         jScrollPane12.setViewportView(fullName);
 
         registerContainer.add(jScrollPane12, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 247, -1));
@@ -287,12 +367,6 @@ public class Register extends javax.swing.JFrame {
         registerContainer.add(currentAddressLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 49, -1, -1));
 
         jScrollPane2.setHorizontalScrollBar(null);
-
-        currentAddress.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                enterTabKeyPressed(evt);
-            }
-        });
         jScrollPane2.setViewportView(currentAddress);
 
         registerContainer.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 80, 280, -1));
@@ -302,12 +376,6 @@ public class Register extends javax.swing.JFrame {
         registerContainer.add(usernameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, -1, -1));
 
         jScrollPane10.setHorizontalScrollBar(null);
-
-        username.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                enterTabKeyPressed(evt);
-            }
-        });
         jScrollPane10.setViewportView(username);
 
         registerContainer.add(jScrollPane10, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 150, 247, -1));
@@ -317,12 +385,6 @@ public class Register extends javax.swing.JFrame {
         registerContainer.add(occupationLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 118, -1, -1));
 
         jScrollPane8.setHorizontalScrollBar(null);
-
-        occupation.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                enterTabKeyPressed(evt);
-            }
-        });
         jScrollPane8.setViewportView(occupation);
 
         registerContainer.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 150, 282, -1));
@@ -332,12 +394,6 @@ public class Register extends javax.swing.JFrame {
         registerContainer.add(contactNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, -1, -1));
 
         jScrollPane3.setHorizontalScrollBar(null);
-
-        contactNum.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                enterTabKeyPressed(evt);
-            }
-        });
         jScrollPane3.setViewportView(contactNum);
 
         registerContainer.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 220, 247, -1));
@@ -347,12 +403,6 @@ public class Register extends javax.swing.JFrame {
         registerContainer.add(companyNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 187, -1, -1));
 
         jScrollPane9.setHorizontalScrollBar(null);
-
-        companyName.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                enterTabKeyPressed(evt);
-            }
-        });
         jScrollPane9.setViewportView(companyName);
 
         registerContainer.add(jScrollPane9, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 219, 282, -1));
@@ -362,12 +412,6 @@ public class Register extends javax.swing.JFrame {
         registerContainer.add(emailAddressLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 260, -1, -1));
 
         jScrollPane4.setHorizontalScrollBar(null);
-
-        emailAddress.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                enterTabKeyPressed(evt);
-            }
-        });
         jScrollPane4.setViewportView(emailAddress);
 
         registerContainer.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 290, 247, -1));
@@ -376,27 +420,11 @@ public class Register extends javax.swing.JFrame {
         workTypeLabel.setText("Work Type:");
         registerContainer.add(workTypeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 256, -1, -1));
 
-        workType.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                workTypeActionPerformed(evt);
-            }
-        });
-        workType.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                enterTabKeyPressed(evt);
-            }
-        });
         registerContainer.add(workType, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 290, 280, -1));
 
         passwordLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         passwordLabel.setText("Password:");
         registerContainer.add(passwordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 330, -1, -1));
-
-        password.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                enterTabKeyPressed(evt);
-            }
-        });
         registerContainer.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, 247, -1));
 
         birthdateLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
@@ -404,12 +432,6 @@ public class Register extends javax.swing.JFrame {
         registerContainer.add(birthdateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 325, -1, -1));
 
         jScrollPane11.setHorizontalScrollBar(null);
-
-        birthdate.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                enterTabKeyPressed(evt);
-            }
-        });
         jScrollPane11.setViewportView(birthdate);
 
         registerContainer.add(jScrollPane11, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 357, 90, -1));
@@ -417,27 +439,10 @@ public class Register extends javax.swing.JFrame {
         confirmPasswordLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         confirmPasswordLabel.setText("Confirm Password:");
         registerContainer.add(confirmPasswordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 400, -1, -1));
-
-        confirmPassword.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                enterTabKeyPressed(evt);
-            }
-        });
         registerContainer.add(confirmPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 430, 247, -1));
 
         registerButton.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         registerButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/register acc.png"))); // NOI18N
-        registerButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                registerButtonMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                registerButtonMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                registerButtonMouseExited(evt);
-            }
-        });
         registerContainer.add(registerButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 490, -1, -1));
 
         loginDescription.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
@@ -447,46 +452,14 @@ public class Register extends javax.swing.JFrame {
         loginButton.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         loginButton.setForeground(new java.awt.Color(99, 71, 12));
         loginButton.setText("<html> <u>Login here</u> </html>");
-        loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                loginButtonMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                loginButtonMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                loginButtonMouseExited(evt);
-            }
-        });
         registerContainer.add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(715, 560, -1, -1));
 
-        year.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                yearActionPerformed(evt);
-            }
-        });
         registerContainer.add(year, new org.netbeans.lib.awtextra.AbsoluteConstraints(615, 358, 70, -1));
 
-        month.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                monthActionPerformed(evt);
-            }
-        });
         registerContainer.add(month, new org.netbeans.lib.awtextra.AbsoluteConstraints(689, 358, 53, -1));
-
-        day.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dayActionPerformed(evt);
-            }
-        });
         registerContainer.add(day, new org.netbeans.lib.awtextra.AbsoluteConstraints(747, 358, 53, -1));
 
         askVet.setText("Are you a veterinarian?");
-        askVet.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                askVetActionPerformed(evt);
-            }
-        });
         registerContainer.add(askVet, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 390, -1, -1));
 
         passcodeLbl.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
@@ -494,18 +467,13 @@ public class Register extends javax.swing.JFrame {
         registerContainer.add(passcodeLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 420, -1, -1));
 
         passcodeScroll.setHorizontalScrollBar(null);
-
-        passcode.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                enterTabKeyPressed(evt);
-            }
-        });
         passcodeScroll.setViewportView(passcode);
 
         registerContainer.add(passcodeScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 450, 282, -1));
 
-        errorMessage.setText("Lagayan ng error message");
-        registerContainer.add(errorMessage, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 500, -1, -1));
+        errorMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        errorMessage.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        registerContainer.add(errorMessage, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 490, 230, 40));
 
         errorMessageContainer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/success error container.png"))); // NOI18N
         registerContainer.add(errorMessageContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 470, 280, 80));
@@ -520,129 +488,6 @@ public class Register extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void workTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workTypeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_workTypeActionPerformed
-
-    private void yearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_yearActionPerformed
-
-    private void monthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_monthActionPerformed
-
-    private void loginButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseEntered
-        // TODO add your handling code here:
-        loginButton.setForeground(Color.RED);
-    }//GEN-LAST:event_loginButtonMouseEntered
-
-    private void dayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dayActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_dayActionPerformed
-
-    private void loginButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseExited
-        // TODO add your handling code here:
-        loginButton.setForeground(new java.awt.Color(99, 71, 12));
-    }//GEN-LAST:event_loginButtonMouseExited
-
-    private void registerButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerButtonMouseEntered
-        // TODO add your handling code here:
-        registerButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/register acc hover.png")));
-    }//GEN-LAST:event_registerButtonMouseEntered
-
-    private void registerButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerButtonMouseExited
-        // TODO add your handling code here:
-        registerButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/register acc.png")));
-    }//GEN-LAST:event_registerButtonMouseExited
-
-    private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
-        // TODO add your handling code here:
-        this.setVisible(false);
-    }//GEN-LAST:event_backButtonMouseClicked
-
-    private void backButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseEntered
-        // TODO add your handling code here:
-        backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button hover (1).png")));
-    }//GEN-LAST:event_backButtonMouseEntered
-
-    private void backButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseExited
-        // TODO add your handling code here:
-        backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button (1).png")));
-    }//GEN-LAST:event_backButtonMouseExited
-
-    private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
-        // TODO add your handling code here:
-        // to make sure that login form or register form is mutually exclusive
-        if (landingPage != null) {
-            login = landingPage.getLogin();
-        }
-        
-        if (login == null) {
-            login = new Login(landingPage);
-            login.setVisible(true);
-        } else if (!login.isVisible()) {
-            login.setVisible(true);
-        }
-        else {
-            login.toFront();
-            login.requestFocus();
-        }
-        this.dispose();
-    }//GEN-LAST:event_loginButtonMouseClicked
-
-    private void minimizeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeButtonMouseClicked
-        // TODO add your handling code here:
-        this.setState(JFrame.ICONIFIED);
-    }//GEN-LAST:event_minimizeButtonMouseClicked
-
-    private void minimizeButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeButtonMouseEntered
-        // TODO add your handling code here:
-        minimizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/minimize button hover (1).png")));
-    }//GEN-LAST:event_minimizeButtonMouseEntered
-
-    private void minimizeButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeButtonMouseExited
-        // TODO add your handling code here:
-        minimizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/minimize button (1).png")));
-    }//GEN-LAST:event_minimizeButtonMouseExited
-
-    private void askVetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_askVetActionPerformed
-        // TODO add your handling code here:
-        if (askVet.isSelected()) {
-            passcodeScroll.setVisible(true);
-            passcodeLbl.setVisible(true);
-            passcode.setVisible(true);
-        } else {
-            passcodeScroll.setVisible(false);
-            passcodeLbl.setVisible(false);
-            passcode.setVisible(false);
-        }
-    }//GEN-LAST:event_askVetActionPerformed
-
-    private void registerButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerButtonMouseClicked
-        // TODO add your handling code here:
-        registerButtonActionPerformed();
-    }//GEN-LAST:event_registerButtonMouseClicked
-
-    private void enterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_enterTabKeyPressed
-        // TODO add your handling code here:
-        // TODO add your handling code here:
-        switch (evt.getKeyChar()) {
-            case KeyEvent.VK_ENTER:
-                // Ignore the event if it is the Enter key
-                evt.consume();
-                registerButtonActionPerformed();
-                break;
-            case KeyEvent.VK_TAB:
-                evt.consume();
-                break;
-            default:
-                // Otherwise, handle the event normally
-                super.processKeyEvent(evt);
-                break;
-        }
-    }//GEN-LAST:event_enterTabKeyPressed
-
     /**
      * @param args the command line arguments
      */
@@ -653,9 +498,9 @@ public class Register extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
@@ -665,7 +510,7 @@ public class Register extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Register.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(Register.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Register.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -698,7 +543,6 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JLabel errorMessageContainer;
     private javax.swing.JTextPane fullName;
     private javax.swing.JLabel fullNameLabel;
-    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane12;

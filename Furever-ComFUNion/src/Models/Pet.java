@@ -24,7 +24,9 @@ public class Pet {
     private int applicationID;
     private String picURL; // sample lang to since hindi ko alam kung pano yung blob sa db
     
-    public Pet(int petID, String petType, String petOrigin, String petStatus, String petSize, int petAge, String petName, String petSex, int petHistory, int applicationID, String picURL) {
+    public Pet(int petID, String petType, String petOrigin, String petStatus,
+               String petSize, int petAge, String petName, String petSex,
+               int petHistory, int applicationID, String picURL) {
         this.petID = petID;
         this.petType = petType;
         this.petOrigin = petOrigin;

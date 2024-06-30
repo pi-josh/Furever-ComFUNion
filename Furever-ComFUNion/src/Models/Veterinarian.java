@@ -19,7 +19,8 @@ public class Veterinarian {
     private String vetCellNum;
     private String vetEmailAdd;
     
-    public Veterinarian(int vetID, String vetPassword, String vetFullName, int vetAge, String vetCellNum, String vetEmailAdd) {
+    public Veterinarian(int vetID, String vetPassword, String vetFullName,
+                        int vetAge, String vetCellNum, String vetEmailAdd) {
         this.vetID = vetID;
         this.vetPassword = vetPassword;
         this.vetAge = vetAge;

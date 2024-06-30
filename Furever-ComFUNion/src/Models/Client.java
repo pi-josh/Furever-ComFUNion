@@ -24,7 +24,10 @@ public class Client {
     private String companyName;
     private String workType;
     
-    public Client(int clientID, String clientPassword, String clientFullName, int clientAge, String clientAddress, String cellNum, String clientEmailAdd, String clientOccupation, String clientIncome, String companyName, String workType) {
+    public Client(int clientID, String clientPassword, String clientFullName,
+                  int clientAge, String clientAddress, String cellNum,
+                  String clientEmailAdd, String clientOccupation, String clientIncome,
+                  String companyName, String workType) {
         this.clientID = clientID;
         this.clientPassword = clientPassword;
         this.clientFullName = clientFullName;
