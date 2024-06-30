@@ -23,7 +23,7 @@ public class VetSamples {
     private Veterinarian coco2 = new Veterinarian(003, "angprobinsyano7", "Coco Martin2", 42, "9326168234 (2)", "buhaypasicardo@gmail.comwildyoungfree@yahoo.com");
     
     public ArrayList<Veterinarian> getAllVeterinarians() {
-        ArrayList<Veterinarian> vets = new ArrayList();
+        ArrayList<Veterinarian> vets = new ArrayList<>();
         
         vets.add(snoop);
         vets.add(wally);

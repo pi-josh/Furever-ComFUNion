@@ -1,5 +1,7 @@
 package Views;
 
+import Models.Client;
+import Models.ClientSamples;
 import Models.Pet;
 import Models.PetSamples;
 import Models.VetSamples;
@@ -71,6 +73,11 @@ public class UserLoggedIn extends javax.swing.JFrame {
     ArrayList<Veterinarian> vets;
     private int totalVets;
     private int vetIndex = 0;
+    
+    // Sample clients
+    ArrayList<Client> clients;
+    private int totalClients;
+    
 
     /**
      * Creates new form Main
@@ -1395,6 +1402,10 @@ public class UserLoggedIn extends javax.swing.JFrame {
         VetSamples vetSamples = new VetSamples();
         this.vets = vetSamples.getAllVeterinarians();
         totalVets = vets.size();
+        
+        ClientSamples clientSamples = new ClientSamples();
+        this.clients = clientSamples.getAllClients();
+        totalClients = clients.size();
     }
 
     private void homeButton() {
