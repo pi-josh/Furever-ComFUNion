@@ -1406,11 +1406,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
         ClientSamples clientSamples = new ClientSamples();
         this.clients = clientSamples.getAllClients();
         totalClients = clients.size();
-        
-        for(Client client : clients) {
-            System.out.println(client.getClientFullName());
-        }
-        System.out.println(totalClients);
     }
 
     private void homeButton() {
