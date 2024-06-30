@@ -1,5 +1,6 @@
 package Views;
 
+import Controllers.ConfirmationDialogController;
 import Controllers.ExitDialogController;
 import Models.Client;
 import Models.ClientSamples;
@@ -34,7 +35,8 @@ import javax.swing.SwingUtilities;
  */
 public class UserLoggedIn extends javax.swing.JFrame {
     // controllers
-    ExitDialogController controller;
+    ExitDialogController exitController;
+    ConfirmationDialogController confirmationController;
     
     // for confirmation dialog
     boolean userResponse;
@@ -2093,6 +2095,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
             public void run() {
                 if (confirmationDialog == null || !confirmationDialog.isVisible()) {
                     confirmationDialog = new ConfirmationDialog(UserLoggedIn.this, latch);
+                    confirmationController = new ConfirmationDialogController(confirmationDialog, UserLoggedIn.this, latch);
                     confirmationDialog.setVisible(true);
                     glassPane.setVisible(true);
                 } else {
@@ -2410,7 +2413,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (exitDialog == null || !exitDialog.isVisible()) {
             exitDialog = new ExitDialog(null, this);
-            controller = new ExitDialogController(exitDialog, null, this);
+            exitController = new ExitDialogController(exitDialog, null, this);
             exitDialog.setVisible(true);
             glassPane.setVisible(true);
         } else {
@@ -3003,21 +3006,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private void profileConfirmButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileConfirmButtonMouseClicked
         // TODO add your handling code here
         // Create a CountDownLatch
-        CountDownLatch latch = new CountDownLatch(1);
-
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                if (confirmationDialog == null || !confirmationDialog.isVisible()) {
-                    confirmationDialog = new ConfirmationDialog(UserLoggedIn.this, latch);
-                    confirmationDialog.setVisible(true);
-                    glassPane.setVisible(true);
-                } else {
-                    confirmationDialog.toFront();
-                    confirmationDialog.requestFocus();
-                }
-            }
-        });
+        CountDownLatch latch = countDownLatch();
 
         // Use a separate thread to wait for the user's response
         new Thread(new Runnable() {
@@ -3057,31 +3046,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void profileCancelButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileCancelButtonMouseClicked
         // Create a CountDownLatch
-        CountDownLatch latch = new CountDownLatch(1);
-
-        // Show the custom frame and wait for the user's response
-        if (confirmationDialog == null || !confirmationDialog.isVisible()) {
-            confirmationDialog = new ConfirmationDialog(this, latch);
-            confirmationDialog.setVisible(true);
-            glassPane.setVisible(true);
-        } else {
-            confirmationDialog.toFront();
-            confirmationDialog.requestFocus();
-        }
-
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                if (confirmationDialog == null || !confirmationDialog.isVisible()) {
-                    confirmationDialog = new ConfirmationDialog(UserLoggedIn.this, latch);
-                    confirmationDialog.setVisible(true);
-                    glassPane.setVisible(true);
-                } else {
-                    confirmationDialog.toFront();
-                    confirmationDialog.requestFocus();
-                }
-            }
-        });
+        CountDownLatch latch = countDownLatch();
 
         // Use a separate thread to wait for the user's response
         new Thread(new Runnable() {

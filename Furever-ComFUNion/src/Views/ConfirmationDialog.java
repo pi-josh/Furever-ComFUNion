@@ -9,6 +9,7 @@ import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.util.concurrent.CountDownLatch;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -16,57 +17,47 @@ import javax.swing.JPanel;
  * @author joshu
  */
 public class ConfirmationDialog extends javax.swing.JFrame {
-    // for user response
-    boolean userResponse;
-    CountDownLatch latch;
-    
-    // sub frames
-    private UserLoggedIn userLoggedIn;
-    private JPanel glassPane;
-    
-    /**
-     * Creates new form Register
-     * @param userLoggedIn
-     */
+    private boolean userResponse;
+    private final JPanel glassPane;
+    private final CountDownLatch latch;
+
     public ConfirmationDialog(UserLoggedIn userLoggedIn, CountDownLatch latch) {
-        this.userLoggedIn = userLoggedIn;
+        initComponents();
         this.latch = latch;
-        initComponents();
-        
+        this.glassPane = (JPanel) userLoggedIn.getGlassPane();
+
         // Window logo
-        ImageIcon icon1 = null;
         try {
-            icon1 = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Resources/logo2.png")));
-            if (icon1.getImageLoadStatus() == MediaTracker.ERRORED) {
+            ImageIcon icon = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Resources/logo2.png")));
+            if (icon.getImageLoadStatus() == MediaTracker.ERRORED) {
                 throw new NullPointerException("Image not found or cannot be loaded.");
             }
-            this.setIconImage(icon1.getImage());
+            this.setIconImage(icon.getImage());
         } catch (NullPointerException e) {
             System.err.println("Error: Image not found. " + e.getMessage());
             e.printStackTrace();
         }
     }
-    
-    public ConfirmationDialog() {
-        initComponents();
-        
-        // Window logo
-        ImageIcon icon1 = null;
-        try {
-            icon1 = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Resources/logo2.png")));
-            if (icon1.getImageLoadStatus() == MediaTracker.ERRORED) {
-                throw new NullPointerException("Image not found or cannot be loaded.");
-            }
-            this.setIconImage(icon1.getImage());
-        } catch (NullPointerException e) {
-            System.err.println("Error: Image not found. " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-    
-    // getter method
+
+    // Getters and setters
     public boolean getUserResponse() {
         return userResponse;
+    }
+
+    public void setUserResponse(boolean userResponse) {
+        this.userResponse = userResponse;
+    }
+
+    public JPanel getGlassPane() {
+        return glassPane;
+    }
+
+    public JLabel getYesButton() {
+        return yesButton;
+    }
+
+    public JLabel getNoButton() {
+        return noButton;
     }
 
     /**
@@ -100,31 +91,9 @@ public class ConfirmationDialog extends javax.swing.JFrame {
 
         yesButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/yes button (1).png"))); // NOI18N
         yesButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        yesButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                yesButtonMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                yesButtonMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                yesButtonMouseExited(evt);
-            }
-        });
         exitDialogPanel.add(yesButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 185, 230, 70));
 
         noButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/no button (1).png"))); // NOI18N
-        noButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                noButtonMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                noButtonMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                noButtonMouseExited(evt);
-            }
-        });
         exitDialogPanel.add(noButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 185, 230, 70));
 
         exitDialog.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/continuation dialog (1).png"))); // NOI18N
@@ -135,48 +104,6 @@ public class ConfirmationDialog extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void yesButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_yesButtonMouseClicked
-        // TODO add your handling code here:
-        if (userLoggedIn != null) {
-            glassPane = (JPanel) userLoggedIn.getGlassPane();
-            glassPane.setVisible(false);
-        }
-        userResponse = true;
-        latch.countDown(); // Release the latch
-        this.setVisible(false);
-    }//GEN-LAST:event_yesButtonMouseClicked
-
-    private void yesButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_yesButtonMouseEntered
-        // TODO add your handling code here:
-        yesButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/yes button hover (1).png")));
-    }//GEN-LAST:event_yesButtonMouseEntered
-
-    private void yesButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_yesButtonMouseExited
-        // TODO add your handling code here:
-        yesButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/yes button (1).png")));
-    }//GEN-LAST:event_yesButtonMouseExited
-
-    private void noButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_noButtonMouseClicked
-        // TODO add your handling code here:
-        if (userLoggedIn != null) {
-            glassPane = (JPanel) userLoggedIn.getGlassPane();
-            glassPane.setVisible(false);
-        }
-        userResponse = false;
-        latch.countDown(); // Release the latch
-        this.setVisible(false);
-    }//GEN-LAST:event_noButtonMouseClicked
-
-    private void noButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_noButtonMouseEntered
-        // TODO add your handling code here:
-        noButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/no button hover (1).png")));
-    }//GEN-LAST:event_noButtonMouseEntered
-
-    private void noButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_noButtonMouseExited
-        // TODO add your handling code here:
-        noButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/no button (1).png")));
-    }//GEN-LAST:event_noButtonMouseExited
 
     /**
      * @param args the command line arguments
@@ -207,7 +134,7 @@ public class ConfirmationDialog extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ConfirmationDialog().setVisible(true);
+                new ConfirmationDialog(null, null).setVisible(true);
             }
         });
     }
@@ -220,4 +147,8 @@ public class ConfirmationDialog extends javax.swing.JFrame {
     private javax.swing.JLabel noButton;
     private javax.swing.JLabel yesButton;
     // End of variables declaration//GEN-END:variables
+
+    private void setModal(boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

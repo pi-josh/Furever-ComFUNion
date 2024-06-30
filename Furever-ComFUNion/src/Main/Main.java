@@ -16,8 +16,8 @@ public class Main {
     public static void main(String[] args) {
         LandingPage landingPage = new LandingPage(true);
         UserLoggedIn userLoggedIn = new UserLoggedIn();
-        // landingPage.setVisible(true);
-        userLoggedIn.setVisible(true);
+        landingPage.setVisible(true);
+        // userLoggedIn.setVisible(true);
     }
 }
 
