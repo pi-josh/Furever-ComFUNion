@@ -1,5 +1,6 @@
 package Views;
 
+import Controllers.ExitDialogController;
 import Models.Client;
 import Models.ClientSamples;
 import Models.Pet;
@@ -32,6 +33,9 @@ import javax.swing.SwingUtilities;
  * @author joshu
  */
 public class UserLoggedIn extends javax.swing.JFrame {
+    // controllers
+    ExitDialogController controller;
+    
     // for confirmation dialog
     boolean userResponse;
     
@@ -2406,6 +2410,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (exitDialog == null || !exitDialog.isVisible()) {
             exitDialog = new ExitDialog(null, this);
+            controller = new ExitDialogController(exitDialog, null, this);
             exitDialog.setVisible(true);
             glassPane.setVisible(true);
         } else {

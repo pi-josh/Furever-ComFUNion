@@ -1,5 +1,6 @@
 package Views;
 
+import Controllers.ExitDialogController;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -22,6 +23,9 @@ import javax.swing.Timer;
  * @author joshu
  */
 public class LandingPage extends javax.swing.JFrame {
+    // controllers
+    ExitDialogController controller;
+    
     // sub frames
     private Login login;
     private Register register;
@@ -813,6 +817,7 @@ public class LandingPage extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (exitDialog == null || !exitDialog.isVisible()) {
             exitDialog = new ExitDialog(this, null);
+            controller = new ExitDialogController(exitDialog, this, null);
             exitDialog.setVisible(true);
             glassPane.setVisible(true);
         } else {
