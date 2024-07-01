@@ -17,6 +17,7 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -249,8 +250,17 @@ public class UserLoggedIn extends javax.swing.JFrame {
         petPanel1 = new javax.swing.JLabel();
         petPanel2 = new javax.swing.JLabel();
         petPanel3 = new javax.swing.JLabel();
+        petBackButton = new javax.swing.JLabel();
+        petAdoptButton = new javax.swing.JLabel();
+        petHistory = new javax.swing.JLabel();
+        petSize = new javax.swing.JLabel();
+        petStatus = new javax.swing.JLabel();
+        petOrigin = new javax.swing.JLabel();
+        petType = new javax.swing.JLabel();
+        petID = new javax.swing.JLabel();
+        petPanelClick = new javax.swing.JLabel();
         petHeader = new javax.swing.JLabel();
-        backButton = new javax.swing.JLabel();
+        noResultFound = new javax.swing.JLabel();
         background3 = new javax.swing.JLabel();
         vetsBody = new javax.swing.JPanel();
         vetName1 = new javax.swing.JLabel();
@@ -265,6 +275,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetContact4 = new javax.swing.JLabel();
         vetContact5 = new javax.swing.JLabel();
         vetContact6 = new javax.swing.JLabel();
+        vetEmail1 = new javax.swing.JLabel();
+        vetEmail2 = new javax.swing.JLabel();
+        vetEmail3 = new javax.swing.JLabel();
+        vetEmail4 = new javax.swing.JLabel();
+        vetEmail5 = new javax.swing.JLabel();
+        vetEmail6 = new javax.swing.JLabel();
         vetPrev = new javax.swing.JLabel();
         vetNext = new javax.swing.JLabel();
         vetsPanel = new javax.swing.JLabel();
@@ -285,40 +301,40 @@ public class UserLoggedIn extends javax.swing.JFrame {
         applicationPanel = new javax.swing.JLabel();
         background5 = new javax.swing.JLabel();
         profileBody = new javax.swing.JPanel();
+        profilePicture = new javax.swing.JLabel();
         fullNameScroll = new javax.swing.JScrollPane();
         fullName = new javax.swing.JTextPane();
+        profileName = new javax.swing.JLabel();
         usernameScroll = new javax.swing.JScrollPane();
         username1 = new javax.swing.JTextPane();
+        profileUsername = new javax.swing.JLabel();
         contactNumScroll = new javax.swing.JScrollPane();
         contactNum = new javax.swing.JTextPane();
+        profileContactNum = new javax.swing.JLabel();
         emailAddressScroll = new javax.swing.JScrollPane();
         emailAddress = new javax.swing.JTextPane();
-        currentAddressScroll = new javax.swing.JScrollPane();
-        currentAddress = new javax.swing.JTextPane();
-        occupationScroll = new javax.swing.JScrollPane();
-        occupation = new javax.swing.JTextPane();
-        companyScroll = new javax.swing.JScrollPane();
-        companyName = new javax.swing.JTextPane();
-        year = new javax.swing.JComboBox<>();
-        month = new javax.swing.JComboBox<>();
-        day = new javax.swing.JComboBox<>();
-        birthdayScroll = new javax.swing.JScrollPane();
-        birthdate = new javax.swing.JTextPane();
-        workType = new javax.swing.JComboBox<>();
+        profileEmailAddress = new javax.swing.JLabel();
         passwordLabel = new javax.swing.JLabel();
         password = new javax.swing.JPasswordField();
         confirmPasswordLabel = new javax.swing.JLabel();
         confirmPassword = new javax.swing.JPasswordField();
-        profilePicture = new javax.swing.JLabel();
-        profileName = new javax.swing.JLabel();
-        profileUsername = new javax.swing.JLabel();
-        profileContactNum = new javax.swing.JLabel();
-        profileEmailAddress = new javax.swing.JLabel();
         profilePassword = new javax.swing.JLabel();
+        currentAddressScroll = new javax.swing.JScrollPane();
+        currentAddress = new javax.swing.JTextPane();
         profileAddress = new javax.swing.JLabel();
+        occupationScroll = new javax.swing.JScrollPane();
+        occupation = new javax.swing.JTextPane();
         profileOccupation = new javax.swing.JLabel();
+        companyScroll = new javax.swing.JScrollPane();
+        companyName = new javax.swing.JTextPane();
         profileCompany = new javax.swing.JLabel();
+        workType = new javax.swing.JComboBox<>();
         profileWorkType = new javax.swing.JLabel();
+        birthdayScroll = new javax.swing.JScrollPane();
+        birthdate = new javax.swing.JTextPane();
+        year = new javax.swing.JComboBox<>();
+        month = new javax.swing.JComboBox<>();
+        day = new javax.swing.JComboBox<>();
         profileAge = new javax.swing.JLabel();
         profileDeleteButton = new javax.swing.JLabel();
         profileEditButton = new javax.swing.JLabel();
@@ -718,32 +734,41 @@ public class UserLoggedIn extends javax.swing.JFrame {
         petImg3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         petsBody.add(petImg3, new org.netbeans.lib.awtextra.AbsoluteConstraints(995, 198, 190, 170));
 
-        petName1.setText("Pet Name");
-        petsBody.add(petName1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 455, -1, -1));
+        petName1.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
+        petName1.setText("Caliver");
+        petsBody.add(petName1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 447, 170, -1));
 
-        petName2.setText("Pet Name");
-        petsBody.add(petName2, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 455, -1, -1));
+        petName2.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
+        petName2.setText("Tiktok");
+        petsBody.add(petName2, new org.netbeans.lib.awtextra.AbsoluteConstraints(639, 447, 180, -1));
 
-        petName3.setText("Pet Name");
-        petsBody.add(petName3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 455, -1, -1));
+        petName3.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
+        petName3.setText("Clover");
+        petsBody.add(petName3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1053, 447, 162, -1));
 
-        petAge1.setText("Age");
-        petsBody.add(petAge1, new org.netbeans.lib.awtextra.AbsoluteConstraints(265, 490, -1, -1));
+        petAge1.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
+        petAge1.setText("24 months");
+        petsBody.add(petAge1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 484, 200, -1));
 
-        petAge2.setText("Age");
-        petsBody.add(petAge2, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 490, -1, -1));
+        petAge2.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
+        petAge2.setText("18 months");
+        petsBody.add(petAge2, new org.netbeans.lib.awtextra.AbsoluteConstraints(623, 484, 196, -1));
 
-        petAge3.setText("Age");
-        petsBody.add(petAge3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1085, 490, -1, -1));
+        petAge3.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
+        petAge3.setText("28 months");
+        petsBody.add(petAge3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1025, 484, 190, -1));
 
-        petGender1.setText("Gender");
-        petsBody.add(petGender1, new org.netbeans.lib.awtextra.AbsoluteConstraints(255, 525, -1, -1));
+        petGender1.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
+        petGender1.setText("Male");
+        petsBody.add(petGender1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 520, 160, -1));
 
-        petGender2.setText("Gender");
-        petsBody.add(petGender2, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 525, -1, -1));
+        petGender2.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
+        petGender2.setText("Female");
+        petsBody.add(petGender2, new org.netbeans.lib.awtextra.AbsoluteConstraints(661, 520, 158, -1));
 
-        petGender3.setText("Gender");
-        petsBody.add(petGender3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1075, 525, -1, -1));
+        petGender3.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
+        petGender3.setText("Male");
+        petsBody.add(petGender3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 520, 155, -1));
 
         petPanel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets panel (1).png"))); // NOI18N
         petPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -770,18 +795,63 @@ public class UserLoggedIn extends javax.swing.JFrame {
         });
         petsBody.add(petPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 90, 400, 530));
 
+        petBackButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button (2).png"))); // NOI18N
+        petBackButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                petBackButtonMouseClicked(evt);
+            }
+        });
+        petsBody.add(petBackButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 200, -1, -1));
+
+        petAdoptButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/adopt button (1).png"))); // NOI18N
+        petAdoptButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                petAdoptButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                petAdoptButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                petAdoptButtonMouseExited(evt);
+            }
+        });
+        petsBody.add(petAdoptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 540, 250, 70));
+
+        petHistory.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
+        petHistory.setText("7");
+        petsBody.add(petHistory, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 493, -1, -1));
+
+        petSize.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
+        petSize.setText("Small");
+        petsBody.add(petSize, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 443, -1, -1));
+
+        petStatus.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
+        petStatus.setText("A");
+        petsBody.add(petStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 393, -1, -1));
+
+        petOrigin.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
+        petOrigin.setText("Owned");
+        petsBody.add(petOrigin, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 343, -1, -1));
+
+        petType.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
+        petType.setText("Dog");
+        petsBody.add(petType, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 293, -1, -1));
+
+        petID.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
+        petID.setText("P008");
+        petsBody.add(petID, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 243, -1, -1));
+
+        petPanelClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pet panel click (1).png"))); // NOI18N
+        petsBody.add(petPanelClick, new org.netbeans.lib.awtextra.AbsoluteConstraints(441, 153, 790, 450));
+
         petHeader.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         petHeader.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         petHeader.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets header.png"))); // NOI18N
         petsBody.add(petHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 250, 90));
 
-        backButton.setText("Back");
-        backButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                backButtonMouseClicked(evt);
-            }
-        });
-        petsBody.add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 60, -1, -1));
+        noResultFound.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+        noResultFound.setText("No results found");
+        petsBody.add(noResultFound, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 300, 410, 120));
 
         background3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
         petsBody.add(background3, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 1366, 738));
@@ -793,53 +863,131 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetsBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         vetsBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        vetName1.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         vetName1.setForeground(new java.awt.Color(255, 255, 255));
+        vetName1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         vetName1.setText("Pangalan ni Vet1");
-        vetsBody.add(vetName1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 240, 120, 20));
+        vetName1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        vetsBody.add(vetName1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 240, 200, 25));
 
+        vetName2.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         vetName2.setForeground(new java.awt.Color(255, 255, 255));
+        vetName2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         vetName2.setText("Pangalan ni Vet2");
-        vetsBody.add(vetName2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 300, 120, 20));
+        vetName2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        vetsBody.add(vetName2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 300, 200, 25));
 
+        vetName3.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         vetName3.setForeground(new java.awt.Color(255, 255, 255));
+        vetName3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         vetName3.setText("Pangalan ni Vet3");
-        vetsBody.add(vetName3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 360, 120, 20));
+        vetName3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        vetsBody.add(vetName3, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 360, 200, 25));
 
+        vetName4.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         vetName4.setForeground(new java.awt.Color(255, 255, 255));
+        vetName4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         vetName4.setText("Pangalan ni Vet4");
-        vetsBody.add(vetName4, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 420, 120, 20));
+        vetName4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        vetsBody.add(vetName4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 420, 200, 25));
 
+        vetName5.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         vetName5.setForeground(new java.awt.Color(255, 255, 255));
+        vetName5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         vetName5.setText("Pangalan ni Vet5");
-        vetsBody.add(vetName5, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 480, 120, 20));
+        vetName5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        vetsBody.add(vetName5, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 480, 200, 25));
 
+        vetName6.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         vetName6.setForeground(new java.awt.Color(255, 255, 255));
+        vetName6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         vetName6.setText("Pangalan ni Vet6");
-        vetsBody.add(vetName6, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 540, 120, 20));
+        vetName6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        vetsBody.add(vetName6, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 540, 200, 25));
 
+        vetContact1.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         vetContact1.setForeground(new java.awt.Color(255, 255, 255));
+        vetContact1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         vetContact1.setText("Contact ni Vet1");
-        vetsBody.add(vetContact1, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 240, 120, 20));
+        vetContact1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        vetsBody.add(vetContact1, new org.netbeans.lib.awtextra.AbsoluteConstraints(835, 240, 200, 25));
 
+        vetContact2.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         vetContact2.setForeground(new java.awt.Color(255, 255, 255));
+        vetContact2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         vetContact2.setText("Contact ni Vet2");
-        vetsBody.add(vetContact2, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 300, 120, 20));
+        vetContact2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        vetsBody.add(vetContact2, new org.netbeans.lib.awtextra.AbsoluteConstraints(835, 300, 200, 25));
 
+        vetContact3.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         vetContact3.setForeground(new java.awt.Color(255, 255, 255));
+        vetContact3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         vetContact3.setText("Contact ni Vet3");
-        vetsBody.add(vetContact3, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 360, 120, 20));
+        vetContact3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        vetsBody.add(vetContact3, new org.netbeans.lib.awtextra.AbsoluteConstraints(835, 360, 200, 25));
 
+        vetContact4.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         vetContact4.setForeground(new java.awt.Color(255, 255, 255));
+        vetContact4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         vetContact4.setText("Contact ni Vet4");
-        vetsBody.add(vetContact4, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 420, 120, 20));
+        vetContact4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        vetsBody.add(vetContact4, new org.netbeans.lib.awtextra.AbsoluteConstraints(835, 420, 200, 25));
 
+        vetContact5.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         vetContact5.setForeground(new java.awt.Color(255, 255, 255));
+        vetContact5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         vetContact5.setText("Contact ni Vet5");
-        vetsBody.add(vetContact5, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 480, 120, 20));
+        vetContact5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        vetsBody.add(vetContact5, new org.netbeans.lib.awtextra.AbsoluteConstraints(835, 480, 200, 25));
 
+        vetContact6.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         vetContact6.setForeground(new java.awt.Color(255, 255, 255));
+        vetContact6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         vetContact6.setText("Contact ni Vet6");
-        vetsBody.add(vetContact6, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 540, 120, 20));
+        vetContact6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        vetsBody.add(vetContact6, new org.netbeans.lib.awtextra.AbsoluteConstraints(835, 540, 200, 25));
+
+        vetEmail1.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        vetEmail1.setForeground(new java.awt.Color(255, 255, 255));
+        vetEmail1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        vetEmail1.setText("Email ni Vet1");
+        vetEmail1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        vetsBody.add(vetEmail1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 240, 250, 25));
+
+        vetEmail2.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        vetEmail2.setForeground(new java.awt.Color(255, 255, 255));
+        vetEmail2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        vetEmail2.setText("Email ni Vet2");
+        vetEmail2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        vetsBody.add(vetEmail2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 300, 250, 25));
+
+        vetEmail3.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        vetEmail3.setForeground(new java.awt.Color(255, 255, 255));
+        vetEmail3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        vetEmail3.setText("Email ni Vet3");
+        vetEmail3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        vetsBody.add(vetEmail3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 360, 250, 25));
+
+        vetEmail4.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        vetEmail4.setForeground(new java.awt.Color(255, 255, 255));
+        vetEmail4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        vetEmail4.setText("Email ni Vet4");
+        vetEmail4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        vetsBody.add(vetEmail4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 420, 250, 25));
+
+        vetEmail5.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        vetEmail5.setForeground(new java.awt.Color(255, 255, 255));
+        vetEmail5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        vetEmail5.setText("Email ni Vet5");
+        vetEmail5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        vetsBody.add(vetEmail5, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 480, 250, 25));
+
+        vetEmail6.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        vetEmail6.setForeground(new java.awt.Color(255, 255, 255));
+        vetEmail6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        vetEmail6.setText("Email ni Vet6");
+        vetEmail6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        vetsBody.add(vetEmail6, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 540, 250, 25));
 
         vetPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/prev button (1).png"))); // NOI18N
         vetPrev.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -870,6 +1018,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetsBody.add(vetNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 630, 350, 100));
 
         vetsPanel.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+        vetsPanel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         vetsPanel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/vets panel (1).png"))); // NOI18N
         vetsBody.add(vetsPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(195, 15, -1, 710));
 
@@ -1065,113 +1214,151 @@ public class UserLoggedIn extends javax.swing.JFrame {
         profileBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         profileBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        profilePicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/profile pic.jpg"))); // NOI18N
+        profileBody.add(profilePicture, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 52, 259, 242));
+
         fullNameScroll.setHorizontalScrollBar(null);
 
         fullName.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                enterTabKeyPressed(evt);
+                fullNameenterTabKeyPressed(evt);
             }
         });
         fullNameScroll.setViewportView(fullName);
 
-        profileBody.add(fullNameScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 380, 247, -1));
+        profileBody.add(fullNameScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 373, 280, -1));
+
+        profileName.setFont(new java.awt.Font("Comic Sans MS", 0, 16)); // NOI18N
+        profileName.setForeground(new java.awt.Color(139, 83, 18));
+        profileName.setText("Joshua C. Macatunao");
+        profileBody.add(profileName, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 373, 280, -1));
 
         usernameScroll.setHorizontalScrollBar(null);
 
         username1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                enterTabKeyPressed(evt);
+                username1enterTabKeyPressed(evt);
             }
         });
         usernameScroll.setViewportView(username1);
 
-        profileBody.add(usernameScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 430, 247, -1));
+        profileBody.add(usernameScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 540, 220, -1));
+
+        profileUsername.setFont(new java.awt.Font("Comic Sans MS", 0, 16)); // NOI18N
+        profileUsername.setForeground(new java.awt.Color(139, 83, 18));
+        profileUsername.setText("icedew07_");
+        profileBody.add(profileUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 540, 220, -1));
 
         contactNumScroll.setHorizontalScrollBar(null);
 
         contactNum.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                enterTabKeyPressed(evt);
+                contactNumenterTabKeyPressed(evt);
             }
         });
         contactNumScroll.setViewportView(contactNum);
 
-        profileBody.add(contactNumScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 490, 247, -1));
+        profileBody.add(contactNumScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 488, 200, -1));
+
+        profileContactNum.setFont(new java.awt.Font("Comic Sans MS", 0, 16)); // NOI18N
+        profileContactNum.setForeground(new java.awt.Color(139, 83, 18));
+        profileContactNum.setText("+639458722802");
+        profileBody.add(profileContactNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 488, 200, -1));
 
         emailAddressScroll.setHorizontalScrollBar(null);
 
         emailAddress.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                enterTabKeyPressed(evt);
+                emailAddressenterTabKeyPressed(evt);
             }
         });
         emailAddressScroll.setViewportView(emailAddress);
 
-        profileBody.add(emailAddressScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 540, 247, -1));
+        profileBody.add(emailAddressScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 435, 250, -1));
+
+        profileEmailAddress.setFont(new java.awt.Font("Comic Sans MS", 0, 16)); // NOI18N
+        profileEmailAddress.setForeground(new java.awt.Color(139, 83, 18));
+        profileEmailAddress.setText("joshua.macatunao007@gmail.com");
+        profileBody.add(profileEmailAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 435, 250, -1));
+
+        passwordLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        passwordLabel.setText("Password:");
+        profileBody.add(passwordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 570, -1, -1));
+
+        password.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                passwordenterTabKeyPressed(evt);
+            }
+        });
+        profileBody.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 590, 220, -1));
+
+        confirmPasswordLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        confirmPasswordLabel.setText("Confirm Password:");
+        profileBody.add(confirmPasswordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 620, -1, -1));
+
+        confirmPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmPasswordActionPerformed(evt);
+            }
+        });
+        confirmPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                confirmPasswordenterTabKeyPressed(evt);
+            }
+        });
+        profileBody.add(confirmPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 640, 220, -1));
+
+        profilePassword.setFont(new java.awt.Font("Comic Sans MS", 0, 16)); // NOI18N
+        profilePassword.setForeground(new java.awt.Color(139, 83, 18));
+        profilePassword.setText("**********");
+        profileBody.add(profilePassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 593, 220, -1));
 
         currentAddressScroll.setHorizontalScrollBar(null);
         currentAddressScroll.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                enterTabKeyPressed(evt);
+                currentAddressScrollenterTabKeyPressed(evt);
             }
         });
         currentAddressScroll.setViewportView(currentAddress);
 
-        profileBody.add(currentAddressScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 390, 280, -1));
+        profileBody.add(currentAddressScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 382, 270, -1));
+
+        profileAddress.setFont(new java.awt.Font("Comic Sans MS", 0, 16)); // NOI18N
+        profileAddress.setForeground(new java.awt.Color(139, 83, 18));
+        profileAddress.setText("Mandaluyong City, Metro Manila");
+        profileBody.add(profileAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 382, 270, -1));
 
         occupationScroll.setHorizontalScrollBar(null);
 
         occupation.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                enterTabKeyPressed(evt);
+                occupationenterTabKeyPressed(evt);
             }
         });
         occupationScroll.setViewportView(occupation);
 
-        profileBody.add(occupationScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 440, 240, -1));
+        profileBody.add(occupationScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 488, 230, -1));
+
+        profileOccupation.setFont(new java.awt.Font("Comic Sans MS", 0, 16)); // NOI18N
+        profileOccupation.setForeground(new java.awt.Color(139, 83, 18));
+        profileOccupation.setText("Software Engineer");
+        profileBody.add(profileOccupation, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 488, 230, -1));
 
         companyScroll.setHorizontalScrollBar(null);
 
         companyName.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                enterTabKeyPressed(evt);
+                companyNameenterTabKeyPressed(evt);
             }
         });
         companyScroll.setViewportView(companyName);
 
-        profileBody.add(companyScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 490, 260, -1));
+        profileBody.add(companyScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 540, 250, -1));
 
-        year.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                yearActionPerformed(evt);
-            }
-        });
-        profileBody.add(year, new org.netbeans.lib.awtextra.AbsoluteConstraints(995, 600, 70, -1));
-
-        month.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                monthActionPerformed(evt);
-            }
-        });
-        profileBody.add(month, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 600, 53, -1));
-
-        day.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dayActionPerformed(evt);
-            }
-        });
-        profileBody.add(day, new org.netbeans.lib.awtextra.AbsoluteConstraints(1128, 600, 53, -1));
-
-        birthdayScroll.setHorizontalScrollBar(null);
-
-        birthdate.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                enterTabKeyPressed(evt);
-            }
-        });
-        birthdayScroll.setViewportView(birthdate);
-
-        profileBody.add(birthdayScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 600, 90, -1));
+        profileCompany.setFont(new java.awt.Font("Comic Sans MS", 0, 16)); // NOI18N
+        profileCompany.setForeground(new java.awt.Color(139, 83, 18));
+        profileCompany.setText("Google");
+        profileBody.add(profileCompany, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 540, 250, -1));
 
         workType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1180,65 +1367,47 @@ public class UserLoggedIn extends javax.swing.JFrame {
         });
         workType.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                enterTabKeyPressed(evt);
+                workTypeenterTabKeyPressed(evt);
             }
         });
-        profileBody.add(workType, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 550, 240, -1));
+        profileBody.add(workType, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 593, 230, -1));
 
-        passwordLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        passwordLabel.setText("Password:");
-        profileBody.add(passwordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 570, -1, -1));
-
-        password.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                enterTabKeyPressed(evt);
-            }
-        });
-        profileBody.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 590, 247, -1));
-
-        confirmPasswordLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        confirmPasswordLabel.setText("Confirm Password:");
-        profileBody.add(confirmPasswordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 620, -1, -1));
-
-        confirmPassword.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                enterTabKeyPressed(evt);
-            }
-        });
-        profileBody.add(confirmPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 640, 247, -1));
-
-        profilePicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/profile pic.jpg"))); // NOI18N
-        profileBody.add(profilePicture, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 52, 259, 242));
-
-        profileName.setText("Joshua C. Macatunao");
-        profileBody.add(profileName, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 380, -1, -1));
-
-        profileUsername.setText("icedew07_");
-        profileBody.add(profileUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 440, -1, -1));
-
-        profileContactNum.setText("+639458722802");
-        profileBody.add(profileContactNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 490, -1, -1));
-
-        profileEmailAddress.setText("joshua.macatunao007@gmail.com");
-        profileBody.add(profileEmailAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 550, -1, -1));
-
-        profilePassword.setText("pogiako123");
-        profileBody.add(profilePassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 590, -1, -1));
-
-        profileAddress.setText("Mandaluyong City, Metro Manila");
-        profileBody.add(profileAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 390, -1, -1));
-
-        profileOccupation.setText("Software Engineer");
-        profileBody.add(profileOccupation, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 440, -1, -1));
-
-        profileCompany.setText("Google");
-        profileBody.add(profileCompany, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 500, -1, -1));
-
+        profileWorkType.setFont(new java.awt.Font("Comic Sans MS", 0, 16)); // NOI18N
+        profileWorkType.setForeground(new java.awt.Color(139, 83, 18));
         profileWorkType.setText("No Travel");
-        profileBody.add(profileWorkType, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 550, -1, -1));
+        profileBody.add(profileWorkType, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 593, 230, -1));
 
-        profileAge.setText("2003-09-07");
-        profileBody.add(profileAge, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 600, -1, -1));
+        birthdayScroll.setHorizontalScrollBar(null);
+
+        birthdate.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                birthdateenterTabKeyPressed(evt);
+            }
+        });
+        birthdayScroll.setViewportView(birthdate);
+
+        profileBody.add(birthdayScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 430, 130, -1));
+
+        profileBody.add(year, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 430, 70, -1));
+
+        month.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                monthActionPerformed(evt);
+            }
+        });
+        profileBody.add(month, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 430, 53, -1));
+
+        day.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dayActionPerformed(evt);
+            }
+        });
+        profileBody.add(day, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 430, 53, -1));
+
+        profileAge.setFont(new java.awt.Font("Comic Sans MS", 0, 16)); // NOI18N
+        profileAge.setForeground(new java.awt.Color(139, 83, 18));
+        profileAge.setText("20");
+        profileBody.add(profileAge, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 432, 320, -1));
 
         profileDeleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/delete button (2).png"))); // NOI18N
         profileDeleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1311,6 +1480,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         profileBody.add(logoutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 245, 250, 80));
 
         profilePanel.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+        profilePanel.setForeground(new java.awt.Color(139, 83, 18));
         profilePanel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/profile panel (1).png"))); // NOI18N
         profileBody.add(profilePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 10, 1080, 720));
 
@@ -1508,7 +1678,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void handlePetButtonClick() {
         petProfilesReset();
-        backButton.setVisible(false);
+        petBackButton.setVisible(false);
         updatePanelVisibility(false, false, false, true, false, false, false);
         petPrev.setVisible(false);
         updateClickBackgroundVisibility(false, false, false, true, false, false);
@@ -1568,6 +1738,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
     }
 
     private void petProfiles() {
+        // pet click widgets
+        JComponent[] components = { petBackButton, petAdoptButton, petHistory, petSize,
+                                    petOrigin, petType, petID, petPanelClick, noResultFound };
+        
+        for(JComponent component : components) {
+            component.setVisible(false);
+        }
+        
         // Pet Panel 1
         if (totalPets >= 1) {
             petName1.setText(pets.get(petIndex).getPetName());
@@ -1599,7 +1777,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     }
 
     private void petProfilesReset() {
-        // totalPets = 0;
+        //totalPets = 0;
         // totalPets = 1;
         // totalPets = 2;
         // totalPets = 3;
@@ -1631,6 +1809,10 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 petImages[i].setIcon(new javax.swing.ImageIcon(getClass().getResource(pets.get(petIndex + i).getPicURL())));
             }
         }
+        
+        if(totalPets == 0) {
+            noResultFound.setVisible(true);
+        }
 
         // Show or hide navigation buttons based on totalPets and petIndex
         petPrev.setVisible(petIndex > 0);
@@ -1641,6 +1823,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // Vet Panel 1
         if (totalVets >= 1) {
             vetName1.setText(vets.get(vetIndex).getVetFullName());
+            vetEmail1.setText(vets.get(vetIndex).getVetEmailAdd());
             vetContact1.setText(vets.get(vetIndex).getVetCellNum());
         }
         vetIndex++;
@@ -1648,6 +1831,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // Vet Panel 2
         if (totalVets >= 2) {
             vetName2.setText(vets.get(vetIndex).getVetFullName());
+            vetEmail2.setText(vets.get(vetIndex).getVetEmailAdd());
             vetContact2.setText(vets.get(vetIndex).getVetCellNum());
         }
         vetIndex++;
@@ -1655,6 +1839,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // Vet Panel 3
         if (totalVets >= 3) {
             vetName3.setText(vets.get(vetIndex).getVetFullName());
+            vetEmail3.setText(vets.get(vetIndex).getVetEmailAdd());
             vetContact3.setText(vets.get(vetIndex).getVetCellNum());
         }
         vetIndex++;
@@ -1662,6 +1847,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // Vet Panel 4
         if (totalVets >= 4) {
             vetName4.setText(vets.get(vetIndex).getVetFullName());
+            vetEmail4.setText(vets.get(vetIndex).getVetEmailAdd());
             vetContact4.setText(vets.get(vetIndex).getVetCellNum());
         }
         vetIndex++;
@@ -1669,6 +1855,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // Vet Panel 5
         if (totalVets >= 5) {
             vetName5.setText(vets.get(vetIndex).getVetFullName());
+            vetEmail5.setText(vets.get(vetIndex).getVetEmailAdd());
             vetContact5.setText(vets.get(vetIndex).getVetCellNum());
         }
         vetIndex++;
@@ -1676,6 +1863,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // Vet Panel 6
         if (totalVets >= 6) {
             vetName6.setText(vets.get(vetIndex).getVetFullName());
+            vetEmail6.setText(vets.get(vetIndex).getVetEmailAdd());
             vetContact6.setText(vets.get(vetIndex).getVetCellNum());
         }
         vetIndex++;
@@ -1690,15 +1878,18 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         // Array of vet name and contact labels
         JLabel[] vetNames = { vetName1, vetName2, vetName3, vetName4, vetName5, vetName6 };
+        JLabel[] vetEmails = { vetEmail1, vetEmail2, vetEmail3, vetEmail4, vetEmail5, vetEmail6};
         JLabel[] vetContacts = { vetContact1, vetContact2, vetContact3, vetContact4, vetContact5, vetContact6 };
 
         // Iterate through the arrays and set visibility based on totalVets
         for (int i = 0; i < vetNames.length; i++) {
             if (i < totalVets) {
                 vetNames[i].setVisible(true);
+                vetEmails[i].setVisible(true);
                 vetContacts[i].setVisible(true);
             } else {
                 vetNames[i].setVisible(false);
+                vetEmails[i].setVisible(false);
                 vetContacts[i].setVisible(false);
             }
         }
@@ -1779,7 +1970,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
     }
     
     private void hidePetPanels(boolean hide) {
-        backButton.setVisible(!hide);
+        JComponent[] components = { petBackButton, petAdoptButton, petHistory, petSize,
+                                    petOrigin, petType, petID, petPanelClick };
+        
+        for(JComponent component : components) {
+            component.setVisible(!hide);
+        }
 
         // Arrays for pet panels and associated components
         JLabel[] petPanels = {petPanel2, petPanel3};
@@ -1821,25 +2017,150 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
             System.out.println(tempPetName); // Optional: Print stored pet name
         }
-
+        
+        
+        String pOrigin = "", pStatus = "", pSize = "";
+                
+        String origin = "";
+        String status = "";
+        String size = "";
         // Update pet panel 1 based on selected panel
         switch (panel) {
-            case 1:
-                // No action needed, already displaying pet panel 1
+            case 1:       
+                origin = pets.get(petIndex-2).getPetOrigin();
+                status = pets.get(petIndex-2).getPetStatus();
+                size = pets.get(petIndex-2).getPetSize();
+                
+                switch (origin.charAt(0)) {
+                    case 'O':
+                        pOrigin = "Owned";
+                        break;
+                    case 'R':
+                        pOrigin = "Rehome";
+                        break;
+                }
+                
+                if(status.equals("NA")) {
+                    pStatus = "Not Adopted";
+                } else if(status.equals("A")) {
+                    pStatus = "Adopted";
+                }
+                
+                switch (size.charAt(0)) {
+                    case 'T':
+                        pSize = "Tiny";
+                        break;
+                    case 'S':
+                        pSize = "Small";
+                        break;
+                    case 'M':
+                        pSize = "Medium";
+                        break;
+                    case 'L':
+                        pSize = "Large";
+                        break;
+                }
+                
+                petID.setText(String.valueOf(pets.get(petIndex-2).getPetID()));
+                petType.setText(String.valueOf(pets.get(petIndex-2).getPetType()));
+                petOrigin.setText(pOrigin);
+                petStatus.setText(pStatus);
+                petSize.setText(pSize);
+                petHistory.setText(String.valueOf(pets.get(petIndex-2).getPetHistory()));
                 break;
             case 2:
-                // Display pet panel 2 information on panel 1
+                // Display pet panel 2 information on panel 1     
+                origin = pets.get(petIndex-2).getPetOrigin();
+                status = pets.get(petIndex-2).getPetStatus();
+                size = pets.get(petIndex-2).getPetSize();
+                
+                switch (origin.charAt(0)) {
+                    case 'O':
+                        pOrigin = "Owned";
+                        break;
+                    case 'R':
+                        pOrigin = "Rehome";
+                        break;
+                }
+                
+                if(status.equals("NA")) {
+                    pStatus = "Not Adopted";
+                } else if(status.equals("A")) {
+                    pStatus = "Adopted";
+                }
+                
+                switch (size.charAt(0)) {
+                    case 'T':
+                        pSize = "Tiny";
+                        break;
+                    case 'S':
+                        pSize = "Small";
+                        break;
+                    case 'M':
+                        pSize = "Medium";
+                        break;
+                    case 'L':
+                        pSize = "Large";
+                        break;
+                }
+                
                 petName1.setText(petName2.getText());
                 petAge1.setText(petAge2.getText());
                 petGender1.setText(petGender2.getText());
                 petImg1.setIcon(new javax.swing.ImageIcon(getClass().getResource(petURL2)));
+                petID.setText(String.valueOf(pets.get(petIndex-1).getPetID()));
+                petType.setText(String.valueOf(pets.get(petIndex-1).getPetType()));
+                petOrigin.setText(pOrigin);
+                petStatus.setText(pStatus);
+                petSize.setText(pSize);
+                petHistory.setText(String.valueOf(pets.get(petIndex-1).getPetHistory()));
                 break;
             case 3:
                 // Display pet panel 3 information on panel 1
+                origin = pets.get(petIndex-2).getPetOrigin();
+                status = pets.get(petIndex-2).getPetStatus();
+                size = pets.get(petIndex-2).getPetSize();
+                
+                switch (origin.charAt(0)) {
+                    case 'O':
+                        pOrigin = "Owned";
+                        break;
+                    case 'R':
+                        pOrigin = "Rehome";
+                        break;
+                }
+                
+                if(status.equals("NA")) {
+                    pStatus = "Not Adopted";
+                } else if(status.equals("A")) {
+                    pStatus = "Adopted";
+                }
+                
+                switch (size.charAt(0)) {
+                    case 'T':
+                        pSize = "Tiny";
+                        break;
+                    case 'S':
+                        pSize = "Small";
+                        break;
+                    case 'M':
+                        pSize = "Medium";
+                        break;
+                    case 'L':
+                        pSize = "Large";
+                        break;
+                }
+                
                 petName1.setText(petName3.getText());
                 petAge1.setText(petAge3.getText());
                 petGender1.setText(petGender3.getText());
                 petImg1.setIcon(new javax.swing.ImageIcon(getClass().getResource(petURL3)));
+                petID.setText(String.valueOf(pets.get(petIndex).getPetID()));
+                petType.setText(String.valueOf(pets.get(petIndex).getPetType()));
+                petOrigin.setText(pOrigin);
+                petStatus.setText(pStatus);
+                petSize.setText(pSize);
+                petHistory.setText(String.valueOf(pets.get(petIndex).getPetHistory()));
                 break;
             default:
                 // Fallback to initial stored pet information
@@ -2851,22 +3172,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
         profileCancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/cancel button (2).png")));
     }//GEN-LAST:event_profileCancelButtonMouseExited
 
-    private void yearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_yearActionPerformed
-
-    private void monthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_monthActionPerformed
-
-    private void dayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dayActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_dayActionPerformed
-
-    private void workTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workTypeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_workTypeActionPerformed
-
     private void rehomeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rehomeButtonMouseClicked
         // TODO add your handling code here:
         if (adopt != null) {
@@ -2925,29 +3230,227 @@ public class UserLoggedIn extends javax.swing.JFrame {
         hidePetPanels(false);
     }//GEN-LAST:event_petPanel3MouseClicked
 
-    private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
+    private void petBackButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petBackButtonMouseClicked
         // TODO add your handling code here:
         setCurrentPetPanel(0);
         hidePetPanels(true);
         petPanel1Clicked = false;
-    }//GEN-LAST:event_backButtonMouseClicked
+    }//GEN-LAST:event_petBackButtonMouseClicked
 
-    private void enterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_enterTabKeyPressed
+    private void fullNameenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fullNameenterTabKeyPressed
         // TODO add your handling code here:
         switch (evt.getKeyChar()) {
             case KeyEvent.VK_ENTER:
-                // Ignore the event if it is the Enter key
-                evt.consume();
-                break;
+            // Ignore the event if it is the Enter key
+            evt.consume();
+            break;
             case KeyEvent.VK_TAB:
-                evt.consume();
-                break;
+            evt.consume();
+            break;
             default:
-                // Otherwise, handle the event normally
-                super.processKeyEvent(evt);
-                break;
+            // Otherwise, handle the event normally
+            super.processKeyEvent(evt);
+            break;
         }
-    }//GEN-LAST:event_enterTabKeyPressed
+    }//GEN-LAST:event_fullNameenterTabKeyPressed
+
+    private void username1enterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_username1enterTabKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyChar()) {
+            case KeyEvent.VK_ENTER:
+            // Ignore the event if it is the Enter key
+            evt.consume();
+            break;
+            case KeyEvent.VK_TAB:
+            evt.consume();
+            break;
+            default:
+            // Otherwise, handle the event normally
+            super.processKeyEvent(evt);
+            break;
+        }
+    }//GEN-LAST:event_username1enterTabKeyPressed
+
+    private void birthdateenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_birthdateenterTabKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyChar()) {
+            case KeyEvent.VK_ENTER:
+            // Ignore the event if it is the Enter key
+            evt.consume();
+            break;
+            case KeyEvent.VK_TAB:
+            evt.consume();
+            break;
+            default:
+            // Otherwise, handle the event normally
+            super.processKeyEvent(evt);
+            break;
+        }
+    }//GEN-LAST:event_birthdateenterTabKeyPressed
+
+    private void monthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_monthActionPerformed
+
+    private void dayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dayActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dayActionPerformed
+
+    private void contactNumenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_contactNumenterTabKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyChar()) {
+            case KeyEvent.VK_ENTER:
+            // Ignore the event if it is the Enter key
+            evt.consume();
+            break;
+            case KeyEvent.VK_TAB:
+            evt.consume();
+            break;
+            default:
+            // Otherwise, handle the event normally
+            super.processKeyEvent(evt);
+            break;
+        }
+    }//GEN-LAST:event_contactNumenterTabKeyPressed
+
+    private void passwordenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordenterTabKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyChar()) {
+            case KeyEvent.VK_ENTER:
+            // Ignore the event if it is the Enter key
+            evt.consume();
+            break;
+            case KeyEvent.VK_TAB:
+            evt.consume();
+            break;
+            default:
+            // Otherwise, handle the event normally
+            super.processKeyEvent(evt);
+            break;
+        }
+    }//GEN-LAST:event_passwordenterTabKeyPressed
+
+    private void confirmPasswordenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_confirmPasswordenterTabKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyChar()) {
+            case KeyEvent.VK_ENTER:
+            // Ignore the event if it is the Enter key
+            evt.consume();
+            break;
+            case KeyEvent.VK_TAB:
+            evt.consume();
+            break;
+            default:
+            // Otherwise, handle the event normally
+            super.processKeyEvent(evt);
+            break;
+        }
+    }//GEN-LAST:event_confirmPasswordenterTabKeyPressed
+
+    private void confirmPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_confirmPasswordActionPerformed
+
+    private void currentAddressScrollenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_currentAddressScrollenterTabKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyChar()) {
+            case KeyEvent.VK_ENTER:
+            // Ignore the event if it is the Enter key
+            evt.consume();
+            break;
+            case KeyEvent.VK_TAB:
+            evt.consume();
+            break;
+            default:
+            // Otherwise, handle the event normally
+            super.processKeyEvent(evt);
+            break;
+        }
+    }//GEN-LAST:event_currentAddressScrollenterTabKeyPressed
+
+    private void occupationenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_occupationenterTabKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyChar()) {
+            case KeyEvent.VK_ENTER:
+            // Ignore the event if it is the Enter key
+            evt.consume();
+            break;
+            case KeyEvent.VK_TAB:
+            evt.consume();
+            break;
+            default:
+            // Otherwise, handle the event normally
+            super.processKeyEvent(evt);
+            break;
+        }
+    }//GEN-LAST:event_occupationenterTabKeyPressed
+
+    private void emailAddressenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailAddressenterTabKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyChar()) {
+            case KeyEvent.VK_ENTER:
+            // Ignore the event if it is the Enter key
+            evt.consume();
+            break;
+            case KeyEvent.VK_TAB:
+            evt.consume();
+            break;
+            default:
+            // Otherwise, handle the event normally
+            super.processKeyEvent(evt);
+            break;
+        }
+    }//GEN-LAST:event_emailAddressenterTabKeyPressed
+
+    private void workTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workTypeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_workTypeActionPerformed
+
+    private void workTypeenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_workTypeenterTabKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyChar()) {
+            case KeyEvent.VK_ENTER:
+            // Ignore the event if it is the Enter key
+            evt.consume();
+            break;
+            case KeyEvent.VK_TAB:
+            evt.consume();
+            break;
+            default:
+            // Otherwise, handle the event normally
+            super.processKeyEvent(evt);
+            break;
+        }
+    }//GEN-LAST:event_workTypeenterTabKeyPressed
+
+    private void companyNameenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_companyNameenterTabKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyChar()) {
+            case KeyEvent.VK_ENTER:
+            // Ignore the event if it is the Enter key
+            evt.consume();
+            break;
+            case KeyEvent.VK_TAB:
+            evt.consume();
+            break;
+            default:
+            // Otherwise, handle the event normally
+            super.processKeyEvent(evt);
+            break;
+        }
+    }//GEN-LAST:event_companyNameenterTabKeyPressed
+
+    private void petAdoptButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petAdoptButtonMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_petAdoptButtonMouseClicked
+
+    private void petAdoptButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petAdoptButtonMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_petAdoptButtonMouseEntered
+
+    private void petAdoptButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petAdoptButtonMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_petAdoptButtonMouseExited
 
     /**
      * @param args the command line arguments
@@ -3003,7 +3506,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel applicationNext;
     private javax.swing.JLabel applicationPanel;
     private javax.swing.JLabel applicationPrev;
-    private javax.swing.JLabel backButton;
     private javax.swing.JLabel background;
     private javax.swing.JLabel background1;
     private javax.swing.JLabel background2;
@@ -3052,19 +3554,24 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> month;
     private javax.swing.JPanel navBar;
     private javax.swing.JLabel next;
+    private javax.swing.JLabel noResultFound;
     private javax.swing.JTextPane occupation;
     private javax.swing.JScrollPane occupationScroll;
     private javax.swing.JPasswordField password;
     private javax.swing.JLabel passwordLabel;
+    private javax.swing.JLabel petAdoptButton;
     private javax.swing.JLabel petAge1;
     private javax.swing.JLabel petAge2;
     private javax.swing.JLabel petAge3;
+    private javax.swing.JLabel petBackButton;
     private javax.swing.JLabel petButton;
     private javax.swing.JLabel petClick;
     private javax.swing.JLabel petGender1;
     private javax.swing.JLabel petGender2;
     private javax.swing.JLabel petGender3;
     private javax.swing.JLabel petHeader;
+    private javax.swing.JLabel petHistory;
+    private javax.swing.JLabel petID;
     private javax.swing.JLabel petImg1;
     private javax.swing.JLabel petImg2;
     private javax.swing.JLabel petImg3;
@@ -3072,10 +3579,15 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel petName2;
     private javax.swing.JLabel petName3;
     private javax.swing.JLabel petNext;
+    private javax.swing.JLabel petOrigin;
     private javax.swing.JLabel petPanel1;
     private javax.swing.JLabel petPanel2;
     private javax.swing.JLabel petPanel3;
+    private javax.swing.JLabel petPanelClick;
     private javax.swing.JLabel petPrev;
+    private javax.swing.JLabel petSize;
+    private javax.swing.JLabel petStatus;
+    private javax.swing.JLabel petType;
     private javax.swing.JPanel petsBody;
     private javax.swing.JLabel prev;
     private javax.swing.JLabel profileAddress;
@@ -3110,6 +3622,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel vetContact4;
     private javax.swing.JLabel vetContact5;
     private javax.swing.JLabel vetContact6;
+    private javax.swing.JLabel vetEmail1;
+    private javax.swing.JLabel vetEmail2;
+    private javax.swing.JLabel vetEmail3;
+    private javax.swing.JLabel vetEmail4;
+    private javax.swing.JLabel vetEmail5;
+    private javax.swing.JLabel vetEmail6;
     private javax.swing.JLabel vetName1;
     private javax.swing.JLabel vetName2;
     private javax.swing.JLabel vetName3;

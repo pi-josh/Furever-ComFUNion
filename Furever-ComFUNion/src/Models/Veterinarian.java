@@ -20,9 +20,8 @@ public class Veterinarian {
     private String vetEmailAdd;
     private String vetUsername;
     
-    public Veterinarian(int vetID, String vetPassword, String vetFullName,
-                        int vetAge, String vetCellNum, String vetEmailAdd,
-                        String vetUsername) {
+    public Veterinarian(int vetID, String vetUsername, String vetPassword, String vetFullName,
+                        int vetAge, String vetCellNum, String vetEmailAdd) {
         this.vetID = vetID;
         this.vetPassword = vetPassword;
         this.vetAge = vetAge;
@@ -95,25 +94,9 @@ public class Veterinarian {
     public ArrayList<Veterinarian> getAllVetSamples() {
         ArrayList<Veterinarian> vets = new ArrayList<>();
         
-        Veterinarian snoop = new Veterinarian(001, "pogiako123", "Snoop Dog", 52, "9124512315", "wildyoungfree1@yahoo.com", "wildyoungfree1");
-        Veterinarian wally = new Veterinarian(002, "wallybayola17", "Wally Bayola", 51, "9632634189", "wallyeatbulaga1@gmail.com", "wallyeatbulaga1");
-        Veterinarian coco = new Veterinarian(003, "angprobinsyano7", "Coco Martin", 42, "9326168234", "buhaypasicardo1@gmail.com", "buhaypasicardo1");
-        Veterinarian snoop1 = new Veterinarian(001, "pogiako123", "Snoop Dog1", 52, "9124512315 (1)", "wildyoungfree2@yahoo.com", "wildyoungfree2");
-        Veterinarian wally1 = new Veterinarian(002, "wallybayola17", "Wally Bayola1", 51, "9632634189 (1)", "wallyeatbulaga2@gmail.com", "wallyeatbulaga2");
-        Veterinarian coco1 = new Veterinarian(003, "angprobinsyano7", "Coco Martin1", 42, "9326168234 (1)", "buhaypasicardo2@gmail.com", "buhaypasicardo2");
-        Veterinarian snoop2 = new Veterinarian(001, "pogiako123", "Snoop Dog2", 52, "9124512315 (2)", "wildyoungfree3@yahoo.com", "wildyoungfree3");
-        Veterinarian wally2 = new Veterinarian(002, "wallybayola17", "Wally Bayola2", 51, "9632634189 (2)", "wallyeatbulaga3@gmail.com", "wallyeatbulaga3");
-        Veterinarian coco2 = new Veterinarian(003, "angprobinsyano7", "Coco Martin2", 42, "9326168234 (2)", "buhaypasicardo3@gmail.com", "buhaypasicardo3");
-        
-        vets.add(snoop);
-        vets.add(wally);
-        vets.add(coco);
-        vets.add(snoop1);
-        vets.add(wally1);
-        vets.add(coco1);
-        vets.add(snoop2);
-        vets.add(wally2);
-        vets.add(coco2);
+        vets.add(new Veterinarian(001, "Snoopy420", "pogiako123", "Snoop Dog", 52, "9124512315", "wildyoungfree1@yahoo.com"));
+        vets.add(new Veterinarian(002, "WallyBayola123", "wallybayola17", "Wally Bayola", 51, "9632634189", "wallyeatbulaga1@gmail.com"));
+        vets.add(new Veterinarian(003, "CMartin01", "angprobinsyano7", "Coco Martin", 42, "9326168234", "buhaypasicardo1@gmail.com"));
         
         return vets;
     }
