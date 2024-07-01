@@ -17,7 +17,6 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -33,6 +32,9 @@ import javax.swing.SwingUtilities;
  * @author joshu
  */
 public class UserLoggedIn extends javax.swing.JFrame {
+    // Client who is currently logged in
+    private Client client;
+    
     // controllers
     ExitDialogController exitController;
     ConfirmationDialogController confirmationController;
@@ -87,12 +89,19 @@ public class UserLoggedIn extends javax.swing.JFrame {
     /**
      * Creates new form Main
      */
-    public UserLoggedIn() {
+    public UserLoggedIn(Client client) {
+        this.client = client;
 
         // alisin na lang pagkatapos
         samples();
 
         initComponents();
+        
+        if(client != null) {
+            // update profile
+            updateClientProfile();
+        }
+        
         comboBoxes();
 
         // default
@@ -147,6 +156,20 @@ public class UserLoggedIn extends javax.swing.JFrame {
         });
 
         setGlassPane(glassPane);
+    }
+    
+    private void updateClientProfile() {
+        profileName.setText(client.getClientFullName());
+        profileUsername.setText(client.getClientUsername());
+        profileContactNum.setText(client.getCellNum());
+        profileEmailAddress.setText(client.getClientEmailAdd());
+        profilePassword.setText(client.getClientPassword());
+        profileAddress.setText(client.getClientAddress());
+        profileOccupation.setText(client.getClientOccupation());
+        profileWorkType.setText(client.getWorkType());
+        profileAge.setText(String.valueOf(client.getClientAge()));
+        profileUsername.setText(client.getClientUsername());
+        
     }
     
     // getters
@@ -296,7 +319,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         profileOccupation = new javax.swing.JLabel();
         profileCompany = new javax.swing.JLabel();
         profileWorkType = new javax.swing.JLabel();
-        profileBirthday = new javax.swing.JLabel();
+        profileAge = new javax.swing.JLabel();
         profileDeleteButton = new javax.swing.JLabel();
         profileEditButton = new javax.swing.JLabel();
         profileCancelButton = new javax.swing.JLabel();
@@ -1214,8 +1237,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
         profileWorkType.setText("No Travel");
         profileBody.add(profileWorkType, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 550, -1, -1));
 
-        profileBirthday.setText("2003-09-07");
-        profileBody.add(profileBirthday, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 600, -1, -1));
+        profileAge.setText("2003-09-07");
+        profileBody.add(profileAge, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 600, -1, -1));
 
         profileDeleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/delete button (2).png"))); // NOI18N
         profileDeleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1718,7 +1741,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         profileOccupation.setVisible(!edit);
         profileCompany.setVisible(!edit);
         profileWorkType.setVisible(!edit);
-        profileBirthday.setVisible(!edit);
+        profileAge.setVisible(!edit);
         
         // password labels
         passwordLabel.setVisible(edit);
@@ -2956,7 +2979,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new UserLoggedIn().setVisible(true);
+                new UserLoggedIn(null).setVisible(true);
             }
         });
     }
@@ -3056,7 +3079,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JPanel petsBody;
     private javax.swing.JLabel prev;
     private javax.swing.JLabel profileAddress;
-    private javax.swing.JLabel profileBirthday;
+    private javax.swing.JLabel profileAge;
     private javax.swing.JPanel profileBody;
     private javax.swing.JLabel profileCancelButton;
     private javax.swing.JLabel profileCollar;

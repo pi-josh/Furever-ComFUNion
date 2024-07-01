@@ -1,6 +1,5 @@
 package Controllers;
 
-import Models.User;
 import Views.Register;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
@@ -20,43 +19,7 @@ public class RegisterController {
         view.getRegisterButton().addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                // Directly handle mouse click event
-                String fullName = view.getFullName().getText();
-                String currentAddress = view.getCurrentAddress().getText();
-                String username = view.getUsername().getText();
-                String occupation = view.getOccupation().getText();
-                String contactNumber = view.getContactNumber().getText();
-                String companyName = view.getCompanyName().getText();
-                String emailAddress = view.getEmailAddress().getText();
-                String workType = (String) view.getWorkType().getSelectedItem();
-                String password = new String(view.getPassword().getPassword());
-                String birthdate = view.getBirthdate().getText();
-                String confirmPassword = new String(view.getConfirmPassword().getPassword());
-                boolean isVeterinarian = view.getAskVetCheckBox().isSelected();
-                String passcode = view.getPasscode().getText();
-
-                if (!validateInput(fullName, currentAddress, username, occupation, contactNumber, emailAddress,
-                        workType, password, birthdate, confirmPassword, passcode)) {
-                    return;
-                }
-
-                // Create a User object from input
-                User newUser = new User(fullName, currentAddress, username, occupation, contactNumber,
-                        companyName, emailAddress, workType, password, birthdate,
-                        confirmPassword, isVeterinarian, passcode);
-
-                // Save the user to database (simulate saving for demo)
-                boolean success = saveUserToDatabase(newUser);
-
-                if (success) {
-                    // Show success message
-                    JOptionPane.showMessageDialog(view, "User registered successfully!");
-                    // Clear fields after successful registration
-                    clearFields();
-                } else {
-                    // Show error message
-                    JOptionPane.showMessageDialog(view, "Failed to register user. Please try again.");
-                }
+                registerUser();
             }
 
             @Override
@@ -115,10 +78,26 @@ public class RegisterController {
                     view.getPasscodeScroll().setVisible(true);
                     view.getPasscodeLbl().setVisible(true);
                     view.getPasscode().setVisible(true);
+                    view.getCurrentAddress().setEnabled(false);
+                    view.getOccupation().setEnabled(false);
+                    view.getCompanyName().setEnabled(false);
+                    view.getWorkType().setEnabled(false);
+                    view.getBirthdate().setEnabled(false);
+                    view.getYear().setEnabled(false);
+                    view.getMonth().setEnabled(false);
+                    view.getDay().setEnabled(false);
                 } else {
                     view.getPasscodeScroll().setVisible(false);
                     view.getPasscodeLbl().setVisible(false);
                     view.getPasscode().setVisible(false);
+                    view.getCurrentAddress().setEnabled(true);
+                    view.getOccupation().setEnabled(true);
+                    view.getCompanyName().setEnabled(true);
+                    view.getWorkType().setEnabled(true);
+                    view.getBirthdate().setEnabled(true);
+                    view.getYear().setEnabled(true);
+                    view.getMonth().setEnabled(true);
+                    view.getDay().setEnabled(true);
                 }
             }
         });
@@ -145,7 +124,6 @@ public class RegisterController {
         // Key listener for ENTER and TAB keys on relevant fields
         addKeyListenerToField(view.getFullName());
         addKeyListenerToField(view.getCurrentAddress());
-        addKeyListenerToField(view.getUsername());
         addKeyListenerToField(view.getOccupation());
         addKeyListenerToField(view.getContactNum());
         addKeyListenerToField(view.getCompanyName());
@@ -169,59 +147,91 @@ public class RegisterController {
             }
         });
     }
-
+    
+    
     private void registerUser() {
-        String fullName = view.getFullName().getText();
-        String currentAddress = view.getCurrentAddress().getText();
-        String username = view.getUsername().getText();
-        String occupation = view.getOccupation().getText();
-        String contactNumber = view.getContactNumber().getText();
-        String companyName = view.getCompanyName().getText();
-        String emailAddress = view.getEmailAddress().getText();
-        String workType = (String) view.getWorkType().getSelectedItem();
-        String password = new String(view.getPassword().getPassword());
-        String birthdate = view.getBirthdate().getText();
-        String confirmPassword = new String(view.getConfirmPassword().getPassword());
-        boolean isVeterinarian = view.getAskVetCheckBox().isSelected();
-        String passcode = view.getPasscode().getText();
+        boolean success = false;
+        
+        // Vet Passcode
+        String[] passcodes = {"group8IMBestGroup!", "ma'am monina is the best!"};
+        boolean isVet = false;
 
-        // Validate input and show errors in label instead of dialog
-        if (!validateInput(fullName, currentAddress, username, occupation, contactNumber, emailAddress,
-                workType, password, birthdate, confirmPassword, passcode)) {
-            return;
+        // Directly handle mouse click event
+        boolean isVeterinarian = view.getAskVetCheckBox().isSelected();
+        if(isVeterinarian) {
+            String fullName = view.getFullName().getText();
+            String emailAddress = view.getEmailAddress().getText();
+            String username = view.getUsername().getText();
+            String contactNumber = view.getContactNumber().getText();
+            String password = new String(view.getPassword().getPassword());
+            String confirmPassword = new String(view.getConfirmPassword().getPassword());
+            String enteredPasscode = view.getPasscode().getText();
+
+            if(enteredPasscode.isEmpty()) {
+                view.getErrorMessage().setText("Please enter the passcode.");
+                view.getErrorMessage().setForeground(Color.RED);
+            } else {
+                view.getErrorMessage().setText(""); // Clear error message
+            }
+
+            // Check if passcode matches
+            for(String passcode : passcodes) {
+                if(enteredPasscode.equals(passcode)) {
+                    isVet = true;
+                    break;
+                }
+            }
+
+            if(isVet) {
+                view.getErrorMessage().setText(""); // Clear error message
+                if(validateInput(fullName, emailAddress, username, contactNumber, password, confirmPassword)) {
+                    success = true;
+                }
+            } else {
+                view.getErrorMessage().setText("Incorrect passcode!");
+                view.getErrorMessage().setForeground(Color.RED);
+            }
+        } else {
+            String fullName = view.getFullName().getText();
+            String emailAddress = view.getEmailAddress().getText();
+            String username = view.getUsername().getText();
+            String contactNumber = view.getContactNumber().getText();
+            String password = new String(view.getPassword().getPassword());
+            String confirmPassword = new String(view.getConfirmPassword().getPassword());
+            String currentAddress = view.getCurrentAddress().getText();
+            String occupation = view.getOccupation().getText();
+            String companyName = view.getCompanyName().getText();
+            String workType = (String) view.getWorkType().getSelectedItem();
+            String birthdate = view.getBirthdate().getText();
+
+            // validate inputs
+            if(validateInput(fullName, emailAddress, username, contactNumber, password, confirmPassword,
+                    currentAddress, occupation, companyName, workType, birthdate)) {
+                success = true;
+            }
         }
 
-        // Create a User object from input
-        User newUser = new User(fullName, currentAddress, username, occupation, contactNumber,
-                companyName, emailAddress, workType, password, birthdate,
-                confirmPassword, isVeterinarian, passcode);
-
-        // Save the user to database (simulate saving for demo)
-        boolean success = saveUserToDatabase(newUser);
-
         if (success) {
-            // Show success message (could update a status label if needed)
-            view.getErrorMessage().setText("User registered successfully!");
-            view.getErrorMessage().setForeground(Color.GREEN);
+            // Show success message
+            JOptionPane.showMessageDialog(view, "User registered successfully!");
             // Clear fields after successful registration
             clearFields();
         } else {
-            // Show error message in error label
-            view.getErrorMessage().setText("Failed to register user. Please try again.");
-            view.getErrorMessage().setForeground(Color.RED);
+            // Show error message
+            JOptionPane.showMessageDialog(view, "Failed to register user. Please try again.");
         }
     }
-
-    private boolean validateInput(String fullName, String currentAddress, String username, String occupation,
-                              String contactNumber, String emailAddress, String workType, String password,
-                              String birthdate, String confirmPassword, String passcode) {
-        boolean isValid = true;
+    
+    // for client
+    private boolean validateInput(String fullName, String emailAddress, String username, String contactNumber, String password, String confirmPassword,
+                    String currentAddress, String occupation, String companyName, String workType, String birthdate) {
 
         // Check if required fields are not empty
-        if (fullName.isEmpty() || username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+        if (fullName.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() ||
+            currentAddress.isEmpty() || occupation.isEmpty() || workType.isEmpty() ||
+            username.isEmpty() || companyName.isEmpty()) {
             view.getErrorMessage().setText("Please fill in all required fields.");
             view.getErrorMessage().setForeground(Color.RED);
-            isValid = false;
             return false;
         } else {
             view.getErrorMessage().setText(""); // Clear error message
@@ -231,7 +241,6 @@ public class RegisterController {
         if (!isValidEmail(emailAddress)) {
             view.getErrorMessage().setText("Please enter a valid email address.");
             view.getErrorMessage().setForeground(Color.RED);
-            isValid = false;
             return false;
         } else {
             view.getErrorMessage().setText(""); // Clear error message
@@ -241,7 +250,6 @@ public class RegisterController {
         if (!isValidBirthdate(birthdate)) {
             view.getErrorMessage().setText("Please enter a valid birthdate (MM/dd/yyyy).");
             view.getErrorMessage().setForeground(Color.RED);
-            isValid = false;
             return false;
         } else {
             view.getErrorMessage().setText(""); // Clear error message
@@ -251,7 +259,6 @@ public class RegisterController {
         if (!isValidContactNumber(contactNumber)) {
             view.getErrorMessage().setText("Please enter a valid contact number (XXX-XXX-XXXX).");
             view.getErrorMessage().setForeground(Color.RED);
-            isValid = false;
             return false;
         } else {
             view.getErrorMessage().setText(""); // Clear error message
@@ -261,23 +268,54 @@ public class RegisterController {
         if (!password.equals(confirmPassword)) {
             view.getErrorMessage().setText("Passwords do not match.");
             view.getErrorMessage().setForeground(Color.RED);
-            isValid = false;
             return false;
         } else {
             view.getErrorMessage().setText(""); // Clear error message
         }
-
-        // Check if passcode is required for certain users
-        if (view.getAskVetCheckBox().isSelected() && passcode.isEmpty()) {
-            view.getErrorMessage().setText("Please enter a passcode.");
+        
+        return true;
+    }
+    
+    // for vet
+    private boolean validateInput(String fullName, String emailAddress, String username, String contactNumber, String password, String confirmPassword) {
+        // Check if required fields are not empty
+        if (fullName.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || username.isEmpty() ||
+            emailAddress.isEmpty() || contactNumber.isEmpty()) {
+            view.getErrorMessage().setText("Please fill in all required fields.");
             view.getErrorMessage().setForeground(Color.RED);
-            isValid = false;
             return false;
         } else {
             view.getErrorMessage().setText(""); // Clear error message
         }
 
-        return isValid;
+        // Validate email format
+        if (!isValidEmail(emailAddress)) {
+            view.getErrorMessage().setText("Please enter a valid email address.");
+            view.getErrorMessage().setForeground(Color.RED);
+            return false;
+        } else {
+            view.getErrorMessage().setText(""); // Clear error message
+        }
+
+        // Validate contact number format (example: XXX-XXX-XXXX)
+        if (!isValidContactNumber(contactNumber)) {
+            view.getErrorMessage().setText("Please enter a valid contact number (XXX-XXX-XXXX).");
+            view.getErrorMessage().setForeground(Color.RED);
+            return false;
+        } else {
+            view.getErrorMessage().setText(""); // Clear error message
+        }
+
+        // Check if passwords match
+        if (!password.equals(confirmPassword)) {
+            view.getErrorMessage().setText("Passwords do not match.");
+            view.getErrorMessage().setForeground(Color.RED);
+            return false;
+        } else {
+            view.getErrorMessage().setText(""); // Clear error message
+        }
+
+        return true;
     }
 
     private boolean isValidEmail(String email) {
@@ -295,21 +333,11 @@ public class RegisterController {
         return true;
     }
 
-
-    private boolean saveUserToDatabase(User user) {
-        // Example: Simulate saving user to database
-        // Replace with actual database logic in your application
-        System.out.println("Saving user to database: " + user.toString());
-        // Simulate success/failure
-        return true;  // For demo purposes, assume success
-    }
-
     private void clearFields() {
         // Clear all input fields after successful registration
         view.getErrorMessage().setText("");
         view.getFullName().setText("");
         view.getCurrentAddress().setText("");
-        view.getUsername().setText("");
         view.getOccupation().setText("");
         view.getContactNum().setText("");
         view.getCompanyName().setText("");
@@ -318,6 +346,19 @@ public class RegisterController {
         view.getConfirmPassword().setText("");
         view.getBirthdate().setText("");
         view.getPasscode().setText("");
+        
+        view.getAskVetCheckBox().setSelected(false);
+        view.getPasscodeScroll().setVisible(false);
+        view.getPasscodeLbl().setVisible(false);
+        view.getPasscode().setVisible(false);
+        view.getCurrentAddress().setEnabled(true);
+        view.getOccupation().setEnabled(true);
+        view.getCompanyName().setEnabled(true);
+        view.getWorkType().setEnabled(true);
+        view.getBirthdate().setEnabled(true);
+        view.getYear().setEnabled(true);
+        view.getMonth().setEnabled(true);
+        view.getDay().setEnabled(true);
     }
 
     public static void main(String[] args) {

@@ -138,6 +138,10 @@ public class Register extends javax.swing.JFrame {
     public JTextPane getOccupation() {
         return occupation;
     }
+    
+    public JTextPane getUsername() {
+        return username;
+    }
 
 
     public JTextPane getPasscode() {
@@ -168,9 +172,6 @@ public class Register extends javax.swing.JFrame {
         return registerButton;
     }
 
-    public JTextPane getUsername() {
-        return username;
-    }
 
     public JComboBox<String> getWorkType() {
         return workType;
@@ -281,36 +282,20 @@ public class Register extends javax.swing.JFrame {
         titleContainer = new javax.swing.JPanel();
         registerHeader = new javax.swing.JLabel();
         registerContainer = new javax.swing.JPanel();
-        fullNameLabel = new javax.swing.JLabel();
-        jScrollPane12 = new javax.swing.JScrollPane();
-        fullName = new javax.swing.JTextPane();
         currentAddressLabel = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        currentAddressScroll = new javax.swing.JScrollPane();
         currentAddress = new javax.swing.JTextPane();
-        usernameLabel = new javax.swing.JLabel();
-        jScrollPane10 = new javax.swing.JScrollPane();
-        username = new javax.swing.JTextPane();
         occupationLabel = new javax.swing.JLabel();
-        jScrollPane8 = new javax.swing.JScrollPane();
+        occupationScroll = new javax.swing.JScrollPane();
         occupation = new javax.swing.JTextPane();
-        contactNumber = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        contactNum = new javax.swing.JTextPane();
         companyNameLabel = new javax.swing.JLabel();
-        jScrollPane9 = new javax.swing.JScrollPane();
+        companyNameScroll = new javax.swing.JScrollPane();
         companyName = new javax.swing.JTextPane();
-        emailAddressLabel = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        emailAddress = new javax.swing.JTextPane();
         workTypeLabel = new javax.swing.JLabel();
         workType = new javax.swing.JComboBox<>();
-        passwordLabel = new javax.swing.JLabel();
-        password = new javax.swing.JPasswordField();
         birthdateLabel = new javax.swing.JLabel();
-        jScrollPane11 = new javax.swing.JScrollPane();
+        birthdateScroll = new javax.swing.JScrollPane();
         birthdate = new javax.swing.JTextPane();
-        confirmPasswordLabel = new javax.swing.JLabel();
-        confirmPassword = new javax.swing.JPasswordField();
         registerButton = new javax.swing.JLabel();
         loginDescription = new javax.swing.JLabel();
         loginButton = new javax.swing.JLabel();
@@ -321,6 +306,22 @@ public class Register extends javax.swing.JFrame {
         passcodeLbl = new javax.swing.JLabel();
         passcodeScroll = new javax.swing.JScrollPane();
         passcode = new javax.swing.JTextPane();
+        fullNameLabel = new javax.swing.JLabel();
+        fullNameScroll = new javax.swing.JScrollPane();
+        fullName = new javax.swing.JTextPane();
+        contactNumber = new javax.swing.JLabel();
+        contactNumScroll = new javax.swing.JScrollPane();
+        contactNum = new javax.swing.JTextPane();
+        emailAddressLabel = new javax.swing.JLabel();
+        emailAddressScroll = new javax.swing.JScrollPane();
+        emailAddress = new javax.swing.JTextPane();
+        passwordLabel = new javax.swing.JLabel();
+        password = new javax.swing.JPasswordField();
+        confirmPassword = new javax.swing.JPasswordField();
+        confirmPasswordLabel = new javax.swing.JLabel();
+        usernameLabel = new javax.swing.JLabel();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        username = new javax.swing.JTextPane();
         errorMessage = new javax.swing.JLabel();
         errorMessageContainer = new javax.swing.JLabel();
         registerBg = new javax.swing.JLabel();
@@ -353,130 +354,130 @@ public class Register extends javax.swing.JFrame {
         registerContainer.setPreferredSize(new java.awt.Dimension(900, 575));
         registerContainer.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        fullNameLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        fullNameLabel.setText("Full Name [First, Last]:");
-        registerContainer.add(fullNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 49, -1, -1));
-
-        jScrollPane12.setHorizontalScrollBar(null);
-        jScrollPane12.setViewportView(fullName);
-
-        registerContainer.add(jScrollPane12, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 247, -1));
-
         currentAddressLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         currentAddressLabel.setText("Current Address:");
-        registerContainer.add(currentAddressLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 49, -1, -1));
+        registerContainer.add(currentAddressLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 140, -1, -1));
 
-        jScrollPane2.setHorizontalScrollBar(null);
-        jScrollPane2.setViewportView(currentAddress);
+        currentAddressScroll.setHorizontalScrollBar(null);
+        currentAddressScroll.setViewportView(currentAddress);
 
-        registerContainer.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 80, 280, -1));
-
-        usernameLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        usernameLabel.setText("Username:");
-        registerContainer.add(usernameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, -1, -1));
-
-        jScrollPane10.setHorizontalScrollBar(null);
-        jScrollPane10.setViewportView(username);
-
-        registerContainer.add(jScrollPane10, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 150, 247, -1));
+        registerContainer.add(currentAddressScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 170, 280, -1));
 
         occupationLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         occupationLabel.setText("Occupation:");
-        registerContainer.add(occupationLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 118, -1, -1));
+        registerContainer.add(occupationLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 210, -1, -1));
 
-        jScrollPane8.setHorizontalScrollBar(null);
-        jScrollPane8.setViewportView(occupation);
+        occupationScroll.setHorizontalScrollBar(null);
+        occupationScroll.setViewportView(occupation);
 
-        registerContainer.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 150, 282, -1));
-
-        contactNumber.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        contactNumber.setText("Contact Number:");
-        registerContainer.add(contactNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, -1, -1));
-
-        jScrollPane3.setHorizontalScrollBar(null);
-        jScrollPane3.setViewportView(contactNum);
-
-        registerContainer.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 220, 247, -1));
+        registerContainer.add(occupationScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 240, 280, -1));
 
         companyNameLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         companyNameLabel.setText("Company Name:");
-        registerContainer.add(companyNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 187, -1, -1));
+        registerContainer.add(companyNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 270, -1, -1));
 
-        jScrollPane9.setHorizontalScrollBar(null);
-        jScrollPane9.setViewportView(companyName);
+        companyNameScroll.setHorizontalScrollBar(null);
+        companyNameScroll.setViewportView(companyName);
 
-        registerContainer.add(jScrollPane9, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 219, 282, -1));
-
-        emailAddressLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        emailAddressLabel.setText("Email Address:");
-        registerContainer.add(emailAddressLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 260, -1, -1));
-
-        jScrollPane4.setHorizontalScrollBar(null);
-        jScrollPane4.setViewportView(emailAddress);
-
-        registerContainer.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 290, 247, -1));
+        registerContainer.add(companyNameScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 300, 280, -1));
 
         workTypeLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         workTypeLabel.setText("Work Type:");
-        registerContainer.add(workTypeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 256, -1, -1));
+        registerContainer.add(workTypeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 330, -1, -1));
 
-        registerContainer.add(workType, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 290, 280, -1));
-
-        passwordLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        passwordLabel.setText("Password:");
-        registerContainer.add(passwordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 330, -1, -1));
-        registerContainer.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, 247, -1));
+        registerContainer.add(workType, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 360, 280, -1));
 
         birthdateLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         birthdateLabel.setText("Birthday (yyyy-mm-dd)");
-        registerContainer.add(birthdateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 325, -1, -1));
+        registerContainer.add(birthdateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 390, -1, -1));
 
-        jScrollPane11.setHorizontalScrollBar(null);
-        jScrollPane11.setViewportView(birthdate);
+        birthdateScroll.setHorizontalScrollBar(null);
+        birthdateScroll.setViewportView(birthdate);
 
-        registerContainer.add(jScrollPane11, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 357, 90, -1));
-
-        confirmPasswordLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        confirmPasswordLabel.setText("Confirm Password:");
-        registerContainer.add(confirmPasswordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 400, -1, -1));
-        registerContainer.add(confirmPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 430, 247, -1));
+        registerContainer.add(birthdateScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 420, 90, -1));
 
         registerButton.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         registerButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/register acc.png"))); // NOI18N
-        registerContainer.add(registerButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 490, -1, -1));
+        registerContainer.add(registerButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 460, -1, -1));
 
         loginDescription.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         loginDescription.setText("Already have an account? ");
-        registerContainer.add(loginDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 560, -1, -1));
+        registerContainer.add(loginDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 530, -1, -1));
 
         loginButton.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         loginButton.setForeground(new java.awt.Color(99, 71, 12));
         loginButton.setText("<html> <u>Login here</u> </html>");
-        registerContainer.add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(715, 560, -1, -1));
+        registerContainer.add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 530, -1, -1));
 
-        registerContainer.add(year, new org.netbeans.lib.awtextra.AbsoluteConstraints(615, 358, 70, -1));
+        registerContainer.add(year, new org.netbeans.lib.awtextra.AbsoluteConstraints(615, 420, 70, -1));
 
-        registerContainer.add(month, new org.netbeans.lib.awtextra.AbsoluteConstraints(689, 358, 53, -1));
-        registerContainer.add(day, new org.netbeans.lib.awtextra.AbsoluteConstraints(747, 358, 53, -1));
+        registerContainer.add(month, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 420, 53, -1));
+        registerContainer.add(day, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 420, 53, -1));
 
         askVet.setText("Are you a veterinarian?");
-        registerContainer.add(askVet, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 390, -1, -1));
+        registerContainer.add(askVet, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, -1, -1));
 
         passcodeLbl.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         passcodeLbl.setText("Passcode:");
-        registerContainer.add(passcodeLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 420, -1, -1));
+        registerContainer.add(passcodeLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, -1, -1));
 
         passcodeScroll.setHorizontalScrollBar(null);
         passcodeScroll.setViewportView(passcode);
 
-        registerContainer.add(passcodeScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 450, 282, -1));
+        registerContainer.add(passcodeScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 280, -1));
+
+        fullNameLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        fullNameLabel.setText("Full Name [First, Last]:");
+        registerContainer.add(fullNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, -1, -1));
+
+        fullNameScroll.setHorizontalScrollBar(null);
+        fullNameScroll.setViewportView(fullName);
+
+        registerContainer.add(fullNameScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, 280, -1));
+
+        contactNumber.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        contactNumber.setText("Contact Number:");
+        registerContainer.add(contactNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 80, -1, -1));
+
+        contactNumScroll.setHorizontalScrollBar(null);
+        contactNumScroll.setViewportView(contactNum);
+
+        registerContainer.add(contactNumScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 110, 280, -1));
+
+        emailAddressLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        emailAddressLabel.setText("Email Address:");
+        registerContainer.add(emailAddressLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 210, -1, -1));
+
+        emailAddressScroll.setHorizontalScrollBar(null);
+        emailAddressScroll.setViewportView(emailAddress);
+
+        registerContainer.add(emailAddressScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 240, 280, -1));
+
+        passwordLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        passwordLabel.setText("Password:");
+        registerContainer.add(passwordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 330, -1, -1));
+        registerContainer.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, 280, -1));
+        registerContainer.add(confirmPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 420, 280, -1));
+
+        confirmPasswordLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        confirmPasswordLabel.setText("Confirm Password:");
+        registerContainer.add(confirmPasswordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 390, -1, -1));
+
+        usernameLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        usernameLabel.setText("Username:");
+        registerContainer.add(usernameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 270, -1, -1));
+
+        jScrollPane10.setHorizontalScrollBar(null);
+        jScrollPane10.setViewportView(username);
+
+        registerContainer.add(jScrollPane10, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 300, 280, -1));
 
         errorMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         errorMessage.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        registerContainer.add(errorMessage, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 490, 230, 40));
+        registerContainer.add(errorMessage, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 480, 230, 40));
 
         errorMessageContainer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/success error container.png"))); // NOI18N
-        registerContainer.add(errorMessageContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 470, 280, 80));
+        registerContainer.add(errorMessageContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 460, 280, 80));
 
         registerBg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/register bg.png"))); // NOI18N
         registerBg.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -528,35 +529,35 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JLabel backButton;
     private javax.swing.JTextPane birthdate;
     private javax.swing.JLabel birthdateLabel;
+    private javax.swing.JScrollPane birthdateScroll;
     private javax.swing.JTextPane companyName;
     private javax.swing.JLabel companyNameLabel;
+    private javax.swing.JScrollPane companyNameScroll;
     private javax.swing.JPasswordField confirmPassword;
     private javax.swing.JLabel confirmPasswordLabel;
     private javax.swing.JTextPane contactNum;
+    private javax.swing.JScrollPane contactNumScroll;
     private javax.swing.JLabel contactNumber;
     private javax.swing.JTextPane currentAddress;
     private javax.swing.JLabel currentAddressLabel;
+    private javax.swing.JScrollPane currentAddressScroll;
     private javax.swing.JComboBox<String> day;
     private javax.swing.JTextPane emailAddress;
     private javax.swing.JLabel emailAddressLabel;
+    private javax.swing.JScrollPane emailAddressScroll;
     private javax.swing.JLabel errorMessage;
     private javax.swing.JLabel errorMessageContainer;
     private javax.swing.JTextPane fullName;
     private javax.swing.JLabel fullNameLabel;
+    private javax.swing.JScrollPane fullNameScroll;
     private javax.swing.JScrollPane jScrollPane10;
-    private javax.swing.JScrollPane jScrollPane11;
-    private javax.swing.JScrollPane jScrollPane12;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane8;
-    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JLabel loginButton;
     private javax.swing.JLabel loginDescription;
     private javax.swing.JLabel minimizeButton;
     private javax.swing.JComboBox<String> month;
     private javax.swing.JTextPane occupation;
     private javax.swing.JLabel occupationLabel;
+    private javax.swing.JScrollPane occupationScroll;
     private javax.swing.JTextPane passcode;
     private javax.swing.JLabel passcodeLbl;
     private javax.swing.JScrollPane passcodeScroll;

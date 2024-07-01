@@ -1906,7 +1906,7 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="javax.swing.JLabel" name="profileBirthday">
+        <Component class="javax.swing.JLabel" name="profileAge">
           <Properties>
             <Property name="text" type="java.lang.String" value="2003-09-07"/>
           </Properties>

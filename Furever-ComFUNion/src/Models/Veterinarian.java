@@ -18,15 +18,18 @@ public class Veterinarian {
     private String vetFullName;
     private String vetCellNum;
     private String vetEmailAdd;
+    private String vetUsername;
     
     public Veterinarian(int vetID, String vetPassword, String vetFullName,
-                        int vetAge, String vetCellNum, String vetEmailAdd) {
+                        int vetAge, String vetCellNum, String vetEmailAdd,
+                        String vetUsername) {
         this.vetID = vetID;
         this.vetPassword = vetPassword;
         this.vetAge = vetAge;
         this.vetFullName = vetFullName;
         this.vetCellNum = vetCellNum;
         this.vetEmailAdd = vetEmailAdd;
+        this.vetUsername = vetUsername;
     }
     
     public Veterinarian() {}
@@ -56,6 +59,10 @@ public class Veterinarian {
         return vetEmailAdd;
     }
     
+    public String getVetUsername() {
+        return vetUsername;
+    }
+    
     // setter methods
     public void setVetID(int vetID) {
         this.vetID = vetID;
@@ -81,18 +88,22 @@ public class Veterinarian {
         this.vetEmailAdd = vetEmailAdd;
     }
     
+    public void setVetUsername(String vetUsername) {
+        this.vetUsername = vetUsername;
+    }
+    
     public ArrayList<Veterinarian> getAllVetSamples() {
         ArrayList<Veterinarian> vets = new ArrayList<>();
         
-        Veterinarian snoop = new Veterinarian(001, "pogiako123", "Snoop Dog", 52, "9124512315", "wildyoungfree@yahoo.com");
-        Veterinarian wally = new Veterinarian(002, "wallybayola17", "Wally Bayola", 51, "9632634189", "wallyeatbulaga@gmail.com");
-        Veterinarian coco = new Veterinarian(003, "angprobinsyano7", "Coco Martin", 42, "9326168234", "buhaypasicardo@gmail.comwildyoungfree@yahoo.com");
-        Veterinarian snoop1 = new Veterinarian(001, "pogiako123", "Snoop Dog1", 52, "9124512315 (1)", "wildyoungfree@yahoo.com");
-        Veterinarian wally1 = new Veterinarian(002, "wallybayola17", "Wally Bayola1", 51, "9632634189 (1)", "wallyeatbulaga@gmail.com");
-        Veterinarian coco1 = new Veterinarian(003, "angprobinsyano7", "Coco Martin1", 42, "9326168234 (1)", "buhaypasicardo@gmail.comwildyoungfree@yahoo.com");
-        Veterinarian snoop2 = new Veterinarian(001, "pogiako123", "Snoop Dog2", 52, "9124512315 (2)", "wildyoungfree@yahoo.com");
-        Veterinarian wally2 = new Veterinarian(002, "wallybayola17", "Wally Bayola2", 51, "9632634189 (2)", "wallyeatbulaga@gmail.com");
-        Veterinarian coco2 = new Veterinarian(003, "angprobinsyano7", "Coco Martin2", 42, "9326168234 (2)", "buhaypasicardo@gmail.comwildyoungfree@yahoo.com");
+        Veterinarian snoop = new Veterinarian(001, "pogiako123", "Snoop Dog", 52, "9124512315", "wildyoungfree1@yahoo.com", "wildyoungfree1");
+        Veterinarian wally = new Veterinarian(002, "wallybayola17", "Wally Bayola", 51, "9632634189", "wallyeatbulaga1@gmail.com", "wallyeatbulaga1");
+        Veterinarian coco = new Veterinarian(003, "angprobinsyano7", "Coco Martin", 42, "9326168234", "buhaypasicardo1@gmail.com", "buhaypasicardo1");
+        Veterinarian snoop1 = new Veterinarian(001, "pogiako123", "Snoop Dog1", 52, "9124512315 (1)", "wildyoungfree2@yahoo.com", "wildyoungfree2");
+        Veterinarian wally1 = new Veterinarian(002, "wallybayola17", "Wally Bayola1", 51, "9632634189 (1)", "wallyeatbulaga2@gmail.com", "wallyeatbulaga2");
+        Veterinarian coco1 = new Veterinarian(003, "angprobinsyano7", "Coco Martin1", 42, "9326168234 (1)", "buhaypasicardo2@gmail.com", "buhaypasicardo2");
+        Veterinarian snoop2 = new Veterinarian(001, "pogiako123", "Snoop Dog2", 52, "9124512315 (2)", "wildyoungfree3@yahoo.com", "wildyoungfree3");
+        Veterinarian wally2 = new Veterinarian(002, "wallybayola17", "Wally Bayola2", 51, "9632634189 (2)", "wallyeatbulaga3@gmail.com", "wallyeatbulaga3");
+        Veterinarian coco2 = new Veterinarian(003, "angprobinsyano7", "Coco Martin2", 42, "9326168234 (2)", "buhaypasicardo3@gmail.com", "buhaypasicardo3");
         
         vets.add(snoop);
         vets.add(wally);

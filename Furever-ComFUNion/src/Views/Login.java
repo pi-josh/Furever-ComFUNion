@@ -7,10 +7,12 @@ package Views;
 
 import Controllers.LoginController;
 import Controllers.RegisterController;
-import Models.User;
+import Models.Client;
+import Models.Veterinarian;
 import java.awt.Color;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,7 +30,14 @@ public class Login extends javax.swing.JFrame {
     // frames
     private LandingPage landingPage;
     private Register register;
-   
+    
+    // Sample vets
+    ArrayList<Veterinarian> vets;
+    private int totalVets;
+    
+    // Sample clients
+    ArrayList<Client> clients;
+    private int totalClients;
 
     public Login(LandingPage landingPage) {
         initComponents();
@@ -38,6 +47,9 @@ public class Login extends javax.swing.JFrame {
 
         // Window logo
         setWindowIcon();
+        
+        // populate sample info for user
+        populateSampleUsers();
         
         resetErrorMessage();
     }
@@ -51,6 +63,9 @@ public class Login extends javax.swing.JFrame {
         
         // Window logo
         setWindowIcon();
+        
+        // populate sample info for user
+        populateSampleUsers();
     }
 
     private void setWindowIcon() {
@@ -66,6 +81,17 @@ public class Login extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+    
+    private void populateSampleUsers() {
+        Veterinarian vetSamples = new Veterinarian();
+        this.vets = vetSamples.getAllVetSamples();
+        totalVets = vets.size();
+        
+        Client clientSamples = new Client();
+        this.clients = clientSamples.getAllClientSamples();
+        totalClients = clients.size();
+    }
+    
     
     public Register getRegister() {
         return register;
@@ -98,16 +124,44 @@ public class Login extends javax.swing.JFrame {
 
     // Event handling methods
     public void loginButtonActionPerformed() {
+        boolean isVet = false, isValid = false;
         String enteredUsername = username.getText();
         String enteredPassword = new String(password.getPassword());
 
         // Simulate authentication (replace with actual logic)
-        User user = new User("admin", "admin");
-        if (user.authenticate(enteredUsername, enteredPassword)) {
+        Client client = null;
+        Veterinarian vet = null;
+        
+        
+        // Check if user is exist as vet or client
+        for(Client curClient : clients) {
+            if(curClient.getClientUsername().equals(enteredUsername) && curClient.getClientPassword().equals(enteredPassword)) {
+                client = curClient;
+                isValid = true;
+            }
+        }
+        
+        for (Veterinarian curVet : vets) {
+            if(curVet.getVetUsername().equals(enteredUsername) && curVet.getVetPassword().equals(enteredPassword)) {
+                vet = curVet;
+                isVet = true;
+                isValid = true;
+            }
+        }
+        
+        if(isVet && isValid) {
             this.setVisible(false);
             landingPage.setVisible(false);
-            new UserLoggedIn().setVisible(true);
-        } else {
+            new VetInterface(vet).setVisible(true);
+        } else if(!isVet && isValid) {
+            this.setVisible(false);
+            landingPage.setVisible(false);
+            new UserLoggedIn(client).setVisible(true);
+        } else if(enteredUsername.equals("admin") && enteredPassword.equals("admin")) {
+            this.setVisible(false);
+            landingPage.setVisible(false);
+            new UserLoggedIn(null).setVisible(true);
+        }else {
             errorMessage.setText("Invalid username or password");
             errorMessage.setForeground(Color.RED);
         }

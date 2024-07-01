@@ -19,6 +19,7 @@ public class Client {
     private String clientAddress;
     private String cellNum;
     private String clientEmailAdd;
+    private String clientUsername;
     private String clientOccupation;
     private String clientIncome;
     private String companyName;
@@ -26,7 +27,7 @@ public class Client {
     
     public Client(int clientID, String clientPassword, String clientFullName,
                   int clientAge, String clientAddress, String cellNum,
-                  String clientEmailAdd, String clientOccupation, String clientIncome,
+                  String clientEmailAdd, String clientUsername, String clientOccupation, String clientIncome,
                   String companyName, String workType) {
         this.clientID = clientID;
         this.clientPassword = clientPassword;
@@ -35,10 +36,16 @@ public class Client {
         this.clientAddress = clientAddress;
         this.cellNum = cellNum;
         this.clientEmailAdd = clientEmailAdd;
+        this.clientUsername = clientUsername;
         this.clientOccupation = clientOccupation;
         this.clientIncome = clientIncome;
         this.companyName = companyName;
         this.workType = workType;
+    }
+    
+    public Client(String enteredUsername, String enteredPassword) {
+        this.clientUsername = enteredUsername;
+        this.clientPassword = enteredPassword;
     }
     
     public Client() {}
@@ -70,6 +77,10 @@ public class Client {
     
     public String getClientEmailAdd() {
         return clientEmailAdd;
+    }
+    
+    public String getClientUsername() {
+        return clientUsername;
     }
     
     public String getClientOccupation() {
@@ -117,6 +128,10 @@ public class Client {
         this.clientEmailAdd = clientEmailAdd;
     }
     
+    public void setClientUsername(String clientUsername) {
+        this.clientUsername = clientUsername;
+    }
+    
     public void setClientOccupation(String clientOccupation) {
         this.clientOccupation = clientOccupation;
     }
@@ -136,11 +151,11 @@ public class Client {
     public ArrayList<Client> getAllClientSamples() {
         ArrayList<Client> clients = new ArrayList<>();
         
-        Client joshua = new Client(1, "tunaw123", "John Joshua Macatunao", 19, "81 Pouros Grove, Suite 091, 64822-2475, East Jaronfurt, Iowa, United States", "9892865657", "jjmelt@yahoo.com", "Photographer", "69000", "Melt Studio", "T");
-        Client katrina = new Client(2, "tara8ball", "Katrina Halili", 20, "095 Loy Divide, Suite 919, 70892, Hansenstad, Wyoming, United States", "9652655123", "akonaman@gmail.com", "NASA Scientist", "405000", "NASA", "NT");
-        Client joly = new Client(3, "jawlineislife", "Joly Gonzaga", 31, "Poblacion, Baliuag, Bulacan, Philippines", "9652235242", "McWater@yahoo.com", "Gym Instructor", "51000", "FItness Inc.", "NT");
-        Client mark = new Client(4, "shhh!!!", "Mark Quiet", 21, "826 Loyal Point, Suite 753, 37394-6564, Kuphalton, Ohio, United States", "9528652421", "marktahimik@gmail.com", "Senior Software Engineer", "375635", "Microsoft", "NT");
-        Client randy = new Client(5, "r.a.n.d.i.", "Randy Fernandez", 24, "77828 Towne Knoll, Suite 229, 24698-7170, Burniceburgh, West Virginia, United States", "9652234242", "Power.Fernandez01@y8mail.com", "Senior Fraud Analyst", "93290", "HSBC", "NT");
+        Client joshua = new Client(1, "tunaw123", "John Joshua Macatunao", 19, "81 Pouros Grove, Suite 091, 64822-2475, East Jaronfurt, Iowa, United States", "9892865657", "jjmelt@yahoo.com", "jjmelt", "Photographer", "69000", "Melt Studio", "T");
+        Client katrina = new Client(2, "tara8ball", "Katrina Halili", 20, "095 Loy Divide, Suite 919, 70892, Hansenstad, Wyoming, United States", "9652655123", "akonaman@gmail.com", "akonaman", "NASA Scientist", "405000", "NASA", "NT");
+        Client joly = new Client(3, "jawlineislife", "Joly Gonzaga", 31, "Poblacion, Baliuag, Bulacan, Philippines", "9652235242", "McWater@yahoo.com", "McWater", "Gym Instructor", "51000", "FItness Inc.", "NT");
+        Client mark = new Client(4, "shhh!!!", "Mark Quiet", 21, "826 Loyal Point, Suite 753, 37394-6564, Kuphalton, Ohio, United States", "9528652421", "marktahimik@gmail.com", "marktahimik", "Senior Software Engineer", "375635", "Microsoft", "NT");
+        Client randy = new Client(5, "r.a.n.d.i.", "Randy Fernandez", 24, "77828 Towne Knoll, Suite 229, 24698-7170, Burniceburgh, West Virginia, United States", "9652234242", "Power.Fernandez01@y8mail.com", "Power.Fernandez01", "Senior Fraud Analyst", "93290", "HSBC", "NT");
         
         clients.add(joshua);
         clients.add(katrina);
