@@ -259,8 +259,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
         petType = new javax.swing.JLabel();
         petID = new javax.swing.JLabel();
         petPanelClick = new javax.swing.JLabel();
-        petHeader = new javax.swing.JLabel();
         noResultFound = new javax.swing.JLabel();
+        petHeader = new javax.swing.JLabel();
         background3 = new javax.swing.JLabel();
         vetsBody = new javax.swing.JPanel();
         vetName1 = new javax.swing.JLabel();
@@ -800,6 +800,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 petBackButtonMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                petBackButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                petBackButtonMouseExited(evt);
+            }
         });
         petsBody.add(petBackButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 200, -1, -1));
 
@@ -844,14 +850,15 @@ public class UserLoggedIn extends javax.swing.JFrame {
         petPanelClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pet panel click (1).png"))); // NOI18N
         petsBody.add(petPanelClick, new org.netbeans.lib.awtextra.AbsoluteConstraints(441, 153, 790, 450));
 
+        noResultFound.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+        noResultFound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/no result found (1).png"))); // NOI18N
+        noResultFound.setToolTipText("");
+        petsBody.add(noResultFound, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 160, 900, 420));
+
         petHeader.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         petHeader.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         petHeader.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets header.png"))); // NOI18N
         petsBody.add(petHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 250, 90));
-
-        noResultFound.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        noResultFound.setText("No results found");
-        petsBody.add(noResultFound, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 300, 410, 120));
 
         background3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
         petsBody.add(background3, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 1366, 738));
@@ -1214,8 +1221,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
         profileBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         profileBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        profilePicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/profile pic.jpg"))); // NOI18N
-        profileBody.add(profilePicture, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 52, 259, 242));
+        profilePicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/profile pic (1).jpg"))); // NOI18N
+        profileBody.add(profilePicture, new org.netbeans.lib.awtextra.AbsoluteConstraints(253, 55, 240, 230));
 
         fullNameScroll.setHorizontalScrollBar(null);
 
@@ -1739,11 +1746,15 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void petProfiles() {
         // pet click widgets
-        JComponent[] components = { petBackButton, petAdoptButton, petHistory, petSize,
+        JComponent[] components = { petBackButton, petAdoptButton, petHistory, petSize, petStatus,
                                     petOrigin, petType, petID, petPanelClick, noResultFound };
         
         for(JComponent component : components) {
             component.setVisible(false);
+        }
+        
+        if(totalPets == 0) {
+            noResultFound.setVisible(true);
         }
         
         // Pet Panel 1
@@ -1777,7 +1788,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     }
 
     private void petProfilesReset() {
-        //totalPets = 0;
+        totalPets = 0;
         // totalPets = 1;
         // totalPets = 2;
         // totalPets = 3;
@@ -1808,10 +1819,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 petGenders[i].setText(pets.get(petIndex + i).getPetSex());
                 petImages[i].setIcon(new javax.swing.ImageIcon(getClass().getResource(pets.get(petIndex + i).getPicURL())));
             }
-        }
-        
-        if(totalPets == 0) {
-            noResultFound.setVisible(true);
         }
 
         // Show or hide navigation buttons based on totalPets and petIndex
@@ -1971,7 +1978,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     
     private void hidePetPanels(boolean hide) {
         JComponent[] components = { petBackButton, petAdoptButton, petHistory, petSize,
-                                    petOrigin, petType, petID, petPanelClick };
+                                    petStatus, petOrigin, petType, petID, petPanelClick };
         
         for(JComponent component : components) {
             component.setVisible(!hide);
@@ -3442,15 +3449,46 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void petAdoptButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petAdoptButtonMouseClicked
         // TODO add your handling code here:
+        if (rehome != null ){
+            if(rehome.getAdopt() != null) {
+                adopt = rehome.getAdopt();
+            }
+            rehome.setVisible(false);
+        }
+        if (adopt == null) {
+            adopt = new Adopt(this);
+            adopt.setVisible(true);
+        } else if (!adopt.isVisible()) {
+            adopt.setVisible(true);
+        }
+        else {
+            adopt.toFront();
+            adopt.requestFocus();
+        }
     }//GEN-LAST:event_petAdoptButtonMouseClicked
 
     private void petAdoptButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petAdoptButtonMouseEntered
         // TODO add your handling code here:
+        petAdoptButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/adopt button hover (1).png")));
     }//GEN-LAST:event_petAdoptButtonMouseEntered
 
     private void petAdoptButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petAdoptButtonMouseExited
         // TODO add your handling code here:
+        petAdoptButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/adopt button (1).png")));
     }//GEN-LAST:event_petAdoptButtonMouseExited
+
+    private void petBackButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petBackButtonMouseEntered
+        // TODO add your handling code here:
+        petBackButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button hover (2).png")));
+    }//GEN-LAST:event_petBackButtonMouseEntered
+
+    private void petBackButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petBackButtonMouseExited
+        // TODO add your handling code here:
+        petBackButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button (2).png")));
+        if(adopt != null) {
+            adopt.dispose();
+        }
+    }//GEN-LAST:event_petBackButtonMouseExited
 
     /**
      * @param args the command line arguments
