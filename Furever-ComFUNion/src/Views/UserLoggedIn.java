@@ -619,7 +619,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         adoptedLabel.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         adoptedLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        adoptedLabel.setText("Pets are adopted");
+        adoptedLabel.setText("Wonderful Pets");
         adoptedLabel.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 badgeKeyPressed(evt);
@@ -1802,6 +1802,9 @@ public class UserLoggedIn extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void defaultWindow() {
+        // set pet count
+        adoptedCounter.setText(String.valueOf(pets.size()));
+        
         // set visiblity
         homeBody.setVisible(true);
         aboutUsBody.setVisible(false);
@@ -1959,6 +1962,9 @@ public class UserLoggedIn extends javax.swing.JFrame {
     }
 
     private void handleHomeButtonClick() {
+        // update count of pets
+        adoptedCounter.setText(String.valueOf(pets.size()));
+        
         updatePanelVisibility(true, false, false, false, false, false, false);
         updateClickBackgroundVisibility(true, false, false, false, false, false);
         homeClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg.png")));
