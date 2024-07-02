@@ -138,6 +138,7 @@ public class Login extends javax.swing.JFrame {
             if(curClient.getClientUsername().equals(enteredUsername) && curClient.getClientPassword().equals(enteredPassword)) {
                 client = curClient;
                 isValid = true;
+                break;
             }
         }
         
@@ -146,6 +147,7 @@ public class Login extends javax.swing.JFrame {
                 vet = curVet;
                 isVet = true;
                 isValid = true;
+                break;
             }
         }
         

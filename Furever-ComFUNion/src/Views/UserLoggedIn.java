@@ -2,6 +2,7 @@ package Views;
 
 import Controllers.ConfirmationDialogController;
 import Controllers.ExitDialogController;
+import Models.Application;
 import Models.Client;
 import Models.Pet;
 import Models.Veterinarian;
@@ -71,6 +72,9 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private boolean applicationClicked;
     private boolean profileClicked;
     private int FAQsPanelCounter = 4000001;
+    
+    // app next and prev buttons
+    private boolean appPrev, appNext;
 
     // Sample pets
     ArrayList<Pet> pets;
@@ -82,9 +86,10 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private int totalVets;
     private int vetIndex = 0;
     
-    // Sample clients
-    ArrayList<Client> clients;
-    private int totalClients;
+    // Sample applications
+    ArrayList<Application> applications;
+    private int totalApplications;
+    private int appIndex = 0;
     
 
     /**
@@ -160,6 +165,9 @@ public class UserLoggedIn extends javax.swing.JFrame {
     }
     
     private void updateClientProfile() {
+        String firstName = client.getClientFullName().split(" ")[0];
+        
+        name.setText(firstName);
         profileName.setText(client.getClientFullName());
         profileUsername.setText(client.getClientUsername());
         profileContactNum.setText(client.getCellNum());
@@ -209,7 +217,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetClick = new javax.swing.JLabel();
         applicationButton = new javax.swing.JLabel();
         applicationClick = new javax.swing.JLabel();
-        username = new javax.swing.JLabel();
+        name = new javax.swing.JLabel();
         profileHead = new javax.swing.JLabel();
         profileCollar = new javax.swing.JLabel();
         homeBody = new javax.swing.JPanel();
@@ -259,8 +267,10 @@ public class UserLoggedIn extends javax.swing.JFrame {
         petType = new javax.swing.JLabel();
         petID = new javax.swing.JLabel();
         petPanelClick = new javax.swing.JLabel();
-        noResultFound = new javax.swing.JLabel();
+        petNoResultsFound = new javax.swing.JLabel();
         petHeader = new javax.swing.JLabel();
+        sortBy = new javax.swing.JLabel();
+        filterBy = new javax.swing.JLabel();
         background3 = new javax.swing.JLabel();
         vetsBody = new javax.swing.JPanel();
         vetName1 = new javax.swing.JLabel();
@@ -283,9 +293,50 @@ public class UserLoggedIn extends javax.swing.JFrame {
         vetEmail6 = new javax.swing.JLabel();
         vetPrev = new javax.swing.JLabel();
         vetNext = new javax.swing.JLabel();
+        vetNoResultsFound = new javax.swing.JLabel();
         vetsPanel = new javax.swing.JLabel();
         background4 = new javax.swing.JLabel();
         applicationBody = new javax.swing.JPanel();
+        appID5 = new javax.swing.JLabel();
+        appType5 = new javax.swing.JLabel();
+        appPetName5 = new javax.swing.JLabel();
+        appPetType5 = new javax.swing.JLabel();
+        appAppointDate5 = new javax.swing.JLabel();
+        appVet5 = new javax.swing.JLabel();
+        appStatus5 = new javax.swing.JLabel();
+        highlight5 = new javax.swing.JLabel();
+        appID4 = new javax.swing.JLabel();
+        appType4 = new javax.swing.JLabel();
+        appPetName4 = new javax.swing.JLabel();
+        appPetType4 = new javax.swing.JLabel();
+        appAppointDate4 = new javax.swing.JLabel();
+        appVet4 = new javax.swing.JLabel();
+        appStatus4 = new javax.swing.JLabel();
+        highlight4 = new javax.swing.JLabel();
+        appID3 = new javax.swing.JLabel();
+        appType3 = new javax.swing.JLabel();
+        appPetName3 = new javax.swing.JLabel();
+        appPetType3 = new javax.swing.JLabel();
+        appAppointDate3 = new javax.swing.JLabel();
+        appVet3 = new javax.swing.JLabel();
+        appStatus3 = new javax.swing.JLabel();
+        highlight3 = new javax.swing.JLabel();
+        appID2 = new javax.swing.JLabel();
+        appType2 = new javax.swing.JLabel();
+        appPetName2 = new javax.swing.JLabel();
+        appPetType2 = new javax.swing.JLabel();
+        appAppointDate2 = new javax.swing.JLabel();
+        appVet2 = new javax.swing.JLabel();
+        appStatus2 = new javax.swing.JLabel();
+        appStatus1 = new javax.swing.JLabel();
+        highlight2 = new javax.swing.JLabel();
+        appVet1 = new javax.swing.JLabel();
+        appAppointDate1 = new javax.swing.JLabel();
+        appPetType1 = new javax.swing.JLabel();
+        appPetName1 = new javax.swing.JLabel();
+        appType1 = new javax.swing.JLabel();
+        appID1 = new javax.swing.JLabel();
+        highlight1 = new javax.swing.JLabel();
         editButton = new javax.swing.JLabel();
         cancelButton = new javax.swing.JLabel();
         confirmButton = new javax.swing.JLabel();
@@ -298,6 +349,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         applicationNext = new javax.swing.JLabel();
         adoptButton = new javax.swing.JLabel();
         rehomeButton = new javax.swing.JLabel();
+        appNoResultsFound = new javax.swing.JLabel();
         applicationPanel = new javax.swing.JLabel();
         background5 = new javax.swing.JLabel();
         profileBody = new javax.swing.JPanel();
@@ -515,9 +567,10 @@ public class UserLoggedIn extends javax.swing.JFrame {
         applicationClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg 2.png"))); // NOI18N
         navBar.add(applicationClick, new org.netbeans.lib.awtextra.AbsoluteConstraints(1005, 20, -1, -1));
 
-        username.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        username.setText("name rito");
-        navBar.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(1205, 75, -1, -1));
+        name.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        name.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        name.setText("Joshua");
+        navBar.add(name, new org.netbeans.lib.awtextra.AbsoluteConstraints(1195, 75, 90, -1));
 
         profileHead.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/head.png"))); // NOI18N
         profileHead.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -709,7 +762,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 petPrevMouseExited(evt);
             }
         });
-        petsBody.add(petPrev, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 580, 350, 120));
+        petsBody.add(petPrev, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 620, 350, 120));
 
         petNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/next button (1).png"))); // NOI18N
         petNext.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -723,52 +776,52 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 petNextMouseExited(evt);
             }
         });
-        petsBody.add(petNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 590, 350, 100));
+        petsBody.add(petNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 630, 350, 100));
 
         petImg1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        petsBody.add(petImg1, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 198, 190, 170));
+        petsBody.add(petImg1, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 258, 190, 170));
 
         petImg2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        petsBody.add(petImg2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 198, 190, 170));
+        petsBody.add(petImg2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 258, 190, 170));
 
         petImg3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        petsBody.add(petImg3, new org.netbeans.lib.awtextra.AbsoluteConstraints(995, 198, 190, 170));
+        petsBody.add(petImg3, new org.netbeans.lib.awtextra.AbsoluteConstraints(995, 258, 190, 170));
 
         petName1.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
         petName1.setText("Caliver");
-        petsBody.add(petName1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 447, 170, -1));
+        petsBody.add(petName1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 507, 170, -1));
 
         petName2.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
         petName2.setText("Tiktok");
-        petsBody.add(petName2, new org.netbeans.lib.awtextra.AbsoluteConstraints(639, 447, 180, -1));
+        petsBody.add(petName2, new org.netbeans.lib.awtextra.AbsoluteConstraints(639, 507, 180, -1));
 
         petName3.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
         petName3.setText("Clover");
-        petsBody.add(petName3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1053, 447, 162, -1));
+        petsBody.add(petName3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1053, 507, 162, -1));
 
         petAge1.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
         petAge1.setText("24 months");
-        petsBody.add(petAge1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 484, 200, -1));
+        petsBody.add(petAge1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 544, 200, -1));
 
         petAge2.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
         petAge2.setText("18 months");
-        petsBody.add(petAge2, new org.netbeans.lib.awtextra.AbsoluteConstraints(623, 484, 196, -1));
+        petsBody.add(petAge2, new org.netbeans.lib.awtextra.AbsoluteConstraints(623, 544, 196, -1));
 
         petAge3.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
         petAge3.setText("28 months");
-        petsBody.add(petAge3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1025, 484, 190, -1));
+        petsBody.add(petAge3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1025, 544, 190, -1));
 
         petGender1.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
         petGender1.setText("Male");
-        petsBody.add(petGender1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 520, 160, -1));
+        petsBody.add(petGender1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 580, 160, -1));
 
         petGender2.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
         petGender2.setText("Female");
-        petsBody.add(petGender2, new org.netbeans.lib.awtextra.AbsoluteConstraints(661, 520, 158, -1));
+        petsBody.add(petGender2, new org.netbeans.lib.awtextra.AbsoluteConstraints(661, 580, 158, -1));
 
         petGender3.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
         petGender3.setText("Male");
-        petsBody.add(petGender3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 520, 155, -1));
+        petsBody.add(petGender3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 580, 155, -1));
 
         petPanel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets panel (1).png"))); // NOI18N
         petPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -776,7 +829,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 petPanel1MouseClicked(evt);
             }
         });
-        petsBody.add(petPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 400, 530));
+        petsBody.add(petPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 400, 530));
 
         petPanel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets panel (1).png"))); // NOI18N
         petPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -784,7 +837,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 petPanel2MouseClicked(evt);
             }
         });
-        petsBody.add(petPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 90, 400, 530));
+        petsBody.add(petPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 150, 400, 530));
 
         petPanel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets panel (1).png"))); // NOI18N
         petPanel3.setPreferredSize(new java.awt.Dimension(400, 400));
@@ -793,7 +846,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 petPanel3MouseClicked(evt);
             }
         });
-        petsBody.add(petPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 90, 400, 530));
+        petsBody.add(petPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 150, 400, 530));
 
         petBackButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button (2).png"))); // NOI18N
         petBackButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -807,7 +860,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 petBackButtonMouseExited(evt);
             }
         });
-        petsBody.add(petBackButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 200, -1, -1));
+        petsBody.add(petBackButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 260, -1, -1));
 
         petAdoptButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/adopt button (1).png"))); // NOI18N
         petAdoptButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -821,44 +874,50 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 petAdoptButtonMouseExited(evt);
             }
         });
-        petsBody.add(petAdoptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 540, 250, 70));
+        petsBody.add(petAdoptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 600, 250, 70));
 
         petHistory.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
         petHistory.setText("7");
-        petsBody.add(petHistory, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 493, -1, -1));
+        petsBody.add(petHistory, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 553, -1, -1));
 
         petSize.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
         petSize.setText("Small");
-        petsBody.add(petSize, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 443, -1, -1));
+        petsBody.add(petSize, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 503, -1, -1));
 
         petStatus.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
         petStatus.setText("A");
-        petsBody.add(petStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 393, -1, -1));
+        petsBody.add(petStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 453, -1, -1));
 
         petOrigin.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
         petOrigin.setText("Owned");
-        petsBody.add(petOrigin, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 343, -1, -1));
+        petsBody.add(petOrigin, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 403, -1, -1));
 
         petType.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
         petType.setText("Dog");
-        petsBody.add(petType, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 293, -1, -1));
+        petsBody.add(petType, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 353, -1, -1));
 
         petID.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
         petID.setText("P008");
-        petsBody.add(petID, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 243, -1, -1));
+        petsBody.add(petID, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 303, -1, -1));
 
         petPanelClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pet panel click (1).png"))); // NOI18N
-        petsBody.add(petPanelClick, new org.netbeans.lib.awtextra.AbsoluteConstraints(441, 153, 790, 450));
+        petsBody.add(petPanelClick, new org.netbeans.lib.awtextra.AbsoluteConstraints(441, 213, 790, 450));
 
-        noResultFound.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        noResultFound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/no result found (1).png"))); // NOI18N
-        noResultFound.setToolTipText("");
-        petsBody.add(noResultFound, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 160, 900, 420));
+        petNoResultsFound.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+        petNoResultsFound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/no result found (1).png"))); // NOI18N
+        petNoResultsFound.setToolTipText("");
+        petsBody.add(petNoResultsFound, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 240, 730, 330));
 
         petHeader.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         petHeader.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         petHeader.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pets header.png"))); // NOI18N
         petsBody.add(petHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 250, 90));
+
+        sortBy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/sort by.png"))); // NOI18N
+        petsBody.add(sortBy, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 10, 540, 140));
+
+        filterBy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/filter by.png"))); // NOI18N
+        petsBody.add(filterBy, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 540, 140));
 
         background3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
         petsBody.add(background3, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 1366, 738));
@@ -1024,6 +1083,11 @@ public class UserLoggedIn extends javax.swing.JFrame {
         });
         vetsBody.add(vetNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 630, 350, 100));
 
+        vetNoResultsFound.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+        vetNoResultsFound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/no result found (1).png"))); // NOI18N
+        vetNoResultsFound.setToolTipText("");
+        vetsBody.add(vetNoResultsFound, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 240, 730, 330));
+
         vetsPanel.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         vetsPanel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         vetsPanel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/vets panel (1).png"))); // NOI18N
@@ -1039,6 +1103,238 @@ public class UserLoggedIn extends javax.swing.JFrame {
         applicationBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         applicationBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        appID5.setBackground(new java.awt.Color(255, 255, 255));
+        appID5.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appID5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appID5.setText("1");
+        appID5.setToolTipText("");
+        applicationBody.add(appID5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 580, 40, -1));
+
+        appType5.setBackground(new java.awt.Color(255, 255, 255));
+        appType5.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appType5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appType5.setText("Rehome");
+        appType5.setToolTipText("");
+        applicationBody.add(appType5, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 580, 80, -1));
+
+        appPetName5.setBackground(new java.awt.Color(255, 255, 255));
+        appPetName5.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appPetName5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appPetName5.setText("Clovernistic");
+        appPetName5.setToolTipText("");
+        applicationBody.add(appPetName5, new org.netbeans.lib.awtextra.AbsoluteConstraints(443, 580, 120, -1));
+
+        appPetType5.setBackground(new java.awt.Color(255, 255, 255));
+        appPetType5.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appPetType5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appPetType5.setText("Hamster");
+        appPetType5.setToolTipText("");
+        applicationBody.add(appPetType5, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 580, 110, -1));
+
+        appAppointDate5.setBackground(new java.awt.Color(255, 255, 255));
+        appAppointDate5.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appAppointDate5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appAppointDate5.setText("9999-99-99");
+        appAppointDate5.setToolTipText("");
+        applicationBody.add(appAppointDate5, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 580, 150, -1));
+
+        appVet5.setBackground(new java.awt.Color(255, 255, 255));
+        appVet5.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appVet5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appVet5.setText("Rafael Lafuente");
+        appVet5.setToolTipText("");
+        applicationBody.add(appVet5, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 580, 160, -1));
+
+        appStatus5.setBackground(new java.awt.Color(255, 255, 255));
+        appStatus5.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appStatus5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appStatus5.setText("Cancelled");
+        appStatus5.setToolTipText("");
+        applicationBody.add(appStatus5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 580, 100, -1));
+
+        highlight5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/highlight (1).png"))); // NOI18N
+        applicationBody.add(highlight5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 560, 880, 70));
+
+        appID4.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appID4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appID4.setText("1");
+        appID4.setToolTipText("");
+        applicationBody.add(appID4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 513, 40, -1));
+
+        appType4.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appType4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appType4.setText("Rehome");
+        appType4.setToolTipText("");
+        applicationBody.add(appType4, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 513, 80, -1));
+
+        appPetName4.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appPetName4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appPetName4.setText("Clovernistic");
+        appPetName4.setToolTipText("");
+        applicationBody.add(appPetName4, new org.netbeans.lib.awtextra.AbsoluteConstraints(443, 513, 120, -1));
+
+        appPetType4.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appPetType4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appPetType4.setText("Hamster");
+        appPetType4.setToolTipText("");
+        applicationBody.add(appPetType4, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 513, 110, -1));
+
+        appAppointDate4.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appAppointDate4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appAppointDate4.setText("9999-99-99");
+        appAppointDate4.setToolTipText("");
+        applicationBody.add(appAppointDate4, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 513, 150, -1));
+
+        appVet4.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appVet4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appVet4.setText("Rafael Lafuente");
+        appVet4.setToolTipText("");
+        applicationBody.add(appVet4, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 513, 160, -1));
+
+        appStatus4.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appStatus4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appStatus4.setText("Cancelled");
+        appStatus4.setToolTipText("");
+        applicationBody.add(appStatus4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 513, 100, -1));
+
+        highlight4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/highlight (1).png"))); // NOI18N
+        applicationBody.add(highlight4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 490, 880, 70));
+
+        appID3.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appID3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appID3.setText("1");
+        appID3.setToolTipText("");
+        applicationBody.add(appID3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 443, 40, -1));
+
+        appType3.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appType3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appType3.setText("Rehome");
+        appType3.setToolTipText("");
+        applicationBody.add(appType3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 443, 80, -1));
+
+        appPetName3.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appPetName3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appPetName3.setText("Clovernistic");
+        appPetName3.setToolTipText("");
+        applicationBody.add(appPetName3, new org.netbeans.lib.awtextra.AbsoluteConstraints(443, 443, 120, -1));
+
+        appPetType3.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appPetType3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appPetType3.setText("Hamster");
+        appPetType3.setToolTipText("");
+        applicationBody.add(appPetType3, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 443, 110, -1));
+
+        appAppointDate3.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appAppointDate3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appAppointDate3.setText("9999-99-99");
+        appAppointDate3.setToolTipText("");
+        applicationBody.add(appAppointDate3, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 443, 150, -1));
+
+        appVet3.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appVet3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appVet3.setText("Rafael Lafuente");
+        appVet3.setToolTipText("");
+        applicationBody.add(appVet3, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 443, 160, -1));
+
+        appStatus3.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appStatus3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appStatus3.setText("Cancelled");
+        appStatus3.setToolTipText("");
+        applicationBody.add(appStatus3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 443, 100, -1));
+
+        highlight3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/highlight (1).png"))); // NOI18N
+        applicationBody.add(highlight3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 420, 880, 70));
+
+        appID2.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appID2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appID2.setText("1");
+        appID2.setToolTipText("");
+        applicationBody.add(appID2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 373, 40, -1));
+
+        appType2.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appType2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appType2.setText("Rehome");
+        appType2.setToolTipText("");
+        applicationBody.add(appType2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 373, 80, -1));
+
+        appPetName2.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appPetName2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appPetName2.setText("Clovernistic");
+        appPetName2.setToolTipText("");
+        applicationBody.add(appPetName2, new org.netbeans.lib.awtextra.AbsoluteConstraints(443, 373, 120, -1));
+
+        appPetType2.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appPetType2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appPetType2.setText("Hamster");
+        appPetType2.setToolTipText("");
+        applicationBody.add(appPetType2, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 373, 110, -1));
+
+        appAppointDate2.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appAppointDate2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appAppointDate2.setText("9999-99-99");
+        appAppointDate2.setToolTipText("");
+        applicationBody.add(appAppointDate2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 373, 150, -1));
+
+        appVet2.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appVet2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appVet2.setText("Rafael Lafuente");
+        appVet2.setToolTipText("");
+        applicationBody.add(appVet2, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 373, 160, -1));
+
+        appStatus2.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appStatus2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appStatus2.setText("Cancelled");
+        appStatus2.setToolTipText("");
+        applicationBody.add(appStatus2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 373, 100, -1));
+
+        appStatus1.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appStatus1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appStatus1.setText("Cancelled");
+        appStatus1.setToolTipText("");
+        applicationBody.add(appStatus1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 303, 100, -1));
+
+        highlight2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/highlight (1).png"))); // NOI18N
+        applicationBody.add(highlight2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 350, 880, 70));
+
+        appVet1.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appVet1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appVet1.setText("Rafael Lafuente");
+        appVet1.setToolTipText("");
+        applicationBody.add(appVet1, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 303, 160, -1));
+
+        appAppointDate1.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appAppointDate1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appAppointDate1.setText("9999-99-99");
+        appAppointDate1.setToolTipText("");
+        applicationBody.add(appAppointDate1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 303, 150, -1));
+
+        appPetType1.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appPetType1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appPetType1.setText("Hamster");
+        appPetType1.setToolTipText("");
+        applicationBody.add(appPetType1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 303, 110, -1));
+
+        appPetName1.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appPetName1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appPetName1.setText("Clovernistic");
+        appPetName1.setToolTipText("");
+        applicationBody.add(appPetName1, new org.netbeans.lib.awtextra.AbsoluteConstraints(443, 303, 120, -1));
+
+        appType1.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appType1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appType1.setText("Rehome");
+        appType1.setToolTipText("");
+        applicationBody.add(appType1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 303, 80, -1));
+
+        appID1.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appID1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appID1.setText("1");
+        appID1.setToolTipText("");
+        applicationBody.add(appID1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 303, 40, -1));
+
+        highlight1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/highlight (1).png"))); // NOI18N
+        applicationBody.add(highlight1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 280, 880, 70));
+
         editButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (1).png"))); // NOI18N
         editButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1051,7 +1347,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 editButtonMouseExited(evt);
             }
         });
-        applicationBody.add(editButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 110, 90, 90));
+        applicationBody.add(editButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 100, 90, 90));
 
         cancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/cancel button (1).png"))); // NOI18N
         cancelButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1065,7 +1361,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 cancelButtonMouseExited(evt);
             }
         });
-        applicationBody.add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 110, 90, 90));
+        applicationBody.add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 100, 90, 90));
 
         confirmButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/confirm button (1).png"))); // NOI18N
         confirmButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1079,7 +1375,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 confirmButtonMouseExited(evt);
             }
         });
-        applicationBody.add(confirmButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 110, 90, 90));
+        applicationBody.add(confirmButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 100, 90, 90));
 
         deleteButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/delete button (1).png"))); // NOI18N
         deleteButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1093,7 +1389,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 deleteButton1MouseExited(evt);
             }
         });
-        applicationBody.add(deleteButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1125, 280, 50, 50));
+        applicationBody.add(deleteButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1125, 290, 50, 50));
 
         deleteButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/delete button (1).png"))); // NOI18N
         deleteButton2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1107,7 +1403,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 deleteButton2MouseExited(evt);
             }
         });
-        applicationBody.add(deleteButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1125, 342, 50, 50));
+        applicationBody.add(deleteButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1125, 360, 50, 50));
 
         deleteButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/delete button (1).png"))); // NOI18N
         deleteButton3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1121,7 +1417,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 deleteButton3MouseExited(evt);
             }
         });
-        applicationBody.add(deleteButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1125, 405, 50, 50));
+        applicationBody.add(deleteButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1125, 430, 50, 50));
 
         deleteButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/delete button (1).png"))); // NOI18N
         deleteButton4.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1135,7 +1431,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 deleteButton4MouseExited(evt);
             }
         });
-        applicationBody.add(deleteButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1125, 468, 50, 50));
+        applicationBody.add(deleteButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1125, 500, 50, 50));
 
         deleteButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/delete button (1).png"))); // NOI18N
         deleteButton5.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1149,7 +1445,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 deleteButton5MouseExited(evt);
             }
         });
-        applicationBody.add(deleteButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1125, 530, 50, 50));
+        applicationBody.add(deleteButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1125, 570, 50, 50));
 
         applicationPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/prev button (1).png"))); // NOI18N
         applicationPrev.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1163,7 +1459,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 applicationPrevMouseExited(evt);
             }
         });
-        applicationBody.add(applicationPrev, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 620, 350, 120));
+        applicationBody.add(applicationPrev, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 625, 350, 120));
 
         applicationNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/next button (1).png"))); // NOI18N
         applicationNext.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1177,7 +1473,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 applicationNextMouseExited(evt);
             }
         });
-        applicationBody.add(applicationNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 630, 350, 100));
+        applicationBody.add(applicationNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 635, 350, 100));
 
         adoptButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/adopt button (1).png"))); // NOI18N
         adoptButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1207,9 +1503,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
         });
         applicationBody.add(rehomeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 20, 250, 70));
 
+        appNoResultsFound.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+        appNoResultsFound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/no result found (1).png"))); // NOI18N
+        appNoResultsFound.setToolTipText("");
+        applicationBody.add(appNoResultsFound, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 290, 730, 330));
+
         applicationPanel.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         applicationPanel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/application panel (1).png"))); // NOI18N
-        applicationBody.add(applicationPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, 1000, 640));
+        applicationBody.add(applicationPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 90, 1000, 640));
 
         background5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paw prints.png"))); // NOI18N
         applicationBody.add(background5, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 1366, 738));
@@ -1608,9 +1909,13 @@ public class UserLoggedIn extends javax.swing.JFrame {
         this.vets = vetSamples.getAllVetSamples();
         totalVets = vets.size();
         
-        Client clientSamples = new Client();
-        this.clients = clientSamples.getAllClientSamples();
-        totalClients = clients.size();
+        Application appSamples = new Application();
+        if(client != null) {
+            this.applications = appSamples.getAllApplicationSamples(client.getClientID());
+        } else {
+            this.applications = appSamples.getAllApplicationSamples();
+        }
+        totalApplications = applications.size();
     }
 
     private void updatePanelVisibility(boolean home, boolean aboutUs, boolean faqs, boolean pets, boolean vets, boolean application, boolean profile) {
@@ -1660,7 +1965,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         line.setBackground(new java.awt.Color(255, 251, 209));
         updateClickabilityFlags(true, false, false, false, false, false, false);
         updateButtonIcons("/Resources/home click.png", "/Resources/about us.png", "/Resources/FAQs.png", "/Resources/pets.png", "/Resources/vets.png", "/Resources/application.png", "/Resources/head.png", "/Resources/collar.png");
-        username.setForeground(Color.BLACK);
+        name.setForeground(Color.BLACK);
     }
 
     private void handleAboutUsButtonClick() {
@@ -1670,7 +1975,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         line.setBackground(new java.awt.Color(255, 251, 209));
         updateClickabilityFlags(false, true, false, false, false, false, false);
         updateButtonIcons("/Resources/home.png", "/Resources/about us click.png", "/Resources/FAQs.png", "/Resources/pets.png", "/Resources/vets.png", "/Resources/application.png", "/Resources/head.png", "/Resources/collar.png");
-        username.setForeground(Color.BLACK);
+        name.setForeground(Color.BLACK);
     }
 
     private void handleFaqButtonClick() {
@@ -1680,7 +1985,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         line.setBackground(new java.awt.Color(255, 251, 209));
         updateClickabilityFlags(false, false, true, false, false, false, false);
         updateButtonIcons("/Resources/home.png", "/Resources/about us.png", "/Resources/FAQs click.png", "/Resources/pets.png", "/Resources/vets.png", "/Resources/application.png", "/Resources/head.png", "/Resources/collar.png");
-        username.setForeground(Color.BLACK);
+        name.setForeground(Color.BLACK);
     }
 
     private void handlePetButtonClick() {
@@ -1693,7 +1998,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         line.setBackground(new java.awt.Color(255, 251, 209));
         updateClickabilityFlags(false, false, false, true, false, false, false);
         updateButtonIcons("/Resources/home.png", "/Resources/about us.png", "/Resources/FAQs.png", "/Resources/pets click.png", "/Resources/vets.png", "/Resources/application.png", "/Resources/head.png", "/Resources/collar.png");
-        username.setForeground(Color.BLACK);
+        name.setForeground(Color.BLACK);
     }
 
     private void handleVetButtonClick() {
@@ -1704,17 +2009,18 @@ public class UserLoggedIn extends javax.swing.JFrame {
         line.setBackground(new java.awt.Color(255, 251, 209));
         updateClickabilityFlags(false, false, false, false, true, false, false);
         updateButtonIcons("/Resources/home.png", "/Resources/about us.png", "/Resources/FAQs.png", "/Resources/pets.png", "/Resources/vets click.png", "/Resources/application.png", "/Resources/head.png", "/Resources/collar.png");
-        username.setForeground(Color.BLACK);
+        name.setForeground(Color.BLACK);
     }
 
     private void handleApplicationButtonClick() {
+        applicationsReset();
         updatePanelVisibility(false, false, false, false, false, true, false);
         updateClickBackgroundVisibility(false, false, false, false, false, true);
         applicationClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/click bg 2.png")));
         line.setBackground(new java.awt.Color(255, 251, 209));
         updateClickabilityFlags(false, false, false, false, false, true, false);
         updateButtonIcons("/Resources/home.png", "/Resources/about us.png", "/Resources/FAQs.png", "/Resources/pets.png", "/Resources/vets.png", "/Resources/application click.png", "/Resources/head.png", "/Resources/collar.png");
-        username.setForeground(Color.BLACK);
+        name.setForeground(Color.BLACK);
     }
 
     private void handleProfileButtonClick() {
@@ -1723,7 +2029,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         line.setBackground(new java.awt.Color(255, 251, 209));
         updateClickabilityFlags(false, false, false, false, false, false, true);
         updateButtonIcons("/Resources/home.png", "/Resources/about us.png", "/Resources/FAQs.png", "/Resources/pets.png", "/Resources/vets.png", "/Resources/application.png", "/Resources/head click.png", "/Resources/collar click.png");
-        username.setForeground(Color.YELLOW);
+        name.setForeground(Color.YELLOW);
     }
 
 
@@ -1747,14 +2053,16 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private void petProfiles() {
         // pet click widgets
         JComponent[] components = { petBackButton, petAdoptButton, petHistory, petSize, petStatus,
-                                    petOrigin, petType, petID, petPanelClick, noResultFound };
+                                    petOrigin, petType, petID, petPanelClick, petNoResultsFound };
         
         for(JComponent component : components) {
             component.setVisible(false);
         }
         
         if(totalPets == 0) {
-            noResultFound.setVisible(true);
+            petNoResultsFound.setVisible(true);
+        } else {
+            petNoResultsFound.setVisible(false);
         }
         
         // Pet Panel 1
@@ -1788,7 +2096,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     }
 
     private void petProfilesReset() {
-        totalPets = 0;
+        // totalPets = 0;
         // totalPets = 1;
         // totalPets = 2;
         // totalPets = 3;
@@ -1882,6 +2190,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
             vetIndex = 0;
             totalVets = vets.size();
         }
+        
+        // totalVets = 0;
 
         // Array of vet name and contact labels
         JLabel[] vetNames = { vetName1, vetName2, vetName3, vetName4, vetName5, vetName6 };
@@ -1900,6 +2210,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 vetContacts[i].setVisible(false);
             }
         }
+        
+        if (totalVets == 0) {
+            vetNoResultsFound.setVisible(true);
+        } else {
+            vetNoResultsFound.setVisible(false);
+        }
 
         // Show or hide prev button based on vetIndex
         vetPrev.setVisible(vetIndex > 0);
@@ -1909,16 +2225,284 @@ public class UserLoggedIn extends javax.swing.JFrame {
     }
 
 
-    private void applicationEditVisibility(boolean edit) {
+    private void applicationEditVisibility(boolean edit) {     
         JLabel[] deleteButtons = { deleteButton1, deleteButton2, deleteButton3, deleteButton4, deleteButton5 };
+        JLabel[] highlighters = { highlight1, highlight2, highlight3, highlight4, highlight5 };
+        
+        for (JLabel deleteButton : deleteButtons ) {
+            deleteButton.setVisible(edit);
+        }
+        for (JLabel highlighter : highlighters) {
+            highlighter.setVisible(false);
+        }
 
         editButton.setVisible(!edit);
         cancelButton.setVisible(edit);
         confirmButton.setVisible(edit);
+        if(edit) {
+            // Iterate through the arrays and set visibility based on total applcations
+            for (int i = 0; i < deleteButtons.length; i++) {
+                if (i < totalApplications) {
+                    deleteButtons[i].setVisible(true);
+                } else {
+                    deleteButtons[i].setVisible(false);
+                }
+            }
+            applicationPrev.setVisible(false);
+            applicationNext.setVisible(false);
+        } else {
+            // Array of app infos
+            JLabel[] appIDs = { appID1, appID2, appID3, appID4, appID5 };
+            JLabel[] appTypes = { appType1, appType2, appType3, appType4, appType5 };
+            JLabel[] appPetNames = { appPetName1, appPetName2, appPetName3, appPetName4, appPetName5 };
+            JLabel[] appPetTypes = { appPetType1, appPetType2, appPetType3, appPetType4, appPetType5 };
+            JLabel[] appAppointDates = { appAppointDate1, appAppointDate2, appAppointDate3, appAppointDate4, appAppointDate5 };
+            JLabel[] appVets = { appVet1, appVet2, appVet3, appVet4, appVet5 };
+            JLabel[] appStatuses = { appStatus1, appStatus2, appStatus3, appStatus4, appStatus5 };
 
-        for (JLabel button : deleteButtons) {
-            button.setVisible(edit);
+            // Iterate through the arrays and set the foreground based on total applications
+            for (int i = 0; i < appIDs.length; i++) {
+                if (i < totalApplications) {
+                    appIDs[i].setForeground(Color.white);
+                    appTypes[i].setForeground(Color.white);
+                    appPetNames[i].setForeground(Color.white);
+                    appPetTypes[i].setForeground(Color.white);
+                    appAppointDates[i].setForeground(Color.white);
+                    appVets[i].setForeground(Color.white);
+                    appStatuses[i].setForeground(Color.white);
+                }
+            }
         }
+    }
+    
+    
+    private void applications() {
+        // Application 1
+        if (totalApplications >= 1) {
+            String vetName1 = "";
+            String vetID1 = String.valueOf(applications.get(appIndex).getVetID());
+            String status1 = applications.get(appIndex).getAppointStatus();
+            switch(status1.charAt(0)) {
+                case 'S':
+                    status1 = "Success";
+                    break;
+                case 'C':
+                    status1 = "Cancelled";
+                    break;
+                case 'P':
+                    status1 = "Pending";
+                    break;
+            }
+            
+            for(Veterinarian vet : vets) {
+                if(vet.getVetID().equals(vetID1)) {
+                    vetName1 = vet.getVetFullName();
+                }
+            }             
+            appID1.setText(String.valueOf(applications.get(appIndex).getApplicationID()));
+            appType1.setText(applications.get(appIndex).getApplicationType());
+            appPetName1.setText(applications.get(appIndex).getPetName());
+            appPetType1.setText(applications.get(appIndex).getPetType());
+            appAppointDate1.setText(String.valueOf(applications.get(appIndex).getAppointDate()));
+            appVet1.setText(vetName1);
+            appStatus1.setText(status1);
+        }
+        appIndex++;
+
+        // Application 2
+        if (totalApplications >= 2) {
+            String vetName2 = "";
+            String vetID2 = String.valueOf(applications.get(appIndex).getVetID());
+            String status2 = applications.get(appIndex).getAppointStatus();
+            switch(status2.charAt(0)) {
+                case 'S':
+                    status2 = "Success";
+                    break;
+                case 'C':
+                    status2 = "Cancelled";
+                    break;
+                case 'P':
+                    status2 = "Pending";
+                    break;
+            }
+            
+            for(Veterinarian vet : vets) {
+                if(vet.getVetID().equals(vetID2)) {
+                    vetName2 = vet.getVetFullName();
+                }
+            }   
+            
+            appID2.setText(String.valueOf(applications.get(appIndex).getApplicationID()));
+            appType2.setText(applications.get(appIndex).getApplicationType());
+            appPetName2.setText(applications.get(appIndex).getPetName());
+            appPetType2.setText(applications.get(appIndex).getPetType());
+            appAppointDate2.setText(String.valueOf(applications.get(appIndex).getAppointDate()));
+            appVet2.setText(vetName2);
+            appStatus2.setText(status2);
+        }
+        appIndex++;
+
+        // Application 3
+        if (totalApplications >= 3) {
+            String vetName3 = "";
+            String vetID3 = String.valueOf(applications.get(appIndex).getVetID());
+            String status3 = applications.get(appIndex).getAppointStatus();
+            switch(status3.charAt(0)) {
+                case 'S':
+                    status3 = "Success";
+                    break;
+                case 'C':
+                    status3 = "Cancelled";
+                    break;
+                case 'P':
+                    status3 = "Pending";
+                    break;
+            }
+            
+            for(Veterinarian vet : vets) {
+                if(vet.getVetID().equals(vetID3)) {
+                    vetName3 = vet.getVetFullName();
+                }
+            }    
+            
+            appID3.setText(String.valueOf(applications.get(appIndex).getApplicationID()));
+            appType3.setText(applications.get(appIndex).getApplicationType());
+            appPetName3.setText(applications.get(appIndex).getPetName());
+            appPetType3.setText(applications.get(appIndex).getPetType());
+            appAppointDate3.setText(String.valueOf(applications.get(appIndex).getAppointDate()));
+            appVet3.setText(vetName3);
+            appStatus3.setText(status3);  
+        }
+        appIndex++;
+
+        // Application 4
+        if (totalApplications >= 4) {
+            String vetName4 = "";
+            String vetID4 = String.valueOf(applications.get(appIndex).getVetID());
+            String status4 = applications.get(appIndex).getAppointStatus();
+            switch(status4.charAt(0)) {
+                case 'S':
+                    status4 = "Success";
+                    break;
+                case 'C':
+                    status4 = "Cancelled";
+                    break;
+                case 'P':
+                    status4 = "Pending";
+                    break;
+            }
+            
+            for(Veterinarian vet : vets) {
+                if(vet.getVetID().equals(vetID4)) {
+                    vetName4 = vet.getVetFullName();
+                }
+            }    
+            
+            appID4.setText(String.valueOf(applications.get(appIndex).getApplicationID()));
+            appType4.setText(applications.get(appIndex).getApplicationType());
+            appPetName4.setText(applications.get(appIndex).getPetName());
+            appPetType4.setText(applications.get(appIndex).getPetType());
+            appAppointDate4.setText(String.valueOf(applications.get(appIndex).getAppointDate()));
+            appVet4.setText(vetName4);
+            appStatus4.setText(status4);
+        }
+        appIndex++;
+
+        // Application 5
+        if (totalApplications >= 5) {
+            String vetName5 = "";
+            String vetID5 = String.valueOf(applications.get(appIndex).getVetID());
+            String status5 = applications.get(appIndex).getAppointStatus();
+            switch(status5.charAt(0)) {
+                case 'S':
+                    status5 = "Success";
+                    break;
+                case 'C':
+                    status5 = "Cancelled";
+                    break;
+                case 'P':
+                    status5 = "Pending";
+                    break;
+            }
+            
+            for(Veterinarian vet : vets) {
+                if(vet.getVetID().equals(vetID5)) {
+                    vetName5 = vet.getVetFullName();
+                }
+            }    
+            
+            appID5.setText(String.valueOf(applications.get(appIndex).getApplicationID()));
+            appType5.setText(applications.get(appIndex).getApplicationType());
+            appPetName5.setText(applications.get(appIndex).getPetName());
+            appPetType5.setText(applications.get(appIndex).getPetType());
+            appAppointDate5.setText(String.valueOf(applications.get(appIndex).getAppointDate()));
+            appVet5.setText(vetName5);
+            appStatus5.setText(status5);
+        }
+        appIndex++;
+    
+    }
+    
+    private void applicationsReset() {
+        // Reset app index and total applications if not already clicked
+        if (!applicationClicked) {
+            appIndex = 0;
+            totalApplications = applications.size();
+        }
+        
+        // totalApplications = 3;
+
+        // Array of app infos
+        JLabel[] appIDs = { appID1, appID2, appID3, appID4, appID5 };
+        JLabel[] appTypes = { appType1, appType2, appType3, appType4, appType5 };
+        JLabel[] appPetNames = { appPetName1, appPetName2, appPetName3, appPetName4, appPetName5 };
+        JLabel[] appPetTypes = { appPetType1, appPetType2, appPetType3, appPetType4, appPetType5 };
+        JLabel[] appAppointDates = { appAppointDate1, appAppointDate2, appAppointDate3, appAppointDate4, appAppointDate5 };
+        JLabel[] appVets = { appVet1, appVet2, appVet3, appVet4, appVet5 };
+        JLabel[] appStatuses = { appStatus1, appStatus2, appStatus3, appStatus4, appStatus5 };
+        
+        // Iterate through the arrays and set visibility and foreground based on totalApplications
+        for (int i = 0; i < appIDs.length; i++) {
+            if (i < totalApplications) {
+                appIDs[i].setVisible(true);
+                appTypes[i].setVisible(true);
+                appPetNames[i].setVisible(true);
+                appPetTypes[i].setVisible(true);
+                appAppointDates[i].setVisible(true);
+                appVets[i].setVisible(true);
+                appStatuses[i].setVisible(true);
+                
+                appIDs[i].setForeground(Color.white);
+                appTypes[i].setForeground(Color.white);
+                appPetNames[i].setForeground(Color.white);
+                appPetTypes[i].setForeground(Color.white);
+                appAppointDates[i].setForeground(Color.white);
+                appVets[i].setForeground(Color.white);
+                appStatuses[i].setForeground(Color.white);
+            } else {
+                appIDs[i].setVisible(false);
+                appTypes[i].setVisible(false);
+                appPetNames[i].setVisible(false);
+                appPetTypes[i].setVisible(false);
+                appAppointDates[i].setVisible(false);
+                appVets[i].setVisible(false);
+                appStatuses[i].setVisible(false);
+            }
+        }
+        
+        if (totalApplications == 0) {
+            appNoResultsFound.setVisible(true);
+            editButton.setVisible(false);
+        } else {
+            appNoResultsFound.setVisible(false);
+            editButton.setVisible(true);
+        }
+
+        // Show or hide prev button based on appIndex
+        applicationPrev.setVisible(appIndex > 0);
+
+        // Show or hide next button based on totalApplications
+        applicationNext.setVisible(totalApplications > 6);
     }
 
 
@@ -2338,7 +2922,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         if (!profileClicked) {
             profileCollar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/collar hover.png")));
             profileHead.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/head hover.png")));
-            username.setForeground(Color.YELLOW);
+            name.setForeground(Color.YELLOW);
         }
     }//GEN-LAST:event_profileCollarMouseEntered
 
@@ -2347,7 +2931,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         if (!profileClicked) {
             profileCollar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/collar.png")));
             profileHead.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/head.png")));
-            username.setForeground(Color.BLACK);
+            name.setForeground(Color.BLACK);
         }
     }//GEN-LAST:event_profileCollarMouseExited
 
@@ -2356,7 +2940,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         if (!profileClicked) {
             profileCollar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/collar hover.png")));
             profileHead.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/head hover.png")));
-            username.setForeground(Color.YELLOW);
+            name.setForeground(Color.YELLOW);
         }
     }//GEN-LAST:event_profileHeadMouseEntered
 
@@ -2365,7 +2949,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         if (!profileClicked) {
             profileCollar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/collar.png")));
             profileHead.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/head.png")));
-            username.setForeground(Color.BLACK);
+            name.setForeground(Color.BLACK);
         }
     }//GEN-LAST:event_profileHeadMouseExited
 
@@ -2410,6 +2994,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (!applicationClicked) {
             handleApplicationButtonClick();
+            applications();
             applicationEditVisibility(false);
         }
     }//GEN-LAST:event_applicationButtonMousePressed
@@ -2692,6 +3277,17 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void applicationPrevMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applicationPrevMouseClicked
         // TODO add your handling code here:
+        if (appIndex > 4) {
+            appIndex -= 10;
+            totalApplications += 5;  
+            applicationsReset();
+            applications();
+        }
+        
+        if (appIndex == 5) {
+            applicationNext.setVisible(true);
+            applicationPrev.setVisible(false);
+        }
     }//GEN-LAST:event_applicationPrevMouseClicked
 
     private void applicationPrevMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applicationPrevMouseEntered
@@ -2706,6 +3302,19 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void applicationNextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applicationNextMouseClicked
         // TODO add your handling code here:
+        if (appIndex == 5) {
+            applicationPrev.setVisible(true);
+        }
+        
+        if (appIndex < totalApplications) {
+            totalApplications -= 5;
+            applicationsReset();
+            applications();
+        }
+
+        if (appIndex == totalApplications - 1) {
+            applicationNext.setVisible(false);
+        } 
 
     }//GEN-LAST:event_applicationNextMouseClicked
 
@@ -2742,32 +3351,19 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void deleteButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton1MouseClicked
         // TODO add your handling code here:
-        // Create a CountDownLatch
-        CountDownLatch latch = countDownLatch();
-
-        // Use a separate thread to wait for the user's response
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    // Wait for the user to respond
-                    latch.await();
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-
-                // Continue with code execution based on user's response
-                userResponse = confirmationDialog.getUserResponse();
-
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (userResponse) {
-                        }
-                    }
-                });
+        JLabel[] infos = { appID1, appType1, appPetName1, appPetType1, appAppointDate1, appVet1, appStatus1 };
+        
+        if(highlight1.isVisible()) {
+            highlight1.setVisible(false);
+            for(JLabel info : infos) {
+                info.setForeground(Color.white);
             }
-        }).start();
+        } else {
+            highlight1.setVisible(true);
+            for(JLabel info : infos) {
+                info.setForeground(Color.black);
+            }
+        }
     }//GEN-LAST:event_deleteButton1MouseClicked
 
     private void deleteButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton1MouseEntered
@@ -2782,31 +3378,19 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void deleteButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton2MouseClicked
         // TODO add your handling code here:
-        CountDownLatch latch = countDownLatch();
-
-        // Use a separate thread to wait for the user's response
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    // Wait for the user to respond
-                    latch.await();
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-
-                // Continue with code execution based on user's response
-                userResponse = confirmationDialog.getUserResponse();
-
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (userResponse) {
-                        }
-                    }
-                });
+        JLabel[] infos = { appID2, appType2, appPetName2, appPetType2, appAppointDate2, appVet2, appStatus2 };
+        
+        if(highlight2.isVisible()) {
+            highlight2.setVisible(false);
+            for(JLabel info : infos) {
+                info.setForeground(Color.white);
             }
-        }).start();
+        } else {
+            highlight2.setVisible(true);
+            for(JLabel info : infos) {
+                info.setForeground(Color.black);
+            }
+        }
     }//GEN-LAST:event_deleteButton2MouseClicked
 
     private void deleteButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton2MouseEntered
@@ -2821,31 +3405,18 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void deleteButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton3MouseClicked
         // TODO add your handling code here:
-        CountDownLatch latch = countDownLatch();
-
-        // Use a separate thread to wait for the user's response
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    // Wait for the user to respond
-                    latch.await();
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-
-                // Continue with code execution based on user's response
-                userResponse = confirmationDialog.getUserResponse();
-
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (userResponse) {
-                        }
-                    }
-                });
+        JLabel[] infos = { appID3, appType3, appPetName3, appPetType3, appAppointDate3, appVet3, appStatus3 };
+        if(highlight3.isVisible()) {
+            highlight3.setVisible(false);
+            for(JLabel info : infos) {
+                info.setForeground(Color.white);
             }
-        }).start();
+        } else {
+            highlight3.setVisible(true);
+            for(JLabel info : infos) {
+                info.setForeground(Color.black);
+            }
+        }
     }//GEN-LAST:event_deleteButton3MouseClicked
 
     private void deleteButton3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton3MouseEntered
@@ -2860,31 +3431,18 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void deleteButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton4MouseClicked
         // TODO add your handling code here:
-        CountDownLatch latch = countDownLatch();
-
-        // Use a separate thread to wait for the user's response
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    // Wait for the user to respond
-                    latch.await();
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-
-                // Continue with code execution based on user's response
-                userResponse = confirmationDialog.getUserResponse();
-
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (userResponse) {
-                        }
-                    }
-                });
+        JLabel[] infos = { appID4, appType4, appPetName4, appPetType4, appAppointDate4, appVet4, appStatus4 };
+        if(highlight4.isVisible()) {
+            highlight4.setVisible(false);
+            for(JLabel info : infos) {
+                info.setForeground(Color.white);
             }
-        }).start();
+        } else {
+            highlight4.setVisible(true);
+            for(JLabel info : infos) {
+                info.setForeground(Color.black);
+            }
+        }
     }//GEN-LAST:event_deleteButton4MouseClicked
 
     private void deleteButton4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton4MouseEntered
@@ -2899,31 +3457,18 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void deleteButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton5MouseClicked
         // TODO add your handling code here:
-        CountDownLatch latch = countDownLatch();
-
-        // Use a separate thread to wait for the user's response
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    // Wait for the user to respond
-                    latch.await();
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-
-                // Continue with code execution based on user's response
-                userResponse = confirmationDialog.getUserResponse();
-
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (userResponse) {
-                        }
-                    }
-                });
+        JLabel[] infos = { appID5, appType5, appPetName5, appPetType5, appAppointDate5, appVet5, appStatus5 };
+        if(highlight5.isVisible()) {
+            highlight5.setVisible(false);
+            for(JLabel info : infos) {
+                info.setForeground(Color.white);
             }
-        }).start();
+        } else {
+            highlight5.setVisible(true);
+            for(JLabel info : infos) {
+                info.setForeground(Color.black);
+            }
+        }
     }//GEN-LAST:event_deleteButton5MouseClicked
 
     private void deleteButton5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton5MouseEntered
@@ -2938,6 +3483,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void editButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButtonMouseClicked
         // TODO add your handling code here:
+        appPrev = applicationPrev.isVisible();
+        appNext = applicationNext.isVisible();
         applicationEditVisibility(true);
     }//GEN-LAST:event_editButtonMouseClicked
 
@@ -2964,6 +3511,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
                     public void run() {
                         if (userResponse) {
                             applicationEditVisibility(false);
+                            applicationPrev.setVisible(appPrev);
+                            applicationNext.setVisible(appNext);
                         }
                     }
                 });
@@ -2995,6 +3544,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
                     public void run() {
                         if (userResponse) {
                             applicationEditVisibility(false);
+                            applicationPrev.setVisible(appPrev);
+                            applicationNext.setVisible(appNext);
                         }
                     }
                 });
@@ -3538,6 +4089,42 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel adoptButton;
     private javax.swing.JLabel adoptedCounter;
     private javax.swing.JLabel adoptedLabel;
+    private javax.swing.JLabel appAppointDate1;
+    private javax.swing.JLabel appAppointDate2;
+    private javax.swing.JLabel appAppointDate3;
+    private javax.swing.JLabel appAppointDate4;
+    private javax.swing.JLabel appAppointDate5;
+    private javax.swing.JLabel appID1;
+    private javax.swing.JLabel appID2;
+    private javax.swing.JLabel appID3;
+    private javax.swing.JLabel appID4;
+    private javax.swing.JLabel appID5;
+    private javax.swing.JLabel appNoResultsFound;
+    private javax.swing.JLabel appPetName1;
+    private javax.swing.JLabel appPetName2;
+    private javax.swing.JLabel appPetName3;
+    private javax.swing.JLabel appPetName4;
+    private javax.swing.JLabel appPetName5;
+    private javax.swing.JLabel appPetType1;
+    private javax.swing.JLabel appPetType2;
+    private javax.swing.JLabel appPetType3;
+    private javax.swing.JLabel appPetType4;
+    private javax.swing.JLabel appPetType5;
+    private javax.swing.JLabel appStatus1;
+    private javax.swing.JLabel appStatus2;
+    private javax.swing.JLabel appStatus3;
+    private javax.swing.JLabel appStatus4;
+    private javax.swing.JLabel appStatus5;
+    private javax.swing.JLabel appType1;
+    private javax.swing.JLabel appType2;
+    private javax.swing.JLabel appType3;
+    private javax.swing.JLabel appType4;
+    private javax.swing.JLabel appType5;
+    private javax.swing.JLabel appVet1;
+    private javax.swing.JLabel appVet2;
+    private javax.swing.JLabel appVet3;
+    private javax.swing.JLabel appVet4;
+    private javax.swing.JLabel appVet5;
     private javax.swing.JPanel applicationBody;
     private javax.swing.JLabel applicationButton;
     private javax.swing.JLabel applicationClick;
@@ -3580,8 +4167,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel exitButton;
     private javax.swing.JLabel faqButton;
     private javax.swing.JLabel faqClick;
+    private javax.swing.JLabel filterBy;
     private javax.swing.JTextPane fullName;
     private javax.swing.JScrollPane fullNameScroll;
+    private javax.swing.JLabel highlight1;
+    private javax.swing.JLabel highlight2;
+    private javax.swing.JLabel highlight3;
+    private javax.swing.JLabel highlight4;
+    private javax.swing.JLabel highlight5;
     private javax.swing.JPanel homeBody;
     private javax.swing.JLabel homeButton;
     private javax.swing.JLabel homeClick;
@@ -3590,9 +4183,9 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel logoutButton;
     private javax.swing.JLabel minimizeButton;
     private javax.swing.JComboBox<String> month;
+    private javax.swing.JLabel name;
     private javax.swing.JPanel navBar;
     private javax.swing.JLabel next;
-    private javax.swing.JLabel noResultFound;
     private javax.swing.JTextPane occupation;
     private javax.swing.JScrollPane occupationScroll;
     private javax.swing.JPasswordField password;
@@ -3617,6 +4210,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel petName2;
     private javax.swing.JLabel petName3;
     private javax.swing.JLabel petNext;
+    private javax.swing.JLabel petNoResultsFound;
     private javax.swing.JLabel petOrigin;
     private javax.swing.JLabel petPanel1;
     private javax.swing.JLabel petPanel2;
@@ -3649,7 +4243,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel profileWorkType;
     private javax.swing.JLabel rehomeButton;
     private javax.swing.JLabel slogan;
-    private javax.swing.JLabel username;
+    private javax.swing.JLabel sortBy;
     private javax.swing.JTextPane username1;
     private javax.swing.JScrollPane usernameScroll;
     private javax.swing.JLabel vetButton;
@@ -3673,6 +4267,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel vetName5;
     private javax.swing.JLabel vetName6;
     private javax.swing.JLabel vetNext;
+    private javax.swing.JLabel vetNoResultsFound;
     private javax.swing.JLabel vetPrev;
     private javax.swing.JPanel vetsBody;
     private javax.swing.JLabel vetsPanel;
