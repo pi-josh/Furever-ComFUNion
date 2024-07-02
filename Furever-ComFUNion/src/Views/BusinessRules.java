@@ -6,6 +6,7 @@
 package Views;
 
 import java.awt.MediaTracker;
+import java.awt.Point;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -15,6 +16,9 @@ import javax.swing.JPanel;
  * @author joshu
  */
 public class BusinessRules extends javax.swing.JFrame {
+    // for moving the frame
+    private Point mouseDownCompCoords;
+    
     // sub frames
     private UserLoggedIn userLoggedIn;
     private JPanel glassPane;
@@ -70,6 +74,7 @@ public class BusinessRules extends javax.swing.JFrame {
         jEditorPane1 = new javax.swing.JEditorPane();
         jPanel1 = new javax.swing.JPanel();
         backButton = new javax.swing.JLabel();
+        header = new javax.swing.JLabel();
         businessRulesPanel = new javax.swing.JLabel();
 
         jScrollPane1.setViewportView(jEditorPane1);
@@ -98,6 +103,18 @@ public class BusinessRules extends javax.swing.JFrame {
         });
         jPanel1.add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 400, 80, 80));
 
+        header.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                headerMouseDragged(evt);
+            }
+        });
+        header.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                headerMousePressed(evt);
+            }
+        });
+        jPanel1.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 130));
+
         businessRulesPanel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/business rules pop up (1).png"))); // NOI18N
         jPanel1.add(businessRulesPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 2, -1, -1));
 
@@ -125,6 +142,17 @@ public class BusinessRules extends javax.swing.JFrame {
         // TODO add your handling code here:
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button (2).png")));
     }//GEN-LAST:event_backButtonMouseExited
+
+    private void headerMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerMouseDragged
+        // TODO add your handling code here:
+        Point currCoords = evt.getLocationOnScreen();
+        setLocation(currCoords.x - mouseDownCompCoords.x, currCoords.y - mouseDownCompCoords.y);
+    }//GEN-LAST:event_headerMouseDragged
+
+    private void headerMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerMousePressed
+        // TODO add your handling code here:
+        mouseDownCompCoords = evt.getPoint();
+    }//GEN-LAST:event_headerMousePressed
 
     /**
      * @param args the command line arguments
@@ -167,6 +195,7 @@ public class BusinessRules extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel backButton;
     private javax.swing.JLabel businessRulesPanel;
+    private javax.swing.JLabel header;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

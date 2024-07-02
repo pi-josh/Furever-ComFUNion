@@ -7,10 +7,13 @@ package Views;
 
 import Controllers.LoginController;
 import Controllers.RegisterController;
-import Models.User;
+import Models.Client;
+import Models.Veterinarian;
 import java.awt.Color;
 import java.awt.MediaTracker;
+import java.awt.Point;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,13 +25,23 @@ import javax.swing.JTextPane;
  * @author joshu
  */
 public class Login extends javax.swing.JFrame {
+    // for moving the frame
+    private Point mouseDownCompCoords;
+    
     // controller
     private RegisterController registerController;
     
     // frames
     private LandingPage landingPage;
     private Register register;
-   
+    
+    // Sample vets
+    ArrayList<Veterinarian> vets;
+    private int totalVets;
+    
+    // Sample clients
+    ArrayList<Client> clients;
+    private int totalClients;
 
     public Login(LandingPage landingPage) {
         initComponents();
@@ -38,6 +51,9 @@ public class Login extends javax.swing.JFrame {
 
         // Window logo
         setWindowIcon();
+        
+        // populate sample info for user
+        populateSampleUsers();
         
         resetErrorMessage();
     }
@@ -51,6 +67,9 @@ public class Login extends javax.swing.JFrame {
         
         // Window logo
         setWindowIcon();
+        
+        // populate sample info for user
+        populateSampleUsers();
     }
 
     private void setWindowIcon() {
@@ -66,6 +85,17 @@ public class Login extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+    
+    private void populateSampleUsers() {
+        Veterinarian vetSamples = new Veterinarian();
+        this.vets = vetSamples.getAllVetSamples();
+        totalVets = vets.size();
+        
+        Client clientSamples = new Client();
+        this.clients = clientSamples.getAllClientSamples();
+        totalClients = clients.size();
+    }
+    
     
     public Register getRegister() {
         return register;
@@ -98,16 +128,46 @@ public class Login extends javax.swing.JFrame {
 
     // Event handling methods
     public void loginButtonActionPerformed() {
+        boolean isVet = false, isValid = false;
         String enteredUsername = username.getText();
         String enteredPassword = new String(password.getPassword());
 
         // Simulate authentication (replace with actual logic)
-        User user = new User("admin", "admin");
-        if (user.authenticate(enteredUsername, enteredPassword)) {
+        Client client = null;
+        Veterinarian vet = null;
+        
+        
+        // Check if user is exist as vet or client
+        for(Client curClient : clients) {
+            if(curClient.getClientUsername().equals(enteredUsername) && curClient.getClientPassword().equals(enteredPassword)) {
+                client = curClient;
+                isValid = true;
+                break;
+            }
+        }
+        
+        for (Veterinarian curVet : vets) {
+            if(curVet.getVetUsername().equals(enteredUsername) && curVet.getVetPassword().equals(enteredPassword)) {
+                vet = curVet;
+                isVet = true;
+                isValid = true;
+                break;
+            }
+        }
+        
+        if(isVet && isValid) {
             this.setVisible(false);
             landingPage.setVisible(false);
-            new UserLoggedIn().setVisible(true);
-        } else {
+            new VetInterface(vet).setVisible(true);
+        } else if(!isVet && isValid) {
+            this.setVisible(false);
+            landingPage.setVisible(false);
+            new UserLoggedIn(client).setVisible(true);
+        } else if(enteredUsername.equals("admin") && enteredPassword.equals("admin")) {
+            this.setVisible(false);
+            landingPage.setVisible(false);
+            new UserLoggedIn(null).setVisible(true);
+        }else {
             errorMessage.setText("Invalid username or password");
             errorMessage.setForeground(Color.RED);
         }
@@ -174,6 +234,16 @@ public class Login extends javax.swing.JFrame {
         titleContainer.setBackground(new java.awt.Color(194, 144, 69));
         titleContainer.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 1, 2, new java.awt.Color(0, 0, 0)));
         titleContainer.setPreferredSize(new java.awt.Dimension(900, 75));
+        titleContainer.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                titleContainerMouseDragged(evt);
+            }
+        });
+        titleContainer.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                titleContainerMousePressed(evt);
+            }
+        });
         titleContainer.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         minimizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/minimize button (1).png"))); // NOI18N
@@ -308,6 +378,17 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         minimizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/minimize button (1).png")));
     }//GEN-LAST:event_minimizeButtonMouseExited
+
+    private void titleContainerMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titleContainerMousePressed
+        // TODO add your handling code here:
+        mouseDownCompCoords = evt.getPoint();
+    }//GEN-LAST:event_titleContainerMousePressed
+
+    private void titleContainerMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titleContainerMouseDragged
+        // TODO add your handling code here:
+        Point currCoords = evt.getLocationOnScreen();
+        setLocation(currCoords.x - mouseDownCompCoords.x, currCoords.y - mouseDownCompCoords.y);
+    }//GEN-LAST:event_titleContainerMouseDragged
 
     /**
      * @param args the command line arguments

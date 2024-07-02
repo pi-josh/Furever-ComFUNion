@@ -6,6 +6,7 @@
 package Views;
 
 import java.awt.MediaTracker;
+import java.awt.Point;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -15,6 +16,9 @@ import javax.swing.JFrame;
  * @author joshu
  */
 public class Adopt extends javax.swing.JFrame {
+    // for moving the frame
+    private Point mouseDownCompCoords;
+    
     private UserLoggedIn userLoggedIn;
     private Rehome rehome;
     
@@ -72,11 +76,13 @@ public class Adopt extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        titleContainer = new javax.swing.JPanel();
         minimizeButton = new javax.swing.JLabel();
         backButton = new javax.swing.JLabel();
-        adoptContainer = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        header = new javax.swing.JLabel();
+        adoptPanel1 = new javax.swing.JPanel();
+        adopt1 = new javax.swing.JLabel();
+        adoptPanel2 = new javax.swing.JPanel();
+        adopt2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Adopt");
@@ -84,11 +90,6 @@ public class Adopt extends javax.swing.JFrame {
         setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        titleContainer.setBackground(new java.awt.Color(194, 144, 69));
-        titleContainer.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 1, 2, new java.awt.Color(0, 0, 0)));
-        titleContainer.setPreferredSize(new java.awt.Dimension(900, 75));
-        titleContainer.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         minimizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/minimize button (1).png"))); // NOI18N
         minimizeButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -102,7 +103,7 @@ public class Adopt extends javax.swing.JFrame {
                 minimizeButtonMouseExited(evt);
             }
         });
-        titleContainer.add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(815, 10, 40, 20));
+        getContentPane().add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(815, 10, 40, 20));
 
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button (1).png"))); // NOI18N
         backButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -116,55 +117,83 @@ public class Adopt extends javax.swing.JFrame {
                 backButtonMouseExited(evt);
             }
         });
-        titleContainer.add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(855, 5, 40, 40));
+        getContentPane().add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(855, 5, 40, 40));
 
-        getContentPane().add(titleContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        header.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                headerMouseDragged(evt);
+            }
+        });
+        header.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                headerMousePressed(evt);
+            }
+        });
+        getContentPane().add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 110));
 
-        adoptContainer.setBackground(new java.awt.Color(255, 250, 205));
-        adoptContainer.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 2, 2, 2, new java.awt.Color(0, 0, 0)));
-        adoptContainer.setPreferredSize(new java.awt.Dimension(500, 575));
-        adoptContainer.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        adoptPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
+        adoptPanel1.setPreferredSize(new java.awt.Dimension(900, 680));
+        adoptPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("ADOPT");
-        adoptContainer.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 270, -1, -1));
+        adopt1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/ADOPT Fp1.png"))); // NOI18N
+        adoptPanel1.add(adopt1, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 2, 896, 676));
 
-        getContentPane().add(adoptContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 75, 900, 610));
+        getContentPane().add(adoptPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 680));
+
+        adoptPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
+        adoptPanel2.setMinimumSize(new java.awt.Dimension(900, 680));
+        adoptPanel2.setPreferredSize(new java.awt.Dimension(900, 680));
+        adoptPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        adopt2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/ADOPT Fp2.png"))); // NOI18N
+        adoptPanel2.add(adopt2, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 2, 896, 676));
+
+        getContentPane().add(adoptPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 680));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
-        // TODO add your handling code here:
-        this.setVisible(false);
-    }//GEN-LAST:event_backButtonMouseClicked
-
-    private void backButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseEntered
-        // TODO add your handling code here:
-        backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button hover (1).png")));
-    }//GEN-LAST:event_backButtonMouseEntered
 
     private void backButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseExited
         // TODO add your handling code here:
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button (1).png")));
     }//GEN-LAST:event_backButtonMouseExited
 
-    private void minimizeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeButtonMouseClicked
+    private void backButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseEntered
         // TODO add your handling code here:
-        this.setState(JFrame.ICONIFIED);
-    }//GEN-LAST:event_minimizeButtonMouseClicked
+        backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button hover (1).png")));
+    }//GEN-LAST:event_backButtonMouseEntered
+
+    private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_backButtonMouseClicked
+
+    private void minimizeButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeButtonMouseExited
+        // TODO add your handling code here:
+        minimizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/minimize button (1).png")));
+    }//GEN-LAST:event_minimizeButtonMouseExited
 
     private void minimizeButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeButtonMouseEntered
         // TODO add your handling code here:
         minimizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/minimize button hover (1).png")));
     }//GEN-LAST:event_minimizeButtonMouseEntered
 
-    private void minimizeButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeButtonMouseExited
+    private void minimizeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeButtonMouseClicked
         // TODO add your handling code here:
-        minimizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/minimize button (1).png")));
-    }//GEN-LAST:event_minimizeButtonMouseExited
+        this.setState(JFrame.ICONIFIED);
+    }//GEN-LAST:event_minimizeButtonMouseClicked
+
+    private void headerMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerMousePressed
+        // TODO add your handling code here:
+        mouseDownCompCoords = evt.getPoint();
+    }//GEN-LAST:event_headerMousePressed
+
+    private void headerMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerMouseDragged
+        // TODO add your handling code here:
+        Point currCoords = evt.getLocationOnScreen();
+        setLocation(currCoords.x - mouseDownCompCoords.x, currCoords.y - mouseDownCompCoords.y);
+    }//GEN-LAST:event_headerMouseDragged
 
     /**
      * @param args the command line arguments
@@ -205,10 +234,12 @@ public class Adopt extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel adoptContainer;
+    private javax.swing.JLabel adopt1;
+    private javax.swing.JLabel adopt2;
+    private javax.swing.JPanel adoptPanel1;
+    private javax.swing.JPanel adoptPanel2;
     private javax.swing.JLabel backButton;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel header;
     private javax.swing.JLabel minimizeButton;
-    private javax.swing.JPanel titleContainer;
     // End of variables declaration//GEN-END:variables
 }

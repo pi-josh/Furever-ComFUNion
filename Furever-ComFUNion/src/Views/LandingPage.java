@@ -4,6 +4,7 @@ import Controllers.ExitDialogController;
 import Controllers.LoginController;
 import Controllers.RegisterController;
 import java.awt.MediaTracker;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,6 +26,9 @@ import javax.swing.Timer;
  * @author joshu
  */
 public class LandingPage extends javax.swing.JFrame {
+    // for moving the frame
+    private Point mouseDownCompCoords;
+    
     // controllers
     ExitDialogController exitController;
     LoginController loginController;
@@ -69,7 +73,7 @@ public class LandingPage extends javax.swing.JFrame {
         
         if(!logout) {
             // Create a timer to stop the GIF after 6 seconds
-            timer = new Timer(0, new ActionListener() {
+            timer = new Timer(15000, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     startupAnimationPanel.setVisible(false);
@@ -371,6 +375,16 @@ public class LandingPage extends javax.swing.JFrame {
 
         navBar.setBackground(new java.awt.Color(194, 144, 69));
         navBar.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
+        navBar.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                navBarMouseDragged(evt);
+            }
+        });
+        navBar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                navBarMousePressed(evt);
+            }
+        });
         navBar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/navLogo.png"))); // NOI18N
@@ -822,8 +836,8 @@ public class LandingPage extends javax.swing.JFrame {
     private void exitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButtonMouseClicked
         // TODO add your handling code here:
         if (exitDialog == null || !exitDialog.isVisible()) {
-            exitDialog = new ExitDialog(this, null);
-            exitController = new ExitDialogController(exitDialog, this, null);
+            exitDialog = new ExitDialog(this, null, null);
+            exitController = new ExitDialogController(exitDialog, this, null, null);
             exitDialog.setVisible(true);
             glassPane.setVisible(true);
         } else {
@@ -1094,6 +1108,17 @@ public class LandingPage extends javax.swing.JFrame {
         // TODO add your handling code here:
         minimizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/minimize button (1).png")));
     }//GEN-LAST:event_minimizeButtonMouseExited
+
+    private void navBarMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_navBarMouseDragged
+        // TODO add your handling code here:
+        Point currCoords = evt.getLocationOnScreen();
+        setLocation(currCoords.x - mouseDownCompCoords.x, currCoords.y - mouseDownCompCoords.y);
+    }//GEN-LAST:event_navBarMouseDragged
+
+    private void navBarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_navBarMousePressed
+        // TODO add your handling code here:
+        mouseDownCompCoords = evt.getPoint();
+    }//GEN-LAST:event_navBarMousePressed
 
     /**
      * @param args the command line arguments

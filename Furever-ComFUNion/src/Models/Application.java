@@ -1,40 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Models;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
-/**
- *
- * @author joshu
- */
 public class Application {
     private int applicationID;
     private String applicationType;
-    private Date appointDate;
-    private String appointTime;
-    private String appointPlace;
+    private String appointDate;
     private String appointStatus;
     private int clientID;
-    private String vetID;
-    
-    public Application(int applicationID, String applicationType, Date appointDate,
-                       String appointTime, String appointPlace, String appointStatus,
-                       int clientID, String vetID) {
+    private String vetName;
+    private String petName;
+    private String petType;
+
+    public Application(int applicationID, String applicationType, String appointDate, 
+                       String appointStatus, int clientID, String vetName, String petName, String petType) {
         this.applicationID = applicationID;
         this.applicationType = applicationType;
         this.appointDate = appointDate;
-        this.appointTime = appointTime;
-        this.appointPlace = appointPlace;
         this.appointStatus = appointStatus;
         this.clientID = clientID;
-        this.vetID = vetID;
+        this.vetName = vetName;
+        this.petName = petName;
+        this.petType = petType;
     }
     
     public Application() {}
@@ -48,16 +35,8 @@ public class Application {
         return applicationType;
     }
     
-    public Date getAppointDate() {
+    public String getAppointDate() {
         return appointDate;
-    }
-    
-    public String getAppointTime() {
-        return appointTime;
-    }
-    
-    public String getAppointPlace() {
-        return appointPlace;
     }
     
     public String getAppointStatus() {
@@ -68,8 +47,16 @@ public class Application {
         return clientID;
     }
     
-    public String getVetID() {
-        return vetID;
+    public String getVetName() {
+        return vetName;
+    }
+    
+    public String getPetName() {
+        return petName;
+    }
+    
+    public String getPetType() {
+        return petType;
     }
     
     // setter methods
@@ -81,16 +68,8 @@ public class Application {
         this.applicationType = applicationType;
     }
     
-    public void setAppointDate(Date appointDate) {
+    public void setAppointDate(String appointDate) {
         this.appointDate = appointDate;
-    }
-    
-    public void setAppointTime(String appointTime) {
-        this.appointTime = appointTime;
-    }
-    
-    public void setAppointPlace(String appointPlace) {
-        this.appointPlace = appointPlace;
     }
     
     public void setAppointStatus(String appointStatus) {
@@ -101,28 +80,82 @@ public class Application {
         this.clientID = clientID;
     }
     
-    public void setVetID(String vetID) {
-        this.vetID = vetID;
+    public void setVetName(String vetName) {
+        this.vetName = vetName;
     }
     
+    public void setPetName(String petName) {
+        this.petName = petName;
+    }
+    
+    public void setPetType(String petType) {
+        this.petType = petType;
+    }
+    
+    // this is for the client
+    public ArrayList<Application> getAllApplicationSamples(int clientID) {
+        ArrayList<Application> applications = new ArrayList<>();
+        ArrayList<Application> matchedApplications = new ArrayList<>();
+        
+        applications.add(new Application(1, "R", "2024-06-04", "S", 1, "Snoop Dog", "Hammy", "Hamster"));
+        applications.add(new Application(2, "R", "2024-03-25", "S", 2, "Coco Martin", "Cooper", "Dog"));
+        applications.add(new Application(3, "R", "2024-04-12", "S", 3, "Coco Martin", "Juswa", "Cat"));
+        applications.add(new Application(4, "A", "2024-04-19", "S", 4, "Snoop Dog", "Raphael", "Dog"));
+        applications.add(new Application(5, "A", "2024-04-25", "S", 4, "Snoop Dog", "Juswa", "Cat"));
+        applications.add(new Application(6, "A", "2024-04-02", "C", 4, "Snoop Dog", "Cooper", "Dog"));
+        applications.add(new Application(7, "A", "2024-04-19", "C", 4, "Snoop Dog", "Adjie", "Rabbit"));
+        applications.add(new Application(8, "A", "2024-06-23", "S", 5, "Wally Bayola", "Hammy", "Hamster"));
+        applications.add(new Application(9, "A", "2024-06-23", "P", 5, "Wally Bayola", "Gigi", "Cat"));
+        applications.add(new Application(10, "R", "2024-07-23", "S", 5, "Wally Bayola", "Cassyyy", "Dog"));
+        
+        for(Application app : applications) {
+            if(app.getClientID() == clientID) {
+                matchedApplications.add(app);
+            }
+        }
+        
+        return matchedApplications;
+    }
+    
+    // this is for the veterinarian
+    public ArrayList<Application> getAllApplicationSamples(String vetName) {
+        ArrayList<Application> applications = new ArrayList<>();
+        ArrayList<Application> matchedApplications = new ArrayList<>();
+        
+        applications.add(new Application(1, "R", "2024-06-04", "S", 1, "Snoop Dog", "Hammy", "Hamster"));
+        applications.add(new Application(2, "R", "2024-03-25", "S", 2, "Coco Martin", "Cooper", "Dog"));
+        applications.add(new Application(3, "R", "2024-04-12", "S", 3, "Coco Martin", "Juswa", "Cat"));
+        applications.add(new Application(4, "A", "2024-04-19", "S", 4, "Snoop Dog", "Raphael", "Dog"));
+        applications.add(new Application(5, "A", "2024-04-25", "S", 4, "Snoop Dog", "Juswa", "Cat"));
+        applications.add(new Application(6, "A", "2024-04-02", "C", 4, "Snoop Dog", "Cooper", "Dog"));
+        applications.add(new Application(7, "A", "2024-04-19", "C", 4, "Snoop Dog", "Adjie", "Rabbit"));
+        applications.add(new Application(8, "A", "2024-06-23", "S", 5, "Wally Bayola", "Hammy", "Hamster"));
+        applications.add(new Application(9, "A", "2024-06-23", "P", 5, "Wally Bayola", "Gigi", "Cat"));
+        applications.add(new Application(10, "R", "2024-07-23", "S", 5, "Wally Bayola", "Cassyyy", "Dog"));
+        
+        for(Application app : applications) {
+            if(app.getVetName().equals(vetName)) {
+                matchedApplications.add(app);
+            }
+        }
+        
+        return matchedApplications;
+    }
+    
+    // this is for the admin
     public ArrayList<Application> getAllApplicationSamples() {
         ArrayList<Application> applications = new ArrayList<>();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         
-        try {
-            applications.add(new Application(1, "R", sdf.parse("2024-06-04"), "08:30", "Vet Clinic", "S", 1, "V001"));
-            applications.add(new Application(2, "R", sdf.parse("2024-03-25"), "10:30", "Vet Clinic", "S", 2, "V003"));
-            applications.add(new Application(3, "R", sdf.parse("2024-04-12"), "12:00", "Vet Clinic", "S", 3, "V003"));
-            applications.add(new Application(4, "A", sdf.parse("2024-04-19"), "15:00", "Vet Clinic", "S", 4, "V001"));
-            applications.add(new Application(4, "A", sdf.parse("2024-04-25"), "16:00", "Vet Clinic", "S", 4, "V001"));
-            applications.add(new Application(4, "A", sdf.parse("2024-04-02"), "17:00", "Vet Clinic", "C", 4, "V001"));
-            applications.add(new Application(4, "A", sdf.parse("2024-04-19"), "15:00", "Vet Clinic", "C", 4, "V001"));
-            applications.add(new Application(5, "A", sdf.parse("2024-06-23"), "13:00", "Vet Clinic", "S", 5, "V002"));
-            applications.add(new Application(5, "A", sdf.parse("2024-06-23"), "13:30", "Vet Clinic", "P", 5, "V002"));
-            applications.add(new Application(6, "R", sdf.parse("2024-07-23"), "09:30", "Vet Clinic", "S", 5, "V002"));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        applications.add(new Application(1, "R", "2024-06-04", "S", 1, "Snoop Dog", "Hammy", "Hamster"));
+        applications.add(new Application(2, "R", "2024-03-25", "S", 2, "Coco Martin", "Cooper", "Dog"));
+        applications.add(new Application(3, "R", "2024-04-12", "S", 3, "Coco Martin", "Juswa", "Cat"));
+        applications.add(new Application(4, "A", "2024-04-19", "S", 4, "Snoop Dog", "Raphael", "Dog"));
+        applications.add(new Application(5, "A", "2024-04-25", "S", 4, "Snoop Dog", "Juswa", "Cat"));
+        applications.add(new Application(6, "A", "2024-04-02", "C", 4, "Snoop Dog", "Cooper", "Dog"));
+        applications.add(new Application(7, "A", "2024-04-19", "C", 4, "Snoop Dog", "Adjie", "Rabbit"));
+        applications.add(new Application(8, "A", "2024-06-23", "S", 5, "Wally Bayola", "Hammy", "Hamster"));
+        applications.add(new Application(9, "A", "2024-06-23", "P", 5, "Wally Bayola", "Gigi", "Cat"));
+        applications.add(new Application(10, "R", "2024-07-23", "S", 5, "Wally Bayola", "Cassyyy", "Dog"));
         
         return applications;
     }

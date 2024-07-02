@@ -5,12 +5,9 @@
  */
 package Views;
 
-import java.awt.Color;
 import java.awt.MediaTracker;
+import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.time.YearMonth;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -19,6 +16,10 @@ import javax.swing.JFrame;
  * @author joshu
  */
 public class Rehome extends javax.swing.JFrame {
+    // for moving the frame
+    private Point mouseDownCompCoords;
+    
+    // sub frames
     private UserLoggedIn userLoggedIn;
     private Adopt adopt;
     
@@ -81,12 +82,15 @@ public class Rehome extends javax.swing.JFrame {
         jProgressBar1 = new javax.swing.JProgressBar();
         minimizeButton = new javax.swing.JLabel();
         backButton = new javax.swing.JLabel();
-        titleContainer = new javax.swing.JPanel();
-        rehomeContainer = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        header = new javax.swing.JLabel();
+        rehomePanel1 = new javax.swing.JPanel();
+        rehome1 = new javax.swing.JLabel();
+        rehomePanel2 = new javax.swing.JPanel();
+        rehome2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Rehome");
+        setMinimumSize(new java.awt.Dimension(900, 680));
         setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -119,23 +123,35 @@ public class Rehome extends javax.swing.JFrame {
         });
         getContentPane().add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(855, 5, 40, 40));
 
-        titleContainer.setBackground(new java.awt.Color(194, 144, 69));
-        titleContainer.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
-        titleContainer.setPreferredSize(new java.awt.Dimension(900, 75));
-        titleContainer.setLayout(new java.awt.GridBagLayout());
-        getContentPane().add(titleContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        header.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                headerMouseDragged(evt);
+            }
+        });
+        header.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                headerMousePressed(evt);
+            }
+        });
+        getContentPane().add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 110));
 
-        rehomeContainer.setBackground(new java.awt.Color(255, 250, 205));
-        rehomeContainer.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 2, 2, 2, new java.awt.Color(0, 0, 0)));
-        rehomeContainer.setPreferredSize(new java.awt.Dimension(900, 575));
-        rehomeContainer.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        rehomePanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
+        rehomePanel1.setPreferredSize(new java.awt.Dimension(900, 680));
+        rehomePanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("REHOME");
-        rehomeContainer.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 210, 340, 160));
+        rehome1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/REHOME Fp1.png"))); // NOI18N
+        rehomePanel1.add(rehome1, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 2, 896, 676));
 
-        getContentPane().add(rehomeContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 75, 900, 610));
+        getContentPane().add(rehomePanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 680));
+
+        rehomePanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
+        rehomePanel2.setPreferredSize(new java.awt.Dimension(900, 680));
+        rehomePanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        rehome2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/REHOME Fp2.png"))); // NOI18N
+        rehomePanel2.add(rehome2, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 2, 896, 676));
+
+        getContentPane().add(rehomePanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 680));
 
         pack();
         setLocationRelativeTo(null);
@@ -170,6 +186,17 @@ public class Rehome extends javax.swing.JFrame {
         // TODO add your handling code here:
         minimizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/minimize button (1).png")));
     }//GEN-LAST:event_minimizeButtonMouseExited
+
+    private void headerMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerMousePressed
+        // TODO add your handling code here:
+        mouseDownCompCoords = evt.getPoint();
+    }//GEN-LAST:event_headerMousePressed
+
+    private void headerMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerMouseDragged
+        // TODO add your handling code here:
+        Point currCoords = evt.getLocationOnScreen();
+        setLocation(currCoords.x - mouseDownCompCoords.x, currCoords.y - mouseDownCompCoords.y);
+    }//GEN-LAST:event_headerMouseDragged
 
     /**
      * @param args the command line arguments
@@ -209,10 +236,12 @@ public class Rehome extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel backButton;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel header;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JLabel minimizeButton;
-    private javax.swing.JPanel rehomeContainer;
-    private javax.swing.JPanel titleContainer;
+    private javax.swing.JLabel rehome1;
+    private javax.swing.JLabel rehome2;
+    private javax.swing.JPanel rehomePanel1;
+    private javax.swing.JPanel rehomePanel2;
     // End of variables declaration//GEN-END:variables
 }
