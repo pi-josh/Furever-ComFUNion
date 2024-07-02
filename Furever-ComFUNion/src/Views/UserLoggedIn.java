@@ -260,7 +260,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
         petPanel3 = new javax.swing.JLabel();
         petBackButton = new javax.swing.JLabel();
         petAdoptButton = new javax.swing.JLabel();
-        petHistory = new javax.swing.JLabel();
         petSize = new javax.swing.JLabel();
         petStatus = new javax.swing.JLabel();
         petOrigin = new javax.swing.JLabel();
@@ -876,29 +875,25 @@ public class UserLoggedIn extends javax.swing.JFrame {
         });
         petsBody.add(petAdoptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 600, 250, 70));
 
-        petHistory.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
-        petHistory.setText("7");
-        petsBody.add(petHistory, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 553, -1, -1));
-
         petSize.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
         petSize.setText("Small");
-        petsBody.add(petSize, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 503, -1, -1));
+        petsBody.add(petSize, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 553, -1, -1));
 
         petStatus.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
         petStatus.setText("A");
-        petsBody.add(petStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 453, -1, -1));
+        petsBody.add(petStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 488, -1, -1));
 
         petOrigin.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
         petOrigin.setText("Owned");
-        petsBody.add(petOrigin, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 403, -1, -1));
+        petsBody.add(petOrigin, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 420, -1, -1));
 
         petType.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
         petType.setText("Dog");
-        petsBody.add(petType, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 353, -1, -1));
+        petsBody.add(petType, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 353, -1, -1));
 
         petID.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
         petID.setText("P008");
-        petsBody.add(petID, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 303, -1, -1));
+        petsBody.add(petID, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 283, -1, -1));
 
         petPanelClick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pet panel click (1).png"))); // NOI18N
         petsBody.add(petPanelClick, new org.netbeans.lib.awtextra.AbsoluteConstraints(441, 213, 790, 450));
@@ -2058,7 +2053,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void petProfiles() {
         // pet click widgets
-        JComponent[] components = { petBackButton, petAdoptButton, petHistory, petSize, petStatus,
+        JComponent[] components = { petBackButton, petAdoptButton, petSize, petStatus,
                                     petOrigin, petType, petID, petPanelClick, petNoResultsFound };
         
         for(JComponent component : components) {
@@ -2567,7 +2562,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     }
     
     private void hidePetPanels(boolean hide) {
-        JComponent[] components = { petBackButton, petAdoptButton, petHistory, petSize,
+        JComponent[] components = { petBackButton, petAdoptButton, petSize,
                                     petStatus, petOrigin, petType, petID, petPanelClick };
         
         for(JComponent component : components) {
@@ -2663,7 +2658,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 petOrigin.setText(pOrigin);
                 petStatus.setText(pStatus);
                 petSize.setText(pSize);
-                petHistory.setText(String.valueOf(pets.get(petIndex-2).getPetHistory()));
                 break;
             case 2:
                 // Display pet panel 2 information on panel 1     
@@ -2710,7 +2704,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 petOrigin.setText(pOrigin);
                 petStatus.setText(pStatus);
                 petSize.setText(pSize);
-                petHistory.setText(String.valueOf(pets.get(petIndex-1).getPetHistory()));
                 break;
             case 3:
                 // Display pet panel 3 information on panel 1
@@ -2757,7 +2750,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 petOrigin.setText(pOrigin);
                 petStatus.setText(pStatus);
                 petSize.setText(pSize);
-                petHistory.setText(String.valueOf(pets.get(petIndex).getPetHistory()));
                 break;
             default:
                 // Fallback to initial stored pet information
@@ -4207,7 +4199,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel petGender2;
     private javax.swing.JLabel petGender3;
     private javax.swing.JLabel petHeader;
-    private javax.swing.JLabel petHistory;
     private javax.swing.JLabel petID;
     private javax.swing.JLabel petImg1;
     private javax.swing.JLabel petImg2;
