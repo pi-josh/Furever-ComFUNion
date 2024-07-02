@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Models;
 
 import java.util.ArrayList;
 
 /**
- *
+ * 
  * @author joshu
  */
 public class Client {
@@ -24,11 +19,12 @@ public class Client {
     private String clientIncome;
     private String companyName;
     private String workType;
+    private String clientAcctStatus;
     
     public Client(int clientID, String clientUsername, String clientPassword, String clientFullName,
-                  int clientAge, String clientAddress, String cellNum,
-                  String clientEmailAdd, String clientOccupation, String clientIncome,
-                  String companyName, String workType) {
+                  int clientAge, String clientAddress, String cellNum, String clientEmailAdd,
+                  String clientOccupation, String clientIncome, String companyName,
+                  String workType, String clientAcctStatus) {
         this.clientID = clientID;
         this.clientPassword = clientPassword;
         this.clientFullName = clientFullName;
@@ -41,6 +37,7 @@ public class Client {
         this.clientIncome = clientIncome;
         this.companyName = companyName;
         this.workType = workType;
+        this.clientAcctStatus = clientAcctStatus;
     }
     
     public Client(String enteredUsername, String enteredPassword) {
@@ -97,7 +94,11 @@ public class Client {
     
     public String getWorkType() {
         return workType;
-    } 
+    }
+    
+    public String getClientAcctStatus() {
+        return clientAcctStatus;
+    }
     
     // setter methods
     public void setClientID(int clientID) {
@@ -146,22 +147,20 @@ public class Client {
     
     public void setWorkType(String workType) {
         this.workType = workType;
-    } 
+    }
+    
+    public void setClientAcctStatus(String clientAcctStatus) {
+        this.clientAcctStatus = clientAcctStatus;
+    }
     
     public ArrayList<Client> getAllClientSamples() {
         ArrayList<Client> clients = new ArrayList<>();
         
-        Client joshua = new Client(1, "JJMacatunao", "tunaw123", "John Joshua Macatunao", 19, "81 Pouros Grove, Suite 091, 64822-2475, East Jaronfurt, Iowa, United States", "9892865657", "jjmelt@yahoo.com", "Photographer", "69000", "Melt Studio", "T");
-        Client katrina = new Client(2, "Katrina14", "tara8ball", "Katrina Halili", 20, "095 Loy Divide, Suite 919, 70892, Hansenstad, Wyoming, United States", "9652655123", "akonaman@gmail.com", "NASA Scientist", "405000", "NASA", "NT");
-        Client joly = new Client(3, "Joly@123", "jawlineislife", "Joly Gonzaga", 31, "Poblacion, Baliuag, Bulacan, Philippines", "9652235242", "McWater@yahoo.com", "Gym Instructor", "51000", "FItness Inc.", "NT");
-        Client mark = new Client(4, "MarkQuiet28", "shhh!!!", "Mark Quiet", 21, "826 Loyal Point, Suite 753, 37394-6564, Kuphalton, Ohio, United States", "9528652421", "marktahimik@gmail.com", "Senior Software Engineer", "375635", "Microsoft", "NT");
-        Client randy = new Client(5, "RandyF", "r.a.n.d.i.", "Randy Fernandez", 24, "77828 Towne Knoll, Suite 229, 24698-7170, Burniceburgh, West Virginia, United States", "9652234242", "Power.Fernandez01@y8mail.com", "Senior Fraud Analyst", "93290", "HSBC", "NT");
-        
-        clients.add(joshua);
-        clients.add(katrina);
-        clients.add(joly);
-        clients.add(mark);
-        clients.add(randy);
+        clients.add(new Client(1, "JJMacatunao", "tunaw123", "John Joshua Macatunao", 19, "81 Pouros Grove, Suite 091, 64822-2475, East Jaronfurt, Iowa, United States", "9892865657", "jjmelt@yahoo.com", "Photographer", "69000", "Melt Studio", "T", "A"));
+        clients.add(new Client(2, "Katrina14", "tara8ball", "Katrina Halili", 20, "095 Loy Divide, Suite 919, 70892, Hansenstad, Wyoming, United States", "9652655123", "akonaman@gmail.com", "NASA Scientist", "405000", "NASA", "NT", "A"));
+        clients.add(new Client(3, "Joly@123", "jawlineislife", "Joly Gonzaga", 31, "Poblacion, Baliuag, Bulacan, Philippines", "9652235242", "McWater@yahoo.com", "Gym Instructor", "51000", "FItness Inc.", "NT", "A"));
+        clients.add(new Client(4, "MarkQuiet28", "shhh!!!", "Mark Quiet", 21, "826 Loyal Point, Suite 753, 37394-6564, Kuphalton, Ohio, United States", "9528652421", "marktahimik@gmail.com", "Senior Software Engineer", "375635", "Microsoft", "NT", "A"));
+        clients.add(new Client(5, "RandyF", "r.a.n.d.i.", "Randy Fernandez", 24, "77828 Towne Knoll, Suite 229, 24698-7170, Burniceburgh, West Virginia, United States", "9652234242", "Power.Fernandez01@y8mail.com", "Senior Fraud Analyst", "93290", "HSBC", "NT", "A"));
 
         return clients;
     }

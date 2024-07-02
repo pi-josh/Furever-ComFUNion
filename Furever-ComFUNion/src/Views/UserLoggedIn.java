@@ -2280,8 +2280,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private void applications() {
         // Application 1
         if (totalApplications >= 1) {
-            String vetName1 = "";
-            String vetID1 = String.valueOf(applications.get(appIndex).getVetID());
             String status1 = applications.get(appIndex).getAppointStatus();
             switch(status1.charAt(0)) {
                 case 'S':
@@ -2294,26 +2292,19 @@ public class UserLoggedIn extends javax.swing.JFrame {
                     status1 = "Pending";
                     break;
             }
-            
-            for(Veterinarian vet : vets) {
-                if(vet.getVetID().equals(vetID1)) {
-                    vetName1 = vet.getVetFullName();
-                }
-            }             
+                  
             appID1.setText(String.valueOf(applications.get(appIndex).getApplicationID()));
             appType1.setText(applications.get(appIndex).getApplicationType());
             appPetName1.setText(applications.get(appIndex).getPetName());
             appPetType1.setText(applications.get(appIndex).getPetType());
             appAppointDate1.setText(String.valueOf(applications.get(appIndex).getAppointDate()));
-            appVet1.setText(vetName1);
+            appVet1.setText(applications.get(appIndex).getVetName());
             appStatus1.setText(status1);
         }
         appIndex++;
 
         // Application 2
         if (totalApplications >= 2) {
-            String vetName2 = "";
-            String vetID2 = String.valueOf(applications.get(appIndex).getVetID());
             String status2 = applications.get(appIndex).getAppointStatus();
             switch(status2.charAt(0)) {
                 case 'S':
@@ -2326,27 +2317,19 @@ public class UserLoggedIn extends javax.swing.JFrame {
                     status2 = "Pending";
                     break;
             }
-            
-            for(Veterinarian vet : vets) {
-                if(vet.getVetID().equals(vetID2)) {
-                    vetName2 = vet.getVetFullName();
-                }
-            }   
-            
+ 
             appID2.setText(String.valueOf(applications.get(appIndex).getApplicationID()));
             appType2.setText(applications.get(appIndex).getApplicationType());
             appPetName2.setText(applications.get(appIndex).getPetName());
             appPetType2.setText(applications.get(appIndex).getPetType());
             appAppointDate2.setText(String.valueOf(applications.get(appIndex).getAppointDate()));
-            appVet2.setText(vetName2);
+            appVet2.setText(applications.get(appIndex).getVetName());
             appStatus2.setText(status2);
         }
         appIndex++;
 
         // Application 3
         if (totalApplications >= 3) {
-            String vetName3 = "";
-            String vetID3 = String.valueOf(applications.get(appIndex).getVetID());
             String status3 = applications.get(appIndex).getAppointStatus();
             switch(status3.charAt(0)) {
                 case 'S':
@@ -2359,27 +2342,19 @@ public class UserLoggedIn extends javax.swing.JFrame {
                     status3 = "Pending";
                     break;
             }
-            
-            for(Veterinarian vet : vets) {
-                if(vet.getVetID().equals(vetID3)) {
-                    vetName3 = vet.getVetFullName();
-                }
-            }    
-            
+
             appID3.setText(String.valueOf(applications.get(appIndex).getApplicationID()));
             appType3.setText(applications.get(appIndex).getApplicationType());
             appPetName3.setText(applications.get(appIndex).getPetName());
             appPetType3.setText(applications.get(appIndex).getPetType());
             appAppointDate3.setText(String.valueOf(applications.get(appIndex).getAppointDate()));
-            appVet3.setText(vetName3);
+            appVet3.setText(applications.get(appIndex).getVetName());
             appStatus3.setText(status3);  
         }
         appIndex++;
 
         // Application 4
         if (totalApplications >= 4) {
-            String vetName4 = "";
-            String vetID4 = String.valueOf(applications.get(appIndex).getVetID());
             String status4 = applications.get(appIndex).getAppointStatus();
             switch(status4.charAt(0)) {
                 case 'S':
@@ -2392,27 +2367,19 @@ public class UserLoggedIn extends javax.swing.JFrame {
                     status4 = "Pending";
                     break;
             }
-            
-            for(Veterinarian vet : vets) {
-                if(vet.getVetID().equals(vetID4)) {
-                    vetName4 = vet.getVetFullName();
-                }
-            }    
-            
+
             appID4.setText(String.valueOf(applications.get(appIndex).getApplicationID()));
             appType4.setText(applications.get(appIndex).getApplicationType());
             appPetName4.setText(applications.get(appIndex).getPetName());
             appPetType4.setText(applications.get(appIndex).getPetType());
             appAppointDate4.setText(String.valueOf(applications.get(appIndex).getAppointDate()));
-            appVet4.setText(vetName4);
+            appVet4.setText(applications.get(appIndex).getVetName());
             appStatus4.setText(status4);
         }
         appIndex++;
 
         // Application 5
         if (totalApplications >= 5) {
-            String vetName5 = "";
-            String vetID5 = String.valueOf(applications.get(appIndex).getVetID());
             String status5 = applications.get(appIndex).getAppointStatus();
             switch(status5.charAt(0)) {
                 case 'S':
@@ -2426,18 +2393,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
                     break;
             }
             
-            for(Veterinarian vet : vets) {
-                if(vet.getVetID().equals(vetID5)) {
-                    vetName5 = vet.getVetFullName();
-                }
-            }    
-            
             appID5.setText(String.valueOf(applications.get(appIndex).getApplicationID()));
             appType5.setText(applications.get(appIndex).getApplicationType());
             appPetName5.setText(applications.get(appIndex).getPetName());
             appPetType5.setText(applications.get(appIndex).getPetType());
             appAppointDate5.setText(String.valueOf(applications.get(appIndex).getAppointDate()));
-            appVet5.setText(vetName5);
+            appVet5.setText(applications.get(appIndex).getVetName());
             appStatus5.setText(status5);
         }
         appIndex++;

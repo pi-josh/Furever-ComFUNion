@@ -20,13 +20,11 @@ public class Pet {
     private int petAge;
     private String petName;
     private String petSex;
-    private int petHistory;
-    private int applicationID;
-    private String picURL; // sample lang to since hindi ko alam kung pano yung blob sa db
+    private String picURL;
     
     public Pet(int petID, String petType, String petOrigin, String petStatus,
                String petSize, int petAge, String petName, String petSex,
-               int petHistory, int applicationID, String picURL) {
+               String picURL) {
         this.petID = petID;
         this.petType = petType;
         this.petOrigin = petOrigin;
@@ -35,8 +33,33 @@ public class Pet {
         this.petAge = petAge;
         this.petName = petName;
         this.petSex = petSex;
-        this.petHistory = petHistory;
         this.picURL = picURL;
+    }
+    
+    public Pet(int petID, String petType, String petOrigin, String petStatus,
+               String petSize, int petAge, String petName, String petSex) {
+        this.petID = petID;
+        this.petType = petType;
+        this.petOrigin = petOrigin;
+        this.petStatus = petStatus;
+        this.petSize = petSize;
+        this.petAge = petAge;
+        this.petName = petName;
+        this.petSex = petSex;
+        switch(petType) {
+            case "Dog":
+                this.picURL = "/Resources/sample pets/dog.png";
+                break;
+            case "Cat":
+                this.picURL = "/Resources/sample pets/cat.png";
+                break;
+            case "Hamster":
+                this.picURL = "/Resources/sample pets/hamster.png";
+                break;
+            case "Rabbit":
+                this.picURL = "/Resources/sample pets/rabbit.png";
+                break;
+        } 
     }
     
     public Pet() {}
@@ -72,14 +95,6 @@ public class Pet {
     
     public String getPetSex() {
         return petSex;
-    }
-    
-    public int getPetHistory() {
-        return petHistory;
-    }
-    
-    public int getApplicationID() {
-        return applicationID;
     }
     
     public String getPicURL() {
@@ -119,15 +134,7 @@ public class Pet {
     public void setPetSex(String petSex) {
         this.petSex = petSex;
     }
-    
-    public void setPetHistory(int petHistory) {
-        this.petHistory = petHistory;
-    }
-    
-    public void setApplicationID(int applicationID) {
-        this.applicationID = applicationID;
-    }
-    
+     
     public void setPicURL(String picURL) {
         this.picURL = picURL;
     }
@@ -135,13 +142,13 @@ public class Pet {
     public ArrayList<Pet> getAllPetSamples() {
         ArrayList<Pet> pets = new ArrayList<>();
         
-        Pet cassyyy = new Pet(007, "Dog", "O", "NA", "S", 4, "Cassyyy", "M", 6, 6, "/Resources/sample pets/dog.png");
-        Pet gigi = new Pet(006, "Cat", "R", "NA", "M", 6, "Gigi", "F", 0, 5, "/Resources/sample pets/cat.png");
-        Pet hammy = new Pet(005, "Hamster", "O", "A", "T", 3, "Hammy", "M", 1, 5, "/Resources/sample pets/hamster.png");
-        Pet adjie = new Pet(004, "Rabbit", "R", "NA", "T", 15, "Adjie", "M", 0, 4, "/Resources/sample pets/rabbit.png");
-        Pet cooper = new Pet(003, "Dog", "O", "NA", "M", 7, "Cooper", "M", 2, 4, "/Resources/sample pets/dog.png");
-        Pet juswa = new Pet(002, "Cat", "O", "A", "L", 9, "Juswa", "M", 3, 4, "/Resources/sample pets/cat.png");
-        Pet raphael = new Pet(001, "Dog", "R", "A", "M", 2, "Raphael", "M", 0, 4, "/Resources/sample pets/dog.png");
+        Pet cassyyy = new Pet(007, "Dog", "O", "NA", "S", 4, "Cassyyy", "M", "/Resources/sample pets/dog.png");
+        Pet gigi = new Pet(006, "Cat", "R", "NA", "M", 6, "Gigi", "F", "/Resources/sample pets/cat.png");
+        Pet hammy = new Pet(005, "Hamster", "O", "A", "T", 3, "Hammy", "M", "/Resources/sample pets/hamster.png");
+        Pet adjie = new Pet(004, "Rabbit", "R", "NA", "T", 15, "Adjie", "M", "/Resources/sample pets/rabbit.png");
+        Pet cooper = new Pet(003, "Dog", "O", "NA", "M", 7, "Cooper", "M", "/Resources/sample pets/dog.png");
+        Pet juswa = new Pet(002, "Cat", "O", "A", "L", 9, "Juswa", "M", "/Resources/sample pets/cat.png");
+        Pet raphael = new Pet(001, "Dog", "R", "A", "M", 2, "Raphael", "M", "/Resources/sample pets/dog.png");
         
         pets.add(cassyyy);
         pets.add(gigi);
