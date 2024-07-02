@@ -7,6 +7,7 @@ package Views;
 
 import Controllers.LoginController;
 import java.awt.MediaTracker;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,6 +20,9 @@ import javax.swing.*;
  * @author joshu
  */
 public class Register extends javax.swing.JFrame {
+    // for moving the frame
+    private Point mouseDownCompCoords;
+    
     // controller
     private LoginController loginController;
     
@@ -341,6 +345,16 @@ public class Register extends javax.swing.JFrame {
         titleContainer.setBackground(new java.awt.Color(194, 144, 69));
         titleContainer.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
         titleContainer.setPreferredSize(new java.awt.Dimension(900, 75));
+        titleContainer.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                titleContainerMouseDragged(evt);
+            }
+        });
+        titleContainer.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                titleContainerMousePressed(evt);
+            }
+        });
         titleContainer.setLayout(new java.awt.GridBagLayout());
 
         registerHeader.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
@@ -488,6 +502,17 @@ public class Register extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void titleContainerMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titleContainerMouseDragged
+        // TODO add your handling code here:
+        Point currCoords = evt.getLocationOnScreen();
+        setLocation(currCoords.x - mouseDownCompCoords.x, currCoords.y - mouseDownCompCoords.y);
+    }//GEN-LAST:event_titleContainerMouseDragged
+
+    private void titleContainerMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titleContainerMousePressed
+        // TODO add your handling code here:
+        mouseDownCompCoords = evt.getPoint();
+    }//GEN-LAST:event_titleContainerMousePressed
 
     /**
      * @param args the command line arguments

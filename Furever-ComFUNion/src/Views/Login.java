@@ -11,6 +11,7 @@ import Models.Client;
 import Models.Veterinarian;
 import java.awt.Color;
 import java.awt.MediaTracker;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
@@ -24,6 +25,9 @@ import javax.swing.JTextPane;
  * @author joshu
  */
 public class Login extends javax.swing.JFrame {
+    // for moving the frame
+    private Point mouseDownCompCoords;
+    
     // controller
     private RegisterController registerController;
     
@@ -230,6 +234,16 @@ public class Login extends javax.swing.JFrame {
         titleContainer.setBackground(new java.awt.Color(194, 144, 69));
         titleContainer.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 1, 2, new java.awt.Color(0, 0, 0)));
         titleContainer.setPreferredSize(new java.awt.Dimension(900, 75));
+        titleContainer.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                titleContainerMouseDragged(evt);
+            }
+        });
+        titleContainer.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                titleContainerMousePressed(evt);
+            }
+        });
         titleContainer.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         minimizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/minimize button (1).png"))); // NOI18N
@@ -364,6 +378,17 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         minimizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/minimize button (1).png")));
     }//GEN-LAST:event_minimizeButtonMouseExited
+
+    private void titleContainerMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titleContainerMousePressed
+        // TODO add your handling code here:
+        mouseDownCompCoords = evt.getPoint();
+    }//GEN-LAST:event_titleContainerMousePressed
+
+    private void titleContainerMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titleContainerMouseDragged
+        // TODO add your handling code here:
+        Point currCoords = evt.getLocationOnScreen();
+        setLocation(currCoords.x - mouseDownCompCoords.x, currCoords.y - mouseDownCompCoords.y);
+    }//GEN-LAST:event_titleContainerMouseDragged
 
     /**
      * @param args the command line arguments

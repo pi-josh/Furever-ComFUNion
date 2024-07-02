@@ -6,6 +6,7 @@
 package Views;
 
 import java.awt.MediaTracker;
+import java.awt.Point;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -15,6 +16,9 @@ import javax.swing.JFrame;
  * @author joshu
  */
 public class Adopt extends javax.swing.JFrame {
+    // for moving the frame
+    private Point mouseDownCompCoords;
+    
     private UserLoggedIn userLoggedIn;
     private Rehome rehome;
     
@@ -74,6 +78,7 @@ public class Adopt extends javax.swing.JFrame {
 
         minimizeButton = new javax.swing.JLabel();
         backButton = new javax.swing.JLabel();
+        header = new javax.swing.JLabel();
         adoptPanel1 = new javax.swing.JPanel();
         adopt1 = new javax.swing.JLabel();
         adoptPanel2 = new javax.swing.JPanel();
@@ -83,7 +88,6 @@ public class Adopt extends javax.swing.JFrame {
         setTitle("Adopt");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(900, 680));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -114,6 +118,18 @@ public class Adopt extends javax.swing.JFrame {
             }
         });
         getContentPane().add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(855, 5, 40, 40));
+
+        header.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                headerMouseDragged(evt);
+            }
+        });
+        header.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                headerMousePressed(evt);
+            }
+        });
+        getContentPane().add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 110));
 
         adoptPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
         adoptPanel1.setPreferredSize(new java.awt.Dimension(900, 680));
@@ -168,6 +184,17 @@ public class Adopt extends javax.swing.JFrame {
         this.setState(JFrame.ICONIFIED);
     }//GEN-LAST:event_minimizeButtonMouseClicked
 
+    private void headerMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerMousePressed
+        // TODO add your handling code here:
+        mouseDownCompCoords = evt.getPoint();
+    }//GEN-LAST:event_headerMousePressed
+
+    private void headerMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerMouseDragged
+        // TODO add your handling code here:
+        Point currCoords = evt.getLocationOnScreen();
+        setLocation(currCoords.x - mouseDownCompCoords.x, currCoords.y - mouseDownCompCoords.y);
+    }//GEN-LAST:event_headerMouseDragged
+
     /**
      * @param args the command line arguments
      */
@@ -212,6 +239,7 @@ public class Adopt extends javax.swing.JFrame {
     private javax.swing.JPanel adoptPanel1;
     private javax.swing.JPanel adoptPanel2;
     private javax.swing.JLabel backButton;
+    private javax.swing.JLabel header;
     private javax.swing.JLabel minimizeButton;
     // End of variables declaration//GEN-END:variables
 }

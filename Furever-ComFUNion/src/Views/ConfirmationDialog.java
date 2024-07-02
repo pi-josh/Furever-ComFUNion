@@ -6,6 +6,7 @@
 package Views;
 
 import java.awt.MediaTracker;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.util.concurrent.CountDownLatch;
 import javax.swing.ImageIcon;
@@ -17,6 +18,9 @@ import javax.swing.JPanel;
  * @author joshu
  */
 public class ConfirmationDialog extends javax.swing.JFrame {
+    // for moving the frame
+    private Point mouseDownCompCoords;
+    
     private boolean userResponse;
     private final JPanel glassPane;
     private final CountDownLatch latch;
@@ -97,6 +101,16 @@ public class ConfirmationDialog extends javax.swing.JFrame {
         exitDialogPanel.add(noButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 185, 230, 70));
 
         exitDialog.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/continuation dialog (1).png"))); // NOI18N
+        exitDialog.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                exitDialogMouseDragged(evt);
+            }
+        });
+        exitDialog.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                exitDialogMousePressed(evt);
+            }
+        });
         exitDialogPanel.add(exitDialog, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 2, 546, 296));
 
         getContentPane().add(exitDialogPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 300));
@@ -104,6 +118,17 @@ public class ConfirmationDialog extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void exitDialogMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitDialogMousePressed
+        // TODO add your handling code here:
+        mouseDownCompCoords = evt.getPoint();
+    }//GEN-LAST:event_exitDialogMousePressed
+
+    private void exitDialogMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitDialogMouseDragged
+        // TODO add your handling code here:
+        Point currCoords = evt.getLocationOnScreen();
+        setLocation(currCoords.x - mouseDownCompCoords.x, currCoords.y - mouseDownCompCoords.y);
+    }//GEN-LAST:event_exitDialogMouseDragged
 
     /**
      * @param args the command line arguments
