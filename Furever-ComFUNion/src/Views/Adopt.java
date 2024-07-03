@@ -141,6 +141,7 @@ public class Adopt extends javax.swing.JFrame {
         address = new javax.swing.JTextArea();
         adopt1 = new javax.swing.JLabel();
         adoptPanel2 = new javax.swing.JPanel();
+        adoptButton = new javax.swing.JLabel();
         adoptPrev = new javax.swing.JLabel();
         petAge = new javax.swing.JTextField();
         petType = new javax.swing.JTextField();
@@ -300,6 +301,20 @@ public class Adopt extends javax.swing.JFrame {
         adoptPanel2.setMinimumSize(new java.awt.Dimension(900, 680));
         adoptPanel2.setPreferredSize(new java.awt.Dimension(900, 680));
         adoptPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        adoptButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/app adopt button.png"))); // NOI18N
+        adoptButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                adoptButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                adoptButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                adoptButtonMouseExited(evt);
+            }
+        });
+        adoptPanel2.add(adoptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 570, -1, -1));
 
         adoptPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/app prev button.png"))); // NOI18N
         adoptPrev.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -605,13 +620,9 @@ public class Adopt extends javax.swing.JFrame {
 
     private void rehomeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rehomeButtonMouseClicked
         // TODO add your handling code here:
-        if (adopt != null) {
-            if (adopt.getRehome() != null) {
-                rehome = adopt.getRehome();
-            }
-            adopt.setVisible(false);
+        if (userLoggedIn != null) {
+            rehome = userLoggedIn.getRehome();
         }
-
         if (rehome == null) {
             rehome = new Rehome(userLoggedIn);
             rehome.setVisible(true);
@@ -621,6 +632,7 @@ public class Adopt extends javax.swing.JFrame {
             rehome.toFront();
             rehome.requestFocus();
         }
+        this.dispose();
     }//GEN-LAST:event_rehomeButtonMouseClicked
 
     private void rehomeButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rehomeButtonMouseEntered
@@ -646,6 +658,20 @@ public class Adopt extends javax.swing.JFrame {
         // TODO add your handling code here:
         petButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/pet button (1).png")));
     }//GEN-LAST:event_petButtonMouseExited
+
+    private void adoptButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adoptButtonMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_adoptButtonMouseClicked
+
+    private void adoptButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adoptButtonMouseEntered
+        // TODO add your handling code here:
+        adoptButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/app adopt button hover.png")));
+    }//GEN-LAST:event_adoptButtonMouseEntered
+
+    private void adoptButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adoptButtonMouseExited
+        // TODO add your handling code here:
+        adoptButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/app adopt button.png")));
+    }//GEN-LAST:event_adoptButtonMouseExited
 
     /**
      * @param args the command line arguments
@@ -690,6 +716,7 @@ public class Adopt extends javax.swing.JFrame {
     private javax.swing.JScrollPane addressScroll;
     private javax.swing.JLabel adopt1;
     private javax.swing.JLabel adopt2;
+    private javax.swing.JLabel adoptButton;
     private javax.swing.JLabel adoptNext;
     private javax.swing.JPanel adoptPanel1;
     private javax.swing.JPanel adoptPanel2;

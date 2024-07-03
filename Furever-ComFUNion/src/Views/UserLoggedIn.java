@@ -423,7 +423,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
         setTitle("Furever ComFUNion");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1370, 880));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -4194,7 +4193,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
             if (adopt.getRehome() != null) {
                 rehome = adopt.getRehome();
             }
-            adopt.setVisible(false);
+            adopt.dispose();
         }
 
         if (rehome == null) {
@@ -4214,7 +4213,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
             if (rehome.getAdopt() != null) {
                 adopt = rehome.getAdopt();
             }
-            rehome.setVisible(false);
+            rehome.dispose();
         }
         if (adopt == null) {
             adopt = new Adopt(this);
