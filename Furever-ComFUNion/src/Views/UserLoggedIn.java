@@ -288,9 +288,10 @@ public class UserLoggedIn extends javax.swing.JFrame {
         dogType = new javax.swing.JCheckBox();
         orderByName = new javax.swing.JCheckBox();
         orderByAge = new javax.swing.JCheckBox();
-        ascending = new javax.swing.JCheckBox();
-        descending = new javax.swing.JCheckBox();
         orderByID = new javax.swing.JCheckBox();
+        IDdescending = new javax.swing.JCheckBox();
+        nameDescending = new javax.swing.JCheckBox();
+        ageDescending = new javax.swing.JCheckBox();
         sortBy = new javax.swing.JLabel();
         filterBy = new javax.swing.JLabel();
         background3 = new javax.swing.JLabel();
@@ -1179,7 +1180,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 orderByNameActionPerformed(evt);
             }
         });
-        petsBody.add(orderByName, new org.netbeans.lib.awtextra.AbsoluteConstraints(1036, 49, 30, 30));
+        petsBody.add(orderByName, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 70, 30, 30));
 
         orderByAge.setBackground(new java.awt.Color(255, 255, 255));
         orderByAge.setBorder(null);
@@ -1189,42 +1190,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         orderByAge.setIconTextGap(0);
         orderByAge.setMargin(new java.awt.Insets(0, 0, 0, 0));
         orderByAge.setPreferredSize(new java.awt.Dimension(30, 30));
-        orderByAge.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                orderByAgeActionPerformed(evt);
-            }
-        });
-        petsBody.add(orderByAge, new org.netbeans.lib.awtextra.AbsoluteConstraints(1122, 49, 30, 30));
-
-        ascending.setBackground(new java.awt.Color(255, 255, 255));
-        ascending.setBorder(null);
-        ascending.setContentAreaFilled(false);
-        ascending.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ascending.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        ascending.setIconTextGap(0);
-        ascending.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        ascending.setPreferredSize(new java.awt.Dimension(30, 30));
-        ascending.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ascendingActionPerformed(evt);
-            }
-        });
-        petsBody.add(ascending, new org.netbeans.lib.awtextra.AbsoluteConstraints(971, 90, 30, 30));
-
-        descending.setBackground(new java.awt.Color(255, 255, 255));
-        descending.setBorder(null);
-        descending.setContentAreaFilled(false);
-        descending.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        descending.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        descending.setIconTextGap(0);
-        descending.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        descending.setPreferredSize(new java.awt.Dimension(30, 30));
-        descending.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                descendingActionPerformed(evt);
-            }
-        });
-        petsBody.add(descending, new org.netbeans.lib.awtextra.AbsoluteConstraints(1095, 90, 30, 30));
+        petsBody.add(orderByAge, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 100, 30, 30));
 
         orderByID.setBackground(new java.awt.Color(255, 255, 255));
         orderByID.setBorder(null);
@@ -1239,7 +1205,52 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 orderByIDActionPerformed(evt);
             }
         });
-        petsBody.add(orderByID, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 49, 30, 30));
+        petsBody.add(orderByID, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 40, 30, 30));
+
+        IDdescending.setBackground(new java.awt.Color(255, 255, 255));
+        IDdescending.setBorder(null);
+        IDdescending.setContentAreaFilled(false);
+        IDdescending.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        IDdescending.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        IDdescending.setIconTextGap(0);
+        IDdescending.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        IDdescending.setPreferredSize(new java.awt.Dimension(30, 30));
+        IDdescending.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IDdescendingActionPerformed(evt);
+            }
+        });
+        petsBody.add(IDdescending, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 50, 30, 30));
+
+        nameDescending.setBackground(new java.awt.Color(255, 255, 255));
+        nameDescending.setBorder(null);
+        nameDescending.setContentAreaFilled(false);
+        nameDescending.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        nameDescending.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        nameDescending.setIconTextGap(0);
+        nameDescending.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        nameDescending.setPreferredSize(new java.awt.Dimension(30, 30));
+        nameDescending.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameDescendingActionPerformed(evt);
+            }
+        });
+        petsBody.add(nameDescending, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 80, 30, 30));
+
+        ageDescending.setBackground(new java.awt.Color(255, 255, 255));
+        ageDescending.setBorder(null);
+        ageDescending.setContentAreaFilled(false);
+        ageDescending.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ageDescending.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        ageDescending.setIconTextGap(0);
+        ageDescending.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        ageDescending.setPreferredSize(new java.awt.Dimension(30, 30));
+        ageDescending.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ageDescendingActionPerformed(evt);
+            }
+        });
+        petsBody.add(ageDescending, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 100, 30, 30));
 
         sortBy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/sort by.png"))); // NOI18N
         petsBody.add(sortBy, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 10, 540, 140));
@@ -3666,6 +3677,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (!petsClicked) {
             handlePetButtonClick();
+            petProfiles();
         }
     }//GEN-LAST:event_badgeMousePressed
 
@@ -4560,20 +4572,15 @@ public class UserLoggedIn extends javax.swing.JFrame {
         petFilterBySortBy();
     }//GEN-LAST:event_dogTypeActionPerformed
 
-    private void orderByAgeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderByAgeActionPerformed
+    private void IDdescendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDdescendingActionPerformed
         // TODO add your handling code here:
         petFilterBySortBy();
-    }//GEN-LAST:event_orderByAgeActionPerformed
+    }//GEN-LAST:event_IDdescendingActionPerformed
 
-    private void ascendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ascendingActionPerformed
+    private void ageDescendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ageDescendingActionPerformed
         // TODO add your handling code here:
         petFilterBySortBy();
-    }//GEN-LAST:event_ascendingActionPerformed
-
-    private void descendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descendingActionPerformed
-        // TODO add your handling code here:
-        petFilterBySortBy();
-    }//GEN-LAST:event_descendingActionPerformed
+    }//GEN-LAST:event_ageDescendingActionPerformed
 
     private void orderByIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderByIDActionPerformed
         // TODO add your handling code here:
@@ -4590,6 +4597,10 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // TODO add your handling code here:
         mouseDownCompCoords = evt.getPoint();
     }//GEN-LAST:event_navBarMousePressed
+
+    private void nameDescendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameDescendingActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nameDescendingActionPerformed
 
     /**
      * @param args the command line arguments
@@ -4632,6 +4643,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel FAQsPanel2;
     private javax.swing.JLabel FAQsPanel3;
     private javax.swing.JLabel FAQsPanel4;
+    private javax.swing.JCheckBox IDdescending;
     private javax.swing.JPanel aboutUsBody;
     private javax.swing.JLabel aboutUsButton;
     private javax.swing.JLabel aboutUsClick;
@@ -4640,6 +4652,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel adoptedCounter;
     private javax.swing.JLabel adoptedLabel;
     private javax.swing.JCheckBox adoptedStatus;
+    private javax.swing.JCheckBox ageDescending;
     private javax.swing.JLabel appAppointDate1;
     private javax.swing.JLabel appAppointDate2;
     private javax.swing.JLabel appAppointDate3;
@@ -4682,7 +4695,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel applicationNext;
     private javax.swing.JLabel applicationPanel;
     private javax.swing.JLabel applicationPrev;
-    private javax.swing.JCheckBox ascending;
     private javax.swing.JLabel background;
     private javax.swing.JLabel background1;
     private javax.swing.JLabel background2;
@@ -4713,7 +4725,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel deleteButton3;
     private javax.swing.JLabel deleteButton4;
     private javax.swing.JLabel deleteButton5;
-    private javax.swing.JCheckBox descending;
     private javax.swing.JLabel devs;
     private javax.swing.JCheckBox dogType;
     private javax.swing.JLabel editButton;
@@ -4744,6 +4755,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel minimizeButton;
     private javax.swing.JComboBox<String> month;
     private javax.swing.JLabel name;
+    private javax.swing.JCheckBox nameDescending;
     private javax.swing.JPanel navBar;
     private javax.swing.JLabel next;
     private javax.swing.JCheckBox notAdoptedStatus;
