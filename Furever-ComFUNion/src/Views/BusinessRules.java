@@ -21,18 +21,21 @@ public class BusinessRules extends javax.swing.JFrame {
     
     // sub frames
     private UserLoggedIn userLoggedIn;
+    private VetLoggedIn vetLoggedIn;
     private LandingPage landingPage;
     private JPanel glassPane;
     
     /**
      * Creates new form Register
      */
-    public BusinessRules(LandingPage landingPage, UserLoggedIn userLoggedIn) {
+    public BusinessRules(LandingPage landingPage, UserLoggedIn userLoggedIn, VetLoggedIn vetLoggedIn) {
         initComponents();
         if(userLoggedIn != null) {
             this.userLoggedIn = userLoggedIn;
         } else if(landingPage != null) {
             this.landingPage = landingPage;
+        } else if(vetLoggedIn != null) {
+            this.vetLoggedIn = vetLoggedIn;
         }
         setVisible(true);
         

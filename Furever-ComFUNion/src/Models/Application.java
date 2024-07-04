@@ -142,7 +142,7 @@ public class Application {
         return matchedApplications;
     }
     
-    // this is for the admin
+    // this is for the default
     public ArrayList<Application> getAllApplicationSamples() {
         ArrayList<Application> applications = new ArrayList<>();
         

@@ -20,18 +20,21 @@ public class Devs extends javax.swing.JFrame {
     private Point mouseDownCompCoords;
     
     private UserLoggedIn userLoggedIn;
+    private VetLoggedIn vetLoggedIn;
     private LandingPage landingPage;
     private JPanel glassPane;
     
     /**
      * Creates new form Register
      */
-    public Devs(LandingPage landingPage, UserLoggedIn userLoggedIn) {
+    public Devs(LandingPage landingPage, UserLoggedIn userLoggedIn, VetLoggedIn vetLoggedIn) {
         initComponents();
         if(userLoggedIn != null) {
             this.userLoggedIn = userLoggedIn;
         } else if(landingPage != null) {
             this.landingPage = landingPage;
+        } else if(vetLoggedIn != null) {
+            this.vetLoggedIn = vetLoggedIn;
         }
         setVisible(true);
         

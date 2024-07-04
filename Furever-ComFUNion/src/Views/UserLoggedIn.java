@@ -3203,8 +3203,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
             @Override
             public void run() {
                 if (confirmationDialog == null || !confirmationDialog.isVisible()) {
-                    confirmationDialog = new ConfirmationDialog(UserLoggedIn.this, latch);
-                    confirmationController = new ConfirmationDialogController(confirmationDialog, UserLoggedIn.this, latch);
+                    confirmationDialog = new ConfirmationDialog(UserLoggedIn.this, null, latch);
+                    confirmationController = new ConfirmationDialogController(confirmationDialog, UserLoggedIn.this, null, latch);
                     confirmationDialog.setVisible(true);
                     glassPane.setVisible(true);
                 } else {
@@ -3740,7 +3740,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private void devsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_devsMouseClicked
         // TODO add your handling code here:
         if (devsFrame == null || !devsFrame.isVisible()) {
-            devsFrame = new Devs(null, this);
+            devsFrame = new Devs(null, this, null);
             devsFrame.setVisible(true);
             glassPane.setVisible(true);
         } else {
@@ -3752,7 +3752,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private void businessRulesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_businessRulesMouseClicked
         // TODO add your handling code here:
         if (businessRulesFrame == null || !businessRulesFrame.isVisible()) {
-            businessRulesFrame = new BusinessRules(null, this);
+            businessRulesFrame = new BusinessRules(null, this, null);
             businessRulesFrame.setVisible(true);
             glassPane.setVisible(true);
         } else {

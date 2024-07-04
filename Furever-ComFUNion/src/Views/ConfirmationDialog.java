@@ -22,13 +22,17 @@ public class ConfirmationDialog extends javax.swing.JFrame {
     private Point mouseDownCompCoords;
     
     private boolean userResponse;
-    private final JPanel glassPane;
+    private JPanel glassPane = (JPanel) null;
     private final CountDownLatch latch;
 
-    public ConfirmationDialog(UserLoggedIn userLoggedIn, CountDownLatch latch) {
+    public ConfirmationDialog(UserLoggedIn userLoggedIn, VetLoggedIn vetLoggedIn, CountDownLatch latch) {
         initComponents();
         this.latch = latch;
-        this.glassPane = (JPanel) userLoggedIn.getGlassPane();
+        if(userLoggedIn != null) {
+            this.glassPane = (JPanel) userLoggedIn.getGlassPane();
+        } else if(vetLoggedIn != null) {
+            this.glassPane = (JPanel) vetLoggedIn.getGlassPane();
+        }
 
         // Window logo
         try {
@@ -159,7 +163,7 @@ public class ConfirmationDialog extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ConfirmationDialog(null, null).setVisible(true);
+                new ConfirmationDialog(null, null, null).setVisible(true);
             }
         });
     }

@@ -158,7 +158,7 @@ public class Login extends javax.swing.JFrame {
         if(isVet && isValid) {
             this.setVisible(false);
             landingPage.setVisible(false);
-            new VetInterface(vet).setVisible(true);
+            new VetLoggedIn(vet).setVisible(true);
         } else if(!isVet && isValid) {
             this.setVisible(false);
             landingPage.setVisible(false);

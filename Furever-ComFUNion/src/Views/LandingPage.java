@@ -1865,7 +1865,7 @@ public class LandingPage extends javax.swing.JFrame {
     private void devsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_devsMouseClicked
         // TODO add your handling code here:
         if (devsFrame == null || !devsFrame.isVisible()) {
-            devsFrame = new Devs(this, null);
+            devsFrame = new Devs(this, null, null);
             devsFrame.setVisible(true);
             glassPane.setVisible(true);
         } else {
@@ -1887,7 +1887,7 @@ public class LandingPage extends javax.swing.JFrame {
     private void businessRulesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_businessRulesMouseClicked
         // TODO add your handling code here:
         if (businessRulesFrame == null || !businessRulesFrame.isVisible()) {
-            businessRulesFrame = new BusinessRules(this, null);
+            businessRulesFrame = new BusinessRules(this, null, null);
             businessRulesFrame.setVisible(true);
             glassPane.setVisible(true);
         } else {
