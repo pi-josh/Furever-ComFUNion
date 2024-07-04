@@ -376,6 +376,11 @@ public class UserLoggedIn extends javax.swing.JFrame {
         deleteButton3 = new javax.swing.JLabel();
         deleteButton4 = new javax.swing.JLabel();
         deleteButton5 = new javax.swing.JLabel();
+        editButton1 = new javax.swing.JLabel();
+        editButton2 = new javax.swing.JLabel();
+        editButton3 = new javax.swing.JLabel();
+        editButton4 = new javax.swing.JLabel();
+        editButton5 = new javax.swing.JLabel();
         applicationPrev = new javax.swing.JLabel();
         applicationNext = new javax.swing.JLabel();
         adoptButton = new javax.swing.JLabel();
@@ -1835,6 +1840,76 @@ public class UserLoggedIn extends javax.swing.JFrame {
         });
         applicationBody.add(deleteButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1125, 570, 50, 50));
 
+        editButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (3).png"))); // NOI18N
+        editButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editButton1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editButton1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editButton1MouseExited(evt);
+            }
+        });
+        applicationBody.add(editButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 290, 50, 50));
+
+        editButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (3).png"))); // NOI18N
+        editButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editButton2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editButton2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editButton2MouseExited(evt);
+            }
+        });
+        applicationBody.add(editButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 360, 50, 50));
+
+        editButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (3).png"))); // NOI18N
+        editButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editButton3MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editButton3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editButton3MouseExited(evt);
+            }
+        });
+        applicationBody.add(editButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 430, 50, 50));
+
+        editButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (3).png"))); // NOI18N
+        editButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editButton4MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editButton4MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editButton4MouseExited(evt);
+            }
+        });
+        applicationBody.add(editButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 500, 50, 50));
+
+        editButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (3).png"))); // NOI18N
+        editButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editButton5MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editButton5MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editButton5MouseExited(evt);
+            }
+        });
+        applicationBody.add(editButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 570, 50, 50));
+
         applicationPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/prev button (1).png"))); // NOI18N
         applicationPrev.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -2619,10 +2694,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void applicationEditVisibility(boolean edit) {
         JLabel[] deleteButtons = {deleteButton1, deleteButton2, deleteButton3, deleteButton4, deleteButton5};
+        JLabel[] editButtons = {editButton1, editButton2, editButton3, editButton4, editButton5};
         JLabel[] highlighters = {highlight1, highlight2, highlight3, highlight4, highlight5};
 
         for (JLabel deleteButton : deleteButtons) {
-            deleteButton.setVisible(edit);
+            deleteButton.setVisible(false);
+        }
+        for(JLabel editButton : editButtons) {
+            editButton.setVisible(false);
         }
         for (JLabel highlighter : highlighters) {
             highlighter.setVisible(false);
@@ -2632,13 +2711,20 @@ public class UserLoggedIn extends javax.swing.JFrame {
         cancelButton.setVisible(edit);
         confirmButton.setVisible(edit);
         if (edit) {
+            appIndex -= 5;
             // Iterate through the arrays and set visibility based on total applcations
             for (int i = 0; i < deleteButtons.length; i++) {
                 if (i < totalApplications) {
-                    deleteButtons[i].setVisible(true);
+                    if(applications.get(appIndex).getAppointStatus().charAt(0) == 'P') {
+                        System.out.println(appIndex);
+                        editButtons[i].setVisible(true);
+                        deleteButtons[i].setVisible(true);
+                    }
                 } else {
+                    editButtons[i].setVisible(false);
                     deleteButtons[i].setVisible(false);
                 }
+                appIndex++;
             }
             applicationPrev.setVisible(false);
             applicationNext.setVisible(false);
@@ -4740,6 +4826,77 @@ public class UserLoggedIn extends javax.swing.JFrame {
         petFilterBySortBy();
     }//GEN-LAST:event_orderByAgeActionPerformed
 
+    private void editButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editButton1MouseClicked
+
+    private void editButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton1MouseEntered
+        // TODO add your handling code here:
+        editButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button hover (3).png")));
+    }//GEN-LAST:event_editButton1MouseEntered
+
+    private void editButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton1MouseExited
+        // TODO add your handling code here:
+        editButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (3).png")));
+    }//GEN-LAST:event_editButton1MouseExited
+
+    private void editButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton2MouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_editButton2MouseClicked
+
+    private void editButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton2MouseEntered
+        // TODO add your handling code here:
+        editButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button hover (3).png")));
+    }//GEN-LAST:event_editButton2MouseEntered
+
+    private void editButton2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton2MouseExited
+        // TODO add your handling code here:
+        editButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (3).png")));
+    }//GEN-LAST:event_editButton2MouseExited
+
+    private void editButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton3MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editButton3MouseClicked
+
+    private void editButton3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton3MouseEntered
+        // TODO add your handling code here:
+        editButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button hover (3).png")));
+    }//GEN-LAST:event_editButton3MouseEntered
+
+    private void editButton3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton3MouseExited
+        // TODO add your handling code here:
+        editButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (3).png")));
+    }//GEN-LAST:event_editButton3MouseExited
+
+    private void editButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton4MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editButton4MouseClicked
+
+    private void editButton4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton4MouseEntered
+        // TODO add your handling code here:
+        editButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button hover (3).png")));
+    }//GEN-LAST:event_editButton4MouseEntered
+
+    private void editButton4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton4MouseExited
+        // TODO add your handling code here:
+        editButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (3).png")));
+    }//GEN-LAST:event_editButton4MouseExited
+
+    private void editButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton5MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editButton5MouseClicked
+
+    private void editButton5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton5MouseEntered
+        // TODO add your handling code here:
+        editButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button hover (3).png")));
+    }//GEN-LAST:event_editButton5MouseEntered
+
+    private void editButton5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton5MouseExited
+        // TODO add your handling code here:
+        editButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (3).png")));
+    }//GEN-LAST:event_editButton5MouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -4868,6 +5025,11 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel devs;
     private javax.swing.JCheckBox dogType;
     private javax.swing.JLabel editButton;
+    private javax.swing.JLabel editButton1;
+    private javax.swing.JLabel editButton2;
+    private javax.swing.JLabel editButton3;
+    private javax.swing.JLabel editButton4;
+    private javax.swing.JLabel editButton5;
     private javax.swing.JTextPane emailAddress;
     private javax.swing.JScrollPane emailAddressScroll;
     private javax.swing.JLabel exitButton;
