@@ -21,14 +21,22 @@ public class BusinessRules extends javax.swing.JFrame {
     
     // sub frames
     private UserLoggedIn userLoggedIn;
+    private VetLoggedIn vetLoggedIn;
+    private LandingPage landingPage;
     private JPanel glassPane;
     
     /**
      * Creates new form Register
      */
-    public BusinessRules(UserLoggedIn userLoggedIn) {
+    public BusinessRules(LandingPage landingPage, UserLoggedIn userLoggedIn, VetLoggedIn vetLoggedIn) {
         initComponents();
-        this.userLoggedIn = userLoggedIn;
+        if(userLoggedIn != null) {
+            this.userLoggedIn = userLoggedIn;
+        } else if(landingPage != null) {
+            this.landingPage = landingPage;
+        } else if(vetLoggedIn != null) {
+            this.vetLoggedIn = vetLoggedIn;
+        }
         setVisible(true);
         
         // Window logo
@@ -129,8 +137,11 @@ public class BusinessRules extends javax.swing.JFrame {
         if (userLoggedIn != null) {
             glassPane = (JPanel) userLoggedIn.getGlassPane();
             glassPane.setVisible(false);
+        } else if (landingPage != null) {
+            glassPane = (JPanel) landingPage.getGlassPane();
+            glassPane.setVisible(false);
         }
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_backButtonMouseClicked
 
     private void backButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseEntered

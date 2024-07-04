@@ -8,7 +8,7 @@ package Controllers;
 import Views.ExitDialog;
 import Views.LandingPage;
 import Views.UserLoggedIn;
-import Views.VetInterface;
+import Views.VetLoggedIn;
 import javax.swing.JPanel;
 
 /**
@@ -19,9 +19,9 @@ public class ExitDialogController {
     private final ExitDialog view;
     private final LandingPage landingPage;
     private final UserLoggedIn userLoggedIn;
-    private final VetInterface vetInterface;
+    private final VetLoggedIn vetInterface;
 
-    public ExitDialogController(ExitDialog view, LandingPage landingPage, UserLoggedIn userLoggedIn, VetInterface vetInterface) {
+    public ExitDialogController(ExitDialog view, LandingPage landingPage, UserLoggedIn userLoggedIn, VetLoggedIn vetInterface) {
         this.view = view;
         this.landingPage = landingPage;
         this.userLoggedIn = userLoggedIn;

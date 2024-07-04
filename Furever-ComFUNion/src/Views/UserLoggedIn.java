@@ -95,6 +95,9 @@ public class UserLoggedIn extends javax.swing.JFrame {
     ArrayList<Application> applications;
     private int totalApplications;
     private int appIndex = 0;
+    
+    // for sorting priority
+    ArrayList<JCheckBox> sortingPriority = new ArrayList<>();   
 
     /**
      * Creates new form Main
@@ -102,8 +105,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
     public UserLoggedIn(Client client) {
         this.client = client;
 
-        // alisin na lang pagkatapos
-        samples();
+        // populate
+        populateFromDB();
 
         initComponents();
 
@@ -204,6 +207,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTree1 = new javax.swing.JTree();
         navBar = new javax.swing.JPanel();
         exitButton = new javax.swing.JLabel();
         logo = new javax.swing.JLabel();
@@ -288,9 +293,13 @@ public class UserLoggedIn extends javax.swing.JFrame {
         dogType = new javax.swing.JCheckBox();
         orderByName = new javax.swing.JCheckBox();
         orderByAge = new javax.swing.JCheckBox();
-        ascending = new javax.swing.JCheckBox();
-        descending = new javax.swing.JCheckBox();
         orderByID = new javax.swing.JCheckBox();
+        IDdescending = new javax.swing.JCheckBox();
+        nameDescending = new javax.swing.JCheckBox();
+        ageDescending = new javax.swing.JCheckBox();
+        namePrio = new javax.swing.JLabel();
+        agePrio = new javax.swing.JLabel();
+        IDprio = new javax.swing.JLabel();
         sortBy = new javax.swing.JLabel();
         filterBy = new javax.swing.JLabel();
         background3 = new javax.swing.JLabel();
@@ -367,6 +376,11 @@ public class UserLoggedIn extends javax.swing.JFrame {
         deleteButton3 = new javax.swing.JLabel();
         deleteButton4 = new javax.swing.JLabel();
         deleteButton5 = new javax.swing.JLabel();
+        editButton1 = new javax.swing.JLabel();
+        editButton2 = new javax.swing.JLabel();
+        editButton3 = new javax.swing.JLabel();
+        editButton4 = new javax.swing.JLabel();
+        editButton5 = new javax.swing.JLabel();
         applicationPrev = new javax.swing.JLabel();
         applicationNext = new javax.swing.JLabel();
         adoptButton = new javax.swing.JLabel();
@@ -418,11 +432,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
         profilePanel = new javax.swing.JLabel();
         background6 = new javax.swing.JLabel();
 
+        jScrollPane1.setViewportView(jTree1);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Furever ComFUNion");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1370, 880));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -1167,6 +1182,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
         petsBody.add(dogType, new org.netbeans.lib.awtextra.AbsoluteConstraints(157, 45, 15, 15));
 
         orderByName.setBackground(new java.awt.Color(255, 255, 255));
+        orderByName.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
+        orderByName.setText("petName");
         orderByName.setBorder(null);
         orderByName.setContentAreaFilled(false);
         orderByName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1179,9 +1196,11 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 orderByNameActionPerformed(evt);
             }
         });
-        petsBody.add(orderByName, new org.netbeans.lib.awtextra.AbsoluteConstraints(1036, 49, 30, 30));
+        petsBody.add(orderByName, new org.netbeans.lib.awtextra.AbsoluteConstraints(982, 78, 15, 15));
 
         orderByAge.setBackground(new java.awt.Color(255, 255, 255));
+        orderByAge.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
+        orderByAge.setText("petAge");
         orderByAge.setBorder(null);
         orderByAge.setContentAreaFilled(false);
         orderByAge.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1194,39 +1213,11 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 orderByAgeActionPerformed(evt);
             }
         });
-        petsBody.add(orderByAge, new org.netbeans.lib.awtextra.AbsoluteConstraints(1122, 49, 30, 30));
-
-        ascending.setBackground(new java.awt.Color(255, 255, 255));
-        ascending.setBorder(null);
-        ascending.setContentAreaFilled(false);
-        ascending.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ascending.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        ascending.setIconTextGap(0);
-        ascending.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        ascending.setPreferredSize(new java.awt.Dimension(30, 30));
-        ascending.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ascendingActionPerformed(evt);
-            }
-        });
-        petsBody.add(ascending, new org.netbeans.lib.awtextra.AbsoluteConstraints(971, 90, 30, 30));
-
-        descending.setBackground(new java.awt.Color(255, 255, 255));
-        descending.setBorder(null);
-        descending.setContentAreaFilled(false);
-        descending.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        descending.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        descending.setIconTextGap(0);
-        descending.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        descending.setPreferredSize(new java.awt.Dimension(30, 30));
-        descending.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                descendingActionPerformed(evt);
-            }
-        });
-        petsBody.add(descending, new org.netbeans.lib.awtextra.AbsoluteConstraints(1095, 90, 30, 30));
+        petsBody.add(orderByAge, new org.netbeans.lib.awtextra.AbsoluteConstraints(982, 106, 15, 15));
 
         orderByID.setBackground(new java.awt.Color(255, 255, 255));
+        orderByID.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
+        orderByID.setText("petID");
         orderByID.setBorder(null);
         orderByID.setContentAreaFilled(false);
         orderByID.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1239,7 +1230,81 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 orderByIDActionPerformed(evt);
             }
         });
-        petsBody.add(orderByID, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 49, 30, 30));
+        petsBody.add(orderByID, new org.netbeans.lib.awtextra.AbsoluteConstraints(982, 51, 15, 15));
+
+        IDdescending.setBackground(new java.awt.Color(255, 255, 255));
+        IDdescending.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
+        IDdescending.setText("DESC");
+        IDdescending.setBorder(null);
+        IDdescending.setContentAreaFilled(false);
+        IDdescending.setEnabled(false);
+        IDdescending.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        IDdescending.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        IDdescending.setIconTextGap(0);
+        IDdescending.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        IDdescending.setPreferredSize(new java.awt.Dimension(30, 30));
+        IDdescending.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IDdescendingActionPerformed(evt);
+            }
+        });
+        petsBody.add(IDdescending, new org.netbeans.lib.awtextra.AbsoluteConstraints(1111, 50, 15, 15));
+
+        nameDescending.setBackground(new java.awt.Color(255, 255, 255));
+        nameDescending.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
+        nameDescending.setText("DESC");
+        nameDescending.setToolTipText("");
+        nameDescending.setBorder(null);
+        nameDescending.setContentAreaFilled(false);
+        nameDescending.setEnabled(false);
+        nameDescending.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        nameDescending.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        nameDescending.setIconTextGap(0);
+        nameDescending.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        nameDescending.setPreferredSize(new java.awt.Dimension(30, 30));
+        nameDescending.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameDescendingActionPerformed(evt);
+            }
+        });
+        petsBody.add(nameDescending, new org.netbeans.lib.awtextra.AbsoluteConstraints(1111, 77, 15, 15));
+
+        ageDescending.setBackground(new java.awt.Color(255, 255, 255));
+        ageDescending.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
+        ageDescending.setText("DESC");
+        ageDescending.setToolTipText("");
+        ageDescending.setBorder(null);
+        ageDescending.setContentAreaFilled(false);
+        ageDescending.setEnabled(false);
+        ageDescending.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ageDescending.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        ageDescending.setIconTextGap(0);
+        ageDescending.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        ageDescending.setPreferredSize(new java.awt.Dimension(30, 30));
+        ageDescending.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ageDescendingActionPerformed(evt);
+            }
+        });
+        petsBody.add(ageDescending, new org.netbeans.lib.awtextra.AbsoluteConstraints(1111, 106, 15, 15));
+
+        namePrio.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        namePrio.setForeground(new java.awt.Color(255, 255, 255));
+        namePrio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        namePrio.setToolTipText("");
+        petsBody.add(namePrio, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 78, 15, 15));
+
+        agePrio.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        agePrio.setForeground(new java.awt.Color(255, 255, 255));
+        agePrio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        agePrio.setToolTipText("");
+        petsBody.add(agePrio, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 106, 15, 15));
+
+        IDprio.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        IDprio.setForeground(new java.awt.Color(255, 255, 255));
+        IDprio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        IDprio.setToolTipText("");
+        petsBody.add(IDprio, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 51, 15, 15));
 
         sortBy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/sort by.png"))); // NOI18N
         petsBody.add(sortBy, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 10, 540, 140));
@@ -1775,6 +1840,76 @@ public class UserLoggedIn extends javax.swing.JFrame {
         });
         applicationBody.add(deleteButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1125, 570, 50, 50));
 
+        editButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (3).png"))); // NOI18N
+        editButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editButton1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editButton1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editButton1MouseExited(evt);
+            }
+        });
+        applicationBody.add(editButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 290, 50, 50));
+
+        editButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (3).png"))); // NOI18N
+        editButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editButton2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editButton2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editButton2MouseExited(evt);
+            }
+        });
+        applicationBody.add(editButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 360, 50, 50));
+
+        editButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (3).png"))); // NOI18N
+        editButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editButton3MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editButton3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editButton3MouseExited(evt);
+            }
+        });
+        applicationBody.add(editButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 430, 50, 50));
+
+        editButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (3).png"))); // NOI18N
+        editButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editButton4MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editButton4MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editButton4MouseExited(evt);
+            }
+        });
+        applicationBody.add(editButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 500, 50, 50));
+
+        editButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (3).png"))); // NOI18N
+        editButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editButton5MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editButton5MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editButton5MouseExited(evt);
+            }
+        });
+        applicationBody.add(editButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 570, 50, 50));
+
         applicationPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/prev button (1).png"))); // NOI18N
         applicationPrev.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -2232,7 +2367,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         }
     }
 
-    private void samples() {
+    private void populateFromDB() {
         Pet petSamples = new Pet();
         this.pets = petSamples.getAllPetSamples();
         totalPets = pets.size();
@@ -2559,10 +2694,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void applicationEditVisibility(boolean edit) {
         JLabel[] deleteButtons = {deleteButton1, deleteButton2, deleteButton3, deleteButton4, deleteButton5};
+        JLabel[] editButtons = {editButton1, editButton2, editButton3, editButton4, editButton5};
         JLabel[] highlighters = {highlight1, highlight2, highlight3, highlight4, highlight5};
 
         for (JLabel deleteButton : deleteButtons) {
-            deleteButton.setVisible(edit);
+            deleteButton.setVisible(false);
+        }
+        for(JLabel editButton : editButtons) {
+            editButton.setVisible(false);
         }
         for (JLabel highlighter : highlighters) {
             highlighter.setVisible(false);
@@ -2572,13 +2711,20 @@ public class UserLoggedIn extends javax.swing.JFrame {
         cancelButton.setVisible(edit);
         confirmButton.setVisible(edit);
         if (edit) {
+            appIndex -= 5;
             // Iterate through the arrays and set visibility based on total applcations
             for (int i = 0; i < deleteButtons.length; i++) {
                 if (i < totalApplications) {
-                    deleteButtons[i].setVisible(true);
+                    if(applications.get(appIndex).getAppointStatus().charAt(0) == 'P') {
+                        System.out.println(appIndex);
+                        editButtons[i].setVisible(true);
+                        deleteButtons[i].setVisible(true);
+                    }
                 } else {
+                    editButtons[i].setVisible(false);
                     deleteButtons[i].setVisible(false);
                 }
+                appIndex++;
             }
             applicationPrev.setVisible(false);
             applicationNext.setVisible(false);
@@ -3057,8 +3203,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
             @Override
             public void run() {
                 if (confirmationDialog == null || !confirmationDialog.isVisible()) {
-                    confirmationDialog = new ConfirmationDialog(UserLoggedIn.this, latch);
-                    confirmationController = new ConfirmationDialogController(confirmationDialog, UserLoggedIn.this, latch);
+                    confirmationDialog = new ConfirmationDialog(UserLoggedIn.this, null, latch);
+                    confirmationController = new ConfirmationDialogController(confirmationDialog, UserLoggedIn.this, null, latch);
                     confirmationDialog.setVisible(true);
                     glassPane.setVisible(true);
                 } else {
@@ -3071,34 +3217,9 @@ public class UserLoggedIn extends javax.swing.JFrame {
     }
 
     private void petFilterBySortBy() {
-        // QUERY HERE:
+        // QUERY HERE: filtering and sorting pet profiles
+        
         /*
-        String wherePetType = "WHERE petType IN (";
-        String wherePetOrigin = "WHERE petOrigin IN (";
-        String wherePetStatus = "WHERE petStatus IN (";
-        String wherePetSize = "WHERE petSize IN (";
-        String wherePetGender = "WHERE petGender IN (";
-
-        String text;
-        if (selectedPetTypes.size() == 1) {
-            wherePetType = "WHERE petType = '" + selectedPetTypes.get(0).getText() + "'";
-        } else {
-            for (int i = 0; i < selectedPetTypes.size(); i++) {
-                text = selectedPetTypes.get(i).getText();
-                if (i == selectedPetTypes.size() - 1) {
-                    wherePetType += text + ")";
-                } else {
-                    wherePetType += text + ", ";
-                }
-            }
-        }
-
-        if(!selectedPetTypes.isEmpty()) {
-            System.out.println(wherePetType);
-        } else  {
-            System.out.println("tinulugan ako ni raf");
-        }
-        */
         String wherePetType = "";
         String wherePetOrigin = "";
         String wherePetStatus = "";
@@ -3225,10 +3346,34 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 }
             }
         }
+        */
+        
+        // filtering
         
         
-        // sorting
-        
+        // sorting and displaying the priority level
+        JCheckBox checkBox;
+        String sortBy = "SORT BY ";
+        String attr;
+        for(int i = 0; i < sortingPriority.size(); i++) {
+            checkBox = sortingPriority.get(i);
+            attr = sortingPriority.get(i).getText();
+            if(i == sortingPriority.size() - 1) {
+                sortBy += attr + ";";
+            } else {
+                sortBy += attr + ", ";
+            }
+            
+            if(checkBox.equals(orderByID)) {
+                IDprio.setText(String.valueOf(i+1));
+            } else if(checkBox.equals(orderByName)) {
+                namePrio.setText(String.valueOf(i+1));
+            } else if(checkBox.equals(orderByAge)) {
+                agePrio.setText(String.valueOf(i+1));
+            }
+        }
+
+        System.out.println(sortBy);
     }
 
     private void badgeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_badgeKeyPressed
@@ -3595,7 +3740,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private void devsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_devsMouseClicked
         // TODO add your handling code here:
         if (devsFrame == null || !devsFrame.isVisible()) {
-            devsFrame = new Devs(this);
+            devsFrame = new Devs(null, this, null);
             devsFrame.setVisible(true);
             glassPane.setVisible(true);
         } else {
@@ -3607,7 +3752,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private void businessRulesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_businessRulesMouseClicked
         // TODO add your handling code here:
         if (businessRulesFrame == null || !businessRulesFrame.isVisible()) {
-            businessRulesFrame = new BusinessRules(this);
+            businessRulesFrame = new BusinessRules(null, this, null);
             businessRulesFrame.setVisible(true);
             glassPane.setVisible(true);
         } else {
@@ -3666,6 +3811,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (!petsClicked) {
             handlePetButtonClick();
+            petProfiles();
         }
     }//GEN-LAST:event_badgeMousePressed
 
@@ -4182,7 +4328,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
             if (adopt.getRehome() != null) {
                 rehome = adopt.getRehome();
             }
-            adopt.setVisible(false);
+            adopt.dispose();
         }
 
         if (rehome == null) {
@@ -4202,10 +4348,10 @@ public class UserLoggedIn extends javax.swing.JFrame {
             if (rehome.getAdopt() != null) {
                 adopt = rehome.getAdopt();
             }
-            rehome.setVisible(false);
+            rehome.dispose();
         }
         if (adopt == null) {
-            adopt = new Adopt(this);
+            adopt = new Adopt(null, this);
             adopt.setVisible(true);
         } else if (!adopt.isVisible()) {
             adopt.setVisible(true);
@@ -4452,7 +4598,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
             rehome.setVisible(false);
         }
         if (adopt == null) {
-            adopt = new Adopt(this);
+            adopt = new Adopt(null, this);
             adopt.setVisible(true);
         } else if (!adopt.isVisible()) {
             adopt.setVisible(true);
@@ -4552,6 +4698,29 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void orderByNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderByNameActionPerformed
         // TODO add your handling code here:
+        if(orderByName.isSelected()) {
+            sortingPriority.add(orderByName);
+            nameDescending.setEnabled(true);
+        } else if (sortingPriority != null) {
+            // remove checkbox if exist
+            for(JCheckBox attr : sortingPriority) {
+                if(attr.equals(orderByName)) {
+                    sortingPriority.remove(attr);
+                    break;
+                }
+            }
+            
+            // reset text
+            namePrio.setText("");
+            
+            // unselect descending if checked and call the corresponding listener
+            if(nameDescending.isSelected()) {
+                nameDescending.setSelected(false);
+                nameDescending.setEnabled(false);
+                nameDescendingActionPerformed(evt);
+                return;
+            }
+        }
         petFilterBySortBy();
     }//GEN-LAST:event_orderByNameActionPerformed
 
@@ -4560,23 +4729,51 @@ public class UserLoggedIn extends javax.swing.JFrame {
         petFilterBySortBy();
     }//GEN-LAST:event_dogTypeActionPerformed
 
-    private void orderByAgeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderByAgeActionPerformed
+    private void IDdescendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDdescendingActionPerformed
         // TODO add your handling code here:
+        if(IDdescending.isSelected()) {
+            orderByID.setText("petID DESC");
+        } else {
+            orderByID.setText("petID");
+        }
         petFilterBySortBy();
-    }//GEN-LAST:event_orderByAgeActionPerformed
+    }//GEN-LAST:event_IDdescendingActionPerformed
 
-    private void ascendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ascendingActionPerformed
+    private void ageDescendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ageDescendingActionPerformed
         // TODO add your handling code here:
+        if(ageDescending.isSelected()) {
+            orderByAge.setText("petAge DESC");
+        } else {
+            orderByAge.setText("petAge");
+        }
         petFilterBySortBy();
-    }//GEN-LAST:event_ascendingActionPerformed
-
-    private void descendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descendingActionPerformed
-        // TODO add your handling code here:
-        petFilterBySortBy();
-    }//GEN-LAST:event_descendingActionPerformed
+    }//GEN-LAST:event_ageDescendingActionPerformed
 
     private void orderByIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderByIDActionPerformed
         // TODO add your handling code here:
+        if(orderByID.isSelected()) {
+            IDdescending.setEnabled(true);
+            sortingPriority.add(orderByID);
+        } else if (sortingPriority != null) {
+            // remove checkbox if found
+            for(JCheckBox attr : sortingPriority) {
+                if(attr.equals(orderByID)) {
+                    sortingPriority.remove(attr);
+                    break;
+                }
+            }
+            
+            // reset text
+            IDprio.setText("");
+            
+            // unselect descending if checked and call the corresponding listener
+            if(IDdescending.isSelected()) {
+                IDdescending.setSelected(false);
+                IDdescending.setEnabled(false);
+                IDdescendingActionPerformed(evt);
+                return;
+            }
+        }
         petFilterBySortBy();
     }//GEN-LAST:event_orderByIDActionPerformed
 
@@ -4590,6 +4787,115 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // TODO add your handling code here:
         mouseDownCompCoords = evt.getPoint();
     }//GEN-LAST:event_navBarMousePressed
+
+    private void nameDescendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameDescendingActionPerformed
+        // TODO add your handling code here:
+        if(nameDescending.isSelected()) {
+            orderByName.setText("petName DESC");
+        } else {
+            orderByName.setText("petName");
+        }
+        petFilterBySortBy();
+    }//GEN-LAST:event_nameDescendingActionPerformed
+
+    private void orderByAgeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderByAgeActionPerformed
+        // TODO add your handling code here:
+        if(orderByAge.isSelected()) {
+            sortingPriority.add(orderByAge);
+            ageDescending.setEnabled(true);
+        } else if (sortingPriority != null) {
+            // remove checkbox if found
+            for(JCheckBox attr : sortingPriority) {
+                if(attr.equals(orderByAge)) {
+                    sortingPriority.remove(attr);
+                    break;
+                }
+            }
+            
+            // reset text
+            agePrio.setText("");
+            
+            // unselect descending if checked and call the corresponding listener
+            if(ageDescending.isSelected()) {
+                ageDescending.setSelected(false);
+                ageDescending.setEnabled(false);
+                ageDescendingActionPerformed(evt);
+                return;
+            }
+        }
+        petFilterBySortBy();
+    }//GEN-LAST:event_orderByAgeActionPerformed
+
+    private void editButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editButton1MouseClicked
+
+    private void editButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton1MouseEntered
+        // TODO add your handling code here:
+        editButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button hover (3).png")));
+    }//GEN-LAST:event_editButton1MouseEntered
+
+    private void editButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton1MouseExited
+        // TODO add your handling code here:
+        editButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (3).png")));
+    }//GEN-LAST:event_editButton1MouseExited
+
+    private void editButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton2MouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_editButton2MouseClicked
+
+    private void editButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton2MouseEntered
+        // TODO add your handling code here:
+        editButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button hover (3).png")));
+    }//GEN-LAST:event_editButton2MouseEntered
+
+    private void editButton2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton2MouseExited
+        // TODO add your handling code here:
+        editButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (3).png")));
+    }//GEN-LAST:event_editButton2MouseExited
+
+    private void editButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton3MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editButton3MouseClicked
+
+    private void editButton3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton3MouseEntered
+        // TODO add your handling code here:
+        editButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button hover (3).png")));
+    }//GEN-LAST:event_editButton3MouseEntered
+
+    private void editButton3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton3MouseExited
+        // TODO add your handling code here:
+        editButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (3).png")));
+    }//GEN-LAST:event_editButton3MouseExited
+
+    private void editButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton4MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editButton4MouseClicked
+
+    private void editButton4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton4MouseEntered
+        // TODO add your handling code here:
+        editButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button hover (3).png")));
+    }//GEN-LAST:event_editButton4MouseEntered
+
+    private void editButton4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton4MouseExited
+        // TODO add your handling code here:
+        editButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (3).png")));
+    }//GEN-LAST:event_editButton4MouseExited
+
+    private void editButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton5MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editButton5MouseClicked
+
+    private void editButton5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton5MouseEntered
+        // TODO add your handling code here:
+        editButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button hover (3).png")));
+    }//GEN-LAST:event_editButton5MouseEntered
+
+    private void editButton5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton5MouseExited
+        // TODO add your handling code here:
+        editButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (3).png")));
+    }//GEN-LAST:event_editButton5MouseExited
 
     /**
      * @param args the command line arguments
@@ -4632,6 +4938,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel FAQsPanel2;
     private javax.swing.JLabel FAQsPanel3;
     private javax.swing.JLabel FAQsPanel4;
+    private javax.swing.JCheckBox IDdescending;
+    private javax.swing.JLabel IDprio;
     private javax.swing.JPanel aboutUsBody;
     private javax.swing.JLabel aboutUsButton;
     private javax.swing.JLabel aboutUsClick;
@@ -4640,6 +4948,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel adoptedCounter;
     private javax.swing.JLabel adoptedLabel;
     private javax.swing.JCheckBox adoptedStatus;
+    private javax.swing.JCheckBox ageDescending;
+    private javax.swing.JLabel agePrio;
     private javax.swing.JLabel appAppointDate1;
     private javax.swing.JLabel appAppointDate2;
     private javax.swing.JLabel appAppointDate3;
@@ -4682,7 +4992,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel applicationNext;
     private javax.swing.JLabel applicationPanel;
     private javax.swing.JLabel applicationPrev;
-    private javax.swing.JCheckBox ascending;
     private javax.swing.JLabel background;
     private javax.swing.JLabel background1;
     private javax.swing.JLabel background2;
@@ -4713,10 +5022,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel deleteButton3;
     private javax.swing.JLabel deleteButton4;
     private javax.swing.JLabel deleteButton5;
-    private javax.swing.JCheckBox descending;
     private javax.swing.JLabel devs;
     private javax.swing.JCheckBox dogType;
     private javax.swing.JLabel editButton;
+    private javax.swing.JLabel editButton1;
+    private javax.swing.JLabel editButton2;
+    private javax.swing.JLabel editButton3;
+    private javax.swing.JLabel editButton4;
+    private javax.swing.JLabel editButton5;
     private javax.swing.JTextPane emailAddress;
     private javax.swing.JScrollPane emailAddressScroll;
     private javax.swing.JLabel exitButton;
@@ -4735,6 +5048,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JPanel homeBody;
     private javax.swing.JLabel homeButton;
     private javax.swing.JLabel homeClick;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTree jTree1;
     private javax.swing.JCheckBox largeSize;
     private javax.swing.JPanel line;
     private javax.swing.JLabel logo;
@@ -4744,6 +5059,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel minimizeButton;
     private javax.swing.JComboBox<String> month;
     private javax.swing.JLabel name;
+    private javax.swing.JCheckBox nameDescending;
+    private javax.swing.JLabel namePrio;
     private javax.swing.JPanel navBar;
     private javax.swing.JLabel next;
     private javax.swing.JCheckBox notAdoptedStatus;

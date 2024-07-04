@@ -7,6 +7,7 @@ package Controllers;
 
 import Views.ConfirmationDialog;
 import Views.UserLoggedIn;
+import Views.VetLoggedIn;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.concurrent.CountDownLatch;
@@ -17,12 +18,17 @@ import java.util.concurrent.CountDownLatch;
  */
 public class ConfirmationDialogController {
     private final ConfirmationDialog dialog;
-    private final UserLoggedIn userLoggedIn;
+    private UserLoggedIn userLoggedIn = (UserLoggedIn) null;
+    private VetLoggedIn vetLoggedIn = (VetLoggedIn) null;
     private final CountDownLatch latch;
 
-    public ConfirmationDialogController(ConfirmationDialog dialog, UserLoggedIn userLoggedIn, CountDownLatch latch) {
+    public ConfirmationDialogController(ConfirmationDialog dialog, UserLoggedIn userLoggedIn, VetLoggedIn vetLoggedIn, CountDownLatch latch) {
         this.dialog = dialog;
-        this.userLoggedIn = userLoggedIn;
+        if(userLoggedIn != null) {
+            this.userLoggedIn = userLoggedIn;
+        } else if(vetLoggedIn != null) {
+            this.vetLoggedIn = vetLoggedIn;
+        }
         this.latch = latch;
 
         initializeListeners();
@@ -67,6 +73,8 @@ public class ConfirmationDialogController {
         if (userLoggedIn != null) {
             // Example action: hide glass pane
             dialog.getGlassPane().setVisible(false);
+        } else if(vetLoggedIn != null) {
+            dialog.getGlassPane().setVisible(false);
         }
         dialog.setUserResponse(true);
         latch.countDown(); // Release the latch
@@ -76,6 +84,8 @@ public class ConfirmationDialogController {
     private void handleNoButtonClick() {
         if (userLoggedIn != null) {
             // Example action: hide glass pane
+            dialog.getGlassPane().setVisible(false);
+        } else if(vetLoggedIn != null) {
             dialog.getGlassPane().setVisible(false);
         }
         dialog.setUserResponse(false);
