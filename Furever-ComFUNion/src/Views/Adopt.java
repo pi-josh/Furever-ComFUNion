@@ -20,17 +20,24 @@ public class Adopt extends javax.swing.JFrame {
     private Point mouseDownCompCoords;
     
     private UserLoggedIn userLoggedIn;
+    private LandingPage landingPage;
     private Adopt adopt;
     private Rehome rehome;
     
     /**
      * Creates new form Rehome
      */
-    public Adopt(UserLoggedIn userLoggedIn) {
+    public Adopt(LandingPage landingPage, UserLoggedIn userLoggedIn) {
         initComponents();
-        this.userLoggedIn = userLoggedIn;
-        rehome = userLoggedIn.getRehome();
-        adopt = userLoggedIn.getAdopt();
+        if(userLoggedIn != null) {
+            this.userLoggedIn = userLoggedIn;
+            rehome = userLoggedIn.getRehome();
+            adopt = userLoggedIn.getAdopt();
+        } else if(landingPage != null) {
+            this.landingPage = landingPage;
+            adopt = landingPage.getAdopt();
+        }
+        
         setVisible(true);
         
         // radio buttons

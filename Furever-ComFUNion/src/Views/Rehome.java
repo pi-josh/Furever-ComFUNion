@@ -310,6 +310,7 @@ public class Rehome extends javax.swing.JFrame {
         });
         rehomePanel2.add(rehomePrev, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 565, 220, 75));
 
+        petID.setEnabled(false);
         petID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 petIDActionPerformed(evt);
@@ -515,7 +516,7 @@ public class Rehome extends javax.swing.JFrame {
             adopt = userLoggedIn.getAdopt();
         }
         if (adopt == null) {
-            adopt = new Adopt(userLoggedIn);
+            adopt = new Adopt(null, userLoggedIn);
             adopt.setVisible(true);
         } else if (!adopt.isVisible()) {
             adopt.setVisible(true);

@@ -20,14 +20,19 @@ public class Devs extends javax.swing.JFrame {
     private Point mouseDownCompCoords;
     
     private UserLoggedIn userLoggedIn;
+    private LandingPage landingPage;
     private JPanel glassPane;
     
     /**
      * Creates new form Register
      */
-    public Devs(UserLoggedIn userLoggedIn) {
+    public Devs(LandingPage landingPage, UserLoggedIn userLoggedIn) {
         initComponents();
-        this.userLoggedIn = userLoggedIn;
+        if(userLoggedIn != null) {
+            this.userLoggedIn = userLoggedIn;
+        } else if(landingPage != null) {
+            this.landingPage = landingPage;
+        }
         setVisible(true);
         
         // Window logo
@@ -140,8 +145,11 @@ public class Devs extends javax.swing.JFrame {
         if (userLoggedIn != null) {
             glassPane = (JPanel) userLoggedIn.getGlassPane();
             glassPane.setVisible(false);
+        } else if (landingPage != null) {
+            glassPane = (JPanel) landingPage.getGlassPane();
+            glassPane.setVisible(false);
         }
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_backButtonMouseClicked
 
     private void headerMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerMouseDragged
