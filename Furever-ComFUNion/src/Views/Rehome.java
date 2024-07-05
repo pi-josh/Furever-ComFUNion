@@ -139,6 +139,9 @@ public class Rehome extends javax.swing.JFrame {
         petID = new javax.swing.JTextField();
         petName = new javax.swing.JTextField();
         petType = new javax.swing.JTextField();
+        petAge = new javax.swing.JTextField();
+        vetID = new javax.swing.JTextField();
+        vetName = new javax.swing.JComboBox<>();
         female = new javax.swing.JCheckBox();
         male = new javax.swing.JCheckBox();
         rescued = new javax.swing.JCheckBox();
@@ -294,7 +297,7 @@ public class Rehome extends javax.swing.JFrame {
                 rehomeButtonMouseExited(evt);
             }
         });
-        rehomePanel2.add(rehomeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 570, -1, -1));
+        rehomePanel2.add(rehomeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 620, -1, -1));
 
         rehomePrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/app prev button.png"))); // NOI18N
         rehomePrev.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -331,6 +334,23 @@ public class Rehome extends javax.swing.JFrame {
             }
         });
         rehomePanel2.add(petType, new org.netbeans.lib.awtextra.AbsoluteConstraints(206, 358, 290, 32));
+
+        petAge.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                petAgeActionPerformed(evt);
+            }
+        });
+        rehomePanel2.add(petAge, new org.netbeans.lib.awtextra.AbsoluteConstraints(615, 323, 162, 32));
+
+        vetID.setEnabled(false);
+        vetID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vetIDActionPerformed(evt);
+            }
+        });
+        rehomePanel2.add(vetID, new org.netbeans.lib.awtextra.AbsoluteConstraints(207, 461, 200, 32));
+
+        rehomePanel2.add(vetName, new org.netbeans.lib.awtextra.AbsoluteConstraints(494, 461, 283, 32));
 
         female.setContentAreaFilled(false);
         female.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -440,7 +460,7 @@ public class Rehome extends javax.swing.JFrame {
                 iAgreeActionPerformed(evt);
             }
         });
-        rehomePanel2.add(iAgree, new org.netbeans.lib.awtextra.AbsoluteConstraints(414, 527, 20, 20));
+        rehomePanel2.add(iAgree, new org.netbeans.lib.awtextra.AbsoluteConstraints(414, 580, 20, 20));
 
         rehome2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/REHOME Fp2.png"))); // NOI18N
         rehomePanel2.add(rehome2, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 2, 896, 676));
@@ -639,6 +659,14 @@ public class Rehome extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_iAgreeActionPerformed
 
+    private void petAgeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_petAgeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_petAgeActionPerformed
+
+    private void vetIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vetIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_vetIDActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -695,6 +723,7 @@ public class Rehome extends javax.swing.JFrame {
     private javax.swing.JCheckBox notAdopted;
     private javax.swing.JCheckBox owned;
     private javax.swing.JTextField ownerID;
+    private javax.swing.JTextField petAge;
     private javax.swing.JLabel petButton;
     private javax.swing.JTextField petID;
     private javax.swing.JTextField petName;
@@ -716,5 +745,7 @@ public class Rehome extends javax.swing.JFrame {
     private javax.swing.JCheckBox rescued;
     private javax.swing.JCheckBox small;
     private javax.swing.JCheckBox tiny;
+    private javax.swing.JTextField vetID;
+    private javax.swing.JComboBox<String> vetName;
     // End of variables declaration//GEN-END:variables
 }
