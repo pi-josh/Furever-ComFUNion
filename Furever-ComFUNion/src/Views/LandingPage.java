@@ -5,6 +5,7 @@ import Controllers.ExitDialogController;
 import Controllers.LoginController;
 import Controllers.RegisterController;
 import Models.Pet;
+import Models.SPManager;
 import java.awt.MediaTracker;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -13,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
@@ -32,6 +34,25 @@ import javax.swing.Timer;
  * @author joshu
  */
 public class LandingPage extends javax.swing.JFrame {
+    // Database manager
+    SPManager spManager = new SPManager();
+    
+    // Pet records
+    ArrayList<Pet> pets;
+    private int totalPets;
+    private int petIndex = 0;
+    
+    // filter and sorting conditions
+    private List<String> petTypes = new ArrayList<>();
+    private List<String> petOrigins = new ArrayList<>();
+    private List<String> petStatuses = new ArrayList<>();
+    private List<String> petSizes = new ArrayList<>();
+    private List<String> petGenders = new ArrayList<>();
+    private List<String> sortCriteria = new ArrayList<>();
+    
+    // for sorting priority
+    ArrayList<JCheckBox> sortingPriority = new ArrayList<>();   
+    
     // for moving the frame
     private Point mouseDownCompCoords;
 
@@ -71,14 +92,6 @@ public class LandingPage extends javax.swing.JFrame {
     private boolean petsClicked;
     private int FAQsPanelCounter = 4000001;
     private Timer timer;
-
-    // Sample pets
-    ArrayList<Pet> pets;
-    private int totalPets;
-    private int petIndex = 0;
-    
-    // for sorting priority
-    ArrayList<JCheckBox> sortingPriority = new ArrayList<>();   
     
     /**
      * Creates new form Main
@@ -87,7 +100,8 @@ public class LandingPage extends javax.swing.JFrame {
     public LandingPage(boolean logout) {
         initComponents();
         
-        populateFromDB();
+        // get all initial data from the database
+        populatePetsFromDB();
         
         // default
         defaultWindow();
@@ -115,7 +129,7 @@ public class LandingPage extends javax.swing.JFrame {
         
         if(!logout) {
             // Create a timer to stop the GIF after 6 seconds
-            timer = new Timer(15000, new ActionListener() {
+            timer = new Timer(0, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     startupAnimationPanel.setVisible(false);
@@ -212,9 +226,8 @@ public class LandingPage extends javax.swing.JFrame {
         FAQsPanel4.setVisible(false);
     }
 
-    private void populateFromDB() {
-        Pet petSamples = new Pet();
-        this.pets = petSamples.getAllPetSamples();
+    private void populatePetsFromDB() {
+        this.pets = Pet.getAllPets(petTypes, petOrigins, petStatuses, petSizes, petGenders, sortCriteria);
         totalPets = pets.size();
     }
 
@@ -322,7 +335,7 @@ public class LandingPage extends javax.swing.JFrame {
         // Pet Panel 1
         if (totalPets >= 1) {
             petName1.setText(pets.get(petIndex).getPetName());
-            petAge1.setText(String.valueOf(pets.get(petIndex).getPetAge()) + " months");
+            petAge1.setText(String.valueOf(pets.get(petIndex).getPetAge()));
             petGender1.setText(pets.get(petIndex).getPetSex());
             petImg1.setIcon(new javax.swing.ImageIcon(getClass().getResource(pets.get(petIndex).getPicURL())));
             petURL1 = pets.get(petIndex).getPicURL();
@@ -332,7 +345,7 @@ public class LandingPage extends javax.swing.JFrame {
         // Pet Panel 2
         if (totalPets >= 2) {
             petName2.setText(pets.get(petIndex).getPetName());
-            petAge2.setText(String.valueOf(pets.get(petIndex).getPetAge()) + " months");
+            petAge2.setText(String.valueOf(pets.get(petIndex).getPetAge()));
             petGender2.setText(pets.get(petIndex).getPetSex());
             petImg2.setIcon(new javax.swing.ImageIcon(getClass().getResource(pets.get(petIndex).getPicURL())));
             petURL2 = pets.get(petIndex).getPicURL();
@@ -342,7 +355,7 @@ public class LandingPage extends javax.swing.JFrame {
         // Pet Panel 3
         if (totalPets >= 3) {
             petName3.setText(pets.get(petIndex).getPetName());
-            petAge3.setText(String.valueOf(pets.get(petIndex).getPetAge()) + " months");
+            petAge3.setText(String.valueOf(pets.get(petIndex).getPetAge()));
             petGender3.setText(pets.get(petIndex).getPetSex());
             petImg3.setIcon(new javax.swing.ImageIcon(getClass().getResource(pets.get(petIndex).getPicURL())));
             petURL3 = pets.get(petIndex).getPicURL();
@@ -377,7 +390,7 @@ public class LandingPage extends javax.swing.JFrame {
             // Update pet profile information if it's visible
             if (showPanel && petIndex + i < pets.size()) {
                 petNames[i].setText(pets.get(petIndex + i).getPetName());
-                petAges[i].setText(String.valueOf(pets.get(petIndex + i).getPetAge()) + " months");
+                petAges[i].setText(String.valueOf(pets.get(petIndex + i).getPetAge()));
                 petGenders[i].setText(pets.get(petIndex + i).getPetSex());
                 petImages[i].setIcon(new javax.swing.ImageIcon(getClass().getResource(pets.get(petIndex + i).getPicURL())));
             }
@@ -404,9 +417,9 @@ public class LandingPage extends javax.swing.JFrame {
         };
 
         // Hide or show pet panels and their components
-        for (int i = 0; i < petPanels.length; i++) {
-            petPanels[i].setVisible(hide);
-            for (JLabel component : petComponents[i]) {
+        for (int i = 1; i <= petPanels.length && i < totalPets; i++) {
+            petPanels[i-1].setVisible(hide);
+            for (JLabel component : petComponents[i-1]) {
                 component.setVisible(hide);
             }
         }
@@ -442,12 +455,18 @@ public class LandingPage extends javax.swing.JFrame {
         String origin = "";
         String status = "";
         String size = "";
+        
+
+        int diff = 2;
         // Update pet panel 1 based on selected panel
         switch (panel) {
             case 1:
-                origin = pets.get(petIndex - 2).getPetOrigin();
-                status = pets.get(petIndex - 2).getPetStatus();
-                size = pets.get(petIndex - 2).getPetSize();
+                if(totalPets == 1) {
+                    diff = 1;
+                }
+                origin = pets.get(petIndex - diff).getPetOrigin();
+                status = pets.get(petIndex - diff).getPetStatus();
+                size = pets.get(petIndex - diff).getPetSize();
 
                 switch (origin.charAt(0)) {
                     case 'O':
@@ -479,17 +498,18 @@ public class LandingPage extends javax.swing.JFrame {
                         break;
                 }
 
-                petID.setText(String.valueOf(pets.get(petIndex - 2).getPetID()));
-                petType.setText(String.valueOf(pets.get(petIndex - 2).getPetType()));
+                petID.setText(String.valueOf(pets.get(petIndex - diff).getPetID()));
+                petType.setText(String.valueOf(pets.get(petIndex - diff).getPetType()));
                 petOrigin.setText(pOrigin);
                 petStatus.setText(pStatus);
                 petSize.setText(pSize);
                 break;
             case 2:
+                diff = 1;
                 // Display pet panel 2 information on panel 1     
-                origin = pets.get(petIndex - 2).getPetOrigin();
-                status = pets.get(petIndex - 2).getPetStatus();
-                size = pets.get(petIndex - 2).getPetSize();
+                origin = pets.get(petIndex - diff).getPetOrigin();
+                status = pets.get(petIndex - diff).getPetStatus();
+                size = pets.get(petIndex - diff).getPetSize();
 
                 switch (origin.charAt(0)) {
                     case 'O':
@@ -525,17 +545,17 @@ public class LandingPage extends javax.swing.JFrame {
                 petAge1.setText(petAge2.getText());
                 petGender1.setText(petGender2.getText());
                 petImg1.setIcon(new javax.swing.ImageIcon(getClass().getResource(petURL2)));
-                petID.setText(String.valueOf(pets.get(petIndex - 1).getPetID()));
-                petType.setText(String.valueOf(pets.get(petIndex - 1).getPetType()));
+                petID.setText(String.valueOf(pets.get(petIndex - diff).getPetID()));
+                petType.setText(String.valueOf(pets.get(petIndex - diff).getPetType()));
                 petOrigin.setText(pOrigin);
                 petStatus.setText(pStatus);
                 petSize.setText(pSize);
                 break;
             case 3:
                 // Display pet panel 3 information on panel 1
-                origin = pets.get(petIndex - 2).getPetOrigin();
-                status = pets.get(petIndex - 2).getPetStatus();
-                size = pets.get(petIndex - 2).getPetSize();
+                origin = pets.get(petIndex).getPetOrigin();
+                status = pets.get(petIndex).getPetStatus();
+                size = pets.get(petIndex).getPetSize();
 
                 switch (origin.charAt(0)) {
                     case 'O':
@@ -587,152 +607,57 @@ public class LandingPage extends javax.swing.JFrame {
     }
 
     private void petFilterBySortBy() {
-        // QUERY HERE: filtering and sorting pet profiles
+        // QUERY HERE: filtering and sorting pet profiles based on the selected checkboxes
+        // filter
+        petTypes.removeAll(petTypes);
+        petOrigins.removeAll(petOrigins);
+        petStatuses.removeAll(petStatuses);
+        petSizes.removeAll(petSizes);
+        petGenders.removeAll(petGenders);
+        sortCriteria.removeAll(sortCriteria);
+
         
-        /*
-        String wherePetType = "";
-        String wherePetOrigin = "";
-        String wherePetStatus = "";
-        String wherePetSize = "";
-        String wherePetGender = "";
+        JCheckBox[] types = { dogType, catType, hamsterType, rabbitType };
+        JCheckBox[] origins = { rescuedOrigin, ownedOrigin };
+        JCheckBox[] statuses = { adoptedStatus, notAdoptedStatus };
+        JCheckBox[] sizes = { tinySize, smallSize, mediumSize, largeSize };
+        JCheckBox[] genders = { femaleGender, maleGender };
         
-        
-        // for pet types
-        JCheckBox[] petTypes = {dogType, catType, hamsterType, rabbitType};
-        ArrayList<JCheckBox> selectedPetTypes = new ArrayList<>();
-        
-        for (JCheckBox petType : petTypes) {
-            if (petType.isSelected()) {
-                selectedPetTypes.add(petType);
+        for(JCheckBox type : types) {
+            if(type.isSelected()) {
+                petTypes.add(type.getText());
             }
         }
         
-        String typeCondition;
-        if (selectedPetTypes.size() == 1) {
-            wherePetType = "'" + selectedPetTypes.get(0).getText() + "'";
-        } else {
-            for (int i = 0; i < selectedPetTypes.size(); i++) {
-                typeCondition = selectedPetTypes.get(i).getText();
-                if (i == selectedPetTypes.size() - 1) {
-                    wherePetType += typeCondition + ")";
-                } else {
-                    wherePetType += typeCondition + ", ";
-                }
+        for(JCheckBox origin : origins) {
+            if(origin.isSelected()) {
+                petOrigins.add(origin.getText());
             }
         }
         
-        // for pet origin
-        JCheckBox[] petOrigins = {ownedOrigin, rescuedOrigin};
-        ArrayList<JCheckBox> selectedPetOrigins = new ArrayList<>();
-        
-        for (JCheckBox petOrigin : petOrigins) {
-            if (petOrigin.isSelected()) {
-                selectedPetOrigins.add(petOrigin);
+        for(JCheckBox status : statuses) {
+            if(status.isSelected()) {
+                petStatuses.add(status.getText());
             }
         }
         
-        String originCondition;
-        if (selectedPetOrigins.size() == 1) {
-            wherePetOrigin = "'" + selectedPetOrigins.get(0).getText() + "'";
-        } else {
-            for (int i = 0; i < selectedPetOrigins.size(); i++) {
-                originCondition = selectedPetOrigins.get(i).getText();
-                if (i == selectedPetOrigins.size() - 1) {
-                    wherePetOrigin += originCondition + ")";
-                } else {
-                    wherePetOrigin += originCondition + ", ";
-                }
+        for(JCheckBox size : sizes) {
+            if(size.isSelected()) {
+                petSizes.add(size.getText());
             }
         }
         
-        // for pet status
-        JCheckBox[] petStatuses = {adoptedStatus, notAdoptedStatus};
-        ArrayList<JCheckBox> selectedPetStatuses = new ArrayList<>();
-        
-        for (JCheckBox petStatus : petStatuses) {
-            if (petStatus.isSelected()) {
-                selectedPetStatuses.add(petStatus);
+        for(JCheckBox gender : genders) {
+            if(gender.isSelected()) {
+                petGenders.add(gender.getText());
             }
         }
         
-        String statusCondition;
-        if (selectedPetStatuses.size() == 1) {
-            wherePetStatus = "'" + selectedPetStatuses.get(0).getText() + "'";
-        } else {
-            for (int i = 0; i < selectedPetStatuses.size(); i++) {
-                statusCondition = selectedPetStatuses.get(i).getText();
-                if (i == selectedPetStatuses.size() - 1) {
-                    wherePetStatus += statusCondition + ")";
-                } else {
-                    wherePetStatus += statusCondition + ", ";
-                }
-            }
-        }
-        
-        // for pet size
-        JCheckBox[] petSizes = {tinySize, smallSize, mediumSize, largeSize};
-        ArrayList<JCheckBox> selectedPetSizes = new ArrayList<>();
-        
-        for (JCheckBox petSize : petSizes) {
-            if (petSize.isSelected()) {
-                selectedPetSizes.add(petSize);
-            }
-        }
-        
-        String sizeCondition;
-        if (selectedPetSizes.size() == 1) {
-            wherePetSize = "'" + selectedPetSizes.get(0).getText() + "'";
-        } else {
-            for (int i = 0; i < selectedPetSizes.size(); i++) {
-                sizeCondition = selectedPetSizes.get(i).getText();
-                if (i == selectedPetSizes.size() - 1) {
-                    wherePetSize += sizeCondition + ")";
-                } else {
-                    wherePetSize += sizeCondition + ", ";
-                }
-            }
-        }
-        
-        // for pet gender
-        JCheckBox[] petGenders = {maleGender, femaleGender};
-        ArrayList<JCheckBox> selectedPetGenders = new ArrayList<>();
-        
-        for (JCheckBox petGender : petGenders) {
-            if (petGender.isSelected()) {
-                selectedPetGenders.add(petGender);
-            }
-        }
-        
-        String genderCondition;
-        if (selectedPetGenders.size() == 1) {
-            wherePetGender = "'" + selectedPetGenders.get(0).getText() + "'";
-        } else {
-            for (int i = 0; i < selectedPetGenders.size(); i++) {
-                genderCondition = selectedPetGenders.get(i).getText();
-                if (i == selectedPetGenders.size() - 1) {
-                    wherePetGender += genderCondition + ")";
-                } else {
-                    wherePetGender += genderCondition + ", ";
-                }
-            }
-        }
-        */
-        
-        // filtering
-        
-        
-        // sorting and displaying the priority level
+        // sort and display the priority level
         JCheckBox checkBox;
-        String sortBy = "SORT BY ";
-        String attr;
         for(int i = 0; i < sortingPriority.size(); i++) {
-            checkBox = sortingPriority.get(i);
-            attr = sortingPriority.get(i).getText();
-            if(i == sortingPriority.size() - 1) {
-                sortBy += attr + ";";
-            } else {
-                sortBy += attr + ", ";
-            }
+            checkBox = sortingPriority.get(i);            
+            sortCriteria.add(checkBox.getText());
             
             if(checkBox.equals(orderByID)) {
                 IDprio.setText(String.valueOf(i+1));
@@ -742,8 +667,12 @@ public class LandingPage extends javax.swing.JFrame {
                 agePrio.setText(String.valueOf(i+1));
             }
         }
-
-        System.out.println(sortBy);
+        
+        System.out.println(dogType.getText());
+        
+        populatePetsFromDB();
+        petProfilesReset();
+        petProfiles();
     }
 
     /**
@@ -1292,7 +1221,7 @@ public class LandingPage extends javax.swing.JFrame {
 
         hamsterType.setBackground(new java.awt.Color(255, 255, 255));
         hamsterType.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        hamsterType.setText("'Hamster'");
+        hamsterType.setText("Hamster");
         hamsterType.setBorder(null);
         hamsterType.setContentAreaFilled(false);
         hamsterType.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1308,7 +1237,7 @@ public class LandingPage extends javax.swing.JFrame {
 
         rabbitType.setBackground(new java.awt.Color(255, 255, 255));
         rabbitType.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        rabbitType.setText("'Rabbit'");
+        rabbitType.setText("Rabbit");
         rabbitType.setBorder(null);
         rabbitType.setContentAreaFilled(false);
         rabbitType.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1324,7 +1253,7 @@ public class LandingPage extends javax.swing.JFrame {
 
         rescuedOrigin.setBackground(new java.awt.Color(255, 255, 255));
         rescuedOrigin.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        rescuedOrigin.setText("'R'");
+        rescuedOrigin.setText("R");
         rescuedOrigin.setBorder(null);
         rescuedOrigin.setContentAreaFilled(false);
         rescuedOrigin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1340,7 +1269,7 @@ public class LandingPage extends javax.swing.JFrame {
 
         adoptedStatus.setBackground(new java.awt.Color(255, 255, 255));
         adoptedStatus.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        adoptedStatus.setText("'A'");
+        adoptedStatus.setText("A");
         adoptedStatus.setBorder(null);
         adoptedStatus.setContentAreaFilled(false);
         adoptedStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1356,7 +1285,7 @@ public class LandingPage extends javax.swing.JFrame {
 
         tinySize.setBackground(new java.awt.Color(255, 255, 255));
         tinySize.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        tinySize.setText("'T'");
+        tinySize.setText("T");
         tinySize.setBorder(null);
         tinySize.setContentAreaFilled(false);
         tinySize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1372,7 +1301,7 @@ public class LandingPage extends javax.swing.JFrame {
 
         maleGender.setBackground(new java.awt.Color(255, 255, 255));
         maleGender.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        maleGender.setText("'M'");
+        maleGender.setText("M");
         maleGender.setToolTipText("");
         maleGender.setBorder(null);
         maleGender.setContentAreaFilled(false);
@@ -1389,7 +1318,7 @@ public class LandingPage extends javax.swing.JFrame {
 
         ownedOrigin.setBackground(new java.awt.Color(255, 255, 255));
         ownedOrigin.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        ownedOrigin.setText("'O'");
+        ownedOrigin.setText("O");
         ownedOrigin.setBorder(null);
         ownedOrigin.setContentAreaFilled(false);
         ownedOrigin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1405,7 +1334,7 @@ public class LandingPage extends javax.swing.JFrame {
 
         notAdoptedStatus.setBackground(new java.awt.Color(255, 255, 255));
         notAdoptedStatus.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        notAdoptedStatus.setText("'NA'");
+        notAdoptedStatus.setText("NA");
         notAdoptedStatus.setBorder(null);
         notAdoptedStatus.setContentAreaFilled(false);
         notAdoptedStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1421,7 +1350,7 @@ public class LandingPage extends javax.swing.JFrame {
 
         smallSize.setBackground(new java.awt.Color(255, 255, 255));
         smallSize.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        smallSize.setText("'S'");
+        smallSize.setText("S");
         smallSize.setBorder(null);
         smallSize.setContentAreaFilled(false);
         smallSize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1437,7 +1366,7 @@ public class LandingPage extends javax.swing.JFrame {
 
         femaleGender.setBackground(new java.awt.Color(255, 255, 255));
         femaleGender.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        femaleGender.setText("'F'");
+        femaleGender.setText("F");
         femaleGender.setBorder(null);
         femaleGender.setContentAreaFilled(false);
         femaleGender.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1453,7 +1382,7 @@ public class LandingPage extends javax.swing.JFrame {
 
         mediumSize.setBackground(new java.awt.Color(255, 255, 255));
         mediumSize.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        mediumSize.setText("'M'");
+        mediumSize.setText("M");
         mediumSize.setBorder(null);
         mediumSize.setContentAreaFilled(false);
         mediumSize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1469,7 +1398,7 @@ public class LandingPage extends javax.swing.JFrame {
 
         largeSize.setBackground(new java.awt.Color(255, 255, 255));
         largeSize.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        largeSize.setText("'L'");
+        largeSize.setText("L");
         largeSize.setBorder(null);
         largeSize.setContentAreaFilled(false);
         largeSize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1485,7 +1414,7 @@ public class LandingPage extends javax.swing.JFrame {
 
         catType.setBackground(new java.awt.Color(255, 255, 255));
         catType.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        catType.setText("'Cat'");
+        catType.setText("Cat");
         catType.setBorder(null);
         catType.setContentAreaFilled(false);
         catType.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1501,7 +1430,7 @@ public class LandingPage extends javax.swing.JFrame {
 
         dogType.setBackground(new java.awt.Color(255, 255, 255));
         dogType.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        dogType.setText("'Dog'");
+        dogType.setText("Dog");
         dogType.setBorder(null);
         dogType.setContentAreaFilled(false);
         dogType.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
