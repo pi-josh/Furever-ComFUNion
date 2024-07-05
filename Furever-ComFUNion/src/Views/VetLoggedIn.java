@@ -1483,49 +1483,49 @@ public class VetLoggedIn extends javax.swing.JFrame {
         appID5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appID5.setText("1");
         appID5.setToolTipText("");
-        applicationBody.add(appID5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 580, 40, -1));
+        applicationBody.add(appID5, new org.netbeans.lib.awtextra.AbsoluteConstraints(265, 580, 40, -1));
 
         appType5.setBackground(new java.awt.Color(255, 255, 255));
         appType5.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appType5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appType5.setText("Rehome");
         appType5.setToolTipText("");
-        applicationBody.add(appType5, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 580, 80, -1));
+        applicationBody.add(appType5, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 580, 80, -1));
 
         appPetName5.setBackground(new java.awt.Color(255, 255, 255));
         appPetName5.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appPetName5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appPetName5.setText("Clovernistic");
         appPetName5.setToolTipText("");
-        applicationBody.add(appPetName5, new org.netbeans.lib.awtextra.AbsoluteConstraints(443, 580, 120, -1));
+        applicationBody.add(appPetName5, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 580, 120, -1));
 
         appPetType5.setBackground(new java.awt.Color(255, 255, 255));
         appPetType5.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appPetType5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appPetType5.setText("Hamster");
         appPetType5.setToolTipText("");
-        applicationBody.add(appPetType5, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 580, 110, -1));
+        applicationBody.add(appPetType5, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 580, 110, -1));
 
         appAppointDate5.setBackground(new java.awt.Color(255, 255, 255));
         appAppointDate5.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appAppointDate5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appAppointDate5.setText("9999-99-99");
         appAppointDate5.setToolTipText("");
-        applicationBody.add(appAppointDate5, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 580, 150, -1));
+        applicationBody.add(appAppointDate5, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 580, 150, -1));
 
         appVet5.setBackground(new java.awt.Color(255, 255, 255));
         appVet5.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appVet5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appVet5.setText("Rafael Lafuente");
         appVet5.setToolTipText("");
-        applicationBody.add(appVet5, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 580, 160, -1));
+        applicationBody.add(appVet5, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 580, 160, -1));
 
         appStatus5.setBackground(new java.awt.Color(255, 255, 255));
         appStatus5.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appStatus5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appStatus5.setText("Cancelled");
         appStatus5.setToolTipText("");
-        applicationBody.add(appStatus5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 580, 100, -1));
+        applicationBody.add(appStatus5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 580, 100, -1));
 
         highlight5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/highlight (1).png"))); // NOI18N
         applicationBody.add(highlight5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 560, 880, 70));
@@ -1534,43 +1534,43 @@ public class VetLoggedIn extends javax.swing.JFrame {
         appID4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appID4.setText("1");
         appID4.setToolTipText("");
-        applicationBody.add(appID4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 513, 40, -1));
+        applicationBody.add(appID4, new org.netbeans.lib.awtextra.AbsoluteConstraints(265, 513, 40, -1));
 
         appType4.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appType4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appType4.setText("Rehome");
         appType4.setToolTipText("");
-        applicationBody.add(appType4, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 513, 80, -1));
+        applicationBody.add(appType4, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 513, 80, -1));
 
         appPetName4.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appPetName4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appPetName4.setText("Clovernistic");
         appPetName4.setToolTipText("");
-        applicationBody.add(appPetName4, new org.netbeans.lib.awtextra.AbsoluteConstraints(443, 513, 120, -1));
+        applicationBody.add(appPetName4, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 513, 120, -1));
 
         appPetType4.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appPetType4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appPetType4.setText("Hamster");
         appPetType4.setToolTipText("");
-        applicationBody.add(appPetType4, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 513, 110, -1));
+        applicationBody.add(appPetType4, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 513, 110, -1));
 
         appAppointDate4.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appAppointDate4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appAppointDate4.setText("9999-99-99");
         appAppointDate4.setToolTipText("");
-        applicationBody.add(appAppointDate4, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 513, 150, -1));
+        applicationBody.add(appAppointDate4, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 513, 150, -1));
 
         appVet4.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appVet4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appVet4.setText("Rafael Lafuente");
         appVet4.setToolTipText("");
-        applicationBody.add(appVet4, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 513, 160, -1));
+        applicationBody.add(appVet4, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 513, 160, -1));
 
         appStatus4.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appStatus4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appStatus4.setText("Cancelled");
         appStatus4.setToolTipText("");
-        applicationBody.add(appStatus4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 513, 100, -1));
+        applicationBody.add(appStatus4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 513, 100, -1));
 
         highlight4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/highlight (1).png"))); // NOI18N
         applicationBody.add(highlight4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 490, 880, 70));
@@ -1579,43 +1579,43 @@ public class VetLoggedIn extends javax.swing.JFrame {
         appID3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appID3.setText("1");
         appID3.setToolTipText("");
-        applicationBody.add(appID3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 443, 40, -1));
+        applicationBody.add(appID3, new org.netbeans.lib.awtextra.AbsoluteConstraints(265, 443, 40, -1));
 
         appType3.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appType3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appType3.setText("Rehome");
         appType3.setToolTipText("");
-        applicationBody.add(appType3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 443, 80, -1));
+        applicationBody.add(appType3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 443, 80, -1));
 
         appPetName3.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appPetName3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appPetName3.setText("Clovernistic");
         appPetName3.setToolTipText("");
-        applicationBody.add(appPetName3, new org.netbeans.lib.awtextra.AbsoluteConstraints(443, 443, 120, -1));
+        applicationBody.add(appPetName3, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 443, 120, -1));
 
         appPetType3.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appPetType3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appPetType3.setText("Hamster");
         appPetType3.setToolTipText("");
-        applicationBody.add(appPetType3, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 443, 110, -1));
+        applicationBody.add(appPetType3, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 443, 110, -1));
 
         appAppointDate3.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appAppointDate3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appAppointDate3.setText("9999-99-99");
         appAppointDate3.setToolTipText("");
-        applicationBody.add(appAppointDate3, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 443, 150, -1));
+        applicationBody.add(appAppointDate3, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 443, 150, -1));
 
         appVet3.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appVet3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appVet3.setText("Rafael Lafuente");
         appVet3.setToolTipText("");
-        applicationBody.add(appVet3, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 443, 160, -1));
+        applicationBody.add(appVet3, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 443, 160, -1));
 
         appStatus3.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appStatus3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appStatus3.setText("Cancelled");
         appStatus3.setToolTipText("");
-        applicationBody.add(appStatus3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 443, 100, -1));
+        applicationBody.add(appStatus3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 443, 100, -1));
 
         highlight3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/highlight (1).png"))); // NOI18N
         applicationBody.add(highlight3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 420, 880, 70));
@@ -1624,49 +1624,49 @@ public class VetLoggedIn extends javax.swing.JFrame {
         appID2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appID2.setText("1");
         appID2.setToolTipText("");
-        applicationBody.add(appID2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 373, 40, -1));
+        applicationBody.add(appID2, new org.netbeans.lib.awtextra.AbsoluteConstraints(265, 373, 40, -1));
 
         appType2.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appType2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appType2.setText("Rehome");
         appType2.setToolTipText("");
-        applicationBody.add(appType2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 373, 80, -1));
+        applicationBody.add(appType2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 373, 80, -1));
 
         appPetName2.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appPetName2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appPetName2.setText("Clovernistic");
         appPetName2.setToolTipText("");
-        applicationBody.add(appPetName2, new org.netbeans.lib.awtextra.AbsoluteConstraints(443, 373, 120, -1));
+        applicationBody.add(appPetName2, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 373, 120, -1));
 
         appPetType2.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appPetType2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appPetType2.setText("Hamster");
         appPetType2.setToolTipText("");
-        applicationBody.add(appPetType2, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 373, 110, -1));
+        applicationBody.add(appPetType2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 373, 110, -1));
 
         appAppointDate2.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appAppointDate2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appAppointDate2.setText("9999-99-99");
         appAppointDate2.setToolTipText("");
-        applicationBody.add(appAppointDate2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 373, 150, -1));
+        applicationBody.add(appAppointDate2, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 373, 150, -1));
 
         appVet2.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appVet2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appVet2.setText("Rafael Lafuente");
         appVet2.setToolTipText("");
-        applicationBody.add(appVet2, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 373, 160, -1));
+        applicationBody.add(appVet2, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 373, 160, -1));
 
         appStatus2.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appStatus2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appStatus2.setText("Cancelled");
         appStatus2.setToolTipText("");
-        applicationBody.add(appStatus2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 373, 100, -1));
+        applicationBody.add(appStatus2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 373, 100, -1));
 
         appStatus1.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appStatus1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appStatus1.setText("Cancelled");
         appStatus1.setToolTipText("");
-        applicationBody.add(appStatus1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 303, 100, -1));
+        applicationBody.add(appStatus1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 303, 100, -1));
 
         highlight2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/highlight (1).png"))); // NOI18N
         applicationBody.add(highlight2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 350, 880, 70));
@@ -1675,37 +1675,37 @@ public class VetLoggedIn extends javax.swing.JFrame {
         appVet1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appVet1.setText("Rafael Lafuente");
         appVet1.setToolTipText("");
-        applicationBody.add(appVet1, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 303, 160, -1));
+        applicationBody.add(appVet1, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 303, 160, -1));
 
         appAppointDate1.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appAppointDate1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appAppointDate1.setText("9999-99-99");
         appAppointDate1.setToolTipText("");
-        applicationBody.add(appAppointDate1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 303, 150, -1));
+        applicationBody.add(appAppointDate1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 303, 150, -1));
 
         appPetType1.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appPetType1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appPetType1.setText("Hamster");
         appPetType1.setToolTipText("");
-        applicationBody.add(appPetType1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 303, 110, -1));
+        applicationBody.add(appPetType1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 303, 110, -1));
 
         appPetName1.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appPetName1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appPetName1.setText("Clovernistic");
         appPetName1.setToolTipText("");
-        applicationBody.add(appPetName1, new org.netbeans.lib.awtextra.AbsoluteConstraints(443, 303, 120, -1));
+        applicationBody.add(appPetName1, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 303, 120, -1));
 
         appType1.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appType1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appType1.setText("Rehome");
         appType1.setToolTipText("");
-        applicationBody.add(appType1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 303, 80, -1));
+        applicationBody.add(appType1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 303, 80, -1));
 
         appID1.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appID1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appID1.setText("1");
         appID1.setToolTipText("");
-        applicationBody.add(appID1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 303, 40, -1));
+        applicationBody.add(appID1, new org.netbeans.lib.awtextra.AbsoluteConstraints(265, 303, 40, -1));
 
         highlight1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/highlight (1).png"))); // NOI18N
         applicationBody.add(highlight1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 280, 880, 70));
