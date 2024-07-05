@@ -105,10 +105,13 @@ public class Rescued extends javax.swing.JFrame {
         backButton = new javax.swing.JLabel();
         header = new javax.swing.JLabel();
         rescuedPanel = new javax.swing.JPanel();
-        rehomeButton = new javax.swing.JLabel();
+        rescuedButton = new javax.swing.JLabel();
         petID = new javax.swing.JTextField();
         petName = new javax.swing.JTextField();
+        vetID = new javax.swing.JTextField();
+        vetName = new javax.swing.JComboBox<>();
         petType = new javax.swing.JTextField();
+        petAge = new javax.swing.JTextField();
         female = new javax.swing.JCheckBox();
         male = new javax.swing.JCheckBox();
         rescued = new javax.swing.JCheckBox();
@@ -173,19 +176,19 @@ public class Rescued extends javax.swing.JFrame {
         rescuedPanel.setPreferredSize(new java.awt.Dimension(900, 680));
         rescuedPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        rehomeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/app rehome button.png"))); // NOI18N
-        rehomeButton.addMouseListener(new java.awt.event.MouseAdapter() {
+        rescuedButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/rescue button (1).png"))); // NOI18N
+        rescuedButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                rehomeButtonMouseClicked(evt);
+                rescuedButtonMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                rehomeButtonMouseEntered(evt);
+                rescuedButtonMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                rehomeButtonMouseExited(evt);
+                rescuedButtonMouseExited(evt);
             }
         });
-        rescuedPanel.add(rehomeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 570, -1, -1));
+        rescuedPanel.add(rescuedButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 620, -1, -1));
 
         petID.setEnabled(false);
         petID.addActionListener(new java.awt.event.ActionListener() {
@@ -202,12 +205,29 @@ public class Rescued extends javax.swing.JFrame {
         });
         rescuedPanel.add(petName, new org.netbeans.lib.awtextra.AbsoluteConstraints(206, 323, 362, 32));
 
+        vetID.setEnabled(false);
+        vetID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vetIDActionPerformed(evt);
+            }
+        });
+        rescuedPanel.add(vetID, new org.netbeans.lib.awtextra.AbsoluteConstraints(207, 461, 200, 32));
+
+        rescuedPanel.add(vetName, new org.netbeans.lib.awtextra.AbsoluteConstraints(494, 461, 283, 32));
+
         petType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 petTypeActionPerformed(evt);
             }
         });
         rescuedPanel.add(petType, new org.netbeans.lib.awtextra.AbsoluteConstraints(206, 358, 290, 32));
+
+        petAge.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                petAgeActionPerformed(evt);
+            }
+        });
+        rescuedPanel.add(petAge, new org.netbeans.lib.awtextra.AbsoluteConstraints(616, 324, 162, 32));
 
         female.setContentAreaFilled(false);
         female.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -317,9 +337,9 @@ public class Rescued extends javax.swing.JFrame {
                 iAgreeActionPerformed(evt);
             }
         });
-        rescuedPanel.add(iAgree, new org.netbeans.lib.awtextra.AbsoluteConstraints(414, 527, 20, 20));
+        rescuedPanel.add(iAgree, new org.netbeans.lib.awtextra.AbsoluteConstraints(414, 580, 20, 20));
 
-        rescuedBg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/RESCUED.png"))); // NOI18N
+        rescuedBg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Rescued.png"))); // NOI18N
         rescuedPanel.add(rescuedBg, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 2, 896, 676));
 
         getContentPane().add(rescuedPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 680));
@@ -369,19 +389,19 @@ public class Rescued extends javax.swing.JFrame {
         setLocation(currCoords.x - mouseDownCompCoords.x, currCoords.y - mouseDownCompCoords.y);
     }//GEN-LAST:event_headerMouseDragged
 
-    private void rehomeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rehomeButtonMouseClicked
+    private void rescuedButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rescuedButtonMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_rehomeButtonMouseClicked
+    }//GEN-LAST:event_rescuedButtonMouseClicked
 
-    private void rehomeButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rehomeButtonMouseEntered
+    private void rescuedButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rescuedButtonMouseEntered
         // TODO add your handling code here:
-        rehomeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/app rehome button hover.png")));
-    }//GEN-LAST:event_rehomeButtonMouseEntered
+        rescuedButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/rescue button hover (1).png")));
+    }//GEN-LAST:event_rescuedButtonMouseEntered
 
-    private void rehomeButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rehomeButtonMouseExited
+    private void rescuedButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rescuedButtonMouseExited
         // TODO add your handling code here:
-        rehomeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/app rehome button.png")));
-    }//GEN-LAST:event_rehomeButtonMouseExited
+        rescuedButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/rescue button (1).png")));
+    }//GEN-LAST:event_rescuedButtonMouseExited
 
     private void petIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_petIDActionPerformed
         // TODO add your handling code here:
@@ -439,6 +459,14 @@ public class Rescued extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_iAgreeActionPerformed
 
+    private void vetIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vetIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_vetIDActionPerformed
+
+    private void petAgeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_petAgeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_petAgeActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -489,6 +517,7 @@ public class Rescued extends javax.swing.JFrame {
     private javax.swing.JLabel minimizeButton;
     private javax.swing.JCheckBox notAdopted;
     private javax.swing.JCheckBox owned;
+    private javax.swing.JTextField petAge;
     private javax.swing.JTextField petID;
     private javax.swing.JTextField petName;
     private javax.swing.ButtonGroup petOrigin;
@@ -496,11 +525,13 @@ public class Rescued extends javax.swing.JFrame {
     private javax.swing.ButtonGroup petSize;
     private javax.swing.ButtonGroup petStatus;
     private javax.swing.JTextField petType;
-    private javax.swing.JLabel rehomeButton;
     private javax.swing.JCheckBox rescued;
     private javax.swing.JLabel rescuedBg;
+    private javax.swing.JLabel rescuedButton;
     private javax.swing.JPanel rescuedPanel;
     private javax.swing.JCheckBox small;
     private javax.swing.JCheckBox tiny;
+    private javax.swing.JTextField vetID;
+    private javax.swing.JComboBox<String> vetName;
     // End of variables declaration//GEN-END:variables
 }

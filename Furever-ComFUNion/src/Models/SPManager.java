@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SPManager {
-    private static final String URL = "jdbc:mysql://localhost:3306/forevercomfunion";
+    private static final String URL = "jdbc:mysql://localhost:3306/furever_comfunion";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "Alexi143";
+    private static final String PASSWORD = "_03riseandshine07_";
     
     /* Method to fetch all pets
     public ArrayList<Pet> getAllPets() {

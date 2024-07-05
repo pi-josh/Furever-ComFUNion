@@ -154,6 +154,8 @@ public class Adopt extends javax.swing.JFrame {
         petType = new javax.swing.JTextField();
         petName = new javax.swing.JTextField();
         petID = new javax.swing.JTextField();
+        vetID = new javax.swing.JTextField();
+        vetName = new javax.swing.JComboBox<>();
         adopted = new javax.swing.JCheckBox();
         notAdopted = new javax.swing.JCheckBox();
         rescued = new javax.swing.JCheckBox();
@@ -321,7 +323,7 @@ public class Adopt extends javax.swing.JFrame {
                 adoptButtonMouseExited(evt);
             }
         });
-        adoptPanel2.add(adoptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 570, -1, -1));
+        adoptPanel2.add(adoptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 620, -1, -1));
 
         adoptPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/app prev button.png"))); // NOI18N
         adoptPrev.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -364,6 +366,16 @@ public class Adopt extends javax.swing.JFrame {
             }
         });
         adoptPanel2.add(petID, new org.netbeans.lib.awtextra.AbsoluteConstraints(206, 287, 393, 32));
+
+        vetID.setEnabled(false);
+        vetID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vetIDActionPerformed(evt);
+            }
+        });
+        adoptPanel2.add(vetID, new org.netbeans.lib.awtextra.AbsoluteConstraints(207, 461, 200, 32));
+
+        adoptPanel2.add(vetName, new org.netbeans.lib.awtextra.AbsoluteConstraints(494, 461, 283, 32));
 
         adopted.setContentAreaFilled(false);
         adopted.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -413,7 +425,7 @@ public class Adopt extends javax.swing.JFrame {
                 iAgreeActionPerformed(evt);
             }
         });
-        adoptPanel2.add(iAgree, new org.netbeans.lib.awtextra.AbsoluteConstraints(414, 527, 20, 20));
+        adoptPanel2.add(iAgree, new org.netbeans.lib.awtextra.AbsoluteConstraints(414, 580, 20, 20));
 
         large.setContentAreaFilled(false);
         large.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -680,6 +692,10 @@ public class Adopt extends javax.swing.JFrame {
         adoptButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/app adopt button.png")));
     }//GEN-LAST:event_adoptButtonMouseExited
 
+    private void vetIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vetIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_vetIDActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -763,6 +779,8 @@ public class Adopt extends javax.swing.JFrame {
     private javax.swing.JCheckBox small;
     private javax.swing.JCheckBox tiny;
     private javax.swing.JCheckBox travel;
+    private javax.swing.JTextField vetID;
+    private javax.swing.JComboBox<String> vetName;
     private javax.swing.ButtonGroup workType;
     // End of variables declaration//GEN-END:variables
 }
