@@ -1,0 +1,25 @@
+ctrl + f "QUERY HERE:" for easy navigation
+
+queries needed:
+LandingPage
+> populatePetsFromDB() : line 225
+
+Login
+> loginButtonActionPeformed() : line 130
+
+RegisterController
+> registerUser() : line 189, 216
+> isUsernameExist(String username) : line 368
+> isEmailExist(String email) : line 375
+> isContactNumberExist(String contactNumber) : line 382
+> birthdateToAge(String birthdate) : line 406
+
+UserLoggedIn
+
+Adopt
+
+Rehome
+
+VetLoggedIn
+
+Rescued

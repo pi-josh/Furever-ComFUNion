@@ -4626,9 +4626,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private void petBackButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petBackButtonMouseExited
         // TODO add your handling code here:
         petBackButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button (2).png")));
-        if (adopt != null) {
-            adopt.dispose();
-        }
     }//GEN-LAST:event_petBackButtonMouseExited
 
     private void catTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_catTypeActionPerformed

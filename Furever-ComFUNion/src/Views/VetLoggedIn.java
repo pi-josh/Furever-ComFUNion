@@ -54,8 +54,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
     private ConfirmationDialog confirmationDialog;
     private BusinessRules businessRulesFrame;
     private Devs devsFrame;
-    private Adopt adopt;
-    private Rehome rehome;
+    private Rescued rescued;
     private JPanel glassPane;
 
     // for pet current panel temp info holder
@@ -183,17 +182,13 @@ public class VetLoggedIn extends javax.swing.JFrame {
         profileAddress.setText("Pet Sanctuary");
         profileOccupation.setText("Veterinarian");
         profileWorkType.setText("No Travel");
-        profileAge.setText("N/A");
+        profileAge.setText(String.valueOf(vet.getVetAge()));
 
     }
 
     // getters
-    public Adopt getAdopt() {
-        return adopt;
-    }
-
-    public Rehome getRehome() {
-        return rehome;
+    public Rescued getRescued() {
+        return rescued;
     }
 
     /**
@@ -372,6 +367,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
         applicationPrev = new javax.swing.JLabel();
         applicationNext = new javax.swing.JLabel();
         adoptButton = new javax.swing.JLabel();
+        rescueButton = new javax.swing.JLabel();
         rehomeButton = new javax.swing.JLabel();
         appNoResultsFound = new javax.swing.JLabel();
         pendingPanel1 = new javax.swing.JLabel();
@@ -1792,7 +1788,21 @@ public class VetLoggedIn extends javax.swing.JFrame {
                 adoptButtonMouseExited(evt);
             }
         });
-        applicationBody.add(adoptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 20, 250, 70));
+        applicationBody.add(adoptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(245, 20, 250, 70));
+
+        rescueButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/rescue button.png"))); // NOI18N
+        rescueButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rescueButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                rescueButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                rescueButtonMouseExited(evt);
+            }
+        });
+        applicationBody.add(rescueButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(835, 20, 250, 70));
 
         rehomeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/rehome button (1).png"))); // NOI18N
         rehomeButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1806,7 +1816,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
                 rehomeButtonMouseExited(evt);
             }
         });
-        applicationBody.add(rehomeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 20, 250, 70));
+        applicationBody.add(rehomeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(545, 20, 250, 70));
 
         appNoResultsFound.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         appNoResultsFound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/no result found (1).png"))); // NOI18N
@@ -4004,7 +4014,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
 
     private void adoptButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adoptButtonMouseClicked
         // TODO add your handling code here:
-
+        
     }//GEN-LAST:event_adoptButtonMouseClicked
 
     private void petPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petPanel1MouseClicked
@@ -4243,9 +4253,6 @@ public class VetLoggedIn extends javax.swing.JFrame {
     private void petBackButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petBackButtonMouseExited
         // TODO add your handling code here:
         petBackButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button (2).png")));
-        if (adopt != null) {
-            adopt.dispose();
-        }
     }//GEN-LAST:event_petBackButtonMouseExited
 
     private void catTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_catTypeActionPerformed
@@ -4533,6 +4540,29 @@ public class VetLoggedIn extends javax.swing.JFrame {
         setPanelVisibility(new boolean[]{false, true, false}, new boolean[]{false, false, true}, new boolean[]{true, false, false});
     }//GEN-LAST:event_deniedPanel3MousePressed
 
+    private void rescueButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rescueButtonMouseClicked
+        // TODO add your handling code here:
+        if (rescued == null) {
+            rescued = new Rescued(this);
+            rescued.setVisible(true);
+        } else if (!rescued.isVisible()) {
+            rescued.setVisible(true);
+        } else {
+            rescued.toFront();
+            rescued.requestFocus();
+        }
+    }//GEN-LAST:event_rescueButtonMouseClicked
+
+    private void rescueButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rescueButtonMouseEntered
+        // TODO add your handling code here:
+        rescueButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/rescue button hover.png")));
+    }//GEN-LAST:event_rescueButtonMouseEntered
+
+    private void rescueButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rescueButtonMouseExited
+        // TODO add your handling code here:
+        rescueButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/rescue button.png")));
+    }//GEN-LAST:event_rescueButtonMouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -4755,6 +4785,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel profileWorkType;
     private javax.swing.JCheckBox rabbitType;
     private javax.swing.JLabel rehomeButton;
+    private javax.swing.JLabel rescueButton;
     private javax.swing.JCheckBox rescuedOrigin;
     private javax.swing.JLabel slogan;
     private javax.swing.JCheckBox smallSize;

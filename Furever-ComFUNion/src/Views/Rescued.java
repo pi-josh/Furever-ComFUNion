@@ -20,14 +20,14 @@ public class Rescued extends javax.swing.JFrame {
     private Point mouseDownCompCoords;
     
     // sub frames
-    private UserLoggedIn userLoggedIn;
+    private VetLoggedIn vetLoggedIn;
     
     /**
      * Creates new form Rehome
      * @param userLoggedIn
      */
-    public Rescued(UserLoggedIn userLoggedIn) {
-        this.userLoggedIn = userLoggedIn;
+    public Rescued(VetLoggedIn vetLoggedIn) {
+        this.vetLoggedIn = vetLoggedIn;
         
         initComponents();
         setVisible(true);

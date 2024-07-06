@@ -40,6 +40,7 @@ public class LandingPage extends javax.swing.JFrame {
     // Pet records
     ArrayList<Pet> pets;
     private int totalPets;
+    private int totalPetsToDisplay;
     private int petIndex = 0;
     
     // filter and sorting conditions
@@ -102,6 +103,7 @@ public class LandingPage extends javax.swing.JFrame {
         
         // get all initial data from the database
         populatePetsFromDB();
+        totalPetsToDisplay = totalPets;
         
         // default
         defaultWindow();
@@ -135,9 +137,6 @@ public class LandingPage extends javax.swing.JFrame {
                     startupAnimationPanel.setVisible(false);
                     navBar.setVisible(true);
                     homeBody.setVisible(true);
-                    aboutUsBody.setVisible(true);
-                    petsBody.setVisible(true);
-                    FAQsBody.setVisible(true);
                     timer.stop(); // Stop the timer
                 }
             });
@@ -149,9 +148,6 @@ public class LandingPage extends javax.swing.JFrame {
             startupAnimationPanel.setVisible(false);
             navBar.setVisible(true);
             homeBody.setVisible(true);
-            aboutUsBody.setVisible(true);
-            petsBody.setVisible(true);
-            FAQsBody.setVisible(true);
         }
         
         // glass pane to block out any interaction within the main frame when opening a sub frame
@@ -199,7 +195,7 @@ public class LandingPage extends javax.swing.JFrame {
     
     private void defaultWindow() {
         // set pet count
-        adoptedCounter.setText(String.valueOf(pets.size()));
+        adoptedCounter.setText(String.valueOf(totalPetsToDisplay));
 
         // set visiblity
         homeBody.setVisible(true);
@@ -227,7 +223,8 @@ public class LandingPage extends javax.swing.JFrame {
     }
 
     private void populatePetsFromDB() {
-        this.pets = Pet.getAllPets(petTypes, petOrigins, petStatuses, petSizes, petGenders, sortCriteria);
+        // QUERY HERE: filtering and sorting pet profiles based on the selected checkboxes
+        this.pets = Pet.getAllPets(petTypes, petOrigins, petStatuses, petSizes, petGenders, sortCriteria);  // returns all pets that meets the criteria
         totalPets = pets.size();
     }
 
@@ -242,6 +239,7 @@ public class LandingPage extends javax.swing.JFrame {
         homeClick.setVisible(home);
         aboutUsClick.setVisible(aboutUs);
         faqClick.setVisible(faqs);
+        petClick.setVisible(pets);
     }
 
     private void updateButtonIcons(String homeIcon, String aboutUsIcon, String faqIcon, String petIcon, String vetIcon, String applicationIcon, String profileHeadIcon, String profileCollarIcon) {
@@ -260,7 +258,7 @@ public class LandingPage extends javax.swing.JFrame {
 
     private void handleHomeButtonClick() {
         // update count of pets
-        adoptedCounter.setText(String.valueOf(pets.size()));
+        adoptedCounter.setText(String.valueOf(totalPetsToDisplay));
 
         updatePanelVisibility(true, false, false, false, false, false, false);
         updateClickBackgroundVisibility(true, false, false, false, false, false);
@@ -607,7 +605,6 @@ public class LandingPage extends javax.swing.JFrame {
     }
 
     private void petFilterBySortBy() {
-        // QUERY HERE: filtering and sorting pet profiles based on the selected checkboxes
         // filter
         petTypes.removeAll(petTypes);
         petOrigins.removeAll(petOrigins);
@@ -1950,9 +1947,6 @@ public class LandingPage extends javax.swing.JFrame {
     private void petBackButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petBackButtonMouseExited
         // TODO add your handling code here:
         petBackButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button (2).png")));
-        if (adopt != null) {
-            adopt.dispose();
-        }
     }//GEN-LAST:event_petBackButtonMouseExited
 
     private void petAdoptButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petAdoptButtonMouseClicked
