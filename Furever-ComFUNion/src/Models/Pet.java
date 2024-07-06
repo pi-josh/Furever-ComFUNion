@@ -88,13 +88,6 @@ public class Pet {
     public void setPetName(String petName) { this.petName = petName; }
     public void setPetSex(String petSex) { this.petSex = petSex; }
     public void setPicURL(String picURL) { this.picURL = picURL; }
-
-    // Method to fetch all pets from the database
-    public static ArrayList<Pet> getAllPets(List<String> petTypes, List<String> petOrigins, List<String> petStatuses,
-                                            List<String> petSizes, List<String> petGenders, List<String> sortCriteria) {
-        SPManager spManager = new SPManager();
-        return spManager.getFilteredSortedPets(petTypes, petOrigins, petStatuses, petSizes, petGenders, sortCriteria);
-    }
     
     // Sample pets
     public ArrayList<Pet> getAllPetSamples() {

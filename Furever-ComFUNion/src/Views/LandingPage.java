@@ -224,7 +224,7 @@ public class LandingPage extends javax.swing.JFrame {
 
     private void populatePetsFromDB() {
         // QUERY HERE: filtering and sorting pet profiles based on the selected checkboxes
-        this.pets = Pet.getAllPets(petTypes, petOrigins, petStatuses, petSizes, petGenders, sortCriteria);  // returns all pets that meets the criteria
+        this.pets = spManager.getFilteredSortedPets(petTypes, petOrigins, petStatuses, petSizes, petGenders, sortCriteria);  // returns all pets that meets the criteria
         totalPets = pets.size();
     }
 
@@ -466,7 +466,7 @@ public class LandingPage extends javax.swing.JFrame {
                 status = pets.get(petIndex - diff).getPetStatus();
                 size = pets.get(petIndex - diff).getPetSize();
 
-                switch (origin.charAt(0)) {
+                switch (origin.toUpperCase().charAt(0)) {
                     case 'O':
                         pOrigin = "Owned";
                         break;
@@ -475,13 +475,13 @@ public class LandingPage extends javax.swing.JFrame {
                         break;
                 }
 
-                if (status.equals("NA")) {
+                if (status.toUpperCase().equals("NA")) {
                     pStatus = "Not Adopted";
                 } else if (status.equals("A")) {
                     pStatus = "Adopted";
                 }
 
-                switch (size.charAt(0)) {
+                switch (size.toUpperCase().charAt(0)) {
                     case 'T':
                         pSize = "Tiny";
                         break;
@@ -509,7 +509,7 @@ public class LandingPage extends javax.swing.JFrame {
                 status = pets.get(petIndex - diff).getPetStatus();
                 size = pets.get(petIndex - diff).getPetSize();
 
-                switch (origin.charAt(0)) {
+                switch (origin.toUpperCase().charAt(0)) {
                     case 'O':
                         pOrigin = "Owned";
                         break;
@@ -518,13 +518,13 @@ public class LandingPage extends javax.swing.JFrame {
                         break;
                 }
 
-                if (status.equals("NA")) {
+                if (status.toUpperCase().equals("NA")) {
                     pStatus = "Not Adopted";
                 } else if (status.equals("A")) {
                     pStatus = "Adopted";
                 }
 
-                switch (size.charAt(0)) {
+                switch (size.toUpperCase().charAt(0)) {
                     case 'T':
                         pSize = "Tiny";
                         break;
@@ -555,7 +555,7 @@ public class LandingPage extends javax.swing.JFrame {
                 status = pets.get(petIndex).getPetStatus();
                 size = pets.get(petIndex).getPetSize();
 
-                switch (origin.charAt(0)) {
+                switch (origin.toUpperCase().charAt(0)) {
                     case 'O':
                         pOrigin = "Owned";
                         break;
@@ -564,13 +564,13 @@ public class LandingPage extends javax.swing.JFrame {
                         break;
                 }
 
-                if (status.equals("NA")) {
+                if (status.toUpperCase().equals("NA")) {
                     pStatus = "Not Adopted";
-                } else if (status.equals("A")) {
+                } else if (status.toUpperCase().equals("A")) {
                     pStatus = "Adopted";
                 }
 
-                switch (size.charAt(0)) {
+                switch (size.toUpperCase().charAt(0)) {
                     case 'T':
                         pSize = "Tiny";
                         break;
