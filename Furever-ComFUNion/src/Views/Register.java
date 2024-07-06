@@ -12,6 +12,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.YearMonth;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.*;
 
@@ -56,6 +58,13 @@ public class Register extends javax.swing.JFrame {
 
         populateComboBoxes();
         setWindowIcon();
+        
+        // set the default value of birthdate based on the default value of year, month, and day comboboxes
+        List<String> yearMonthDay = new ArrayList<>();
+        yearMonthDay.add((String) year.getSelectedItem());
+        yearMonthDay.add((String) month.getSelectedItem());
+        yearMonthDay.add((String) day.getSelectedItem());
+        birthdate.setText("".join("-", yearMonthDay));
     }
     
     private void setWindowIcon() {
@@ -101,10 +110,6 @@ public class Register extends javax.swing.JFrame {
 
     public JTextPane getContactNum() {
         return contactNum;
-    }
-
-    public JLabel getContactNumber() {
-        return contactNumber;
     }
 
     public JTextPane getCurrentAddress() {
@@ -266,11 +271,6 @@ public class Register extends javax.swing.JFrame {
         }
         this.dispose();
     }
-
-    
-    private void registerButtonActionPerformed() {
-        System.out.println("nag-enter");
-    }
   
     /**
      * This method is called from within the constructor to initialize the form.
@@ -423,9 +423,25 @@ public class Register extends javax.swing.JFrame {
         loginButton.setText("<html> <u>Login here</u> </html>");
         registerContainer.add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 530, -1, -1));
 
+        year.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                setBirthdate(evt);
+            }
+        });
         registerContainer.add(year, new org.netbeans.lib.awtextra.AbsoluteConstraints(615, 420, 70, -1));
 
+        month.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                setBirthdate(evt);
+            }
+        });
         registerContainer.add(month, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 420, 53, -1));
+
+        day.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                setBirthdate(evt);
+            }
+        });
         registerContainer.add(day, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 420, 53, -1));
 
         askVet.setText("Are you a veterinarian?");
@@ -514,6 +530,16 @@ public class Register extends javax.swing.JFrame {
         mouseDownCompCoords = evt.getPoint();
     }//GEN-LAST:event_titleContainerMousePressed
 
+    private void setBirthdate(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setBirthdate
+        // TODO add your handling code here:
+        List<String> yearMonthDay = new ArrayList<>();
+        yearMonthDay.add((String) year.getSelectedItem());
+        yearMonthDay.add((String) month.getSelectedItem());
+        yearMonthDay.add((String) day.getSelectedItem());
+        birthdate.setText("".join("-", yearMonthDay));
+    }//GEN-LAST:event_setBirthdate
+
+    
     /**
      * @param args the command line arguments
      */

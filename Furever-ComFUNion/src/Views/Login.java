@@ -13,7 +13,6 @@ import java.awt.Color;
 import java.awt.MediaTracker;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -35,14 +34,15 @@ public class Login extends javax.swing.JFrame {
     private LandingPage landingPage;
     private Register register;
     
-    // Sample vets
+    /* Sample vets
     ArrayList<Veterinarian> vets;
     private int totalVets;
     
-    // Sample clients
+    / Sample clients
     ArrayList<Client> clients;
     private int totalClients;
-
+    */
+    
     public Login(LandingPage landingPage) {
         initComponents();
         this.landingPage = landingPage;
@@ -53,7 +53,7 @@ public class Login extends javax.swing.JFrame {
         setWindowIcon();
         
         // populate sample info for user
-        populateSampleUsers();
+        //populateSampleUsers();
         
         resetErrorMessage();
     }
@@ -69,7 +69,7 @@ public class Login extends javax.swing.JFrame {
         setWindowIcon();
         
         // populate sample info for user
-        populateSampleUsers();
+        //populateSampleUsers();
     }
 
     private void setWindowIcon() {
@@ -86,6 +86,7 @@ public class Login extends javax.swing.JFrame {
         }
     }
     
+    /*
     private void populateSampleUsers() {
         Veterinarian vetSamples = new Veterinarian();
         this.vets = vetSamples.getAllVetSamples();
@@ -95,6 +96,7 @@ public class Login extends javax.swing.JFrame {
         this.clients = clientSamples.getAllClientSamples();
         totalClients = clients.size();
     }
+    */
     
     
     public Register getRegister() {
@@ -128,7 +130,7 @@ public class Login extends javax.swing.JFrame {
 
     // Event handling methods
     public void loginButtonActionPerformed() {
-        boolean isVet = false, isValid = false;
+        // boolean isVet = false, isValid = false;
         String enteredUsername = username.getText();
         String enteredPassword = new String(password.getPassword());
 
@@ -136,8 +138,44 @@ public class Login extends javax.swing.JFrame {
         Client client = null;
         Veterinarian vet = null;
         
+        /* QUERY HERE: check if the entered username and password exist in client or vet table
+        // default acc for viewing sample infos
+        if(enteredUsername.equals("admin") && enteredPassword.equals("admin")) {
+            this.setVisible(false);
+            landingPage.setVisible(false);
+            new UserLoggedIn(null).setVisible(true);
+            return;
+        }
+        client = methodName(enteredUsername, enteredPassword);  // this will return the client if exist, else null
+        if(client != null) {
+            this.setVisible(false);
+            landingPage.setVisible(false);
+            new UserLoggedIn(client).setVisible(true);
+            return;
+        }
+        vet = methodName(enteredUsername, enteredPassword); // this will return the veterinarian if exist, else null
+        if(vet != null) {
+            this.setVisible(false);
+            landingPage.setVisible(false);
+            new VetLoggedIn(vet).setVisible(true);
+            return;
+        }
+        // if not existing at both tables, display an error
+        errorMessage.setText("Invalid username or password");
+        errorMessage.setForeground(Color.RED);
+         */
         
-        // Check if user is exist as vet or client
+        // this will be removed after implementing the queries
+        if(enteredUsername.equals("admin") && enteredPassword.equals("admin")) {
+            this.setVisible(false);
+            landingPage.setVisible(false);
+            new UserLoggedIn(null).setVisible(true);
+        }else {
+            errorMessage.setText("Invalid username or password");
+            errorMessage.setForeground(Color.RED);
+        }
+        
+        /* Check if user is exist as vet or client
         for(Client curClient : clients) {
             if(curClient.getClientUsername().equals(enteredUsername) && curClient.getClientPassword().equals(enteredPassword)) {
                 client = curClient;
@@ -163,14 +201,8 @@ public class Login extends javax.swing.JFrame {
             this.setVisible(false);
             landingPage.setVisible(false);
             new UserLoggedIn(client).setVisible(true);
-        } else if(enteredUsername.equals("admin") && enteredPassword.equals("admin")) {
-            this.setVisible(false);
-            landingPage.setVisible(false);
-            new UserLoggedIn(null).setVisible(true);
-        }else {
-            errorMessage.setText("Invalid username or password");
-            errorMessage.setForeground(Color.RED);
-        }
+        } else 
+        */
     }
 
     public void registerButtonMouseClicked(java.awt.event.MouseEvent evt) {

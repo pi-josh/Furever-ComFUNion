@@ -82,10 +82,10 @@ public class RegisterController {
                     view.getOccupation().setEnabled(false);
                     view.getCompanyName().setEnabled(false);
                     view.getWorkType().setEnabled(false);
-                    view.getBirthdate().setEnabled(false);
-                    view.getYear().setEnabled(false);
-                    view.getMonth().setEnabled(false);
-                    view.getDay().setEnabled(false);
+                    view.getBirthdate().setEnabled(true);
+                    view.getYear().setEnabled(true);
+                    view.getMonth().setEnabled(true);
+                    view.getDay().setEnabled(true);
                 } else {
                     view.getPasscodeScroll().setVisible(false);
                     view.getPasscodeLbl().setVisible(false);
@@ -162,10 +162,13 @@ public class RegisterController {
             String fullName = view.getFullName().getText();
             String emailAddress = view.getEmailAddress().getText();
             String username = view.getUsername().getText();
-            String contactNumber = view.getContactNumber().getText();
+            String contactNumber = view.getContactNum().getText();
             String password = new String(view.getPassword().getPassword());
             String confirmPassword = new String(view.getConfirmPassword().getPassword());
             String enteredPasscode = view.getPasscode().getText();
+            String birthdate = view.getBirthdate().getText();
+            
+            System.out.println(fullName + " " + emailAddress + " " + username + " " + contactNumber + " " + password + " " + confirmPassword + " " + enteredPasscode + " " + birthdate);
 
             if(enteredPasscode.isEmpty()) {
                 view.getErrorMessage().setText("Please enter the passcode.");
@@ -184,7 +187,12 @@ public class RegisterController {
 
             if(isVet) {
                 view.getErrorMessage().setText(""); // Clear error message
-                if(validateInput(fullName, emailAddress, username, contactNumber, password, confirmPassword)) {
+                if(validateInput(fullName, emailAddress, username, contactNumber, password, confirmPassword, birthdate)) {
+                    /* QUERY HERE: insert the record to the vet table
+                    String acctStatus = 'A';
+                    int age = birthdateToAge(birthdate);
+                    success = methodName(username, password, fullName, age, contactNumber, emailAddress, acctStatus);    returns true if successful
+                    */
                     success = true;
                 }
             } else {
@@ -195,7 +203,7 @@ public class RegisterController {
             String fullName = view.getFullName().getText();
             String emailAddress = view.getEmailAddress().getText();
             String username = view.getUsername().getText();
-            String contactNumber = view.getContactNumber().getText();
+            String contactNumber = view.getContactNum().getText();
             String password = new String(view.getPassword().getPassword());
             String confirmPassword = new String(view.getConfirmPassword().getPassword());
             String currentAddress = view.getCurrentAddress().getText();
@@ -203,10 +211,19 @@ public class RegisterController {
             String companyName = view.getCompanyName().getText();
             String workType = (String) view.getWorkType().getSelectedItem();
             String birthdate = view.getBirthdate().getText();
+            
+            System.out.println(fullName + " " + emailAddress + " " + username + " " + contactNumber + " " + password + " " +
+                    confirmPassword + " " + currentAddress + " " + occupation + " " + companyName + " " + workType + " " + birthdate);
 
             // validate inputs
             if(validateInput(fullName, emailAddress, username, contactNumber, password, confirmPassword,
                     currentAddress, occupation, companyName, workType, birthdate)) {
+                /* QUERY HERE: insert the record to the client table
+                    String acctStatus = 'A';
+                    int age = birthdateToAge(birthdate);
+                    success = methodName(username, password, fullName, age, currentAddress, contactNumber,
+                                         emailAddress, occupation, companyName, workType, acctStatus);    returns true if successful
+                */
                 success = true;
             }
         }
@@ -236,10 +253,23 @@ public class RegisterController {
         } else {
             view.getErrorMessage().setText(""); // Clear error message
         }
+        
+        // Validate username
+        if(isUsernameExist(username)) {
+            view.getErrorMessage().setText("Username already exist.");
+            view.getErrorMessage().setForeground(Color.RED);
+            return false;
+        } else {
+            view.getErrorMessage().setText(""); // Clear error message
+        }
 
         // Validate email format
         if (!isValidEmail(emailAddress)) {
             view.getErrorMessage().setText("Please enter a valid email address.");
+            view.getErrorMessage().setForeground(Color.RED);
+            return false;
+        } else if(isEmailExist(emailAddress)) {
+            view.getErrorMessage().setText("Email address already exist.");
             view.getErrorMessage().setForeground(Color.RED);
             return false;
         } else {
@@ -255,9 +285,13 @@ public class RegisterController {
             view.getErrorMessage().setText(""); // Clear error message
         }
 
-        // Validate contact number format (example: XXX-XXX-XXXX)
+        // Validate contact number format (example: XXXXXXXXXX)
         if (!isValidContactNumber(contactNumber)) {
             view.getErrorMessage().setText("Please enter a valid contact number (XXX-XXX-XXXX).");
+            view.getErrorMessage().setForeground(Color.RED);
+            return false;
+        } else if(isContactNumberExist(contactNumber)) {
+            view.getErrorMessage().setText("Contact number already exist.");
             view.getErrorMessage().setForeground(Color.RED);
             return false;
         } else {
@@ -277,11 +311,20 @@ public class RegisterController {
     }
     
     // for vet
-    private boolean validateInput(String fullName, String emailAddress, String username, String contactNumber, String password, String confirmPassword) {
+    private boolean validateInput(String fullName, String emailAddress, String username, String contactNumber, String password, String confirmPassword, String birthdate) {
         // Check if required fields are not empty
         if (fullName.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || username.isEmpty() ||
-            emailAddress.isEmpty() || contactNumber.isEmpty()) {
+            emailAddress.isEmpty() || contactNumber.isEmpty() || birthdate.isEmpty()) {
             view.getErrorMessage().setText("Please fill in all required fields.");
+            view.getErrorMessage().setForeground(Color.RED);
+            return false;
+        } else {
+            view.getErrorMessage().setText(""); // Clear error message
+        }
+        
+        // Validate username
+        if(isUsernameExist(username)) {
+            view.getErrorMessage().setText("Username already exist.");
             view.getErrorMessage().setForeground(Color.RED);
             return false;
         } else {
@@ -293,19 +336,36 @@ public class RegisterController {
             view.getErrorMessage().setText("Please enter a valid email address.");
             view.getErrorMessage().setForeground(Color.RED);
             return false;
-        } else {
-            view.getErrorMessage().setText(""); // Clear error message
-        }
-
-        // Validate contact number format (example: XXX-XXX-XXXX)
-        if (!isValidContactNumber(contactNumber)) {
-            view.getErrorMessage().setText("Please enter a valid contact number (XXX-XXX-XXXX).");
+        } else if(isEmailExist(emailAddress)) {
+            view.getErrorMessage().setText("Email address already exist.");
             view.getErrorMessage().setForeground(Color.RED);
             return false;
         } else {
             view.getErrorMessage().setText(""); // Clear error message
         }
 
+        // Validate contact number format (example: XXXXXXXXXX)
+        if (!isValidContactNumber(contactNumber)) {
+            view.getErrorMessage().setText("Please enter a valid contact number (XXX-XXX-XXXX).");
+            view.getErrorMessage().setForeground(Color.RED);
+            return false;
+        } else if(isContactNumberExist(contactNumber)) {
+            view.getErrorMessage().setText("Contact number already exist.");
+            view.getErrorMessage().setForeground(Color.RED);
+            return false;
+        } else {
+            view.getErrorMessage().setText(""); // Clear error message
+        }
+        
+        // Validate birthdate format (example: MM/dd/yyyy)
+        if (!isValidBirthdate(birthdate)) {
+            view.getErrorMessage().setText("Please enter a valid birthdate (MM/dd/yyyy).");
+            view.getErrorMessage().setForeground(Color.RED);
+            return false;
+        } else {
+            view.getErrorMessage().setText(""); // Clear error message
+        }
+        
         // Check if passwords match
         if (!password.equals(confirmPassword)) {
             view.getErrorMessage().setText("Passwords do not match.");
@@ -317,9 +377,30 @@ public class RegisterController {
 
         return true;
     }
+    
+    private boolean isUsernameExist(String username) {
+        /* QUERY HERE: check if username already exist in client and vet tables
+        return methodName(username);    // returns a boolean whether it exist or not
+        */
+        return false;
+    }
+    
+    private boolean isEmailExist(String email) {
+        /* QUERY HERE: check if email address already exist in client and vet tables
+        return methodName(email);    // returns a boolean whether it exist or not
+        */
+        return false;
+    }
+    
+    private boolean isContactNumberExist(String contactNumber) {
+        /* QUERY HERE: check if contact number already exist in client and vet tables
+        return methodName(contactNumber);    // returns a boolean whether it exist or not
+        */
+        return false;
+    }
 
     private boolean isValidEmail(String email) {
-        // IMPLEMENT
+        // IMPLEMENT HERE:
         return true;
     }
 
@@ -331,6 +412,15 @@ public class RegisterController {
     private boolean isValidContactNumber(String contactNumber) {
         // IMPLEMENT
         return true;
+    }
+    
+    private int birthdateToAge(String birthdate) {
+        // IMPLEMENT
+        /*
+           QUERY HERE: get the age of the user based on his/her birthday
+        return methodName(birthdate);   this will return an integer value for age
+        */
+        return 0;
     }
 
     private void clearFields() {
