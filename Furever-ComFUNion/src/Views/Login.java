@@ -8,6 +8,7 @@ package Views;
 import Controllers.LoginController;
 import Controllers.RegisterController;
 import Models.Client;
+import Models.SPManager;
 import Models.Veterinarian;
 import java.awt.Color;
 import java.awt.MediaTracker;
@@ -24,6 +25,8 @@ import javax.swing.JTextPane;
  * @author joshu
  */
 public class Login extends javax.swing.JFrame {
+    SPManager spManager = new SPManager();
+    
     // for moving the frame
     private Point mouseDownCompCoords;
     
@@ -34,15 +37,6 @@ public class Login extends javax.swing.JFrame {
     private LandingPage landingPage;
     private Register register;
     
-    /* Sample vets
-    ArrayList<Veterinarian> vets;
-    private int totalVets;
-    
-    / Sample clients
-    ArrayList<Client> clients;
-    private int totalClients;
-    */
-    
     public Login(LandingPage landingPage) {
         initComponents();
         this.landingPage = landingPage;
@@ -51,9 +45,6 @@ public class Login extends javax.swing.JFrame {
 
         // Window logo
         setWindowIcon();
-        
-        // populate sample info for user
-        //populateSampleUsers();
         
         resetErrorMessage();
     }
@@ -67,9 +58,6 @@ public class Login extends javax.swing.JFrame {
         
         // Window logo
         setWindowIcon();
-        
-        // populate sample info for user
-        //populateSampleUsers();
     }
 
     private void setWindowIcon() {
@@ -84,20 +72,7 @@ public class Login extends javax.swing.JFrame {
             System.err.println("Error: Image not found. " + e.getMessage());
             e.printStackTrace();
         }
-    }
-    
-    /*
-    private void populateSampleUsers() {
-        Veterinarian vetSamples = new Veterinarian();
-        this.vets = vetSamples.getAllVetSamples();
-        totalVets = vets.size();
-        
-        Client clientSamples = new Client();
-        this.clients = clientSamples.getAllClientSamples();
-        totalClients = clients.size();
-    }
-    */
-    
+    }  
     
     public Register getRegister() {
         return register;
@@ -130,15 +105,14 @@ public class Login extends javax.swing.JFrame {
 
     // Event handling methods
     public void loginButtonActionPerformed() {
-        // boolean isVet = false, isValid = false;
         String enteredUsername = username.getText();
         String enteredPassword = new String(password.getPassword());
 
-        // Simulate authentication (replace with actual logic)
+        // Simulate authentication
         Client client = null;
         Veterinarian vet = null;
         
-        /* QUERY HERE: check if the entered username and password exist in client or vet table
+        //QUERY HERE: check if the entered username and password exist in client or vet table
         // default acc for viewing sample infos
         if(enteredUsername.equals("admin") && enteredPassword.equals("admin")) {
             this.setVisible(false);
@@ -146,14 +120,16 @@ public class Login extends javax.swing.JFrame {
             new UserLoggedIn(null).setVisible(true);
             return;
         }
-        client = methodName(enteredUsername, enteredPassword);  // this will return the client if exist, else null
+        // client
+        client = spManager.getClientByCredentials(enteredUsername, enteredPassword);  // this will return the client if exist, else null
         if(client != null) {
             this.setVisible(false);
             landingPage.setVisible(false);
             new UserLoggedIn(client).setVisible(true);
             return;
         }
-        vet = methodName(enteredUsername, enteredPassword); // this will return the veterinarian if exist, else null
+        // veterinarian
+        vet = spManager.getVetByCredentials(enteredUsername, enteredPassword); // this will return the veterinarian if exist, else null
         if(vet != null) {
             this.setVisible(false);
             landingPage.setVisible(false);
@@ -163,46 +139,6 @@ public class Login extends javax.swing.JFrame {
         // if not existing at both tables, display an error
         errorMessage.setText("Invalid username or password");
         errorMessage.setForeground(Color.RED);
-         */
-        
-        // this will be removed after implementing the queries
-        if(enteredUsername.equals("admin") && enteredPassword.equals("admin")) {
-            this.setVisible(false);
-            landingPage.setVisible(false);
-            new UserLoggedIn(null).setVisible(true);
-        }else {
-            errorMessage.setText("Invalid username or password");
-            errorMessage.setForeground(Color.RED);
-        }
-        
-        /* Check if user is exist as vet or client
-        for(Client curClient : clients) {
-            if(curClient.getClientUsername().equals(enteredUsername) && curClient.getClientPassword().equals(enteredPassword)) {
-                client = curClient;
-                isValid = true;
-                break;
-            }
-        }
-        
-        for (Veterinarian curVet : vets) {
-            if(curVet.getVetUsername().equals(enteredUsername) && curVet.getVetPassword().equals(enteredPassword)) {
-                vet = curVet;
-                isVet = true;
-                isValid = true;
-                break;
-            }
-        }
-        
-        if(isVet && isValid) {
-            this.setVisible(false);
-            landingPage.setVisible(false);
-            new VetLoggedIn(vet).setVisible(true);
-        } else if(!isVet && isValid) {
-            this.setVisible(false);
-            landingPage.setVisible(false);
-            new UserLoggedIn(client).setVisible(true);
-        } else 
-        */
     }
 
     public void registerButtonMouseClicked(java.awt.event.MouseEvent evt) {

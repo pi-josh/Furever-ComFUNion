@@ -159,14 +159,14 @@ public class RegisterController {
         // Directly handle mouse click event
         boolean isVeterinarian = view.getAskVetCheckBox().isSelected();
         if(isVeterinarian) {
-            String fullName = view.getFullName().getText();
-            String emailAddress = view.getEmailAddress().getText();
-            String username = view.getUsername().getText();
-            String contactNumber = view.getContactNum().getText();
+            String fullName = view.getFullName().getText().trim();
+            String emailAddress = view.getEmailAddress().getText().trim();
+            String username = view.getUsername().getText().trim();
+            String contactNumber = view.getContactNum().getText().trim();
             String password = new String(view.getPassword().getPassword());
             String confirmPassword = new String(view.getConfirmPassword().getPassword());
             String enteredPasscode = view.getPasscode().getText();
-            String birthdate = view.getBirthdate().getText();
+            String birthdate = view.getBirthdate().getText().trim();
             
             System.out.println(fullName + " " + emailAddress + " " + username + " " + contactNumber + " " + password + " " + confirmPassword + " " + enteredPasscode + " " + birthdate);
 
@@ -200,17 +200,17 @@ public class RegisterController {
                 view.getErrorMessage().setForeground(Color.RED);
             }
         } else {
-            String fullName = view.getFullName().getText();
-            String emailAddress = view.getEmailAddress().getText();
-            String username = view.getUsername().getText();
-            String contactNumber = view.getContactNum().getText();
+            String fullName = view.getFullName().getText().trim();
+            String emailAddress = view.getEmailAddress().getText().trim();
+            String username = view.getUsername().getText().trim();
+            String contactNumber = view.getContactNum().getText().trim();
             String password = new String(view.getPassword().getPassword());
             String confirmPassword = new String(view.getConfirmPassword().getPassword());
-            String currentAddress = view.getCurrentAddress().getText();
-            String occupation = view.getOccupation().getText();
-            String companyName = view.getCompanyName().getText();
+            String currentAddress = view.getCurrentAddress().getText().trim();
+            String occupation = view.getOccupation().getText().trim();
+            String companyName = view.getCompanyName().getText().trim();
             String workType = (String) view.getWorkType().getSelectedItem();
-            String birthdate = view.getBirthdate().getText();
+            String birthdate = view.getBirthdate().getText().trim();
             
             System.out.println(fullName + " " + emailAddress + " " + username + " " + contactNumber + " " + password + " " +
                     confirmPassword + " " + currentAddress + " " + occupation + " " + companyName + " " + workType + " " + birthdate);

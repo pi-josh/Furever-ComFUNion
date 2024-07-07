@@ -328,4 +328,193 @@ public class SPManager {
         }
         return apps;
     }
+    
+    // Method to fetch a particular client account that matches the credentials
+    public Client getClientByCredentials(String username, String password) {
+        Client client = null;
+        String query = "SELECT * FROM `client.v2` WHERE ClientAcctStatus = 'A' AND ClientUsername = ? AND ClientPassword = ?";
+
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, username);
+            ps.setString(2, password);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    client = new Client(
+                        rs.getInt("ClientID"),
+                        rs.getString("ClientUsername"),
+                        rs.getString("ClientPassword"),
+                        rs.getString("ClientFullName"),
+                        rs.getInt("ClientAge"),
+                        rs.getString("ClientAddress"),
+                        rs.getString("CellNum"),
+                        rs.getString("ClientEmailAdd"),
+                        rs.getString("ClientOccupation"),
+                        rs.getString("CompanyName"),
+                        rs.getString("WorkType"),
+                        rs.getString("ClientAcctStatus")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return client;
+    }
+    
+    // Method to fetch a particular veterinarian account that matches the credentials
+    public Veterinarian getVetByCredentials(String username, String password) {
+        Veterinarian vet = null;
+        String query = "SELECT * FROM `vet.v2` WHERE VetAcctStatus = 'A' AND VetUsername = ? AND VetPassword = ?";
+
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, username);
+            ps.setString(2, password);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    vet = new Veterinarian(
+                        rs.getString("VetID"),
+                        rs.getString("VetUsername"),
+                        rs.getString("VetPassword"),
+                        rs.getString("VetFullName"),
+                        rs.getInt("VetAge"),
+                        rs.getString("VetCellNum"),
+                        rs.getString("VetEmailAdd"),
+                        rs.getString("VetAcctStatus")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return vet;
+    }
+    
+    // Method to insert an application record
+    public boolean insertApplicationRecord(String applicationType, String appointDate, String appointTime, String appointPlace, String appointStatus, int clientID, String petID, String vetID) {
+        String insertQuery = "INSERT INTO forevercomfunion.`application.v2` (applicationType, appointDate, appointTime, appointPlace, appointStatus, clientID, petID, vetID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement ps = connection.prepareStatement(insertQuery)) {
+
+            ps.setString(1, applicationType);
+            ps.setString(2, appointDate);
+            ps.setString(3, appointTime);
+            ps.setString(4, appointPlace);
+            ps.setString(5, appointStatus);
+            ps.setInt(6, clientID);
+            ps.setString(7, petID);
+            ps.setString(8, vetID);
+
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    // Method to update the status of pet record
+    public boolean updatePetStatus(String petID, String petStatus) {
+        String updateQuery = "UPDATE forevercomfunion.`pet.v2`"
+                           + "SET PetStatus = ?"
+                           + "WHERE PetID = ?;";
+       try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement ps = connection.prepareStatement(updateQuery)) {
+
+            ps.setString(1, petStatus);
+            ps.setString(2, petID);
+
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    // Method to get a particular application by id
+    public Application getApplicationRecord(int applicationID) {
+        Application application = null;
+        String query = "SELECT * FROM forevercomfunion.`application.v2` WHERE ApplicationID = ?;";
+        
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, applicationID);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    application = new Application(
+                        rs.getInt("ApplicationID"),
+                        rs.getString("ApplicationType"),
+                        rs.getString("AppointDate"),
+                        rs.getString("AppointTime"),
+                        rs.getString("AppointStatus"),
+                        rs.getInt("ClientID"),
+                        rs.getString("PetID"),
+                        rs.getString("VetID")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return application;
+    }
+    
+    // Method to get a particular pet by id
+    public Pet getPetRecordByID(String petID) {
+        Pet pet = null;
+        String query = "SELECT * FROM forevercomfunion.`pet.v2` WHERE petID = ?;";
+        
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, petID);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    pet = new Pet(
+                        rs.getString("PetID"),
+                        rs.getString("PetType"),
+                        rs.getString("PetOrigin"),
+                        rs.getString("PetStatus"),
+                        rs.getString("PetSize"),
+                        rs.getString("PetAge"),
+                        rs.getString("PetName"),
+                        rs.getString("PetSex")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return pet;
+    }
+    
+    // Method to get a particular application by id
+    public Veterinarian getVetRecordByID(String vetID) {
+        Veterinarian vet = null;
+        String query = "SELECT * FROM forevercomfunion.`vet.v2` WHERE vetID = ?;";
+        
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, vetID);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    vet = new Veterinarian(
+                        rs.getString("VetID"),
+                        rs.getString("VetUsername"),
+                        rs.getString("VetPassword"),
+                        rs.getString("VetFullName"),
+                        rs.getInt("VetAge"),
+                        rs.getString("VetCellNum"),
+                        rs.getString("VetEmailAdd"),
+                        rs.getString("VetAcctStatus")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return vet;
+    }
 }
