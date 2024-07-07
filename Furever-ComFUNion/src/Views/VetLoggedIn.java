@@ -2,21 +2,20 @@ package Views;
 
 import Controllers.ConfirmationDialogController;
 import Controllers.ExitDialogController;
+import Controllers.RegisterController;
 import Models.Application;
-import Models.Client;
 import Models.Pet;
+import Models.SPManager;
 import Models.Veterinarian;
 import java.awt.Color;
 import java.awt.MediaTracker;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
@@ -36,6 +35,11 @@ import javax.swing.SwingUtilities;
  * @author joshu
  */
 public class VetLoggedIn extends javax.swing.JFrame {
+    // Database manager
+    SPManager spManager = new SPManager();
+    RegisterController registerController = new RegisterController();
+
+    
     // for moving the frame
     private Point mouseDownCompCoords;
 
@@ -73,7 +77,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
     private boolean FAQsClicked;
     private boolean petsClicked;
     private boolean vetsClicked;
-    private boolean applicationClicked;
+    public boolean applicationClicked;
     private boolean profileClicked;
     private int FAQsPanelCounter = 0;
     private int totalFAQsPanels = 4;
@@ -81,20 +85,32 @@ public class VetLoggedIn extends javax.swing.JFrame {
     // app next and prev buttons
     private boolean appPrev, appNext;
 
-    // Sample pets
+    // Pet records
+    Pet pet; // pet who is going to be adopted
     ArrayList<Pet> pets;
     private int totalPets;
+    private int totalPetsToDisplay;
     private int petIndex = 0;
-
-    // Sample vets
+    
+    // Veterinarian records
     ArrayList<Veterinarian> vets;
     private int totalVets;
     private int vetIndex = 0;
-
-    // Sample applications
+    
+    // Application Records
     ArrayList<Application> applications;
     private int totalApplications;
     private int appIndex = 0;
+    private boolean appAdoptClick = false;
+    private boolean appRehomeClick = false;
+    
+    // filter and sorting conditions
+    private List<String> petTypes = new ArrayList<>();
+    private List<String> petOrigins = new ArrayList<>();
+    private List<String> petStatuses = new ArrayList<>();
+    private List<String> petSizes = new ArrayList<>();
+    private List<String> petGenders = new ArrayList<>();
+    private List<String> sortCriteria = new ArrayList<>();
     
     // for sorting priority
     ArrayList<JCheckBox> sortingPriority = new ArrayList<>();   
@@ -103,19 +119,25 @@ public class VetLoggedIn extends javax.swing.JFrame {
      * Creates new form Main
      */
     public VetLoggedIn(Veterinarian vet) {
-        this.vet = vet;
+        
+        this.vet = new Veterinarian("V004", "Juswa07", "riseandshine", "Joshua Macatunao", 20, "213", "sdfadf", "A");
 
         // populate
-        populateFromDB();
-
+        populatePetsFromDB();
+        populateVetsFromDB();
+        populateAppsFromDB(1);
+        
         initComponents();
-
+        
+        totalPetsToDisplay = spManager.getAllPetsCount();
+        
         if (vet != null) {
             // update profile
             updateVetProfile();
         }
 
-        comboBoxes();
+        // populate the combo boxes
+        populateComboBoxes();
 
         // default
         defaultWindow();
@@ -190,6 +212,11 @@ public class VetLoggedIn extends javax.swing.JFrame {
     // getters
     public Rescued getRescued() {
         return rescued;
+    }
+    
+    // setters
+    public void setApplicationClicked(boolean click) {
+        this.applicationClicked = click;
     }
 
     /**
@@ -322,13 +349,22 @@ public class VetLoggedIn extends javax.swing.JFrame {
         vetsPanel = new javax.swing.JLabel();
         background4 = new javax.swing.JLabel();
         applicationBody = new javax.swing.JPanel();
+        decline5 = new javax.swing.JCheckBox();
+        accept5 = new javax.swing.JCheckBox();
+        decline4 = new javax.swing.JCheckBox();
+        accept4 = new javax.swing.JCheckBox();
+        decline3 = new javax.swing.JCheckBox();
+        accept3 = new javax.swing.JCheckBox();
+        decline2 = new javax.swing.JCheckBox();
+        accept2 = new javax.swing.JCheckBox();
+        accept1 = new javax.swing.JCheckBox();
+        decline1 = new javax.swing.JCheckBox();
         appID5 = new javax.swing.JLabel();
         appType5 = new javax.swing.JLabel();
         appPetName5 = new javax.swing.JLabel();
         appPetType5 = new javax.swing.JLabel();
         appAppointDate5 = new javax.swing.JLabel();
         appVet5 = new javax.swing.JLabel();
-        appStatus5 = new javax.swing.JLabel();
         highlight5 = new javax.swing.JLabel();
         appID4 = new javax.swing.JLabel();
         appType4 = new javax.swing.JLabel();
@@ -336,7 +372,6 @@ public class VetLoggedIn extends javax.swing.JFrame {
         appPetType4 = new javax.swing.JLabel();
         appAppointDate4 = new javax.swing.JLabel();
         appVet4 = new javax.swing.JLabel();
-        appStatus4 = new javax.swing.JLabel();
         highlight4 = new javax.swing.JLabel();
         appID3 = new javax.swing.JLabel();
         appType3 = new javax.swing.JLabel();
@@ -344,7 +379,6 @@ public class VetLoggedIn extends javax.swing.JFrame {
         appPetType3 = new javax.swing.JLabel();
         appAppointDate3 = new javax.swing.JLabel();
         appVet3 = new javax.swing.JLabel();
-        appStatus3 = new javax.swing.JLabel();
         highlight3 = new javax.swing.JLabel();
         appID2 = new javax.swing.JLabel();
         appType2 = new javax.swing.JLabel();
@@ -352,8 +386,6 @@ public class VetLoggedIn extends javax.swing.JFrame {
         appPetType2 = new javax.swing.JLabel();
         appAppointDate2 = new javax.swing.JLabel();
         appVet2 = new javax.swing.JLabel();
-        appStatus2 = new javax.swing.JLabel();
-        appStatus1 = new javax.swing.JLabel();
         highlight2 = new javax.swing.JLabel();
         appVet1 = new javax.swing.JLabel();
         appAppointDate1 = new javax.swing.JLabel();
@@ -411,11 +443,8 @@ public class VetLoggedIn extends javax.swing.JFrame {
         profileCompany = new javax.swing.JLabel();
         workType = new javax.swing.JComboBox<>();
         profileWorkType = new javax.swing.JLabel();
-        birthdayScroll = new javax.swing.JScrollPane();
-        birthdate = new javax.swing.JTextPane();
-        year = new javax.swing.JComboBox<>();
-        month = new javax.swing.JComboBox<>();
-        day = new javax.swing.JComboBox<>();
+        ageScroll = new javax.swing.JScrollPane();
+        age = new javax.swing.JTextPane();
         profileAge = new javax.swing.JLabel();
         profileDeleteButton = new javax.swing.JLabel();
         profileEditButton = new javax.swing.JLabel();
@@ -937,7 +966,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
 
         hamsterType.setBackground(new java.awt.Color(255, 255, 255));
         hamsterType.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        hamsterType.setText("'Hamster'");
+        hamsterType.setText("Hamster");
         hamsterType.setBorder(null);
         hamsterType.setContentAreaFilled(false);
         hamsterType.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -953,7 +982,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
 
         rabbitType.setBackground(new java.awt.Color(255, 255, 255));
         rabbitType.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        rabbitType.setText("'Rabbit'");
+        rabbitType.setText("Rabbit");
         rabbitType.setBorder(null);
         rabbitType.setContentAreaFilled(false);
         rabbitType.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -969,7 +998,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
 
         rescuedOrigin.setBackground(new java.awt.Color(255, 255, 255));
         rescuedOrigin.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        rescuedOrigin.setText("'R'");
+        rescuedOrigin.setText("R");
         rescuedOrigin.setBorder(null);
         rescuedOrigin.setContentAreaFilled(false);
         rescuedOrigin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -985,7 +1014,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
 
         adoptedStatus.setBackground(new java.awt.Color(255, 255, 255));
         adoptedStatus.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        adoptedStatus.setText("'A'");
+        adoptedStatus.setText("A");
         adoptedStatus.setBorder(null);
         adoptedStatus.setContentAreaFilled(false);
         adoptedStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1001,7 +1030,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
 
         tinySize.setBackground(new java.awt.Color(255, 255, 255));
         tinySize.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        tinySize.setText("'T'");
+        tinySize.setText("T");
         tinySize.setBorder(null);
         tinySize.setContentAreaFilled(false);
         tinySize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1017,7 +1046,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
 
         maleGender.setBackground(new java.awt.Color(255, 255, 255));
         maleGender.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        maleGender.setText("'M'");
+        maleGender.setText("M");
         maleGender.setToolTipText("");
         maleGender.setBorder(null);
         maleGender.setContentAreaFilled(false);
@@ -1034,7 +1063,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
 
         ownedOrigin.setBackground(new java.awt.Color(255, 255, 255));
         ownedOrigin.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        ownedOrigin.setText("'O'");
+        ownedOrigin.setText("O");
         ownedOrigin.setBorder(null);
         ownedOrigin.setContentAreaFilled(false);
         ownedOrigin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1050,7 +1079,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
 
         notAdoptedStatus.setBackground(new java.awt.Color(255, 255, 255));
         notAdoptedStatus.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        notAdoptedStatus.setText("'NA'");
+        notAdoptedStatus.setText("NA");
         notAdoptedStatus.setBorder(null);
         notAdoptedStatus.setContentAreaFilled(false);
         notAdoptedStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1066,7 +1095,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
 
         smallSize.setBackground(new java.awt.Color(255, 255, 255));
         smallSize.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        smallSize.setText("'S'");
+        smallSize.setText("S");
         smallSize.setBorder(null);
         smallSize.setContentAreaFilled(false);
         smallSize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1082,7 +1111,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
 
         femaleGender.setBackground(new java.awt.Color(255, 255, 255));
         femaleGender.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        femaleGender.setText("'F'");
+        femaleGender.setText("F");
         femaleGender.setBorder(null);
         femaleGender.setContentAreaFilled(false);
         femaleGender.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1098,7 +1127,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
 
         mediumSize.setBackground(new java.awt.Color(255, 255, 255));
         mediumSize.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        mediumSize.setText("'M'");
+        mediumSize.setText("M");
         mediumSize.setBorder(null);
         mediumSize.setContentAreaFilled(false);
         mediumSize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1114,7 +1143,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
 
         largeSize.setBackground(new java.awt.Color(255, 255, 255));
         largeSize.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        largeSize.setText("'L'");
+        largeSize.setText("L");
         largeSize.setBorder(null);
         largeSize.setContentAreaFilled(false);
         largeSize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1130,7 +1159,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
 
         catType.setBackground(new java.awt.Color(255, 255, 255));
         catType.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        catType.setText("'Cat'");
+        catType.setText("Cat");
         catType.setBorder(null);
         catType.setContentAreaFilled(false);
         catType.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1146,7 +1175,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
 
         dogType.setBackground(new java.awt.Color(255, 255, 255));
         dogType.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        dogType.setText("'Dog'");
+        dogType.setText("Dog");
         dogType.setBorder(null);
         dogType.setContentAreaFilled(false);
         dogType.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1475,6 +1504,106 @@ public class VetLoggedIn extends javax.swing.JFrame {
         applicationBody.setPreferredSize(new java.awt.Dimension(1370, 740));
         applicationBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        decline5.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        decline5.setText("Decline");
+        decline5.setContentAreaFilled(false);
+        decline5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                decline5ActionPerformed(evt);
+            }
+        });
+        applicationBody.add(decline5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 595, -1, -1));
+
+        accept5.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        accept5.setText("Accept");
+        accept5.setContentAreaFilled(false);
+        accept5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                accept5ActionPerformed(evt);
+            }
+        });
+        applicationBody.add(accept5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 570, -1, -1));
+
+        decline4.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        decline4.setText("Decline");
+        decline4.setContentAreaFilled(false);
+        decline4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                decline4ActionPerformed(evt);
+            }
+        });
+        applicationBody.add(decline4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 525, -1, -1));
+
+        accept4.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        accept4.setText("Accept");
+        accept4.setContentAreaFilled(false);
+        accept4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                accept4ActionPerformed(evt);
+            }
+        });
+        applicationBody.add(accept4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 500, -1, -1));
+
+        decline3.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        decline3.setText("Decline");
+        decline3.setContentAreaFilled(false);
+        decline3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                decline3ActionPerformed(evt);
+            }
+        });
+        applicationBody.add(decline3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 455, -1, -1));
+
+        accept3.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        accept3.setText("Accept");
+        accept3.setContentAreaFilled(false);
+        accept3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                accept3ActionPerformed(evt);
+            }
+        });
+        applicationBody.add(accept3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 430, -1, -1));
+
+        decline2.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        decline2.setText("Decline");
+        decline2.setContentAreaFilled(false);
+        decline2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                decline2ActionPerformed(evt);
+            }
+        });
+        applicationBody.add(decline2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 385, -1, -1));
+
+        accept2.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        accept2.setText("Accept");
+        accept2.setContentAreaFilled(false);
+        accept2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                accept2ActionPerformed(evt);
+            }
+        });
+        applicationBody.add(accept2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 360, -1, -1));
+
+        accept1.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        accept1.setText("Accept");
+        accept1.setContentAreaFilled(false);
+        accept1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                accept1ActionPerformed(evt);
+            }
+        });
+        applicationBody.add(accept1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 290, -1, -1));
+
+        decline1.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        decline1.setText("Decline");
+        decline1.setContentAreaFilled(false);
+        decline1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                decline1ActionPerformed(evt);
+            }
+        });
+        applicationBody.add(decline1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 315, -1, -1));
+
         appID5.setBackground(new java.awt.Color(255, 255, 255));
         appID5.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appID5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1517,13 +1646,6 @@ public class VetLoggedIn extends javax.swing.JFrame {
         appVet5.setToolTipText("");
         applicationBody.add(appVet5, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 580, 160, -1));
 
-        appStatus5.setBackground(new java.awt.Color(255, 255, 255));
-        appStatus5.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
-        appStatus5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        appStatus5.setText("Cancelled");
-        appStatus5.setToolTipText("");
-        applicationBody.add(appStatus5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 580, 100, -1));
-
         highlight5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/highlight (1).png"))); // NOI18N
         applicationBody.add(highlight5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 560, 880, 70));
 
@@ -1562,12 +1684,6 @@ public class VetLoggedIn extends javax.swing.JFrame {
         appVet4.setText("Rafael Lafuente");
         appVet4.setToolTipText("");
         applicationBody.add(appVet4, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 513, 160, -1));
-
-        appStatus4.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
-        appStatus4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        appStatus4.setText("Cancelled");
-        appStatus4.setToolTipText("");
-        applicationBody.add(appStatus4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 513, 100, -1));
 
         highlight4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/highlight (1).png"))); // NOI18N
         applicationBody.add(highlight4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 490, 880, 70));
@@ -1608,12 +1724,6 @@ public class VetLoggedIn extends javax.swing.JFrame {
         appVet3.setToolTipText("");
         applicationBody.add(appVet3, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 443, 160, -1));
 
-        appStatus3.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
-        appStatus3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        appStatus3.setText("Cancelled");
-        appStatus3.setToolTipText("");
-        applicationBody.add(appStatus3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 443, 100, -1));
-
         highlight3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/highlight (1).png"))); // NOI18N
         applicationBody.add(highlight3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 420, 880, 70));
 
@@ -1652,18 +1762,6 @@ public class VetLoggedIn extends javax.swing.JFrame {
         appVet2.setText("Rafael Lafuente");
         appVet2.setToolTipText("");
         applicationBody.add(appVet2, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 373, 160, -1));
-
-        appStatus2.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
-        appStatus2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        appStatus2.setText("Cancelled");
-        appStatus2.setToolTipText("");
-        applicationBody.add(appStatus2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 373, 100, -1));
-
-        appStatus1.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
-        appStatus1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        appStatus1.setText("Cancelled");
-        appStatus1.setToolTipText("");
-        applicationBody.add(appStatus1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 303, 100, -1));
 
         highlight2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/highlight (1).png"))); // NOI18N
         applicationBody.add(highlight2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 350, 880, 70));
@@ -2100,32 +2198,16 @@ public class VetLoggedIn extends javax.swing.JFrame {
         profileWorkType.setText("No Travel");
         profileBody.add(profileWorkType, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 593, 230, -1));
 
-        birthdayScroll.setHorizontalScrollBar(null);
+        ageScroll.setHorizontalScrollBar(null);
 
-        birthdate.addKeyListener(new java.awt.event.KeyAdapter() {
+        age.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                birthdateenterTabKeyPressed(evt);
+                ageenterTabKeyPressed(evt);
             }
         });
-        birthdayScroll.setViewportView(birthdate);
+        ageScroll.setViewportView(age);
 
-        profileBody.add(birthdayScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 430, 130, -1));
-
-        profileBody.add(year, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 430, 70, -1));
-
-        month.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                monthActionPerformed(evt);
-            }
-        });
-        profileBody.add(month, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 430, 53, -1));
-
-        day.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dayActionPerformed(evt);
-            }
-        });
-        profileBody.add(day, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 430, 53, -1));
+        profileBody.add(ageScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 432, 320, -1));
 
         profileAge.setFont(new java.awt.Font("Comic Sans MS", 0, 16)); // NOI18N
         profileAge.setForeground(new java.awt.Color(139, 83, 18));
@@ -2218,7 +2300,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
 
     private void defaultWindow() {
         // set pet count
-        adoptedCounter.setText(String.valueOf(pets.size()));
+        adoptedCounter.setText(String.valueOf(totalPetsToDisplay));
 
         // set visiblity
         homeBody.setVisible(true);
@@ -2250,77 +2332,53 @@ public class VetLoggedIn extends javax.swing.JFrame {
         FAQsPanel4.setVisible(false);
     }
 
-    private void comboBoxes() {
-        // action listener for year and month to dynamically adjust days
-        year.addActionListener(new ComboBoxActionListener());
-        month.addActionListener(new ComboBoxActionListener());
-
-        // populate the combo boxes
-        populateComboBoxes();
-    }
-
     private void populateComboBoxes() {
         // Populate worktype combobox
         workType.addItem("Travel");
         workType.addItem("No Travel");
-
-        // Populate year combobox
-        int currentYear = YearMonth.now().getYear();
-        for (int y = 1960; y <= currentYear; y++) {
-            String yearValue = String.valueOf(y);
-            year.addItem(yearValue);
-        }
-
-        // Populate month combobox
-        for (int m = 1; m <= 12; m++) {
-            String monthValue = String.valueOf(m);
-            month.addItem(monthValue);
-        }
-
-        // Initially populate day combobox based on current year and month
-        updateDays();
     }
 
-    private class ComboBoxActionListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            updateDays();
-        }
+    private void populatePetsFromDB() {
+        // QUERY HERE: filtering and sorting pet profiles based on the selected checkboxes
+        this.pets = spManager.getFilteredSortedPets(petTypes, petOrigins, petStatuses, petSizes, petGenders, sortCriteria);  // returns all pets that meets the criteria
+        totalPets = pets.size();
     }
-
-    private void updateDays() {
-        Object selectedYearObj = year.getSelectedItem();
-        Object selectedMonthObj = month.getSelectedItem();
-
-        if (selectedYearObj != null && selectedMonthObj != null) {
-            Integer selectedYear;
-            Integer selectedMonth;
-
-            if (selectedYearObj instanceof String) {
-                selectedYear = Integer.parseInt((String) selectedYearObj);
-            } else {
-                selectedYear = (Integer) selectedYearObj;
-            }
-
-            if (selectedMonthObj instanceof String) {
-                selectedMonth = Integer.parseInt((String) selectedMonthObj);
-            } else {
-                selectedMonth = (Integer) selectedMonthObj;
-            }
-
-            YearMonth yearMonth = YearMonth.of(selectedYear, selectedMonth);
-            int daysInMonth = yearMonth.lengthOfMonth();
-            day.removeAllItems();
-            for (int d = 1; d <= daysInMonth; d++) {
-                String dayValue = String.valueOf(d);
-                day.addItem(dayValue);
-            }
-        }
+    
+    private void populateVetsFromDB() {
+        // QUERY HERE: get all vet records
+        this.vets = spManager.getAllVets();
+        totalVets = vets.size();
     }
-
-    private void populateFromDB() {
-        
+    
+    public void populateAppsFromDB(int criteria) {
+        // QUERY HERE: get all application records based on the button clicked
+        switch(criteria) {
+            case 1:
+                this.applications = spManager.getPendingAdoptionApplicationsForVet(vet.getVetID());
+                totalApplications = applications.size();
+                break;
+            case 2:
+                this.applications = spManager.getSuccessfulAdoptionApplicationsForVet(vet.getVetID());
+                totalApplications = applications.size();
+                break;
+            case 3:
+                this.applications = spManager.getCancelledAdoptionApplicationsForVet(vet.getVetID());
+                totalApplications = applications.size();
+                break;
+            case 4:
+                this.applications = spManager.getPendingRehomeApplicationsForVet(vet.getVetID());
+                totalApplications = applications.size();
+                break;
+            case 5:
+                this.applications = spManager.getSuccessfulRehomeApplicationsForVet(vet.getVetID());
+                totalApplications = applications.size();
+                break;
+            case 6:
+                this.applications = spManager.getCancelledRehomeApplicationsForVet(vet.getVetID());
+                totalApplications = applications.size();
+                break;
+                
+        }
     }
 
     private void updatePanelVisibility(boolean home, boolean aboutUs, boolean faqs, boolean pets, boolean vets, boolean application, boolean profile) {
@@ -2365,7 +2423,8 @@ public class VetLoggedIn extends javax.swing.JFrame {
 
     private void handleHomeButtonClick() {
         // update count of pets
-        adoptedCounter.setText(String.valueOf(pets.size()));
+        totalPetsToDisplay = spManager.getAllPetsCount();
+        adoptedCounter.setText(String.valueOf(totalPetsToDisplay));
 
         updatePanelVisibility(true, false, false, false, false, false, false);
         updateClickBackgroundVisibility(true, false, false, false, false, false);
@@ -2420,7 +2479,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
         name.setForeground(Color.BLACK);
     }
 
-    private void handleApplicationButtonClick() {
+    public void handleApplicationButtonClick() {
         applicationsReset();
         updatePanelVisibility(false, false, false, false, false, true, false);
         updateClickBackgroundVisibility(false, false, false, false, false, true);
@@ -2491,7 +2550,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
         // Pet Panel 1
         if (totalPets >= 1) {
             petName1.setText(pets.get(petIndex).getPetName());
-            petAge1.setText(String.valueOf(pets.get(petIndex).getPetAge()) + " months");
+            petAge1.setText(String.valueOf(pets.get(petIndex).getPetAge()));
             petGender1.setText(pets.get(petIndex).getPetSex());
             petImg1.setIcon(new javax.swing.ImageIcon(getClass().getResource(pets.get(petIndex).getPicURL())));
             petURL1 = pets.get(petIndex).getPicURL();
@@ -2501,7 +2560,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
         // Pet Panel 2
         if (totalPets >= 2) {
             petName2.setText(pets.get(petIndex).getPetName());
-            petAge2.setText(String.valueOf(pets.get(petIndex).getPetAge()) + " months");
+            petAge2.setText(String.valueOf(pets.get(petIndex).getPetAge()));
             petGender2.setText(pets.get(petIndex).getPetSex());
             petImg2.setIcon(new javax.swing.ImageIcon(getClass().getResource(pets.get(petIndex).getPicURL())));
             petURL2 = pets.get(petIndex).getPicURL();
@@ -2511,7 +2570,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
         // Pet Panel 3
         if (totalPets >= 3) {
             petName3.setText(pets.get(petIndex).getPetName());
-            petAge3.setText(String.valueOf(pets.get(petIndex).getPetAge()) + " months");
+            petAge3.setText(String.valueOf(pets.get(petIndex).getPetAge()));
             petGender3.setText(pets.get(petIndex).getPetSex());
             petImg3.setIcon(new javax.swing.ImageIcon(getClass().getResource(pets.get(petIndex).getPicURL())));
             petURL3 = pets.get(petIndex).getPicURL();
@@ -2646,9 +2705,23 @@ public class VetLoggedIn extends javax.swing.JFrame {
         vetNext.setVisible(totalVets > 6);
     }
 
-    private void applicationEditVisibility(boolean edit) {
+    public void applicationEditVisibility(boolean edit) {
+        JLabel[] appIDs = {appID1, appID2, appID3, appID4, appID5};
+        JLabel[] appTypes = {appType1, appType2, appType3, appType4, appType5};
+        JLabel[] appPetNames = {appPetName1, appPetName2, appPetName3, appPetName4, appPetName5};
+        JLabel[] appPetTypes = {appPetType1, appPetType2, appPetType3, appPetType4, appPetType5};
+        JLabel[] appAppointDates = {appAppointDate1, appAppointDate2, appAppointDate3, appAppointDate4, appAppointDate5};
+        JLabel[] appVets = {appVet1, appVet2, appVet3, appVet4, appVet5};
+        JCheckBox[] acceptCheckBoxes = {accept1, accept2, accept3, accept4, accept5};
+        JCheckBox[] declineCheckBoxes = {decline1, decline2, decline3, decline4, decline5};
         JLabel[] highlighters = {highlight1, highlight2, highlight3, highlight4, highlight5};
 
+        for (JCheckBox acceptCheckBox : acceptCheckBoxes) {
+            acceptCheckBox.setVisible(false);
+        }
+        for (JCheckBox declineCheckBox : declineCheckBoxes) {
+            declineCheckBox.setVisible(false);
+        }
         for (JLabel highlighter : highlighters) {
             highlighter.setVisible(false);
         }
@@ -2657,17 +2730,25 @@ public class VetLoggedIn extends javax.swing.JFrame {
         cancelButton.setVisible(edit);
         confirmButton.setVisible(edit);
         if (edit) {
+            appIndex -= 5;
+            // Iterate through the arrays and set visibility based on total applcations
+            for (int i = 0; i < acceptCheckBoxes.length; i++) {
+                if (i < totalApplications) {
+                    if(applications.get(appIndex).getAppointStatus().charAt(0) == 'P') {
+                        acceptCheckBoxes[i].setVisible(true);
+                        declineCheckBoxes[i].setVisible(true);
+                    }
+                } else {
+                    acceptCheckBoxes[i].setVisible(false);
+                    declineCheckBoxes[i].setVisible(false);
+                }
+                appIndex++;
+            }
             applicationPrev.setVisible(false);
             applicationNext.setVisible(false);
         } else {
             // Array of app infos
-            JLabel[] appIDs = {appID1, appID2, appID3, appID4, appID5};
-            JLabel[] appTypes = {appType1, appType2, appType3, appType4, appType5};
-            JLabel[] appPetNames = {appPetName1, appPetName2, appPetName3, appPetName4, appPetName5};
-            JLabel[] appPetTypes = {appPetType1, appPetType2, appPetType3, appPetType4, appPetType5};
-            JLabel[] appAppointDates = {appAppointDate1, appAppointDate2, appAppointDate3, appAppointDate4, appAppointDate5};
-            JLabel[] appVets = {appVet1, appVet2, appVet3, appVet4, appVet5};
-            JLabel[] appStatuses = {appStatus1, appStatus2, appStatus3, appStatus4, appStatus5};
+            
 
             // Iterate through the arrays and set the foreground based on total applications
             for (int i = 0; i < appIDs.length; i++) {
@@ -2678,13 +2759,14 @@ public class VetLoggedIn extends javax.swing.JFrame {
                     appPetTypes[i].setForeground(Color.white);
                     appAppointDates[i].setForeground(Color.white);
                     appVets[i].setForeground(Color.white);
-                    appStatuses[i].setForeground(Color.white);
+                    acceptCheckBoxes[i].setForeground(Color.white);
+                    declineCheckBoxes[i].setForeground(Color.white);
                 }
             }
         }
     }
 
-    private void applications() {
+    public void applications() {
         // Application 1
         if (totalApplications >= 1) {
             String status1 = applications.get(appIndex).getAppointStatus();
@@ -2706,7 +2788,6 @@ public class VetLoggedIn extends javax.swing.JFrame {
             appPetType1.setText(applications.get(appIndex).getPetType());
             appAppointDate1.setText(String.valueOf(applications.get(appIndex).getAppointDate()));
             appVet1.setText(applications.get(appIndex).getVetName());
-            appStatus1.setText(status1);
         }
         appIndex++;
 
@@ -2731,7 +2812,6 @@ public class VetLoggedIn extends javax.swing.JFrame {
             appPetType2.setText(applications.get(appIndex).getPetType());
             appAppointDate2.setText(String.valueOf(applications.get(appIndex).getAppointDate()));
             appVet2.setText(applications.get(appIndex).getVetName());
-            appStatus2.setText(status2);
         }
         appIndex++;
 
@@ -2756,7 +2836,6 @@ public class VetLoggedIn extends javax.swing.JFrame {
             appPetType3.setText(applications.get(appIndex).getPetType());
             appAppointDate3.setText(String.valueOf(applications.get(appIndex).getAppointDate()));
             appVet3.setText(applications.get(appIndex).getVetName());
-            appStatus3.setText(status3);
         }
         appIndex++;
 
@@ -2781,7 +2860,6 @@ public class VetLoggedIn extends javax.swing.JFrame {
             appPetType4.setText(applications.get(appIndex).getPetType());
             appAppointDate4.setText(String.valueOf(applications.get(appIndex).getAppointDate()));
             appVet4.setText(applications.get(appIndex).getVetName());
-            appStatus4.setText(status4);
         }
         appIndex++;
 
@@ -2806,7 +2884,6 @@ public class VetLoggedIn extends javax.swing.JFrame {
             appPetType5.setText(applications.get(appIndex).getPetType());
             appAppointDate5.setText(String.valueOf(applications.get(appIndex).getAppointDate()));
             appVet5.setText(applications.get(appIndex).getVetName());
-            appStatus5.setText(status5);
         }
         appIndex++;
 
@@ -2827,7 +2904,6 @@ public class VetLoggedIn extends javax.swing.JFrame {
         JLabel[] appPetTypes = {appPetType1, appPetType2, appPetType3, appPetType4, appPetType5};
         JLabel[] appAppointDates = {appAppointDate1, appAppointDate2, appAppointDate3, appAppointDate4, appAppointDate5};
         JLabel[] appVets = {appVet1, appVet2, appVet3, appVet4, appVet5};
-        JLabel[] appStatuses = {appStatus1, appStatus2, appStatus3, appStatus4, appStatus5};
 
         // Iterate through the arrays and set visibility and foreground based on totalApplications
         for (int i = 0; i < appIDs.length; i++) {
@@ -2838,7 +2914,6 @@ public class VetLoggedIn extends javax.swing.JFrame {
                 appPetTypes[i].setVisible(true);
                 appAppointDates[i].setVisible(true);
                 appVets[i].setVisible(true);
-                appStatuses[i].setVisible(true);
 
                 appIDs[i].setForeground(Color.white);
                 appTypes[i].setForeground(Color.white);
@@ -2846,7 +2921,6 @@ public class VetLoggedIn extends javax.swing.JFrame {
                 appPetTypes[i].setForeground(Color.white);
                 appAppointDates[i].setForeground(Color.white);
                 appVets[i].setForeground(Color.white);
-                appStatuses[i].setForeground(Color.white);
             } else {
                 appIDs[i].setVisible(false);
                 appTypes[i].setVisible(false);
@@ -2854,7 +2928,6 @@ public class VetLoggedIn extends javax.swing.JFrame {
                 appPetTypes[i].setVisible(false);
                 appAppointDates[i].setVisible(false);
                 appVets[i].setVisible(false);
-                appStatuses[i].setVisible(false);
             }
         }
 
@@ -2904,12 +2977,9 @@ public class VetLoggedIn extends javax.swing.JFrame {
         currentAddress.setVisible(edit);
         occupation.setVisible(edit);
         companyName.setVisible(edit);
-        birthdate.setVisible(edit);
+        age.setVisible(edit);
 
         // combo boxes
-        day.setVisible(edit);
-        month.setVisible(edit);
-        year.setVisible(edit);
         workType.setVisible(edit);
 
         // password fields
@@ -2924,7 +2994,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
         currentAddressScroll.setVisible(edit);
         occupationScroll.setVisible(edit);
         companyScroll.setVisible(edit);
-        birthdayScroll.setVisible(edit);
+        ageScroll.setVisible(edit);
     }
 
     private void hidePetPanels(boolean hide) {
@@ -3147,23 +3217,57 @@ public class VetLoggedIn extends javax.swing.JFrame {
         return latch;
     }
 
-    private void petFilterBySortBy() {
-        // QUERY HERE: filtering and sorting pet profiles     
-        // filtering
+    public void petFilterBySortBy() {
+        // filter
+        petTypes.removeAll(petTypes);
+        petOrigins.removeAll(petOrigins);
+        petStatuses.removeAll(petStatuses);
+        petSizes.removeAll(petSizes);
+        petGenders.removeAll(petGenders);
+        sortCriteria.removeAll(sortCriteria);
+
         
+        JCheckBox[] types = { dogType, catType, hamsterType, rabbitType };
+        JCheckBox[] origins = { rescuedOrigin, ownedOrigin };
+        JCheckBox[] statuses = { adoptedStatus, notAdoptedStatus };
+        JCheckBox[] sizes = { tinySize, smallSize, mediumSize, largeSize };
+        JCheckBox[] genders = { femaleGender, maleGender };
         
-        // sorting and displaying the priority level
-        JCheckBox checkBox;
-        String sortBy = "SORT BY ";
-        String attr;
-        for(int i = 0; i < sortingPriority.size(); i++) {
-            checkBox = sortingPriority.get(i);
-            attr = sortingPriority.get(i).getText();
-            if(i == sortingPriority.size() - 1) {
-                sortBy += attr + ";";
-            } else {
-                sortBy += attr + ", ";
+        for(JCheckBox type : types) {
+            if(type.isSelected()) {
+                petTypes.add(type.getText());
             }
+        }
+        
+        for(JCheckBox origin : origins) {
+            if(origin.isSelected()) {
+                petOrigins.add(origin.getText());
+            }
+        }
+        
+        for(JCheckBox status : statuses) {
+            if(status.isSelected()) {
+                petStatuses.add(status.getText());
+            }
+        }
+        
+        for(JCheckBox size : sizes) {
+            if(size.isSelected()) {
+                petSizes.add(size.getText());
+            }
+        }
+        
+        for(JCheckBox gender : genders) {
+            if(gender.isSelected()) {
+                petGenders.add(gender.getText());
+            }
+        }
+        
+        // sort and display the priority level
+        JCheckBox checkBox;
+        for(int i = 0; i < sortingPriority.size(); i++) {
+            checkBox = sortingPriority.get(i);            
+            sortCriteria.add(checkBox.getText());
             
             if(checkBox.equals(orderByID)) {
                 IDprio.setText(String.valueOf(i+1));
@@ -3173,8 +3277,12 @@ public class VetLoggedIn extends javax.swing.JFrame {
                 agePrio.setText(String.valueOf(i+1));
             }
         }
-
-        System.out.println(sortBy);
+        
+        System.out.println(dogType.getText());
+        
+        populatePetsFromDB();
+        petProfilesReset();
+        petProfiles();
     }
     
     private void setPanelVisibility(boolean[] pendingVisibilities, boolean[] successVisibilities, boolean[] deniedVisibilities) {
@@ -3194,7 +3302,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
     private void handleApplicationPanels() {
         setPanelVisibility(new boolean[]{true, false, false}, new boolean[]{false, true, false}, new boolean[]{false, false, true});
     }
-
+    
     private void badgeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_badgeKeyPressed
         // TODO add your handling code here:
         // This will show the records of the adopted pets
@@ -3404,6 +3512,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
     private void applicationButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applicationButtonMousePressed
         // TODO add your handling code here:
         if (!applicationClicked) {
+            appAdoptClick = true;
             handleApplicationButtonClick();
             applications();
             applicationEditVisibility(false);
@@ -4013,12 +4122,26 @@ public class VetLoggedIn extends javax.swing.JFrame {
 
     private void rehomeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rehomeButtonMouseClicked
         // TODO add your handling code here:
-
+        appAdoptClick = false;
+        appRehomeClick = true;
+        populateAppsFromDB(4);
+        applicationClicked = false;
+        handleApplicationButtonClick();
+        applications();
+        applicationEditVisibility(false);
+        handleApplicationPanels();
     }//GEN-LAST:event_rehomeButtonMouseClicked
 
     private void adoptButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adoptButtonMouseClicked
         // TODO add your handling code here:
-        
+        appAdoptClick = true;
+        appRehomeClick = false;
+        populateAppsFromDB(1);
+        applicationClicked = false;
+        handleApplicationButtonClick();
+        applications();
+        applicationEditVisibility(false);
+        handleApplicationPanels();
     }//GEN-LAST:event_adoptButtonMouseClicked
 
     private void petPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petPanel1MouseClicked
@@ -4079,31 +4202,6 @@ public class VetLoggedIn extends javax.swing.JFrame {
                 break;
         }
     }//GEN-LAST:event_username1enterTabKeyPressed
-
-    private void birthdateenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_birthdateenterTabKeyPressed
-        // TODO add your handling code here:
-        switch (evt.getKeyChar()) {
-            case KeyEvent.VK_ENTER:
-                // Ignore the event if it is the Enter key
-                evt.consume();
-                break;
-            case KeyEvent.VK_TAB:
-                evt.consume();
-                break;
-            default:
-                // Otherwise, handle the event normally
-                super.processKeyEvent(evt);
-                break;
-        }
-    }//GEN-LAST:event_birthdateenterTabKeyPressed
-
-    private void monthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_monthActionPerformed
-
-    private void dayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dayActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_dayActionPerformed
 
     private void contactNumenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_contactNumenterTabKeyPressed
         // TODO add your handling code here:
@@ -4467,6 +4565,19 @@ public class VetLoggedIn extends javax.swing.JFrame {
     private void successPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_successPanel2MousePressed
         // TODO add your handling code here:
         setPanelVisibility(new boolean[]{false, false, true}, new boolean[]{true, false, false}, new boolean[]{false, true, false});
+        if(appAdoptClick) {
+            populateAppsFromDB(2);
+            applicationClicked = false;
+            handleApplicationButtonClick();
+            applications();
+            applicationEditVisibility(false);
+        } else if(appRehomeClick) {
+            populateAppsFromDB(5);
+            applicationClicked = false;
+            handleApplicationButtonClick();
+            applications();
+            applicationEditVisibility(false);
+        }
     }//GEN-LAST:event_successPanel2MousePressed
 
     private void successPanel3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_successPanel3MouseEntered
@@ -4482,6 +4593,19 @@ public class VetLoggedIn extends javax.swing.JFrame {
     private void successPanel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_successPanel3MousePressed
         // TODO add your handling code here:
         setPanelVisibility(new boolean[]{false, false, true}, new boolean[]{true, false, false}, new boolean[]{false, true, false});
+        if(appAdoptClick) {
+            populateAppsFromDB(2);
+            applicationClicked = false;
+            handleApplicationButtonClick();
+            applications();
+            applicationEditVisibility(false);
+        } else if(appRehomeClick) {
+            populateAppsFromDB(5);
+            applicationClicked = false;
+            handleApplicationButtonClick();
+            applications();
+            applicationEditVisibility(false);
+        }
     }//GEN-LAST:event_successPanel3MousePressed
 
     private void pendingPanel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pendingPanel2MouseEntered
@@ -4497,6 +4621,19 @@ public class VetLoggedIn extends javax.swing.JFrame {
     private void pendingPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pendingPanel2MousePressed
         // TODO add your handling code here:
         setPanelVisibility(new boolean[]{true, false, false}, new boolean[]{false, true, false}, new boolean[]{false, false, true});
+        if(appAdoptClick) {
+            populateAppsFromDB(1);
+            applicationClicked = false;
+            handleApplicationButtonClick();
+            applications();
+            applicationEditVisibility(false);
+        } else if(appRehomeClick) {
+            populateAppsFromDB(4);
+            applicationClicked = false;
+            handleApplicationButtonClick();
+            applications();
+            applicationEditVisibility(false);
+        }
     }//GEN-LAST:event_pendingPanel2MousePressed
 
     private void pendingPanel3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pendingPanel3MouseEntered
@@ -4512,6 +4649,19 @@ public class VetLoggedIn extends javax.swing.JFrame {
     private void pendingPanel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pendingPanel3MousePressed
         // TODO add your handling code here:
         setPanelVisibility(new boolean[]{true, false, false}, new boolean[]{false, true, false}, new boolean[]{false, false, true});
+        if(appAdoptClick) {
+            populateAppsFromDB(1);
+            applicationClicked = false;
+            handleApplicationButtonClick();
+            applications();
+            applicationEditVisibility(false);
+        } else if(appRehomeClick) {
+            populateAppsFromDB(4);
+            applicationClicked = false;
+            handleApplicationButtonClick();
+            applications();
+            applicationEditVisibility(false);
+        }
     }//GEN-LAST:event_pendingPanel3MousePressed
 
     private void deniedPanel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deniedPanel2MouseEntered
@@ -4527,6 +4677,19 @@ public class VetLoggedIn extends javax.swing.JFrame {
     private void deniedPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deniedPanel2MousePressed
         // TODO add your handling code here:
         setPanelVisibility(new boolean[]{false, true, false}, new boolean[]{false, false, true}, new boolean[]{true, false, false});
+        if(appAdoptClick) {
+            populateAppsFromDB(3);
+            applicationClicked = false;
+            handleApplicationButtonClick();
+            applications();
+            applicationEditVisibility(false);
+        } else if(appRehomeClick) {
+            populateAppsFromDB(6);
+            applicationClicked = false;
+            handleApplicationButtonClick();
+            applications();
+            applicationEditVisibility(false);
+        }
     }//GEN-LAST:event_deniedPanel2MousePressed
 
     private void deniedPanel3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deniedPanel3MouseEntered
@@ -4542,12 +4705,25 @@ public class VetLoggedIn extends javax.swing.JFrame {
     private void deniedPanel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deniedPanel3MousePressed
         // TODO add your handling code here:
         setPanelVisibility(new boolean[]{false, true, false}, new boolean[]{false, false, true}, new boolean[]{true, false, false});
+        if(appAdoptClick) {
+            populateAppsFromDB(3);
+            applicationClicked = false;
+            handleApplicationButtonClick();
+            applications();
+            applicationEditVisibility(false);
+        } else if(appRehomeClick) {
+            populateAppsFromDB(6);
+            applicationClicked = false;
+            handleApplicationButtonClick();
+            applications();
+            applicationEditVisibility(false);
+        }
     }//GEN-LAST:event_deniedPanel3MousePressed
 
     private void rescueButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rescueButtonMouseClicked
         // TODO add your handling code here:
         if (rescued == null) {
-            rescued = new Rescued(this);
+            rescued = new Rescued(this, vet);
             rescued.setVisible(true);
         } else if (!rescued.isVisible()) {
             rescued.setVisible(true);
@@ -4566,6 +4742,116 @@ public class VetLoggedIn extends javax.swing.JFrame {
         // TODO add your handling code here:
         rescueButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/rescue button.png")));
     }//GEN-LAST:event_rescueButtonMouseExited
+
+    private void ageenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ageenterTabKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyChar()) {
+            case KeyEvent.VK_ENTER:
+            // Ignore the event if it is the Enter key
+            evt.consume();
+            break;
+            case KeyEvent.VK_TAB:
+            evt.consume();
+            break;
+            default:
+            // Otherwise, handle the event normally
+            super.processKeyEvent(evt);
+            break;
+        }
+    }//GEN-LAST:event_ageenterTabKeyPressed
+
+    private void accept1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accept1ActionPerformed
+        // TODO add your handling code here:
+         JLabel[] infos = {appID1, appType1, appPetName1, appPetType1, appAppointDate1, appVet1};
+        
+        if(decline1.isSelected()) {
+            decline1.setSelected(false);
+        }
+
+        if(!accept1.isSelected()) {
+            if (highlight1.isVisible()) {
+                highlight1.setVisible(false);
+                for (JLabel info : infos) {
+                    info.setForeground(Color.white);
+                }
+                accept1.setForeground(Color.white);
+                decline1.setForeground(Color.white);
+            }
+        } else {
+            highlight1.setVisible(true);
+            for (JLabel info : infos) {
+                info.setForeground(Color.black);
+            }
+            accept1.setForeground(Color.black);
+            decline1.setForeground(Color.black);
+        }                                      
+    }//GEN-LAST:event_accept1ActionPerformed
+
+    private void decline1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decline1ActionPerformed
+        // TODO add your handling code here:
+        JLabel[] infos = {appID1, appType1, appPetName1, appPetType1, appAppointDate1, appVet1};
+        if(accept1.isSelected()) {
+            accept1.setSelected(false);
+        }
+        
+        if(!decline1.isSelected()) {
+            if (highlight1.isVisible()) {
+                highlight1.setVisible(false);
+                for (JLabel info : infos) {
+                    info.setForeground(Color.white);
+                }
+                accept1.setForeground(Color.white);
+                decline1.setForeground(Color.white);
+            }
+        } else {
+            highlight1.setVisible(true);
+            for (JLabel info : infos) {
+                info.setForeground(Color.black);
+            }
+            accept1.setForeground(Color.black);
+            decline1.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_decline1ActionPerformed
+
+    private void accept2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accept2ActionPerformed
+        // TODO add your handling code here:
+        JLabel[] infos = {appID2, appType2, appPetName2, appPetType2, appAppointDate2, appVet2};
+    }//GEN-LAST:event_accept2ActionPerformed
+
+    private void decline2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decline2ActionPerformed
+        // TODO add your handling code here:
+        JLabel[] infos = {appID2, appType2, appPetName2, appPetType2, appAppointDate2, appVet2};
+    }//GEN-LAST:event_decline2ActionPerformed
+
+    private void accept3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accept3ActionPerformed
+        // TODO add your handling code here:
+        JLabel[] infos = {appID3, appType3, appPetName3, appPetType3, appAppointDate3, appVet3};
+    }//GEN-LAST:event_accept3ActionPerformed
+
+    private void decline3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decline3ActionPerformed
+        // TODO add your handling code here:
+        JLabel[] infos = {appID3, appType3, appPetName3, appPetType3, appAppointDate3, appVet3};
+    }//GEN-LAST:event_decline3ActionPerformed
+
+    private void accept4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accept4ActionPerformed
+        // TODO add your handling code here:
+        JLabel[] infos = {appID4, appType4, appPetName4, appPetType4, appAppointDate4, appVet4};
+    }//GEN-LAST:event_accept4ActionPerformed
+
+    private void decline4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decline4ActionPerformed
+        // TODO add your handling code here:
+        JLabel[] infos = {appID4, appType4, appPetName4, appPetType4, appAppointDate4, appVet4};
+    }//GEN-LAST:event_decline4ActionPerformed
+
+    private void accept5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accept5ActionPerformed
+        // TODO add your handling code here:
+        JLabel[] infos = {appID5, appType5, appPetName5, appPetType5, appAppointDate5, appVet5};
+    }//GEN-LAST:event_accept5ActionPerformed
+
+    private void decline5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decline5ActionPerformed
+        // TODO add your handling code here:
+        JLabel[] infos = {appID5, appType5, appPetName5, appPetType5, appAppointDate5, appVet5};
+    }//GEN-LAST:event_decline5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -4615,12 +4901,19 @@ public class VetLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel aboutUsButton;
     private javax.swing.JLabel aboutUsClick;
     private javax.swing.JLabel aboutUsPanel;
+    private javax.swing.JCheckBox accept1;
+    private javax.swing.JCheckBox accept2;
+    private javax.swing.JCheckBox accept3;
+    private javax.swing.JCheckBox accept4;
+    private javax.swing.JCheckBox accept5;
     private javax.swing.JLabel adoptButton;
     private javax.swing.JLabel adoptedCounter;
     private javax.swing.JLabel adoptedLabel;
     private javax.swing.JCheckBox adoptedStatus;
+    private javax.swing.JTextPane age;
     private javax.swing.JCheckBox ageDescending;
     private javax.swing.JLabel agePrio;
+    private javax.swing.JScrollPane ageScroll;
     private javax.swing.JLabel appAppointDate1;
     private javax.swing.JLabel appAppointDate2;
     private javax.swing.JLabel appAppointDate3;
@@ -4642,11 +4935,6 @@ public class VetLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel appPetType3;
     private javax.swing.JLabel appPetType4;
     private javax.swing.JLabel appPetType5;
-    private javax.swing.JLabel appStatus1;
-    private javax.swing.JLabel appStatus2;
-    private javax.swing.JLabel appStatus3;
-    private javax.swing.JLabel appStatus4;
-    private javax.swing.JLabel appStatus5;
     private javax.swing.JLabel appType1;
     private javax.swing.JLabel appType2;
     private javax.swing.JLabel appType3;
@@ -4670,8 +4958,6 @@ public class VetLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel background5;
     private javax.swing.JLabel background6;
     private javax.swing.JLabel badge;
-    private javax.swing.JTextPane birthdate;
-    private javax.swing.JScrollPane birthdayScroll;
     private javax.swing.JLabel bulletin;
     private javax.swing.JLabel businessRules;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -4686,7 +4972,11 @@ public class VetLoggedIn extends javax.swing.JFrame {
     private javax.swing.JScrollPane contactNumScroll;
     private javax.swing.JTextPane currentAddress;
     private javax.swing.JScrollPane currentAddressScroll;
-    private javax.swing.JComboBox<String> day;
+    private javax.swing.JCheckBox decline1;
+    private javax.swing.JCheckBox decline2;
+    private javax.swing.JCheckBox decline3;
+    private javax.swing.JCheckBox decline4;
+    private javax.swing.JCheckBox decline5;
     private javax.swing.JLabel deniedPanel1;
     private javax.swing.JLabel deniedPanel2;
     private javax.swing.JLabel deniedPanel3;
@@ -4720,7 +5010,6 @@ public class VetLoggedIn extends javax.swing.JFrame {
     private javax.swing.JCheckBox maleGender;
     private javax.swing.JCheckBox mediumSize;
     private javax.swing.JLabel minimizeButton;
-    private javax.swing.JComboBox<String> month;
     private javax.swing.JLabel name;
     private javax.swing.JCheckBox nameDescending;
     private javax.swing.JLabel namePrio;
@@ -4826,6 +5115,5 @@ public class VetLoggedIn extends javax.swing.JFrame {
     private javax.swing.JPanel vetsBody;
     private javax.swing.JLabel vetsPanel;
     private javax.swing.JComboBox<String> workType;
-    private javax.swing.JComboBox<String> year;
     // End of variables declaration//GEN-END:variables
 }

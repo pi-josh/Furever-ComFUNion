@@ -183,26 +183,32 @@ public class Rehome extends javax.swing.JFrame {
     }
 
     // available dates
-    public List<String> getAvailableDateTimes(int daysAhead) throws ParseException {
-        List<Application> existingApplications = spManager.getAllExistingApplications();
-        Set<String> reservedDateTimes = new HashSet<>();
-
-        for (Application app : existingApplications) {
-            reservedDateTimes.add(app.getAppointDate() + " " + app.getAppointTime());
-        }
-
+    public List<String> getAvailableDateTimes(int daysAhead, String selectedVetID) throws ParseException {
         List<String> availableDateTimes = new ArrayList<>();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        Calendar calendar = Calendar.getInstance();
+        if("".equals(selectedVetID)) {
+            availableDateTimes.add("");
+        } else {
+            List<Application> existingApplications = spManager.getAllExistingApplications();
+            Set<String> reservedDateTimes = new HashSet<>();
 
-        for (int i = 1; i <= daysAhead; i++) {
-            calendar.add(Calendar.DAY_OF_YEAR, 1);
-            String date = dateFormat.format(calendar.getTime());
-            for (int hour = 9; hour <= 17; hour++) { // Example: 9 AM to 5 PM
-                String dateTimeStr = date + " " + String.format("%02d:00", hour);
-                if (!reservedDateTimes.contains(dateTimeStr)) {
-                    availableDateTimes.add(dateTimeStr);
+            // Filter applications by vetID and collect reserved date times
+            for (Application app : existingApplications) {
+                if (app.getVetID().equals(selectedVetID)) {
+                    reservedDateTimes.add(app.getAppointDate() + " " + app.getAppointTime());
+                }
+            }
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Calendar calendar = Calendar.getInstance();
+
+            for (int i = 1; i <= daysAhead; i++) {
+                calendar.add(Calendar.DAY_OF_YEAR, 1);
+                String date = dateFormat.format(calendar.getTime());
+                for (int hour = 9; hour <= 17; hour++) { // Example: 9 AM to 5 PM
+                    String dateTimeStr = date + " " + String.format("%02d:00:00", hour);
+                    if (!reservedDateTimes.contains(dateTimeStr)) {
+                        availableDateTimes.add(dateTimeStr);
+                    }
                 }
             }
         }
@@ -210,7 +216,9 @@ public class Rehome extends javax.swing.JFrame {
     }
 
     private void populateDateTimeComboBox(int daysAhead) throws ParseException {
-        List<String> availableDateTimes = getAvailableDateTimes(daysAhead);
+        List<String> availableDateTimes = getAvailableDateTimes(daysAhead, (String) vetID.getSelectedItem());
+        availableDates.removeAllItems();
+        availableDates.addItem("");
         for (String dateTime : availableDateTimes) {
             availableDates.addItem(dateTime);
         }
@@ -883,9 +891,9 @@ public class Rehome extends javax.swing.JFrame {
         } else {
             // QUERY HERE: insert rehome application form in the application table
             // the method will return true if successful, otherwise false
-                if(methodName(applicationType, appointDate, appointTime, appointPlace, appointStatus, clientID, selectedPetID, selectedVetID)) {
+            if(methodName(applicationType, appointDate, appointTime, appointPlace, appointStatus, clientID, selectedPetID, selectedVetID)) {
                 JOptionPane.showMessageDialog(null, "Application Submitted!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                        } else {
+            } else {
                 JOptionPane.showMessageDialog(null, "Application Failed", "Failed", JOptionPane.ERROR_MESSAGE);
             }
         }
@@ -986,8 +994,18 @@ public class Rehome extends javax.swing.JFrame {
         for (Veterinarian vet : vets) {
             if (vet.getVetID().equals(currentVetID)) {
                 vetName.setSelectedItem(vet.getVetFullName());
+                try {
+                    populateDateTimeComboBox(30);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 return;
             }
+        }
+        try {
+            populateDateTimeComboBox(30);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
         vetName.setSelectedItem("");
     }//GEN-LAST:event_vetIDActionPerformed
@@ -998,8 +1016,18 @@ public class Rehome extends javax.swing.JFrame {
         for (Veterinarian vet : vets) {
             if (vet.getVetFullName().equals(currentVetName)) {
                 vetID.setSelectedItem(String.valueOf(vet.getVetID()));
+                try {
+                    populateDateTimeComboBox(30);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 return;
             }
+        }
+        try {
+            populateDateTimeComboBox(30);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
         vetID.setSelectedItem("");
     }//GEN-LAST:event_vetNameActionPerformed

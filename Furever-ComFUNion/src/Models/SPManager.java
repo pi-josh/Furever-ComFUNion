@@ -321,6 +321,7 @@ public class SPManager {
                 Application app = new Application();
                 app.setAppointDate(rs.getString("AppointDate"));
                 app.setAppointTime(rs.getString("AppointTime"));
+                app.setVetID(rs.getString("VetID"));
                 apps.add(app);
             }
         } catch (SQLException e) {
@@ -516,5 +517,22 @@ public class SPManager {
             e.printStackTrace();
         }
         return vet;
+    }
+    
+    // Method to fetch count of all pet records
+    public int getAllPetsCount() {
+        int petCount = 0;
+        String query = "{CALL GetAllPetsCount()}"; // Adjust if your stored procedure name is different
+
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             CallableStatement stmt = connection.prepareCall(query);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                petCount = rs.getInt("Count(*)");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return petCount;
     }
 }

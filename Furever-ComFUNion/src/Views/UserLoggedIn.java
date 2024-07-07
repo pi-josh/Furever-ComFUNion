@@ -126,7 +126,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         populateVetsFromDB();
         populateAppsFromDB();
         
-        totalPetsToDisplay = totalPets;
+        totalPetsToDisplay = spManager.getAllPetsCount();
 
         initComponents();
 
@@ -2371,10 +2371,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void handleHomeButtonClick() {
         // update count of pets
-        /*
         //QUERY HERE: get total count of records in the pet table
-        totalPetsToDisplay = methodName();  // returns an integer value for the count  
-        */
+        totalPetsToDisplay = spManager.getAllPetsCount(); 
         adoptedCounter.setText(String.valueOf(totalPetsToDisplay));
 
         updatePanelVisibility(true, false, false, false, false, false, false);
