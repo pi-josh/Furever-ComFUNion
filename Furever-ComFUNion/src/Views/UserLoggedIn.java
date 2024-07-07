@@ -2,6 +2,7 @@ package Views;
 
 import Controllers.ConfirmationDialogController;
 import Controllers.ExitDialogController;
+import Controllers.RegisterController;
 import Models.Application;
 import Models.Client;
 import Models.Pet;
@@ -11,12 +12,9 @@ import java.awt.Color;
 import java.awt.MediaTracker;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -41,6 +39,7 @@ import javax.swing.SwingUtilities;
 public class UserLoggedIn extends javax.swing.JFrame {
     // Database manager
     SPManager spManager = new SPManager();
+    RegisterController registerController = new RegisterController();
     
     // Client who is currently logged in
     private Client client;
@@ -136,7 +135,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
             updateClientProfile();
         }
 
-        comboBoxes();
+        populateComboBoxes();
 
         // default
         defaultWindow();
@@ -420,7 +419,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         fullName = new javax.swing.JTextPane();
         profileName = new javax.swing.JLabel();
         usernameScroll = new javax.swing.JScrollPane();
-        username1 = new javax.swing.JTextPane();
+        username = new javax.swing.JTextPane();
         profileUsername = new javax.swing.JLabel();
         contactNumScroll = new javax.swing.JScrollPane();
         contactNum = new javax.swing.JTextPane();
@@ -444,11 +443,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
         profileCompany = new javax.swing.JLabel();
         workType = new javax.swing.JComboBox<>();
         profileWorkType = new javax.swing.JLabel();
-        birthdayScroll = new javax.swing.JScrollPane();
-        birthdate = new javax.swing.JTextPane();
-        year = new javax.swing.JComboBox<>();
-        month = new javax.swing.JComboBox<>();
-        day = new javax.swing.JComboBox<>();
+        ageScroll = new javax.swing.JScrollPane();
+        age = new javax.swing.JTextPane();
         profileAge = new javax.swing.JLabel();
         profileDeleteButton = new javax.swing.JLabel();
         profileEditButton = new javax.swing.JLabel();
@@ -2032,12 +2028,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         usernameScroll.setHorizontalScrollBar(null);
 
-        username1.addKeyListener(new java.awt.event.KeyAdapter() {
+        username.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                username1enterTabKeyPressed(evt);
+                usernameenterTabKeyPressed(evt);
             }
         });
-        usernameScroll.setViewportView(username1);
+        usernameScroll.setViewportView(username);
 
         profileBody.add(usernameScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 540, 220, -1));
 
@@ -2118,7 +2114,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         });
         currentAddressScroll.setViewportView(currentAddress);
 
-        profileBody.add(currentAddressScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 382, 270, -1));
+        profileBody.add(currentAddressScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 356, 280, 70));
 
         profileAddress.setFont(new java.awt.Font("Comic Sans MS", 0, 16)); // NOI18N
         profileAddress.setForeground(new java.awt.Color(139, 83, 18));
@@ -2174,32 +2170,16 @@ public class UserLoggedIn extends javax.swing.JFrame {
         profileWorkType.setText("No Travel");
         profileBody.add(profileWorkType, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 593, 230, -1));
 
-        birthdayScroll.setHorizontalScrollBar(null);
+        ageScroll.setHorizontalScrollBar(null);
 
-        birthdate.addKeyListener(new java.awt.event.KeyAdapter() {
+        age.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                birthdateenterTabKeyPressed(evt);
+                ageenterTabKeyPressed(evt);
             }
         });
-        birthdayScroll.setViewportView(birthdate);
+        ageScroll.setViewportView(age);
 
-        profileBody.add(birthdayScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 430, 130, -1));
-
-        profileBody.add(year, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 430, 70, -1));
-
-        month.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                monthActionPerformed(evt);
-            }
-        });
-        profileBody.add(month, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 430, 53, -1));
-
-        day.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dayActionPerformed(evt);
-            }
-        });
-        profileBody.add(day, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 430, 53, -1));
+        profileBody.add(ageScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 432, 320, -1));
 
         profileAge.setFont(new java.awt.Font("Comic Sans MS", 0, 16)); // NOI18N
         profileAge.setForeground(new java.awt.Color(139, 83, 18));
@@ -2324,74 +2304,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
         FAQsPanel4.setVisible(false);
     }
 
-    private void comboBoxes() {
-        // action listener for year and month to dynamically adjust days
-        year.addActionListener(new ComboBoxActionListener());
-        month.addActionListener(new ComboBoxActionListener());
-
-        // populate the combo boxes
-        populateComboBoxes();
-    }
-
     private void populateComboBoxes() {
         // Populate worktype combobox
         workType.addItem("Travel");
         workType.addItem("No Travel");
-
-        // Populate year combobox
-        int currentYear = YearMonth.now().getYear();
-        for (int y = 1960; y <= currentYear; y++) {
-            String yearValue = String.valueOf(y);
-            year.addItem(yearValue);
-        }
-
-        // Populate month combobox
-        for (int m = 1; m <= 12; m++) {
-            String monthValue = String.valueOf(m);
-            month.addItem(monthValue);
-        }
-
-        // Initially populate day combobox based on current year and month
-        updateDays();
     }
 
-    private class ComboBoxActionListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            updateDays();
-        }
-    }
-
-    private void updateDays() {
-        Object selectedYearObj = year.getSelectedItem();
-        Object selectedMonthObj = month.getSelectedItem();
-
-        if (selectedYearObj != null && selectedMonthObj != null) {
-            Integer selectedYear;
-            Integer selectedMonth;
-
-            if (selectedYearObj instanceof String) {
-                selectedYear = Integer.parseInt((String) selectedYearObj);
-            } else {
-                selectedYear = (Integer) selectedYearObj;
-            }
-
-            if (selectedMonthObj instanceof String) {
-                selectedMonth = Integer.parseInt((String) selectedMonthObj);
-            } else {
-                selectedMonth = (Integer) selectedMonthObj;
-            }
-
-            YearMonth yearMonth = YearMonth.of(selectedYear, selectedMonth);
-            int daysInMonth = yearMonth.lengthOfMonth();
-            day.removeAllItems();
-            for (int d = 1; d <= daysInMonth; d++) {
-                String dayValue = String.valueOf(d);
-                day.addItem(dayValue);
-            }
-        }
-    }
     
     private void populatePetsFromDB() {
         // QUERY HERE: filtering and sorting pet profiles based on the selected checkboxes
@@ -3012,18 +2930,15 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         // text fields
         fullName.setVisible(edit);
-        username1.setVisible(edit);
+        username.setVisible(edit);
         contactNum.setVisible(edit);
         emailAddress.setVisible(edit);
         currentAddress.setVisible(edit);
         occupation.setVisible(edit);
         companyName.setVisible(edit);
-        birthdate.setVisible(edit);
+        age.setVisible(edit);
 
         // combo boxes
-        day.setVisible(edit);
-        month.setVisible(edit);
-        year.setVisible(edit);
         workType.setVisible(edit);
 
         // password fields
@@ -3038,7 +2953,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         currentAddressScroll.setVisible(edit);
         occupationScroll.setVisible(edit);
         companyScroll.setVisible(edit);
-        birthdayScroll.setVisible(edit);
+        ageScroll.setVisible(edit);
     }
 
     private void hidePetPanels(boolean hide) {
@@ -4181,6 +4096,16 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private void profileEditButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileEditButtonMouseClicked
         // TODO add your handling code here:
         profileEditVisibility(true);
+        fullName.setText(client.getClientFullName());
+        age.setText(String.valueOf(client.getClientAge()));
+        contactNum.setText(client.getCellNum());
+        username.setText(client.getClientUsername());
+        password.setText(client.getClientPassword());
+        currentAddress.setText(client.getClientAddress());
+        emailAddress.setText(client.getClientOccupation());
+        occupation.setText(client.getClientOccupation());
+        companyName.setText(client.getCompanyName());
+        workType.setSelectedItem(client.getWorkType());
     }//GEN-LAST:event_profileEditButtonMouseClicked
 
     private void profileEditButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileEditButtonMouseEntered
@@ -4215,6 +4140,17 @@ public class UserLoggedIn extends javax.swing.JFrame {
                     @Override
                     public void run() {
                         if (userResponse) {
+                            boolean success = false;
+                            
+                            /*
+                            // QUERY HERE: delete a client record by changing the account status to "D"
+                            // method will return true if successful, otherwise false
+                            success = spManager.methodName(client.getClientID());
+                            */
+                            if(success) {
+                                UserLoggedIn.this.setVisible(false);
+                                new LandingPage(true).setVisible(true);
+                            }
                         }
                     }
                 });
@@ -4296,6 +4232,41 @@ public class UserLoggedIn extends javax.swing.JFrame {
                     @Override
                     public void run() {
                         if (userResponse) {
+                            boolean success = false;
+                            
+                            String fullNameVar = fullName.getText().trim();
+                            int ageVar = Integer.valueOf(age.getText().trim());
+                            String contactNumVar = contactNum.getText().trim();
+                            String usernameVar = username.getText().trim();
+                            String passwordVar = (String) password.getText();
+                            String confirmPasswordVar = (String) confirmPassword.getText();
+                            String currentAddressVar = currentAddress.getText().trim();
+                            String emailAddressVar = emailAddress.getText().trim();
+                            String occupationVar = occupation.getText().trim();
+                            String companyNameVar = companyName.getText().trim();
+                            String workTypeVar = (String) workType.getSelectedItem();
+                            
+                            if(registerController.validateClientInput(fullNameVar, emailAddressVar, usernameVar, contactNumVar, passwordVar, confirmPasswordVar,
+                                             currentAddressVar, occupationVar, companyNameVar, workTypeVar, "")) {
+                            /* QUERY HERE: update client record by id
+                                String acctStatus = 'A';
+                                success = methodName(client.getClientID(), usernameVar, passwordVar, fullNameVar, ageVar, currentAddressVar, contactNumberVar,
+                                                     emailAddressVar, occupationVar, companyNameVar, workTypeVar, acctStatus);    returns true if successful
+                                
+                                if (success) {
+                                    // Show success message
+                                    confirmPassword.setText("");
+                                    JOptionPane.showMessageDialog(null, "Profile Updated Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                                } else {
+                                    // Show error message
+                                    JOptionPane.showMessageDialog(null, "Profile Update Failed. Please try again.");
+                                    return;
+                                }  
+                            */
+                            } else {
+                                return;
+                            }
+                                              
                             profileEditVisibility(false);
                         }
                     }
@@ -4336,6 +4307,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                     @Override
                     public void run() {
                         if (userResponse) {
+                            confirmPassword.setText("");
                             profileEditVisibility(false);
                         }
                     }
@@ -4418,7 +4390,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_fullNameenterTabKeyPressed
 
-    private void username1enterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_username1enterTabKeyPressed
+    private void usernameenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameenterTabKeyPressed
         // TODO add your handling code here:
         switch (evt.getKeyChar()) {
             case KeyEvent.VK_ENTER:
@@ -4433,9 +4405,9 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 super.processKeyEvent(evt);
                 break;
         }
-    }//GEN-LAST:event_username1enterTabKeyPressed
+    }//GEN-LAST:event_usernameenterTabKeyPressed
 
-    private void birthdateenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_birthdateenterTabKeyPressed
+    private void ageenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ageenterTabKeyPressed
         // TODO add your handling code here:
         switch (evt.getKeyChar()) {
             case KeyEvent.VK_ENTER:
@@ -4450,15 +4422,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 super.processKeyEvent(evt);
                 break;
         }
-    }//GEN-LAST:event_birthdateenterTabKeyPressed
-
-    private void monthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_monthActionPerformed
-
-    private void dayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dayActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_dayActionPerformed
+    }//GEN-LAST:event_ageenterTabKeyPressed
 
     private void contactNumenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_contactNumenterTabKeyPressed
         // TODO add your handling code here:
@@ -5203,8 +5167,10 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel adoptedCounter;
     private javax.swing.JLabel adoptedLabel;
     private javax.swing.JCheckBox adoptedStatus;
+    private javax.swing.JTextPane age;
     private javax.swing.JCheckBox ageDescending;
     private javax.swing.JLabel agePrio;
+    private javax.swing.JScrollPane ageScroll;
     private javax.swing.JLabel appAppointDate1;
     private javax.swing.JLabel appAppointDate2;
     private javax.swing.JLabel appAppointDate3;
@@ -5255,8 +5221,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel background5;
     private javax.swing.JLabel background6;
     private javax.swing.JLabel badge;
-    private javax.swing.JTextPane birthdate;
-    private javax.swing.JScrollPane birthdayScroll;
     private javax.swing.JLabel bulletin;
     private javax.swing.JLabel businessRules;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -5271,7 +5235,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JScrollPane contactNumScroll;
     private javax.swing.JTextPane currentAddress;
     private javax.swing.JScrollPane currentAddressScroll;
-    private javax.swing.JComboBox<String> day;
     private javax.swing.JLabel deleteButton1;
     private javax.swing.JLabel deleteButton2;
     private javax.swing.JLabel deleteButton3;
@@ -5312,7 +5275,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JCheckBox maleGender;
     private javax.swing.JCheckBox mediumSize;
     private javax.swing.JLabel minimizeButton;
-    private javax.swing.JComboBox<String> month;
     private javax.swing.JLabel name;
     private javax.swing.JCheckBox nameDescending;
     private javax.swing.JLabel namePrio;
@@ -5384,7 +5346,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JCheckBox smallSize;
     private javax.swing.JLabel sortBy;
     private javax.swing.JCheckBox tinySize;
-    private javax.swing.JTextPane username1;
+    private javax.swing.JTextPane username;
     private javax.swing.JScrollPane usernameScroll;
     private javax.swing.JLabel vetButton;
     private javax.swing.JLabel vetClick;
@@ -5412,6 +5374,5 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JPanel vetsBody;
     private javax.swing.JLabel vetsPanel;
     private javax.swing.JComboBox<String> workType;
-    private javax.swing.JComboBox<String> year;
     // End of variables declaration//GEN-END:variables
 }

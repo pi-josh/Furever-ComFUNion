@@ -7,13 +7,15 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class RegisterController {
-    private final Register view;
+    private Register view = null;
 
     public RegisterController(Register view) {
         this.view = view;
         attachEventHandlers();
     }
-
+        
+    public RegisterController() {}
+    
     private void attachEventHandlers() {
         // Register button events
         view.getRegisterButton().addMouseListener(new java.awt.event.MouseAdapter() {
@@ -187,7 +189,7 @@ public class RegisterController {
 
             if(isVet) {
                 view.getErrorMessage().setText(""); // Clear error message
-                if(validateInput(fullName, emailAddress, username, contactNumber, password, confirmPassword, birthdate)) {
+                if(validateVetInput(fullName, emailAddress, username, contactNumber, password, confirmPassword, birthdate)) {
                     /* QUERY HERE: insert the record to the vet table
                     String acctStatus = 'A';
                     int age = birthdateToAge(birthdate);
@@ -216,7 +218,7 @@ public class RegisterController {
                     confirmPassword + " " + currentAddress + " " + occupation + " " + companyName + " " + workType + " " + birthdate);
 
             // validate inputs
-            if(validateInput(fullName, emailAddress, username, contactNumber, password, confirmPassword,
+            if(validateClientInput(fullName, emailAddress, username, contactNumber, password, confirmPassword,
                     currentAddress, occupation, companyName, workType, birthdate)) {
                 /* QUERY HERE: insert the record to the client table
                     String acctStatus = 'A';
@@ -239,143 +241,110 @@ public class RegisterController {
         }
     }
     
-    // for client
-    private boolean validateInput(String fullName, String emailAddress, String username, String contactNumber, String password, String confirmPassword,
-                    String currentAddress, String occupation, String companyName, String workType, String birthdate) {
+    // For client
+    public boolean validateClientInput(String fullName, String emailAddress, String username, String contactNumber, String password, String confirmPassword,
+                                       String currentAddress, String occupation, String companyName, String workType, String birthdate) {
 
         // Check if required fields are not empty
         if (fullName.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() ||
-            currentAddress.isEmpty() || occupation.isEmpty() || workType.isEmpty() ||
-            username.isEmpty() || companyName.isEmpty()) {
-            view.getErrorMessage().setText("Please fill in all required fields.");
-            view.getErrorMessage().setForeground(Color.RED);
+                currentAddress.isEmpty() || occupation.isEmpty() || workType.isEmpty() ||
+                username.isEmpty() || companyName.isEmpty()) {
+            showErrorDialog("Please fill in all required fields.");
             return false;
-        } else {
-            view.getErrorMessage().setText(""); // Clear error message
         }
-        
+
         // Validate username
-        if(isUsernameExist(username)) {
-            view.getErrorMessage().setText("Username already exist.");
-            view.getErrorMessage().setForeground(Color.RED);
+        if (isUsernameExist(username)) {
+            showErrorDialog("Username already exists.");
             return false;
-        } else {
-            view.getErrorMessage().setText(""); // Clear error message
         }
 
         // Validate email format
         if (!isValidEmail(emailAddress)) {
-            view.getErrorMessage().setText("Please enter a valid email address.");
-            view.getErrorMessage().setForeground(Color.RED);
+            showErrorDialog("Please enter a valid email address.");
             return false;
-        } else if(isEmailExist(emailAddress)) {
-            view.getErrorMessage().setText("Email address already exist.");
-            view.getErrorMessage().setForeground(Color.RED);
+        } else if (isEmailExist(emailAddress)) {
+            showErrorDialog("Email address already exists.");
             return false;
-        } else {
-            view.getErrorMessage().setText(""); // Clear error message
         }
 
         // Validate birthdate format (example: MM/dd/yyyy)
-        if (!isValidBirthdate(birthdate)) {
-            view.getErrorMessage().setText("Please enter a valid birthdate (MM/dd/yyyy).");
-            view.getErrorMessage().setForeground(Color.RED);
-            return false;
-        } else {
-            view.getErrorMessage().setText(""); // Clear error message
+        if (!"".equals(birthdate)) {
+            if (!isValidBirthdate(birthdate)) {
+                showErrorDialog("Please enter a valid birthdate (MM/dd/yyyy).");
+                return false;
+            }
         }
 
-        // Validate contact number format (example: XXXXXXXXXX)
+        // Validate contact number format (example: XXX-XXX-XXXX)
         if (!isValidContactNumber(contactNumber)) {
-            view.getErrorMessage().setText("Please enter a valid contact number (XXX-XXX-XXXX).");
-            view.getErrorMessage().setForeground(Color.RED);
+            showErrorDialog("Please enter a valid contact number (XXX-XXX-XXXX).");
             return false;
-        } else if(isContactNumberExist(contactNumber)) {
-            view.getErrorMessage().setText("Contact number already exist.");
-            view.getErrorMessage().setForeground(Color.RED);
+        } else if (isContactNumberExist(contactNumber)) {
+            showErrorDialog("Contact number already exists.");
             return false;
-        } else {
-            view.getErrorMessage().setText(""); // Clear error message
         }
 
         // Check if passwords match
         if (!password.equals(confirmPassword)) {
-            view.getErrorMessage().setText("Passwords do not match.");
-            view.getErrorMessage().setForeground(Color.RED);
+            showErrorDialog("Passwords do not match.");
             return false;
-        } else {
-            view.getErrorMessage().setText(""); // Clear error message
         }
-        
+
         return true;
     }
-    
-    // for vet
-    private boolean validateInput(String fullName, String emailAddress, String username, String contactNumber, String password, String confirmPassword, String birthdate) {
+
+    // For vet
+    public boolean validateVetInput(String fullName, String emailAddress, String username, String contactNumber, String password, String confirmPassword, String birthdate) {
         // Check if required fields are not empty
         if (fullName.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || username.isEmpty() ||
-            emailAddress.isEmpty() || contactNumber.isEmpty() || birthdate.isEmpty()) {
-            view.getErrorMessage().setText("Please fill in all required fields.");
-            view.getErrorMessage().setForeground(Color.RED);
+                emailAddress.isEmpty() || contactNumber.isEmpty() || birthdate.isEmpty()) {
+            showErrorDialog("Please fill in all required fields.");
             return false;
-        } else {
-            view.getErrorMessage().setText(""); // Clear error message
         }
-        
+
         // Validate username
-        if(isUsernameExist(username)) {
-            view.getErrorMessage().setText("Username already exist.");
-            view.getErrorMessage().setForeground(Color.RED);
+        if (isUsernameExist(username)) {
+            showErrorDialog("Username already exists.");
             return false;
-        } else {
-            view.getErrorMessage().setText(""); // Clear error message
         }
 
         // Validate email format
         if (!isValidEmail(emailAddress)) {
-            view.getErrorMessage().setText("Please enter a valid email address.");
-            view.getErrorMessage().setForeground(Color.RED);
+            showErrorDialog("Please enter a valid email address.");
             return false;
-        } else if(isEmailExist(emailAddress)) {
-            view.getErrorMessage().setText("Email address already exist.");
-            view.getErrorMessage().setForeground(Color.RED);
+        } else if (isEmailExist(emailAddress)) {
+            showErrorDialog("Email address already exists.");
             return false;
-        } else {
-            view.getErrorMessage().setText(""); // Clear error message
         }
 
-        // Validate contact number format (example: XXXXXXXXXX)
+        // Validate contact number format (example: XXX-XXX-XXXX)
         if (!isValidContactNumber(contactNumber)) {
-            view.getErrorMessage().setText("Please enter a valid contact number (XXX-XXX-XXXX).");
-            view.getErrorMessage().setForeground(Color.RED);
+            showErrorDialog("Please enter a valid contact number (XXX-XXX-XXXX).");
             return false;
-        } else if(isContactNumberExist(contactNumber)) {
-            view.getErrorMessage().setText("Contact number already exist.");
-            view.getErrorMessage().setForeground(Color.RED);
+        } else if (isContactNumberExist(contactNumber)) {
+            showErrorDialog("Contact number already exists.");
             return false;
-        } else {
-            view.getErrorMessage().setText(""); // Clear error message
         }
-        
+
         // Validate birthdate format (example: MM/dd/yyyy)
         if (!isValidBirthdate(birthdate)) {
-            view.getErrorMessage().setText("Please enter a valid birthdate (MM/dd/yyyy).");
-            view.getErrorMessage().setForeground(Color.RED);
+            showErrorDialog("Please enter a valid birthdate (MM/dd/yyyy).");
             return false;
-        } else {
-            view.getErrorMessage().setText(""); // Clear error message
         }
-        
+
         // Check if passwords match
         if (!password.equals(confirmPassword)) {
-            view.getErrorMessage().setText("Passwords do not match.");
-            view.getErrorMessage().setForeground(Color.RED);
+            showErrorDialog("Passwords do not match.");
             return false;
-        } else {
-            view.getErrorMessage().setText(""); // Clear error message
         }
 
         return true;
+    }
+
+    // Helper method to show error dialog
+    private void showErrorDialog(String message) {
+        JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
     
     private boolean isUsernameExist(String username) {
