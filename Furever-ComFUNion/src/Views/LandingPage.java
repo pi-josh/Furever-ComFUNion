@@ -72,8 +72,6 @@ public class LandingPage extends javax.swing.JFrame {
     private Devs devsFrame;
     private Login login;
     private Register register;
-    private Adopt adopt;
-    private Rehome rehome;
     private JPanel glassPane;
 
     // for pet current panel temp info holder
@@ -91,7 +89,8 @@ public class LandingPage extends javax.swing.JFrame {
     private boolean aboutUsClicked;
     private boolean FAQsClicked;
     private boolean petsClicked;
-    private int FAQsPanelCounter = 4000001;
+    private int FAQsPanelCounter = 0;
+    private int totalFAQsPanels = 4;
     private Timer timer;
     
     /**
@@ -187,10 +186,6 @@ public class LandingPage extends javax.swing.JFrame {
     
     public Register getRegister() {
         return register;
-    }
-    
-    public Adopt getAdopt() {
-        return adopt;
     }
     
     private void defaultWindow() {
@@ -297,23 +292,40 @@ public class LandingPage extends javax.swing.JFrame {
         updateClickabilityFlags(false, false, false, true, false, false, false);
         updateButtonIcons("/Resources/home.png", "/Resources/about us.png", "/Resources/FAQs.png", "/Resources/pets click.png", "/Resources/vets.png", "/Resources/application.png", "/Resources/head.png", "/Resources/collar.png");
     }
+    
+    private void initializeFAQsPanel() {
+        FAQsPanelCounter = 0;
+        setFAQsPanelVisibility(FAQsPanelCounter);
+        updateButtonVisibility();
+    }
 
     private void FAQsChangePanel(String button) {
         if (button.equals("next")) {
-            FAQsPanelCounter++;
+            if (FAQsPanelCounter < totalFAQsPanels - 1) {
+                FAQsPanelCounter++;
+            }
         } else if (button.equals("prev")) {
-            FAQsPanelCounter--;
+            if (FAQsPanelCounter > 0) {
+                FAQsPanelCounter--;
+            }
         }
-        int counter = Math.abs(FAQsPanelCounter) % 4;
-        setFAQsPanelVisibility(counter);
+
+        setFAQsPanelVisibility(FAQsPanelCounter);
+        updateButtonVisibility();
+    }
+    
+    private void updateButtonVisibility() {
+        prev.setVisible(FAQsPanelCounter > 0);
+        next.setVisible(FAQsPanelCounter < totalFAQsPanels - 1);
     }
 
     private void setFAQsPanelVisibility(int panel) {
-        FAQsPanel1.setVisible(panel == 1);
-        FAQsPanel2.setVisible(panel == 2);
-        FAQsPanel3.setVisible(panel == 3);
-        FAQsPanel4.setVisible(panel == 0);
+        FAQsPanel1.setVisible(panel == 0);
+        FAQsPanel2.setVisible(panel == 1);
+        FAQsPanel3.setVisible(panel == 2);
+        FAQsPanel4.setVisible(panel == 3);
     }
+
 
     private void petProfiles() {
         // pet click widgets
@@ -478,6 +490,7 @@ public class LandingPage extends javax.swing.JFrame {
                 if (status.toUpperCase().equals("NA")) {
                     pStatus = "Not Adopted";
                 } else if (status.equals("A")) {
+                    petAdoptButton.setVisible(false);
                     pStatus = "Adopted";
                 }
 
@@ -521,6 +534,7 @@ public class LandingPage extends javax.swing.JFrame {
                 if (status.toUpperCase().equals("NA")) {
                     pStatus = "Not Adopted";
                 } else if (status.equals("A")) {
+                    petAdoptButton.setVisible(false);
                     pStatus = "Adopted";
                 }
 
@@ -567,6 +581,7 @@ public class LandingPage extends javax.swing.JFrame {
                 if (status.toUpperCase().equals("NA")) {
                     pStatus = "Not Adopted";
                 } else if (status.toUpperCase().equals("A")) {
+                    petAdoptButton.setVisible(false);
                     pStatus = "Adopted";
                 }
 
@@ -981,13 +996,13 @@ public class LandingPage extends javax.swing.JFrame {
 
         adoptedLabel.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         adoptedLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        adoptedLabel.setText("Wonderful Pets");
+        adoptedLabel.setText("Click for summary!");
         adoptedLabel.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 adoptedLabelbadgeKeyPressed(evt);
             }
         });
-        homeBody.add(adoptedLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 490, 320, 50));
+        homeBody.add(adoptedLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(875, 490, 350, 50));
 
         badge.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/badge2.png"))); // NOI18N
         badge.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1916,26 +1931,28 @@ public class LandingPage extends javax.swing.JFrame {
 
     private void petPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petPanel1MouseClicked
         // TODO add your handling code here:
-        setCurrentPetPanel(1);
         hidePetPanels(false);
+        setCurrentPetPanel(1);
     }//GEN-LAST:event_petPanel1MouseClicked
 
     private void petPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petPanel2MouseClicked
         // TODO add your handling code here:
-        setCurrentPetPanel(2);
         hidePetPanels(false);
+        setCurrentPetPanel(2);
+
     }//GEN-LAST:event_petPanel2MouseClicked
 
     private void petPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petPanel3MouseClicked
         // TODO add your handling code here:
-        setCurrentPetPanel(3);
         hidePetPanels(false);
+        setCurrentPetPanel(3);
+
     }//GEN-LAST:event_petPanel3MouseClicked
 
     private void petBackButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petBackButtonMouseClicked
         // TODO add your handling code here:
-        setCurrentPetPanel(0);
         hidePetPanels(true);
+        setCurrentPetPanel(0);
         petPanel1Clicked = false;
     }//GEN-LAST:event_petBackButtonMouseClicked
 
@@ -1951,20 +1968,22 @@ public class LandingPage extends javax.swing.JFrame {
 
     private void petAdoptButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petAdoptButtonMouseClicked
         // TODO add your handling code here:
-        if (rehome != null) {
-            if (rehome.getAdopt() != null) {
-                adopt = rehome.getAdopt();
+        if (register != null ){
+            if(register.getLogin() != null) {
+                login = register.getLogin();
             }
-            rehome.setVisible(false);
+            register.setVisible(false);
         }
-        if (adopt == null) {
-            adopt = new Adopt(this, null);
-            adopt.setVisible(true);
-        } else if (!adopt.isVisible()) {
-            adopt.setVisible(true);
-        } else {
-            adopt.toFront();
-            adopt.requestFocus();
+        if (login == null) {
+            login = new Login(this);
+            loginController = new LoginController(login);
+            login.setVisible(true);
+        } else if (!login.isVisible()) {
+            login.setVisible(true);
+        }
+        else {
+            login.toFront();
+            login.requestFocus();
         }
     }//GEN-LAST:event_petAdoptButtonMouseClicked
 
@@ -2236,6 +2255,7 @@ public class LandingPage extends javax.swing.JFrame {
     private void faqButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_faqButtonMousePressed
         // TODO add your handling code here:
         if (!FAQsClicked) {
+            initializeFAQsPanel();
             handleFaqButtonClick();
         }
     }//GEN-LAST:event_faqButtonMousePressed

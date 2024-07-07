@@ -5,6 +5,8 @@
  */
 package Views;
 
+import Models.Client;
+import Models.Pet;
 import java.awt.MediaTracker;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -24,11 +26,45 @@ public class Rehome extends javax.swing.JFrame {
     private Adopt adopt;
     private Rehome rehome;
     
+    // Client who is logged in
+    Client client;
+    
+    
     /**
      * Creates new form Rehome
      * @param userLoggedIn
      */
     public Rehome(UserLoggedIn userLoggedIn) {
+        this.userLoggedIn = userLoggedIn;
+        adopt = userLoggedIn.getAdopt();
+        rehome = userLoggedIn.getRehome();
+        
+        initComponents();
+        setVisible(true);
+
+        // Window logo
+        setWindowIcon();
+        
+        // radio buttons   
+        petSex.add(male);
+        petSex.add(female);
+        
+        petOrigin.add(owned);
+        petOrigin.add(rescued);
+        
+        petStatus.add(adopted);
+        petStatus.add(notAdopted);
+        
+        petSize.add(tiny);
+        petSize.add(small);
+        petSize.add(medium);
+        petSize.add(large);
+        
+        // hide 2nd panel
+        rehomePanel2.setVisible(false);
+    }
+    
+    public Rehome(UserLoggedIn userLoggedIn, Client client) {
         this.userLoggedIn = userLoggedIn;
         adopt = userLoggedIn.getAdopt();
         rehome = userLoggedIn.getRehome();
@@ -536,7 +572,7 @@ public class Rehome extends javax.swing.JFrame {
             adopt = userLoggedIn.getAdopt();
         }
         if (adopt == null) {
-            adopt = new Adopt(null, userLoggedIn);
+            adopt = new Adopt(userLoggedIn);
             adopt.setVisible(true);
         } else if (!adopt.isVisible()) {
             adopt.setVisible(true);

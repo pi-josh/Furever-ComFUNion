@@ -5,37 +5,89 @@
  */
 package Views;
 
+import Models.Application;
+import Models.Client;
+import Models.Pet;
+import Models.SPManager;
+import Models.Veterinarian;
 import java.awt.MediaTracker;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author joshu
  */
 public class Adopt extends javax.swing.JFrame {
+    SPManager spManager = new SPManager();
+    
     // for moving the frame
     private Point mouseDownCompCoords;
     
     private UserLoggedIn userLoggedIn;
-    private LandingPage landingPage;
     private Adopt adopt;
     private Rehome rehome;
+    
+    // Client who is logged in
+    Client client;
+    
+    // Pet records
+    ArrayList<Pet> pets;
+    
+    // filter and sorting conditions
+    private List<String> petTypes = new ArrayList<>();
+    private List<String> petOrigins = new ArrayList<>();
+    private List<String> petStatuses = new ArrayList<>();
+    private List<String> petSizes = new ArrayList<>();
+    private List<String> petGenders = new ArrayList<>();
+    private List<String> sortCriteria = new ArrayList<>();
+    
+    // Pet who is being adopted
+    Pet pet;
+    
+    // Vet records
+    ArrayList<Veterinarian> vets;
+    
     
     /**
      * Creates new form Rehome
      */
-    public Adopt(LandingPage landingPage, UserLoggedIn userLoggedIn) {
+    public Adopt(UserLoggedIn userLoggedIn, Client client, Pet pet) {
         initComponents();
+        
+        // combo box
+        populateVetComboBox();
+        populatePetComboBox();
+        availableDates.addItem("");
+        try {
+            populateDateTimeComboBox(30);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        
         if(userLoggedIn != null) {
             this.userLoggedIn = userLoggedIn;
             rehome = userLoggedIn.getRehome();
             adopt = userLoggedIn.getAdopt();
-        } else if(landingPage != null) {
-            this.landingPage = landingPage;
-            adopt = landingPage.getAdopt();
+        }
+         
+        if(client != null) {
+            this.client = client;
+            setClientInformation(client);
+        }
+        if(pet != null) {
+            this.pet = pet;
+            setPetInformation(pet);
         }
         
         setVisible(true);
@@ -63,6 +115,183 @@ public class Adopt extends javax.swing.JFrame {
         
         // Window logo
         setWindowIcon();
+        
+        
+    }
+    
+    private void populateVetComboBox() {
+        // populate checkboxes with vet names
+        this.vets = spManager.getAllVetsIDName();
+        vetID.removeAllItems();
+        vetID.addItem("");
+        vetName.removeAllItems();
+        vetName.addItem("");
+        for(Veterinarian vet : vets) {
+            vetName.addItem(vet.getVetFullName());
+            vetID.addItem(vet.getVetID());
+        }
+    }
+    
+    private void populatePetComboBox() {
+        // populate combobox with pet id
+        this.pets = spManager.getFilteredSortedPets(petTypes, petOrigins, petStatuses, petSizes, petGenders, sortCriteria);
+        petID.removeAllItems();
+        petID.addItem("");
+        petName.removeAllItems();
+        petName.addItem("");
+        for(Pet pet : pets) {
+            if(pet.getPetStatus().equals("NA")) {
+                petID.addItem(pet.getPetID());
+                petName.addItem(pet.getPetName());
+            }
+        }
+    }
+    
+    private void setClientInformation(Client client) {
+        this.client = client;
+            String[] nameParts = client.getClientFullName().trim().split("\\s+");
+
+            String firstNameVar = "";
+            String lastNameVar = "";
+
+            if (nameParts.length == 2) {
+                // Case with one first name and one last name
+                firstNameVar = nameParts[0];
+                lastNameVar = nameParts[1];
+            } else if (nameParts.length >= 3) {
+                // Case with two words for the first name and the rest for the last name
+                firstNameVar = nameParts[0] + " " + nameParts[1];
+
+                // Remaining parts as last name
+                StringBuilder lastNameBuilder = new StringBuilder();
+                for (int i = 2; i < nameParts.length; i++) {
+                    lastNameBuilder.append(nameParts[i]);
+                    if (i < nameParts.length - 1) {
+                        lastNameBuilder.append(" ");
+                    }
+                }
+                lastNameVar = lastNameBuilder.toString();
+            }
+            
+            firstName.setText(firstNameVar);
+            lastName.setText(lastNameVar);
+            adopterID.setText(String.valueOf(client.getClientID()));
+            age.setText(String.valueOf(client.getClientAge()));
+            address.setText(client.getClientAddress());
+            phoneNumber.setText(client.getCellNum());
+            emailAddress.setText(client.getClientEmailAdd());
+            companyName.setText(client.getCompanyName());
+            occupation.setText(client.getClientOccupation());
+            String workType = client.getWorkType();
+            if(workType.equals("T")) {
+                travel.setSelected(true);
+            } else if(workType.equals("NT")) {
+                noTravel.setSelected(true);
+            }
+    }
+    
+    private void setPetInformation(Pet pet) {
+        this.pet = pet;
+            
+        String sex = pet.getPetSex();
+        String origin = pet.getPetOrigin();
+        String status = pet.getPetStatus();
+        String size = pet.getPetSize();
+
+        petID.setSelectedItem(pet.getPetID());
+        switch(sex.toUpperCase().charAt(0)) {
+            case 'M':
+                male.setSelected(true);
+                break;
+            case 'F':
+                female.setSelected(true);
+                break;
+        }
+        petName.setSelectedItem(pet.getPetName());
+        petAge.setText(String.valueOf(pet.getPetAge()));
+        petType.setText(pet.getPetType());
+        switch(origin.toUpperCase().charAt(0)) {
+            case 'O':
+                owned.setSelected(true);
+                break;
+            case 'R':
+                rescued.setSelected(true);
+                break;
+        }
+        if(status.toUpperCase().equals("NA")) {
+            notAdopted.setSelected(true);
+        } else if(status.toUpperCase().equals("A")) {
+            adopted.setSelected(true);
+        }
+        switch(size.toUpperCase().charAt(0)) {
+            case 'T':
+                tiny.setSelected(true);
+                break;
+            case 'S':
+                small.setSelected(true);
+                break;
+            case 'M':
+                medium.setSelected(true);
+                break;
+            case 'L':
+                large.setSelected(true);
+                break;
+        }
+
+        petName.setEditable(false);
+        petAge.setEditable(false);
+        petType.setEditable(false);
+    }
+    
+    private void resetPetInformation() {
+        pet = null;
+        male.setSelected(false);
+        female.setSelected(false);
+        petName.setSelectedItem("");
+        petAge.setText("");
+        petType.setText("");
+        owned.setSelected(false);
+        rescued.setSelected(false);
+        adopted.setSelected(false);
+        notAdopted.setSelected(false);
+        small.setSelected(false);
+        tiny.setSelected(false);
+        medium.setSelected(false);
+        large.setSelected(false);
+    }
+    
+    // available dates
+    public List<String> getAvailableDateTimes(int daysAhead) throws ParseException {
+        List<Application> existingApplications = spManager.getAllExistingApplications();
+        Set<String> reservedDateTimes = new HashSet<>();
+
+        for (Application app : existingApplications) {
+            reservedDateTimes.add(app.getAppointDate() + " " + app.getAppointTime());
+        }
+
+        List<String> availableDateTimes = new ArrayList<>();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Calendar calendar = Calendar.getInstance();
+
+        for (int i = 1; i <= daysAhead; i++) {
+            calendar.add(Calendar.DAY_OF_YEAR, 1);
+            String date = dateFormat.format(calendar.getTime());
+            for (int hour = 9; hour <= 17; hour++) { // Example: 9 AM to 5 PM
+                String dateTimeStr = date + " " + String.format("%02d:00", hour);
+                if (!reservedDateTimes.contains(dateTimeStr)) {
+                    availableDateTimes.add(dateTimeStr);
+                }
+            }
+        }
+        return availableDateTimes;
+    }
+    
+    private void populateDateTimeComboBox(int daysAhead) throws ParseException {
+        List<String> availableDateTimes = getAvailableDateTimes(daysAhead);
+        for (String dateTime : availableDateTimes) {
+            availableDates.addItem(dateTime);
+        }
     }
     
     public Adopt() {
@@ -133,6 +362,7 @@ public class Adopt extends javax.swing.JFrame {
         header = new javax.swing.JLabel();
         adoptPanel1 = new javax.swing.JPanel();
         adoptNext = new javax.swing.JLabel();
+        availableDates = new javax.swing.JComboBox<>();
         age = new javax.swing.JTextField();
         adopterID = new javax.swing.JTextField();
         income = new javax.swing.JTextField();
@@ -152,9 +382,9 @@ public class Adopt extends javax.swing.JFrame {
         adoptPrev = new javax.swing.JLabel();
         petAge = new javax.swing.JTextField();
         petType = new javax.swing.JTextField();
-        petName = new javax.swing.JTextField();
-        petID = new javax.swing.JTextField();
-        vetID = new javax.swing.JTextField();
+        petName = new javax.swing.JComboBox<>();
+        petID = new javax.swing.JComboBox<>();
+        vetID = new javax.swing.JComboBox<>();
         vetName = new javax.swing.JComboBox<>();
         adopted = new javax.swing.JCheckBox();
         notAdopted = new javax.swing.JCheckBox();
@@ -262,41 +492,128 @@ public class Adopt extends javax.swing.JFrame {
         });
         adoptPanel1.add(adoptNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(605, 575, 220, 70));
 
+        availableDates.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                availableDatesActionPerformed(evt);
+            }
+        });
+        adoptPanel1.add(availableDates, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 590, 278, 32));
+
+        age.setEditable(false);
         age.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ageActionPerformed(evt);
             }
         });
+        age.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                setClient(evt);
+            }
+        });
         adoptPanel1.add(age, new org.netbeans.lib.awtextra.AbsoluteConstraints(616, 324, 162, 32));
+
+        adopterID.setEditable(false);
+        adopterID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                setClient(evt);
+            }
+        });
         adoptPanel1.add(adopterID, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 324, 354, 32));
         adoptPanel1.add(income, new org.netbeans.lib.awtextra.AbsoluteConstraints(197, 538, 278, 32));
+
+        emailAddress.setEditable(false);
+        emailAddress.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                setClient(evt);
+            }
+        });
         adoptPanel1.add(emailAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(481, 424, 297, 32));
+
+        phoneNumber.setEditable(false);
+        phoneNumber.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                setClient(evt);
+            }
+        });
         adoptPanel1.add(phoneNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(216, 424, 207, 32));
 
+        occupation.setEditable(false);
         occupation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 occupationActionPerformed(evt);
             }
         });
+        occupation.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                setClient(evt);
+            }
+        });
         adoptPanel1.add(occupation, new org.netbeans.lib.awtextra.AbsoluteConstraints(216, 502, 562, 32));
+
+        companyName.setEditable(false);
+        companyName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                setClient(evt);
+            }
+        });
         adoptPanel1.add(companyName, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 466, 517, 32));
+
+        firstName.setEditable(false);
+        firstName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                setClient(evt);
+            }
+        });
         adoptPanel1.add(firstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(214, 287, 232, 32));
+
+        lastName.setEditable(false);
+        lastName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                setClient(evt);
+            }
+        });
         adoptPanel1.add(lastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(541, 287, 238, 32));
 
         noTravel.setContentAreaFilled(false);
         noTravel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         noTravel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        noTravel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                noTravelActionPerformed(evt);
+            }
+        });
+        noTravel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                setClient(evt);
+            }
+        });
         adoptPanel1.add(noTravel, new org.netbeans.lib.awtextra.AbsoluteConstraints(666, 545, 20, 20));
 
         travel.setContentAreaFilled(false);
         travel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         travel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        travel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                travelActionPerformed(evt);
+            }
+        });
+        travel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                setClient(evt);
+            }
+        });
         adoptPanel1.add(travel, new org.netbeans.lib.awtextra.AbsoluteConstraints(581, 545, 20, 20));
 
         addressScroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
+        address.setEditable(false);
         address.setColumns(20);
         address.setRows(5);
+        address.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                setClient(evt);
+            }
+        });
         addressScroll.setViewportView(address);
 
         adoptPanel1.add(addressScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 360, 563, 59));
@@ -367,7 +684,6 @@ public class Adopt extends javax.swing.JFrame {
         });
         adoptPanel2.add(petID, new org.netbeans.lib.awtextra.AbsoluteConstraints(206, 287, 393, 32));
 
-        vetID.setEnabled(false);
         vetID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 vetIDActionPerformed(evt);
@@ -375,6 +691,11 @@ public class Adopt extends javax.swing.JFrame {
         });
         adoptPanel2.add(vetID, new org.netbeans.lib.awtextra.AbsoluteConstraints(207, 461, 200, 32));
 
+        vetName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vetNameActionPerformed(evt);
+            }
+        });
         adoptPanel2.add(vetName, new org.netbeans.lib.awtextra.AbsoluteConstraints(494, 461, 283, 32));
 
         adopted.setContentAreaFilled(false);
@@ -577,60 +898,88 @@ public class Adopt extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_occupationActionPerformed
 
-    private void petIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_petIDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_petIDActionPerformed
-
     private void femaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_femaleActionPerformed
         // TODO add your handling code here:
+        if(pet != null) {
+            setPetInformation(pet);
+        }
     }//GEN-LAST:event_femaleActionPerformed
 
     private void maleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maleActionPerformed
         // TODO add your handling code here:
+        if(pet != null) {
+            setPetInformation(pet);
+        }
     }//GEN-LAST:event_maleActionPerformed
 
     private void petAgeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_petAgeActionPerformed
         // TODO add your handling code here:
+        if(pet != null) {
+            setPetInformation(pet);
+        }
     }//GEN-LAST:event_petAgeActionPerformed
-
-    private void petNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_petNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_petNameActionPerformed
 
     private void petTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_petTypeActionPerformed
         // TODO add your handling code here:
+        if(pet != null) {
+            setPetInformation(pet);
+        }
     }//GEN-LAST:event_petTypeActionPerformed
 
     private void rescuedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rescuedActionPerformed
         // TODO add your handling code here:
+        if(pet != null) {
+            setPetInformation(pet);
+        }
     }//GEN-LAST:event_rescuedActionPerformed
 
     private void ownedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ownedActionPerformed
         // TODO add your handling code here:
+        if(pet != null) {
+            setPetInformation(pet);
+        }
     }//GEN-LAST:event_ownedActionPerformed
 
     private void adoptedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adoptedActionPerformed
         // TODO add your handling code here:
+        if(pet != null) {
+            setPetInformation(pet);
+        }
     }//GEN-LAST:event_adoptedActionPerformed
 
     private void notAdoptedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notAdoptedActionPerformed
         // TODO add your handling code here:
+        if(pet != null) {
+            setPetInformation(pet);
+        }
     }//GEN-LAST:event_notAdoptedActionPerformed
 
     private void tinyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tinyActionPerformed
         // TODO add your handling code here:
+        if(pet != null) {
+            setPetInformation(pet);
+        }
     }//GEN-LAST:event_tinyActionPerformed
 
     private void smallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smallActionPerformed
         // TODO add your handling code here:
+        if(pet != null) {
+            setPetInformation(pet);
+        }
     }//GEN-LAST:event_smallActionPerformed
 
     private void largeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_largeActionPerformed
         // TODO add your handling code here:
+        if(pet != null) {
+            setPetInformation(pet);
+        }
     }//GEN-LAST:event_largeActionPerformed
 
     private void mediumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mediumActionPerformed
         // TODO add your handling code here:
+        if(pet != null) {
+            setPetInformation(pet);
+        }
     }//GEN-LAST:event_mediumActionPerformed
 
     private void iAgreeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iAgreeActionPerformed
@@ -643,7 +992,7 @@ public class Adopt extends javax.swing.JFrame {
             rehome = userLoggedIn.getRehome();
         }
         if (rehome == null) {
-            rehome = new Rehome(userLoggedIn);
+            rehome = new Rehome(userLoggedIn, client);
             rehome.setVisible(true);
         } else if (!rehome.isVisible()) {
             rehome.setVisible(true);
@@ -666,6 +1015,12 @@ public class Adopt extends javax.swing.JFrame {
 
     private void petButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petButtonMouseClicked
         // TODO add your handling code here:
+        if(userLoggedIn != null) {
+            userLoggedIn.setVisible(true);
+            userLoggedIn.handlePetButtonClick();
+            userLoggedIn.petFilterBySortBy();
+        }
+        this.dispose();
     }//GEN-LAST:event_petButtonMouseClicked
 
     private void petButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petButtonMouseEntered
@@ -680,6 +1035,45 @@ public class Adopt extends javax.swing.JFrame {
 
     private void adoptButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adoptButtonMouseClicked
         // TODO add your handling code here:
+        if ("".equals((String) availableDates.getSelectedItem())) {
+            JOptionPane.showMessageDialog(null, "Please select an available date.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if ("".equals((String) petID.getSelectedItem())) {
+            JOptionPane.showMessageDialog(null, "Please select a pet ID.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if ("".equals((String) vetID.getSelectedItem())) {
+            JOptionPane.showMessageDialog(null, "Please select a vet ID.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!iAgree.isSelected()) {
+            JOptionPane.showMessageDialog(null, "You must agree to the terms.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String applicationType = "A";
+        String[] appointDateTime = ((String) availableDates.getSelectedItem()).split(" ");
+        String appointDate = appointDateTime[0];
+        String appointTime = appointDateTime[1];
+        String appointPlace = "Vet Clinic";
+        int clientID = Integer.valueOf(adopterID.getText());
+        String selectedPetID = (String) petID.getSelectedItem();
+        String selectedVetID = (String) vetID.getSelectedItem();
+        
+        System.out.println(applicationType + " " + appointDate + " " + appointTime + " " + appointPlace + " " + clientID + " " + selectedPetID + " " + selectedVetID);
+        
+        /*
+        // QUERY HERE: insert adopt application form in the application table
+        // the method will return true if successful, otherwise false
+        if(methodName(applicationType, appointDate, appointTime, appointPlace, clientID, selectedPetID, selectedVetID)) {
+            JOptionPane.showMessageDialog(null, "Application Submitted!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Application Failed", "Failed", JOptionPane.ERROR_MESSAGE);
+        }
+        */
     }//GEN-LAST:event_adoptButtonMouseClicked
 
     private void adoptButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adoptButtonMouseEntered
@@ -692,9 +1086,74 @@ public class Adopt extends javax.swing.JFrame {
         adoptButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/app adopt button.png")));
     }//GEN-LAST:event_adoptButtonMouseExited
 
+    private void setClient(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_setClient
+        // TODO add your handling code here:
+        setClientInformation(client);
+    }//GEN-LAST:event_setClient
+
+    private void vetNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vetNameActionPerformed
+        // TODO add your handling code here:
+        String currentVetName = (String) vetName.getSelectedItem();
+        for(Veterinarian vet : vets) {
+            if(vet.getVetFullName().equals(currentVetName)) {
+                vetID.setSelectedItem(String.valueOf(vet.getVetID()));
+                return;
+            }
+        }
+        vetID.setSelectedItem("");
+    }//GEN-LAST:event_vetNameActionPerformed
+
+    private void petIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_petIDActionPerformed
+        // TODO add your handling code here:
+        String currentPetID = (String) petID.getSelectedItem();
+        for(Pet pet : pets) {
+            if(pet.getPetID().equals(currentPetID)) {
+                this.pet = pet;
+                setPetInformation(pet);
+                return;
+            }
+        }
+        resetPetInformation();
+    }//GEN-LAST:event_petIDActionPerformed
+
+    private void travelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_travelActionPerformed
+        // TODO add your handling code here:
+        setClientInformation(client);
+    }//GEN-LAST:event_travelActionPerformed
+
+    private void noTravelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noTravelActionPerformed
+        // TODO add your handling code here:
+        setClientInformation(client);
+    }//GEN-LAST:event_noTravelActionPerformed
+
+    private void petNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_petNameActionPerformed
+        // TODO add your handling code here:
+        String currentPetName = (String) petName.getSelectedItem();
+        for(Pet pet : pets) {
+            if(pet.getPetName().equals(currentPetName)) {
+                this.pet = pet;
+                setPetInformation(pet);
+                return;
+            }
+        }
+        resetPetInformation();
+    }//GEN-LAST:event_petNameActionPerformed
+
     private void vetIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vetIDActionPerformed
         // TODO add your handling code here:
+        String currentVetID = (String) vetID.getSelectedItem();
+        for(Veterinarian vet : vets) {
+            if(vet.getVetID().equals(currentVetID)) {
+                vetName.setSelectedItem(vet.getVetFullName());
+                return;
+            }
+        }
+        vetName.setSelectedItem("");
     }//GEN-LAST:event_vetIDActionPerformed
+
+    private void availableDatesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_availableDatesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_availableDatesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -747,6 +1206,7 @@ public class Adopt extends javax.swing.JFrame {
     private javax.swing.JCheckBox adopted;
     private javax.swing.JTextField adopterID;
     private javax.swing.JTextField age;
+    private javax.swing.JComboBox<String> availableDates;
     private javax.swing.JLabel backButton;
     private javax.swing.JTextField companyName;
     private javax.swing.JTextField emailAddress;
@@ -766,8 +1226,8 @@ public class Adopt extends javax.swing.JFrame {
     private javax.swing.JCheckBox owned;
     private javax.swing.JTextField petAge;
     private javax.swing.JLabel petButton;
-    private javax.swing.JTextField petID;
-    private javax.swing.JTextField petName;
+    private javax.swing.JComboBox<String> petID;
+    private javax.swing.JComboBox<String> petName;
     private javax.swing.ButtonGroup petOrigin;
     private javax.swing.ButtonGroup petSex;
     private javax.swing.ButtonGroup petSize;
@@ -779,7 +1239,7 @@ public class Adopt extends javax.swing.JFrame {
     private javax.swing.JCheckBox small;
     private javax.swing.JCheckBox tiny;
     private javax.swing.JCheckBox travel;
-    private javax.swing.JTextField vetID;
+    private javax.swing.JComboBox<String> vetID;
     private javax.swing.JComboBox<String> vetName;
     private javax.swing.ButtonGroup workType;
     // End of variables declaration//GEN-END:variables

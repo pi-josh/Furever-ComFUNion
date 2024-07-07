@@ -5,6 +5,7 @@ import Controllers.ExitDialogController;
 import Models.Application;
 import Models.Client;
 import Models.Pet;
+import Models.SPManager;
 import Models.Veterinarian;
 import java.awt.Color;
 import java.awt.MediaTracker;
@@ -17,6 +18,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
@@ -36,11 +38,43 @@ import javax.swing.SwingUtilities;
  * @author joshu
  */
 public class UserLoggedIn extends javax.swing.JFrame {
+    // Database manager
+    SPManager spManager = new SPManager();
+    
+    // Client who is currently logged in
+    // private Client client;
+    private static Client client = new Client(4, "MarkQuiet28", "shhh!!!", "Mark Quiet", 21, "Mandaluyong City", "9528652421", "marktahimik@gmail.com", "Senior Software Engineer", "Microsoft", "NT", "A");
+    
+    // Pet records
+    Pet pet; // pet who is going to be adopted
+    ArrayList<Pet> pets;
+    private int totalPets;
+    private int totalPetsToDisplay;
+    private int petIndex = 0;
+    
+    // Veterinarian records
+    ArrayList<Veterinarian> vets;
+    private int totalVets;
+    private int vetIndex = 0;
+    
+    // Application Records
+    ArrayList<Application> applications;
+    private int totalApplications;
+    private int appIndex = 0;
+    
+    // filter and sorting conditions
+    private List<String> petTypes = new ArrayList<>();
+    private List<String> petOrigins = new ArrayList<>();
+    private List<String> petStatuses = new ArrayList<>();
+    private List<String> petSizes = new ArrayList<>();
+    private List<String> petGenders = new ArrayList<>();
+    private List<String> sortCriteria = new ArrayList<>();
+    
+    // for sorting priority
+    ArrayList<JCheckBox> sortingPriority = new ArrayList<>();   
+    
     // for moving the frame
     private Point mouseDownCompCoords;
-
-    // Client who is currently logged in
-    private Client client;
 
     // controllers
     ExitDialogController exitController;
@@ -76,29 +110,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private boolean vetsClicked;
     private boolean applicationClicked;
     private boolean profileClicked;
-    private int FAQsPanelCounter = 4000001;
+    private int FAQsPanelCounter = 0;
+    private int totalFAQsPanels = 4;
 
     // app next and prev buttons
     private boolean appPrev, appNext;
-
-    // Sample pets
-    ArrayList<Pet> pets;
-    private int totalPets;
-    private int petIndex = 0;
-
-    // Sample vets
-    ArrayList<Veterinarian> vets;
-    private int totalVets;
-    private int vetIndex = 0;
-
-    // Sample applications
-    ArrayList<Application> applications;
-    private int totalApplications;
-    private int appIndex = 0;
     
-    // for sorting priority
-    ArrayList<JCheckBox> sortingPriority = new ArrayList<>();   
-
     /**
      * Creates new form Main
      */
@@ -106,7 +123,11 @@ public class UserLoggedIn extends javax.swing.JFrame {
         this.client = client;
 
         // populate
-        populateFromDB();
+        populatePetsFromDB();
+        populateVetsFromDB();
+        populateAppsFromDB();
+        
+        totalPetsToDisplay = totalPets;
 
         initComponents();
 
@@ -958,7 +979,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         hamsterType.setBackground(new java.awt.Color(255, 255, 255));
         hamsterType.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        hamsterType.setText("'Hamster'");
+        hamsterType.setText("Hamster");
         hamsterType.setBorder(null);
         hamsterType.setContentAreaFilled(false);
         hamsterType.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -974,7 +995,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         rabbitType.setBackground(new java.awt.Color(255, 255, 255));
         rabbitType.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        rabbitType.setText("'Rabbit'");
+        rabbitType.setText("Rabbit");
         rabbitType.setBorder(null);
         rabbitType.setContentAreaFilled(false);
         rabbitType.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -990,7 +1011,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         rescuedOrigin.setBackground(new java.awt.Color(255, 255, 255));
         rescuedOrigin.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        rescuedOrigin.setText("'R'");
+        rescuedOrigin.setText("R");
         rescuedOrigin.setBorder(null);
         rescuedOrigin.setContentAreaFilled(false);
         rescuedOrigin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1006,7 +1027,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         adoptedStatus.setBackground(new java.awt.Color(255, 255, 255));
         adoptedStatus.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        adoptedStatus.setText("'A'");
+        adoptedStatus.setText("A");
         adoptedStatus.setBorder(null);
         adoptedStatus.setContentAreaFilled(false);
         adoptedStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1022,7 +1043,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         tinySize.setBackground(new java.awt.Color(255, 255, 255));
         tinySize.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        tinySize.setText("'T'");
+        tinySize.setText("T");
         tinySize.setBorder(null);
         tinySize.setContentAreaFilled(false);
         tinySize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1038,7 +1059,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         maleGender.setBackground(new java.awt.Color(255, 255, 255));
         maleGender.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        maleGender.setText("'M'");
+        maleGender.setText("M");
         maleGender.setToolTipText("");
         maleGender.setBorder(null);
         maleGender.setContentAreaFilled(false);
@@ -1055,7 +1076,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         ownedOrigin.setBackground(new java.awt.Color(255, 255, 255));
         ownedOrigin.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        ownedOrigin.setText("'O'");
+        ownedOrigin.setText("O");
         ownedOrigin.setBorder(null);
         ownedOrigin.setContentAreaFilled(false);
         ownedOrigin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1071,7 +1092,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         notAdoptedStatus.setBackground(new java.awt.Color(255, 255, 255));
         notAdoptedStatus.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        notAdoptedStatus.setText("'NA'");
+        notAdoptedStatus.setText("NA");
         notAdoptedStatus.setBorder(null);
         notAdoptedStatus.setContentAreaFilled(false);
         notAdoptedStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1087,7 +1108,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         smallSize.setBackground(new java.awt.Color(255, 255, 255));
         smallSize.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        smallSize.setText("'S'");
+        smallSize.setText("S");
         smallSize.setBorder(null);
         smallSize.setContentAreaFilled(false);
         smallSize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1103,7 +1124,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         femaleGender.setBackground(new java.awt.Color(255, 255, 255));
         femaleGender.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        femaleGender.setText("'F'");
+        femaleGender.setText("F");
         femaleGender.setBorder(null);
         femaleGender.setContentAreaFilled(false);
         femaleGender.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1119,7 +1140,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         mediumSize.setBackground(new java.awt.Color(255, 255, 255));
         mediumSize.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        mediumSize.setText("'M'");
+        mediumSize.setText("M");
         mediumSize.setBorder(null);
         mediumSize.setContentAreaFilled(false);
         mediumSize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1135,7 +1156,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         largeSize.setBackground(new java.awt.Color(255, 255, 255));
         largeSize.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        largeSize.setText("'L'");
+        largeSize.setText("L");
         largeSize.setBorder(null);
         largeSize.setContentAreaFilled(false);
         largeSize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1151,7 +1172,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         catType.setBackground(new java.awt.Color(255, 255, 255));
         catType.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        catType.setText("'Cat'");
+        catType.setText("Cat");
         catType.setBorder(null);
         catType.setContentAreaFilled(false);
         catType.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1167,7 +1188,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         dogType.setBackground(new java.awt.Color(255, 255, 255));
         dogType.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        dogType.setText("'Dog'");
+        dogType.setText("Dog");
         dogType.setBorder(null);
         dogType.setContentAreaFilled(false);
         dogType.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -2266,7 +2287,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void defaultWindow() {
         // set pet count
-        adoptedCounter.setText(String.valueOf(pets.size()));
+        adoptedCounter.setText(String.valueOf(totalPetsToDisplay));
 
         // set visiblity
         homeBody.setVisible(true);
@@ -2366,23 +2387,23 @@ public class UserLoggedIn extends javax.swing.JFrame {
             }
         }
     }
-
-    private void populateFromDB() {
-        Pet petSamples = new Pet();
-        this.pets = petSamples.getAllPetSamples();
+    
+    private void populatePetsFromDB() {
+        // QUERY HERE: filtering and sorting pet profiles based on the selected checkboxes
+        this.pets = spManager.getFilteredSortedPets(petTypes, petOrigins, petStatuses, petSizes, petGenders, sortCriteria);  // returns all pets that meets the criteria
         totalPets = pets.size();
-
-        Veterinarian vetSamples = new Veterinarian();
-        this.vets = vetSamples.getAllVetSamples();
+    }
+    
+    private void populateVetsFromDB() {
+        // QUERY HERE: get all vet records
+        this.vets = spManager.getAllVets();
         totalVets = vets.size();
+    }
 
-        Application appSamples = new Application();
-        if (client != null) {
-            this.applications = appSamples.getAllApplicationSamples(client.getClientID());
-        } else {
-            this.applications = appSamples.getAllApplicationSamples();
-        }
-        totalApplications = applications.size();
+    private void populateAppsFromDB() {
+        // QUERY HERE: get all application records of client
+        // this.applications = spManager.getApplicationHistoryForClient(client.getClientID());
+        this.applications = spManager.getApplicationHistoryForClient(4); // this is just a test. will be removed after the implementation of queries in login form
     }
 
     private void updatePanelVisibility(boolean home, boolean aboutUs, boolean faqs, boolean pets, boolean vets, boolean application, boolean profile) {
@@ -2427,7 +2448,11 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void handleHomeButtonClick() {
         // update count of pets
-        adoptedCounter.setText(String.valueOf(pets.size()));
+        /*
+        //QUERY HERE: get total count of records in the pet table
+        totalPetsToDisplay = methodName();  // returns an integer value for the count  
+        */
+        adoptedCounter.setText(String.valueOf(totalPetsToDisplay));
 
         updatePanelVisibility(true, false, false, false, false, false, false);
         updateClickBackgroundVisibility(true, false, false, false, false, false);
@@ -2458,7 +2483,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         name.setForeground(Color.BLACK);
     }
 
-    private void handlePetButtonClick() {
+    public void handlePetButtonClick() {
         petProfilesReset();
         petBackButton.setVisible(false);
         updatePanelVisibility(false, false, false, true, false, false, false);
@@ -2502,21 +2527,37 @@ public class UserLoggedIn extends javax.swing.JFrame {
         name.setForeground(Color.YELLOW);
     }
 
+    private void initializeFAQsPanel() {
+        FAQsPanelCounter = 0;
+        setFAQsPanelVisibility(FAQsPanelCounter);
+        updateButtonVisibility();
+    }
+
     private void FAQsChangePanel(String button) {
         if (button.equals("next")) {
-            FAQsPanelCounter++;
+            if (FAQsPanelCounter < totalFAQsPanels - 1) {
+                FAQsPanelCounter++;
+            }
         } else if (button.equals("prev")) {
-            FAQsPanelCounter--;
+            if (FAQsPanelCounter > 0) {
+                FAQsPanelCounter--;
+            }
         }
-        int counter = Math.abs(FAQsPanelCounter) % 4;
-        setFAQsPanelVisibility(counter);
+
+        setFAQsPanelVisibility(FAQsPanelCounter);
+        updateButtonVisibility();
+    }
+    
+    private void updateButtonVisibility() {
+        prev.setVisible(FAQsPanelCounter > 0);
+        next.setVisible(FAQsPanelCounter < totalFAQsPanels - 1);
     }
 
     private void setFAQsPanelVisibility(int panel) {
-        FAQsPanel1.setVisible(panel == 1);
-        FAQsPanel2.setVisible(panel == 2);
-        FAQsPanel3.setVisible(panel == 3);
-        FAQsPanel4.setVisible(panel == 0);
+        FAQsPanel1.setVisible(panel == 0);
+        FAQsPanel2.setVisible(panel == 1);
+        FAQsPanel3.setVisible(panel == 2);
+        FAQsPanel4.setVisible(panel == 3);
     }
 
     private void petProfiles() {
@@ -2537,7 +2578,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // Pet Panel 1
         if (totalPets >= 1) {
             petName1.setText(pets.get(petIndex).getPetName());
-            petAge1.setText(String.valueOf(pets.get(petIndex).getPetAge()) + " months");
+            petAge1.setText(String.valueOf(pets.get(petIndex).getPetAge()));
             petGender1.setText(pets.get(petIndex).getPetSex());
             petImg1.setIcon(new javax.swing.ImageIcon(getClass().getResource(pets.get(petIndex).getPicURL())));
             petURL1 = pets.get(petIndex).getPicURL();
@@ -2547,7 +2588,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // Pet Panel 2
         if (totalPets >= 2) {
             petName2.setText(pets.get(petIndex).getPetName());
-            petAge2.setText(String.valueOf(pets.get(petIndex).getPetAge()) + " months");
+            petAge2.setText(String.valueOf(pets.get(petIndex).getPetAge()));
             petGender2.setText(pets.get(petIndex).getPetSex());
             petImg2.setIcon(new javax.swing.ImageIcon(getClass().getResource(pets.get(petIndex).getPicURL())));
             petURL2 = pets.get(petIndex).getPicURL();
@@ -2557,7 +2598,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // Pet Panel 3
         if (totalPets >= 3) {
             petName3.setText(pets.get(petIndex).getPetName());
-            petAge3.setText(String.valueOf(pets.get(petIndex).getPetAge()) + " months");
+            petAge3.setText(String.valueOf(pets.get(petIndex).getPetAge()));
             petGender3.setText(pets.get(petIndex).getPetSex());
             petImg3.setIcon(new javax.swing.ImageIcon(getClass().getResource(pets.get(petIndex).getPicURL())));
             petURL3 = pets.get(petIndex).getPicURL();
@@ -3050,14 +3091,21 @@ public class UserLoggedIn extends javax.swing.JFrame {
         String origin = "";
         String status = "";
         String size = "";
+        
+
+        int diff = 2;
         // Update pet panel 1 based on selected panel
         switch (panel) {
             case 1:
-                origin = pets.get(petIndex - 2).getPetOrigin();
-                status = pets.get(petIndex - 2).getPetStatus();
-                size = pets.get(petIndex - 2).getPetSize();
+                if(totalPets == 1) {
+                    diff = 1;
+                }
+                pet = pets.get(petIndex - diff);
+                origin = pets.get(petIndex - diff).getPetOrigin();
+                status = pets.get(petIndex - diff).getPetStatus();
+                size = pets.get(petIndex - diff).getPetSize();
 
-                switch (origin.charAt(0)) {
+                switch (origin.toUpperCase().charAt(0)) {
                     case 'O':
                         pOrigin = "Owned";
                         break;
@@ -3066,13 +3114,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
                         break;
                 }
 
-                if (status.equals("NA")) {
+                if (status.toUpperCase().equals("NA")) {
                     pStatus = "Not Adopted";
                 } else if (status.equals("A")) {
+                    petAdoptButton.setVisible(false);
                     pStatus = "Adopted";
                 }
 
-                switch (size.charAt(0)) {
+                switch (size.toUpperCase().charAt(0)) {
                     case 'T':
                         pSize = "Tiny";
                         break;
@@ -3087,19 +3136,21 @@ public class UserLoggedIn extends javax.swing.JFrame {
                         break;
                 }
 
-                petID.setText(String.valueOf(pets.get(petIndex - 2).getPetID()));
-                petType.setText(String.valueOf(pets.get(petIndex - 2).getPetType()));
+                petID.setText(String.valueOf(pets.get(petIndex - diff).getPetID()));
+                petType.setText(String.valueOf(pets.get(petIndex - diff).getPetType()));
                 petOrigin.setText(pOrigin);
                 petStatus.setText(pStatus);
                 petSize.setText(pSize);
                 break;
             case 2:
-                // Display pet panel 2 information on panel 1     
-                origin = pets.get(petIndex - 2).getPetOrigin();
-                status = pets.get(petIndex - 2).getPetStatus();
-                size = pets.get(petIndex - 2).getPetSize();
+                diff = 1;
+                // Display pet panel 2 information on panel 1   
+                pet = pets.get(petIndex - diff);
+                origin = pets.get(petIndex - diff).getPetOrigin();
+                status = pets.get(petIndex - diff).getPetStatus();
+                size = pets.get(petIndex - diff).getPetSize();
 
-                switch (origin.charAt(0)) {
+                switch (origin.toUpperCase().charAt(0)) {
                     case 'O':
                         pOrigin = "Owned";
                         break;
@@ -3108,13 +3159,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
                         break;
                 }
 
-                if (status.equals("NA")) {
+                if (status.toUpperCase().equals("NA")) {
                     pStatus = "Not Adopted";
                 } else if (status.equals("A")) {
+                    petAdoptButton.setVisible(false);
                     pStatus = "Adopted";
                 }
 
-                switch (size.charAt(0)) {
+                switch (size.toUpperCase().charAt(0)) {
                     case 'T':
                         pSize = "Tiny";
                         break;
@@ -3133,19 +3185,20 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 petAge1.setText(petAge2.getText());
                 petGender1.setText(petGender2.getText());
                 petImg1.setIcon(new javax.swing.ImageIcon(getClass().getResource(petURL2)));
-                petID.setText(String.valueOf(pets.get(petIndex - 1).getPetID()));
-                petType.setText(String.valueOf(pets.get(petIndex - 1).getPetType()));
+                petID.setText(String.valueOf(pets.get(petIndex - diff).getPetID()));
+                petType.setText(String.valueOf(pets.get(petIndex - diff).getPetType()));
                 petOrigin.setText(pOrigin);
                 petStatus.setText(pStatus);
                 petSize.setText(pSize);
                 break;
             case 3:
                 // Display pet panel 3 information on panel 1
-                origin = pets.get(petIndex - 2).getPetOrigin();
-                status = pets.get(petIndex - 2).getPetStatus();
-                size = pets.get(petIndex - 2).getPetSize();
+                pet = pets.get(petIndex);
+                origin = pets.get(petIndex).getPetOrigin();
+                status = pets.get(petIndex).getPetStatus();
+                size = pets.get(petIndex).getPetSize();
 
-                switch (origin.charAt(0)) {
+                switch (origin.toUpperCase().charAt(0)) {
                     case 'O':
                         pOrigin = "Owned";
                         break;
@@ -3154,13 +3207,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
                         break;
                 }
 
-                if (status.equals("NA")) {
+                if (status.toUpperCase().equals("NA")) {
                     pStatus = "Not Adopted";
-                } else if (status.equals("A")) {
+                } else if (status.toUpperCase().equals("A")) {
+                    petAdoptButton.setVisible(false);
                     pStatus = "Adopted";
                 }
 
-                switch (size.charAt(0)) {
+                switch (size.toUpperCase().charAt(0)) {
                     case 'T':
                         pSize = "Tiny";
                         break;
@@ -3187,11 +3241,80 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 break;
             default:
                 // Fallback to initial stored pet information
+                pet = null;
                 petName1.setText(tempPetName);
                 petAge1.setText(tempPetAge);
                 petGender1.setText(tempPetGender);
                 petImg1.setIcon(new javax.swing.ImageIcon(getClass().getResource(tempPetURL)));
         }
+    }
+
+    public void petFilterBySortBy() {
+        // filter
+        petTypes.removeAll(petTypes);
+        petOrigins.removeAll(petOrigins);
+        petStatuses.removeAll(petStatuses);
+        petSizes.removeAll(petSizes);
+        petGenders.removeAll(petGenders);
+        sortCriteria.removeAll(sortCriteria);
+
+        
+        JCheckBox[] types = { dogType, catType, hamsterType, rabbitType };
+        JCheckBox[] origins = { rescuedOrigin, ownedOrigin };
+        JCheckBox[] statuses = { adoptedStatus, notAdoptedStatus };
+        JCheckBox[] sizes = { tinySize, smallSize, mediumSize, largeSize };
+        JCheckBox[] genders = { femaleGender, maleGender };
+        
+        for(JCheckBox type : types) {
+            if(type.isSelected()) {
+                petTypes.add(type.getText());
+            }
+        }
+        
+        for(JCheckBox origin : origins) {
+            if(origin.isSelected()) {
+                petOrigins.add(origin.getText());
+            }
+        }
+        
+        for(JCheckBox status : statuses) {
+            if(status.isSelected()) {
+                petStatuses.add(status.getText());
+            }
+        }
+        
+        for(JCheckBox size : sizes) {
+            if(size.isSelected()) {
+                petSizes.add(size.getText());
+            }
+        }
+        
+        for(JCheckBox gender : genders) {
+            if(gender.isSelected()) {
+                petGenders.add(gender.getText());
+            }
+        }
+        
+        // sort and display the priority level
+        JCheckBox checkBox;
+        for(int i = 0; i < sortingPriority.size(); i++) {
+            checkBox = sortingPriority.get(i);            
+            sortCriteria.add(checkBox.getText());
+            
+            if(checkBox.equals(orderByID)) {
+                IDprio.setText(String.valueOf(i+1));
+            } else if(checkBox.equals(orderByName)) {
+                namePrio.setText(String.valueOf(i+1));
+            } else if(checkBox.equals(orderByAge)) {
+                agePrio.setText(String.valueOf(i+1));
+            }
+        }
+        
+        System.out.println(dogType.getText());
+        
+        populatePetsFromDB();
+        petProfilesReset();
+        petProfiles();
     }
 
     public CountDownLatch countDownLatch() {
@@ -3214,166 +3337,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
             }
         });
         return latch;
-    }
-
-    private void petFilterBySortBy() {
-        // QUERY HERE: filtering and sorting pet profiles
-        
-        /*
-        String wherePetType = "";
-        String wherePetOrigin = "";
-        String wherePetStatus = "";
-        String wherePetSize = "";
-        String wherePetGender = "";
-        
-        
-        // for pet types
-        JCheckBox[] petTypes = {dogType, catType, hamsterType, rabbitType};
-        ArrayList<JCheckBox> selectedPetTypes = new ArrayList<>();
-        
-        for (JCheckBox petType : petTypes) {
-            if (petType.isSelected()) {
-                selectedPetTypes.add(petType);
-            }
-        }
-        
-        String typeCondition;
-        if (selectedPetTypes.size() == 1) {
-            wherePetType = "'" + selectedPetTypes.get(0).getText() + "'";
-        } else {
-            for (int i = 0; i < selectedPetTypes.size(); i++) {
-                typeCondition = selectedPetTypes.get(i).getText();
-                if (i == selectedPetTypes.size() - 1) {
-                    wherePetType += typeCondition + ")";
-                } else {
-                    wherePetType += typeCondition + ", ";
-                }
-            }
-        }
-        
-        // for pet origin
-        JCheckBox[] petOrigins = {ownedOrigin, rescuedOrigin};
-        ArrayList<JCheckBox> selectedPetOrigins = new ArrayList<>();
-        
-        for (JCheckBox petOrigin : petOrigins) {
-            if (petOrigin.isSelected()) {
-                selectedPetOrigins.add(petOrigin);
-            }
-        }
-        
-        String originCondition;
-        if (selectedPetOrigins.size() == 1) {
-            wherePetOrigin = "'" + selectedPetOrigins.get(0).getText() + "'";
-        } else {
-            for (int i = 0; i < selectedPetOrigins.size(); i++) {
-                originCondition = selectedPetOrigins.get(i).getText();
-                if (i == selectedPetOrigins.size() - 1) {
-                    wherePetOrigin += originCondition + ")";
-                } else {
-                    wherePetOrigin += originCondition + ", ";
-                }
-            }
-        }
-        
-        // for pet status
-        JCheckBox[] petStatuses = {adoptedStatus, notAdoptedStatus};
-        ArrayList<JCheckBox> selectedPetStatuses = new ArrayList<>();
-        
-        for (JCheckBox petStatus : petStatuses) {
-            if (petStatus.isSelected()) {
-                selectedPetStatuses.add(petStatus);
-            }
-        }
-        
-        String statusCondition;
-        if (selectedPetStatuses.size() == 1) {
-            wherePetStatus = "'" + selectedPetStatuses.get(0).getText() + "'";
-        } else {
-            for (int i = 0; i < selectedPetStatuses.size(); i++) {
-                statusCondition = selectedPetStatuses.get(i).getText();
-                if (i == selectedPetStatuses.size() - 1) {
-                    wherePetStatus += statusCondition + ")";
-                } else {
-                    wherePetStatus += statusCondition + ", ";
-                }
-            }
-        }
-        
-        // for pet size
-        JCheckBox[] petSizes = {tinySize, smallSize, mediumSize, largeSize};
-        ArrayList<JCheckBox> selectedPetSizes = new ArrayList<>();
-        
-        for (JCheckBox petSize : petSizes) {
-            if (petSize.isSelected()) {
-                selectedPetSizes.add(petSize);
-            }
-        }
-        
-        String sizeCondition;
-        if (selectedPetSizes.size() == 1) {
-            wherePetSize = "'" + selectedPetSizes.get(0).getText() + "'";
-        } else {
-            for (int i = 0; i < selectedPetSizes.size(); i++) {
-                sizeCondition = selectedPetSizes.get(i).getText();
-                if (i == selectedPetSizes.size() - 1) {
-                    wherePetSize += sizeCondition + ")";
-                } else {
-                    wherePetSize += sizeCondition + ", ";
-                }
-            }
-        }
-        
-        // for pet gender
-        JCheckBox[] petGenders = {maleGender, femaleGender};
-        ArrayList<JCheckBox> selectedPetGenders = new ArrayList<>();
-        
-        for (JCheckBox petGender : petGenders) {
-            if (petGender.isSelected()) {
-                selectedPetGenders.add(petGender);
-            }
-        }
-        
-        String genderCondition;
-        if (selectedPetGenders.size() == 1) {
-            wherePetGender = "'" + selectedPetGenders.get(0).getText() + "'";
-        } else {
-            for (int i = 0; i < selectedPetGenders.size(); i++) {
-                genderCondition = selectedPetGenders.get(i).getText();
-                if (i == selectedPetGenders.size() - 1) {
-                    wherePetGender += genderCondition + ")";
-                } else {
-                    wherePetGender += genderCondition + ", ";
-                }
-            }
-        }
-        */
-        
-        // filtering
-        
-        
-        // sorting and displaying the priority level
-        JCheckBox checkBox;
-        String sortBy = "SORT BY ";
-        String attr;
-        for(int i = 0; i < sortingPriority.size(); i++) {
-            checkBox = sortingPriority.get(i);
-            attr = sortingPriority.get(i).getText();
-            if(i == sortingPriority.size() - 1) {
-                sortBy += attr + ";";
-            } else {
-                sortBy += attr + ", ";
-            }
-            
-            if(checkBox.equals(orderByID)) {
-                IDprio.setText(String.valueOf(i+1));
-            } else if(checkBox.equals(orderByName)) {
-                namePrio.setText(String.valueOf(i+1));
-            } else if(checkBox.equals(orderByAge)) {
-                agePrio.setText(String.valueOf(i+1));
-            }
-        }
-
-        System.out.println(sortBy);
     }
 
     private void badgeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_badgeKeyPressed
@@ -3561,6 +3524,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private void faqButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_faqButtonMousePressed
         // TODO add your handling code here:
         if (!FAQsClicked) {
+            initializeFAQsPanel();
             handleFaqButtonClick();
         }
     }//GEN-LAST:event_faqButtonMousePressed
@@ -3576,6 +3540,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private void vetButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vetButtonMousePressed
         // TODO add your handling code here:
         if (!vetsClicked) {
+            populateVetsFromDB();
             handleVetButtonClick();
             vetProfiles();
         }
@@ -3584,6 +3549,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private void applicationButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applicationButtonMousePressed
         // TODO add your handling code here:
         if (!applicationClicked) {
+            populateAppsFromDB();
             handleApplicationButtonClick();
             applications();
             applicationEditVisibility(false);
@@ -3636,26 +3602,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // TODO add your handling code here:
         next.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/next button (1).png")));
     }//GEN-LAST:event_nextMouseExited
-
-    private void petPrevMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petPrevMouseExited
-        // TODO add your handling code here:
-        petPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/prev button (1).png")));
-    }//GEN-LAST:event_petPrevMouseExited
-
-    private void petPrevMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petPrevMouseEntered
-        // TODO add your handling code here:
-        petPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/prev button hover (1).png")));
-    }//GEN-LAST:event_petPrevMouseEntered
-
-    private void petNextMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petNextMouseEntered
-        // TODO add your handling code here:
-        petNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/next button hover (1).png")));
-    }//GEN-LAST:event_petNextMouseEntered
-
-    private void petNextMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petNextMouseExited
-        // TODO add your handling code here:
-        petNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/next button (1).png")));
-    }//GEN-LAST:event_petNextMouseExited
 
     private void nextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nextMouseClicked
         // TODO add your handling code here:
@@ -3760,36 +3706,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
             businessRulesFrame.requestFocus();
         }
     }//GEN-LAST:event_businessRulesMouseClicked
-
-    private void petPrevMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petPrevMouseClicked
-        // TODO add your handling code here:
-        if (petIndex == 3) {
-            petNext.setVisible(true);
-            petPrev.setVisible(false);
-        }
-
-        if (petIndex > 2) {
-            petNext.setVisible(true);
-            petIndex -= 3;
-            petProfiles();
-        }
-    }//GEN-LAST:event_petPrevMouseClicked
-
-    private void petNextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petNextMouseClicked
-        // TODO add your handling code here:
-        if (petIndex < totalPets) {
-            petIndex -= 1;
-            petProfiles();
-        }
-
-        if (petIndex == totalPets - 1) {
-            petNext.setVisible(false);
-        }
-
-        if (petIndex == 3) {
-            petPrev.setVisible(true);
-        }
-    }//GEN-LAST:event_petNextMouseClicked
 
     private void profileHeadMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileHeadMousePressed
         // TODO add your handling code here:
@@ -4350,8 +4266,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
             }
             rehome.dispose();
         }
+        if (adopt != null) {
+            adopt.dispose();
+            adopt = null;
+        }
         if (adopt == null) {
-            adopt = new Adopt(null, this);
+            adopt = new Adopt(this, client, null);
             adopt.setVisible(true);
         } else if (!adopt.isVisible()) {
             adopt.setVisible(true);
@@ -4360,31 +4280,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
             adopt.requestFocus();
         }
     }//GEN-LAST:event_adoptButtonMouseClicked
-
-    private void petPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petPanel1MouseClicked
-        // TODO add your handling code here:
-        setCurrentPetPanel(1);
-        hidePetPanels(false);
-    }//GEN-LAST:event_petPanel1MouseClicked
-
-    private void petPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petPanel2MouseClicked
-        // TODO add your handling code here:
-        setCurrentPetPanel(2);
-        hidePetPanels(false);
-    }//GEN-LAST:event_petPanel2MouseClicked
-
-    private void petPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petPanel3MouseClicked
-        // TODO add your handling code here:
-        setCurrentPetPanel(3);
-        hidePetPanels(false);
-    }//GEN-LAST:event_petPanel3MouseClicked
-
-    private void petBackButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petBackButtonMouseClicked
-        // TODO add your handling code here:
-        setCurrentPetPanel(0);
-        hidePetPanels(true);
-        petPanel1Clicked = false;
-    }//GEN-LAST:event_petBackButtonMouseClicked
 
     private void fullNameenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fullNameenterTabKeyPressed
         // TODO add your handling code here:
@@ -4589,191 +4484,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_companyNameenterTabKeyPressed
 
-    private void petAdoptButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petAdoptButtonMouseClicked
-        // TODO add your handling code here:
-        if (rehome != null) {
-            if (rehome.getAdopt() != null) {
-                adopt = rehome.getAdopt();
-            }
-            rehome.setVisible(false);
-        }
-        if (adopt == null) {
-            adopt = new Adopt(null, this);
-            adopt.setVisible(true);
-        } else if (!adopt.isVisible()) {
-            adopt.setVisible(true);
-        } else {
-            adopt.toFront();
-            adopt.requestFocus();
-        }
-    }//GEN-LAST:event_petAdoptButtonMouseClicked
-
-    private void petAdoptButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petAdoptButtonMouseEntered
-        // TODO add your handling code here:
-        petAdoptButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/adopt button hover (1).png")));
-    }//GEN-LAST:event_petAdoptButtonMouseEntered
-
-    private void petAdoptButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petAdoptButtonMouseExited
-        // TODO add your handling code here:
-        petAdoptButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/adopt button (1).png")));
-    }//GEN-LAST:event_petAdoptButtonMouseExited
-
-    private void petBackButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petBackButtonMouseEntered
-        // TODO add your handling code here:
-        petBackButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button hover (2).png")));
-    }//GEN-LAST:event_petBackButtonMouseEntered
-
-    private void petBackButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petBackButtonMouseExited
-        // TODO add your handling code here:
-        petBackButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button (2).png")));
-    }//GEN-LAST:event_petBackButtonMouseExited
-
-    private void catTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_catTypeActionPerformed
-        // TODO add your handling code here:
-        petFilterBySortBy();
-    }//GEN-LAST:event_catTypeActionPerformed
-
-    private void hamsterTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hamsterTypeActionPerformed
-        // TODO add your handling code here:
-        petFilterBySortBy();
-    }//GEN-LAST:event_hamsterTypeActionPerformed
-
-    private void rabbitTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rabbitTypeActionPerformed
-        // TODO add your handling code here:
-        petFilterBySortBy();
-    }//GEN-LAST:event_rabbitTypeActionPerformed
-
-    private void rescuedOriginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rescuedOriginActionPerformed
-        // TODO add your handling code here:
-        petFilterBySortBy();
-    }//GEN-LAST:event_rescuedOriginActionPerformed
-
-    private void adoptedStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adoptedStatusActionPerformed
-        // TODO add your handling code here:
-        petFilterBySortBy();
-    }//GEN-LAST:event_adoptedStatusActionPerformed
-
-    private void tinySizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tinySizeActionPerformed
-        // TODO add your handling code here:
-        petFilterBySortBy();
-    }//GEN-LAST:event_tinySizeActionPerformed
-
-    private void maleGenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maleGenderActionPerformed
-        // TODO add your handling code here:
-        petFilterBySortBy();
-    }//GEN-LAST:event_maleGenderActionPerformed
-
-    private void ownedOriginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ownedOriginActionPerformed
-        // TODO add your handling code here:
-        petFilterBySortBy();
-    }//GEN-LAST:event_ownedOriginActionPerformed
-
-    private void notAdoptedStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notAdoptedStatusActionPerformed
-        // TODO add your handling code here:
-        petFilterBySortBy();
-    }//GEN-LAST:event_notAdoptedStatusActionPerformed
-
-    private void smallSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smallSizeActionPerformed
-        // TODO add your handling code here:
-        petFilterBySortBy();
-    }//GEN-LAST:event_smallSizeActionPerformed
-
-    private void femaleGenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_femaleGenderActionPerformed
-        // TODO add your handling code here:
-        petFilterBySortBy();
-    }//GEN-LAST:event_femaleGenderActionPerformed
-
-    private void mediumSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mediumSizeActionPerformed
-        // TODO add your handling code here:
-        petFilterBySortBy();
-    }//GEN-LAST:event_mediumSizeActionPerformed
-
-    private void largeSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_largeSizeActionPerformed
-        // TODO add your handling code here:
-        petFilterBySortBy();
-    }//GEN-LAST:event_largeSizeActionPerformed
-
-    private void orderByNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderByNameActionPerformed
-        // TODO add your handling code here:
-        if(orderByName.isSelected()) {
-            sortingPriority.add(orderByName);
-            nameDescending.setEnabled(true);
-        } else if (sortingPriority != null) {
-            // remove checkbox if exist
-            for(JCheckBox attr : sortingPriority) {
-                if(attr.equals(orderByName)) {
-                    sortingPriority.remove(attr);
-                    break;
-                }
-            }
-            
-            // reset text
-            namePrio.setText("");
-            
-            // unselect descending if checked and call the corresponding listener
-            if(nameDescending.isSelected()) {
-                nameDescending.setSelected(false);
-                nameDescending.setEnabled(false);
-                nameDescendingActionPerformed(evt);
-                return;
-            }
-        }
-        petFilterBySortBy();
-    }//GEN-LAST:event_orderByNameActionPerformed
-
-    private void dogTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dogTypeActionPerformed
-        // TODO add your handling code here:
-        petFilterBySortBy();
-    }//GEN-LAST:event_dogTypeActionPerformed
-
-    private void IDdescendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDdescendingActionPerformed
-        // TODO add your handling code here:
-        if(IDdescending.isSelected()) {
-            orderByID.setText("petID DESC");
-        } else {
-            orderByID.setText("petID");
-        }
-        petFilterBySortBy();
-    }//GEN-LAST:event_IDdescendingActionPerformed
-
-    private void ageDescendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ageDescendingActionPerformed
-        // TODO add your handling code here:
-        if(ageDescending.isSelected()) {
-            orderByAge.setText("petAge DESC");
-        } else {
-            orderByAge.setText("petAge");
-        }
-        petFilterBySortBy();
-    }//GEN-LAST:event_ageDescendingActionPerformed
-
-    private void orderByIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderByIDActionPerformed
-        // TODO add your handling code here:
-        if(orderByID.isSelected()) {
-            IDdescending.setEnabled(true);
-            sortingPriority.add(orderByID);
-        } else if (sortingPriority != null) {
-            // remove checkbox if found
-            for(JCheckBox attr : sortingPriority) {
-                if(attr.equals(orderByID)) {
-                    sortingPriority.remove(attr);
-                    break;
-                }
-            }
-            
-            // reset text
-            IDprio.setText("");
-            
-            // unselect descending if checked and call the corresponding listener
-            if(IDdescending.isSelected()) {
-                IDdescending.setSelected(false);
-                IDdescending.setEnabled(false);
-                IDdescendingActionPerformed(evt);
-                return;
-            }
-        }
-        petFilterBySortBy();
-    }//GEN-LAST:event_orderByIDActionPerformed
-
     private void navBarMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_navBarMouseDragged
         // TODO add your handling code here:
         Point currCoords = evt.getLocationOnScreen();
@@ -4784,44 +4494,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // TODO add your handling code here:
         mouseDownCompCoords = evt.getPoint();
     }//GEN-LAST:event_navBarMousePressed
-
-    private void nameDescendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameDescendingActionPerformed
-        // TODO add your handling code here:
-        if(nameDescending.isSelected()) {
-            orderByName.setText("petName DESC");
-        } else {
-            orderByName.setText("petName");
-        }
-        petFilterBySortBy();
-    }//GEN-LAST:event_nameDescendingActionPerformed
-
-    private void orderByAgeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderByAgeActionPerformed
-        // TODO add your handling code here:
-        if(orderByAge.isSelected()) {
-            sortingPriority.add(orderByAge);
-            ageDescending.setEnabled(true);
-        } else if (sortingPriority != null) {
-            // remove checkbox if found
-            for(JCheckBox attr : sortingPriority) {
-                if(attr.equals(orderByAge)) {
-                    sortingPriority.remove(attr);
-                    break;
-                }
-            }
-            
-            // reset text
-            agePrio.setText("");
-            
-            // unselect descending if checked and call the corresponding listener
-            if(ageDescending.isSelected()) {
-                ageDescending.setSelected(false);
-                ageDescending.setEnabled(false);
-                ageDescendingActionPerformed(evt);
-                return;
-            }
-        }
-        petFilterBySortBy();
-    }//GEN-LAST:event_orderByAgeActionPerformed
 
     private void editButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton1MouseClicked
         // TODO add your handling code here:
@@ -4894,6 +4566,308 @@ public class UserLoggedIn extends javax.swing.JFrame {
         editButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (3).png")));
     }//GEN-LAST:event_editButton5MouseExited
 
+    private void ageDescendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ageDescendingActionPerformed
+        // TODO add your handling code here:
+        if(ageDescending.isSelected()) {
+            orderByAge.setText("petAge DESC");
+        } else {
+            orderByAge.setText("petAge");
+        }
+        petFilterBySortBy();
+    }//GEN-LAST:event_ageDescendingActionPerformed
+
+    private void nameDescendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameDescendingActionPerformed
+        // TODO add your handling code here:
+        if(nameDescending.isSelected()) {
+            orderByName.setText("petName DESC");
+        } else {
+            orderByName.setText("petName");
+        }
+        petFilterBySortBy();
+    }//GEN-LAST:event_nameDescendingActionPerformed
+
+    private void IDdescendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDdescendingActionPerformed
+        // TODO add your handling code here:
+        if(IDdescending.isSelected()) {
+            orderByID.setText("petID DESC");
+        } else {
+            orderByID.setText("petID");
+        }
+        petFilterBySortBy();
+    }//GEN-LAST:event_IDdescendingActionPerformed
+
+    private void orderByIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderByIDActionPerformed
+        // TODO add your handling code here:
+        if(orderByID.isSelected()) {
+            IDdescending.setEnabled(true);
+            sortingPriority.add(orderByID);
+        } else if (sortingPriority != null) {
+            // remove checkbox if found
+            for(JCheckBox attr : sortingPriority) {
+                if(attr.equals(orderByID)) {
+                    sortingPriority.remove(attr);
+                    break;
+                }
+            }
+
+            // reset text
+            IDprio.setText("");
+
+            // unselect descending if checked and call the corresponding listener
+            if(IDdescending.isSelected()) {
+                IDdescending.setSelected(false);
+                IDdescending.setEnabled(false);
+                IDdescendingActionPerformed(evt);
+                return;
+            }
+        }
+        petFilterBySortBy();
+    }//GEN-LAST:event_orderByIDActionPerformed
+
+    private void orderByAgeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderByAgeActionPerformed
+        // TODO add your handling code here:
+        if(orderByAge.isSelected()) {
+            sortingPriority.add(orderByAge);
+            ageDescending.setEnabled(true);
+        } else if (sortingPriority != null) {
+            // remove checkbox if found
+            for(JCheckBox attr : sortingPriority) {
+                if(attr.equals(orderByAge)) {
+                    sortingPriority.remove(attr);
+                    break;
+                }
+            }
+
+            // reset text
+            agePrio.setText("");
+
+            // unselect descending if checked and call the corresponding listener
+            if(ageDescending.isSelected()) {
+                ageDescending.setSelected(false);
+                ageDescending.setEnabled(false);
+                ageDescendingActionPerformed(evt);
+                return;
+            }
+        }
+        petFilterBySortBy();
+    }//GEN-LAST:event_orderByAgeActionPerformed
+
+    private void orderByNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderByNameActionPerformed
+        // TODO add your handling code here:
+        if(orderByName.isSelected()) {
+            sortingPriority.add(orderByName);
+            nameDescending.setEnabled(true);
+        } else if (sortingPriority != null) {
+            // remove checkbox if exist
+            for(JCheckBox attr : sortingPriority) {
+                if(attr.equals(orderByName)) {
+                    sortingPriority.remove(attr);
+                    break;
+                }
+            }
+
+            // reset text
+            namePrio.setText("");
+
+            // unselect descending if checked and call the corresponding listener
+            if(nameDescending.isSelected()) {
+                nameDescending.setSelected(false);
+                nameDescending.setEnabled(false);
+                nameDescendingActionPerformed(evt);
+                return;
+            }
+        }
+        petFilterBySortBy();
+    }//GEN-LAST:event_orderByNameActionPerformed
+
+    private void dogTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dogTypeActionPerformed
+        // TODO add your handling code here:
+        petFilterBySortBy();
+    }//GEN-LAST:event_dogTypeActionPerformed
+
+    private void catTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_catTypeActionPerformed
+        // TODO add your handling code here:
+        petFilterBySortBy();
+    }//GEN-LAST:event_catTypeActionPerformed
+
+    private void largeSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_largeSizeActionPerformed
+        // TODO add your handling code here:
+        petFilterBySortBy();
+    }//GEN-LAST:event_largeSizeActionPerformed
+
+    private void mediumSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mediumSizeActionPerformed
+        // TODO add your handling code here:
+        petFilterBySortBy();
+    }//GEN-LAST:event_mediumSizeActionPerformed
+
+    private void femaleGenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_femaleGenderActionPerformed
+        // TODO add your handling code here:
+        petFilterBySortBy();
+    }//GEN-LAST:event_femaleGenderActionPerformed
+
+    private void smallSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smallSizeActionPerformed
+        // TODO add your handling code here:
+        petFilterBySortBy();
+    }//GEN-LAST:event_smallSizeActionPerformed
+
+    private void notAdoptedStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notAdoptedStatusActionPerformed
+        // TODO add your handling code here:
+        petFilterBySortBy();
+    }//GEN-LAST:event_notAdoptedStatusActionPerformed
+
+    private void ownedOriginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ownedOriginActionPerformed
+        // TODO add your handling code here:
+        petFilterBySortBy();
+    }//GEN-LAST:event_ownedOriginActionPerformed
+
+    private void maleGenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maleGenderActionPerformed
+        // TODO add your handling code here:
+        petFilterBySortBy();
+    }//GEN-LAST:event_maleGenderActionPerformed
+
+    private void tinySizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tinySizeActionPerformed
+        // TODO add your handling code here:
+        petFilterBySortBy();
+    }//GEN-LAST:event_tinySizeActionPerformed
+
+    private void adoptedStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adoptedStatusActionPerformed
+        // TODO add your handling code here:
+        petFilterBySortBy();
+    }//GEN-LAST:event_adoptedStatusActionPerformed
+
+    private void rescuedOriginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rescuedOriginActionPerformed
+        // TODO add your handling code here:
+        petFilterBySortBy();
+    }//GEN-LAST:event_rescuedOriginActionPerformed
+
+    private void rabbitTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rabbitTypeActionPerformed
+        // TODO add your handling code here:
+        petFilterBySortBy();
+    }//GEN-LAST:event_rabbitTypeActionPerformed
+
+    private void hamsterTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hamsterTypeActionPerformed
+        // TODO add your handling code here:
+        petFilterBySortBy();
+    }//GEN-LAST:event_hamsterTypeActionPerformed
+
+    private void petAdoptButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petAdoptButtonMouseExited
+        // TODO add your handling code here:
+        petAdoptButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/adopt button (1).png")));
+    }//GEN-LAST:event_petAdoptButtonMouseExited
+
+    private void petAdoptButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petAdoptButtonMouseEntered
+        // TODO add your handling code here:
+        petAdoptButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/adopt button hover (1).png")));
+    }//GEN-LAST:event_petAdoptButtonMouseEntered
+
+    private void petAdoptButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petAdoptButtonMouseClicked
+        // TODO add your handling code here:
+        if (rehome != null) {
+            if (rehome.getAdopt() != null) {
+                adopt = rehome.getAdopt();
+            }
+            rehome.setVisible(false);
+        }
+        if (adopt != null) {
+            adopt.dispose();
+            adopt = null;
+        }
+        if (adopt == null) {
+            adopt = new Adopt(this, client, pet);
+            adopt.setVisible(true);
+        } else if (!adopt.isVisible()) {
+            adopt.setVisible(true);
+        } else {
+            adopt.toFront();
+            adopt.requestFocus();
+        }
+    }//GEN-LAST:event_petAdoptButtonMouseClicked
+
+    private void petBackButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petBackButtonMouseExited
+        // TODO add your handling code here:
+        petBackButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button (2).png")));
+    }//GEN-LAST:event_petBackButtonMouseExited
+
+    private void petBackButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petBackButtonMouseEntered
+        // TODO add your handling code here:
+        petBackButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button hover (2).png")));
+    }//GEN-LAST:event_petBackButtonMouseEntered
+
+    private void petBackButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petBackButtonMouseClicked
+        // TODO add your handling code here:
+        hidePetPanels(true);
+        setCurrentPetPanel(0);
+        petPanel1Clicked = false;
+    }//GEN-LAST:event_petBackButtonMouseClicked
+
+    private void petPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petPanel3MouseClicked
+        // TODO add your handling code here:
+        hidePetPanels(false);
+        setCurrentPetPanel(3);
+    }//GEN-LAST:event_petPanel3MouseClicked
+
+    private void petPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petPanel2MouseClicked
+        // TODO add your handling code here:
+        hidePetPanels(false);
+        setCurrentPetPanel(2);
+    }//GEN-LAST:event_petPanel2MouseClicked
+
+    private void petPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petPanel1MouseClicked
+        // TODO add your handling code here:
+        hidePetPanels(false);
+        setCurrentPetPanel(1);
+    }//GEN-LAST:event_petPanel1MouseClicked
+
+    private void petNextMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petNextMouseExited
+        // TODO add your handling code here:
+        petNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/next button (1).png")));
+    }//GEN-LAST:event_petNextMouseExited
+
+    private void petNextMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petNextMouseEntered
+        // TODO add your handling code here:
+        petNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/next button hover (1).png")));
+    }//GEN-LAST:event_petNextMouseEntered
+
+    private void petNextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petNextMouseClicked
+        // TODO add your handling code here:
+        if (petIndex < totalPets) {
+            petIndex -= 1;
+            petProfiles();
+        }
+
+        if (petIndex == totalPets - 1) {
+            petNext.setVisible(false);
+        }
+
+        if (petIndex == 3) {
+            petPrev.setVisible(true);
+        }
+    }//GEN-LAST:event_petNextMouseClicked
+
+    private void petPrevMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petPrevMouseExited
+        // TODO add your handling code here:
+        petPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/prev button (1).png")));
+    }//GEN-LAST:event_petPrevMouseExited
+
+    private void petPrevMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petPrevMouseEntered
+        // TODO add your handling code here:
+        petPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/prev button hover (1).png")));
+    }//GEN-LAST:event_petPrevMouseEntered
+
+    private void petPrevMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petPrevMouseClicked
+        // TODO add your handling code here:
+        if (petIndex == 3) {
+            petNext.setVisible(true);
+            petPrev.setVisible(false);
+        }
+
+        if (petIndex > 2) {
+            petNext.setVisible(true);
+            petIndex -= 3;
+            petProfiles();
+        }
+    }//GEN-LAST:event_petPrevMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -4924,7 +4898,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new UserLoggedIn(null).setVisible(true);
+                new UserLoggedIn(client).setVisible(true);
             }
         });
     }

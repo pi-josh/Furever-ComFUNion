@@ -75,7 +75,8 @@ public class VetLoggedIn extends javax.swing.JFrame {
     private boolean vetsClicked;
     private boolean applicationClicked;
     private boolean profileClicked;
-    private int FAQsPanelCounter = 4000001;
+    private int FAQsPanelCounter = 0;
+    private int totalFAQsPanels = 4;
 
     // app next and prev buttons
     private boolean appPrev, appNext;
@@ -2319,21 +2320,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
     }
 
     private void populateFromDB() {
-        Pet petSamples = new Pet();
-        this.pets = petSamples.getAllPetSamples();
-        totalPets = pets.size();
-
-        Veterinarian vetSamples = new Veterinarian();
-        this.vets = vetSamples.getAllVetSamples();
-        totalVets = vets.size();
-
-        Application appSamples = new Application();
-        if (vet != null) {
-            this.applications = appSamples.getAllApplicationSamples(vet.getVetFullName());
-        } else {
-            this.applications = appSamples.getAllApplicationSamples();
-        }
-        totalApplications = applications.size();
+        
     }
 
     private void updatePanelVisibility(boolean home, boolean aboutUs, boolean faqs, boolean pets, boolean vets, boolean application, boolean profile) {
@@ -2453,21 +2440,37 @@ public class VetLoggedIn extends javax.swing.JFrame {
         name.setForeground(Color.YELLOW);
     }
 
+    private void initializeFAQsPanel() {
+        FAQsPanelCounter = 0;
+        setFAQsPanelVisibility(FAQsPanelCounter);
+        updateButtonVisibility();
+    }
+
     private void FAQsChangePanel(String button) {
         if (button.equals("next")) {
-            FAQsPanelCounter++;
+            if (FAQsPanelCounter < totalFAQsPanels - 1) {
+                FAQsPanelCounter++;
+            }
         } else if (button.equals("prev")) {
-            FAQsPanelCounter--;
+            if (FAQsPanelCounter > 0) {
+                FAQsPanelCounter--;
+            }
         }
-        int counter = Math.abs(FAQsPanelCounter) % 4;
-        setFAQsPanelVisibility(counter);
+
+        setFAQsPanelVisibility(FAQsPanelCounter);
+        updateButtonVisibility();
+    }
+    
+    private void updateButtonVisibility() {
+        prev.setVisible(FAQsPanelCounter > 0);
+        next.setVisible(FAQsPanelCounter < totalFAQsPanels - 1);
     }
 
     private void setFAQsPanelVisibility(int panel) {
-        FAQsPanel1.setVisible(panel == 1);
-        FAQsPanel2.setVisible(panel == 2);
-        FAQsPanel3.setVisible(panel == 3);
-        FAQsPanel4.setVisible(panel == 0);
+        FAQsPanel1.setVisible(panel == 0);
+        FAQsPanel2.setVisible(panel == 1);
+        FAQsPanel3.setVisible(panel == 2);
+        FAQsPanel4.setVisible(panel == 3);
     }
 
     private void petProfiles() {
@@ -3377,6 +3380,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
     private void faqButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_faqButtonMousePressed
         // TODO add your handling code here:
         if (!FAQsClicked) {
+            initializeFAQsPanel();
             handleFaqButtonClick();
         }
     }//GEN-LAST:event_faqButtonMousePressed

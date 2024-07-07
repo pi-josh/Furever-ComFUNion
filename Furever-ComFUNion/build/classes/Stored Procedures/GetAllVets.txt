@@ -1,0 +1,5 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAllVets`()
+BEGIN
+SELECT VetFullName, VetEmailAdd, VetCellNum 
+FROM forevercomfunion.`vet.v2`;
+END

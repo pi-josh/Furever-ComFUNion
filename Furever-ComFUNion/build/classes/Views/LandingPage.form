@@ -396,14 +396,14 @@
               <Font name="Tahoma" size="36" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Wonderful Pets"/>
+            <Property name="text" type="java.lang.String" value="Click for summary!"/>
           </Properties>
           <Events>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="adoptedLabelbadgeKeyPressed"/>
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="890" y="490" width="320" height="50"/>
+              <AbsoluteConstraints x="875" y="490" width="350" height="50"/>
             </Constraint>
           </Constraints>
         </Component>
