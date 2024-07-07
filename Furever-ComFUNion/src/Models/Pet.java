@@ -88,27 +88,4 @@ public class Pet {
     public void setPetName(String petName) { this.petName = petName; }
     public void setPetSex(String petSex) { this.petSex = petSex; }
     public void setPicURL(String picURL) { this.picURL = picURL; }
-    
-    // Sample pets
-    public ArrayList<Pet> getAllPetSamples() {
-        ArrayList<Pet> pets = new ArrayList<>();
-        
-        Pet cassyyy = new Pet("P007", "Dog", "O", "NA", "S", "4", "Cassyyy", "M", "/Resources/sample pets/dog.png");
-        Pet gigi = new Pet("P006", "Cat", "R", "NA", "M", "6", "Gigi", "F", "/Resources/sample pets/cat.png");
-        Pet hammy = new Pet("P005", "Hamster", "O", "A", "T", "3", "Hammy", "M", "/Resources/sample pets/hamster.png");
-        Pet adjie = new Pet("P004", "Rabbit", "R", "NA", "T", "15", "Adjie", "M", "/Resources/sample pets/rabbit.png");
-        Pet cooper = new Pet("P003", "Dog", "O", "NA", "M", "7", "Cooper", "M", "/Resources/sample pets/dog.png");
-        Pet juswa = new Pet("P002", "Cat", "O", "A", "L", "9", "Juswa", "M", "/Resources/sample pets/cat.png");
-        Pet raphael = new Pet("P001", "Dog", "R", "A", "M", "2", "Raphael", "M", "/Resources/sample pets/dog.png");
-        
-        pets.add(cassyyy);
-        pets.add(gigi);
-        pets.add(hammy);
-        pets.add(adjie);
-        pets.add(cooper);
-        pets.add(juswa);
-        pets.add(raphael);
-        
-        return pets;
-    }
 }

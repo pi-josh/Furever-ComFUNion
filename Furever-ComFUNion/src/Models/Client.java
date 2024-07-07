@@ -1,10 +1,8 @@
 package Models;
 
-import java.util.ArrayList;
-
 /**
  * 
- * @author joshu
+ * Author: joshu
  */
 public class Client {
     private int clientID;
@@ -43,114 +41,32 @@ public class Client {
     }
     
     public Client() {}
-    
-    // getter methods
-    public int getClientID() {
-        return clientID;
-    }
-    
-    public String getClientPassword() {
-        return clientPassword;
-    }
-    
-    public String getClientFullName() {
-        return clientFullName;
-    }
-    
-    public int getClientAge() {
-        return clientAge;
-    }
-    
-    public String getClientAddress() {
-        return clientAddress;
-    }
-    
-    public String getCellNum() {
-        return cellNum;
-    }
-    
-    public String getClientEmailAdd() {
-        return clientEmailAdd;
-    }
-    
-    public String getClientUsername() {
-        return clientUsername;
-    }
-    
-    public String getClientOccupation() {
-        return clientOccupation;
-    }
-    
-    public String getCompanyName() {
-        return companyName;
-    }
-    
-    public String getWorkType() {
-        return workType;
-    }
-    
-    public String getClientAcctStatus() {
-        return clientAcctStatus;
-    }
-    
-    // setter methods
-    public void setClientID(int clientID) {
-        this.clientID = clientID;
-    }
-    
-    public void setClientPassword(String clientPassword) {
-        this.clientPassword = clientPassword;
-    }
-    
-    public void setClientFullName(String clientFullName) {
-        this.clientFullName = clientFullName;
-    }
-    
-    public void setClientAge(int clientAge) {
-        this.clientAge = clientAge;
-    }
-    
-    public void setClientAddress(String clientAddress) {
-        this.clientAddress = clientAddress;
-    }
-    
-    public void setCellNum(String cellNum) {
-        this.cellNum = cellNum;
-    }
-    
-    public void setClientEmailAdd(String clientEmailAdd) {
-        this.clientEmailAdd = clientEmailAdd;
-    }
-    
-    public void setClientUsername(String clientUsername) {
-        this.clientUsername = clientUsername;
-    }
-    
-    public void setClientOccupation(String clientOccupation) {
-        this.clientOccupation = clientOccupation;
-    }
-    
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-    
-    public void setWorkType(String workType) {
-        this.workType = workType;
-    }
-    
-    public void setClientAcctStatus(String clientAcctStatus) {
-        this.clientAcctStatus = clientAcctStatus;
-    }
-    
-    public ArrayList<Client> getAllClientSamples() {
-        ArrayList<Client> clients = new ArrayList<>();
-        
-        clients.add(new Client(1, "JJMacatunao", "tunaw123", "John Joshua Macatunao", 19, "81 Pouros Grove, Suite 091, 64822-2475, East Jaronfurt, Iowa, United States", "9892865657", "jjmelt@yahoo.com", "Photographer", "Melt Studio", "T", "A"));
-        clients.add(new Client(2, "Katrina14", "tara8ball", "Katrina Halili", 20, "095 Loy Divide, Suite 919, 70892, Hansenstad, Wyoming, United States", "9652655123", "akonaman@gmail.com", "NASA Scientist", "NASA", "NT", "A"));
-        clients.add(new Client(3, "Joly@123", "jawlineislife", "Joly Gonzaga", 31, "Poblacion, Baliuag, Bulacan, Philippines", "9652235242", "McWater@yahoo.com", "Gym Instructor", "FItness Inc.", "NT", "A"));
-        clients.add(new Client(4, "MarkQuiet28", "shhh!!!", "Mark Quiet", 21, "826 Loyal Point, Suite 753, 37394-6564, Kuphalton, Ohio, United States", "9528652421", "marktahimik@gmail.com", "Senior Software Engineer", "Microsoft", "NT", "A"));
-        clients.add(new Client(5, "RandyF", "r.a.n.d.i.", "Randy Fernandez", 24, "77828 Towne Knoll, Suite 229, 24698-7170, Burniceburgh, West Virginia, United States", "9652234242", "Power.Fernandez01@y8mail.com", "Senior Fraud Analyst", "HSBC", "NT", "A"));
 
-        return clients;
-    }
+    // getter methods
+    public int getClientID() { return clientID; }
+    public String getClientPassword() { return clientPassword; }
+    public String getClientFullName() { return clientFullName; }
+    public int getClientAge() { return clientAge; }
+    public String getClientAddress() { return clientAddress; }
+    public String getCellNum() { return cellNum; }
+    public String getClientEmailAdd() { return clientEmailAdd; }
+    public String getClientUsername() { return clientUsername; }
+    public String getClientOccupation() { return clientOccupation; }
+    public String getCompanyName() { return companyName; }
+    public String getWorkType() { return workType; }
+    public String getClientAcctStatus() { return clientAcctStatus; }
+
+    // setter methods
+    public void setClientID(int clientID) { this.clientID = clientID; }
+    public void setClientPassword(String clientPassword) { this.clientPassword = clientPassword; }
+    public void setClientFullName(String clientFullName) { this.clientFullName = clientFullName; }
+    public void setClientAge(int clientAge) { this.clientAge = clientAge; }
+    public void setClientAddress(String clientAddress) { this.clientAddress = clientAddress; }
+    public void setCellNum(String cellNum) { this.cellNum = cellNum; }
+    public void setClientEmailAdd(String clientEmailAdd) { this.clientEmailAdd = clientEmailAdd; }
+    public void setClientUsername(String clientUsername) { this.clientUsername = clientUsername; }
+    public void setClientOccupation(String clientOccupation) { this.clientOccupation = clientOccupation; }
+    public void setCompanyName(String companyName) { this.companyName = companyName; }
+    public void setWorkType(String workType) { this.workType = workType; }
+    public void setClientAcctStatus(String clientAcctStatus) { this.clientAcctStatus = clientAcctStatus; }
 }

@@ -28,21 +28,21 @@ import javax.swing.Timer;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author joshu
  */
 public class LandingPage extends javax.swing.JFrame {
+
     // Database manager
     SPManager spManager = new SPManager();
-    
+
     // Pet records
     ArrayList<Pet> pets;
     private int totalPets;
     private int totalPetsToDisplay;
     private int petIndex = 0;
-    
+
     // filter and sorting conditions
     private List<String> petTypes = new ArrayList<>();
     private List<String> petOrigins = new ArrayList<>();
@@ -50,10 +50,10 @@ public class LandingPage extends javax.swing.JFrame {
     private List<String> petSizes = new ArrayList<>();
     private List<String> petGenders = new ArrayList<>();
     private List<String> sortCriteria = new ArrayList<>();
-    
+
     // for sorting priority
-    ArrayList<JCheckBox> sortingPriority = new ArrayList<>();   
-    
+    ArrayList<JCheckBox> sortingPriority = new ArrayList<>();
+
     // for moving the frame
     private Point mouseDownCompCoords;
 
@@ -72,8 +72,6 @@ public class LandingPage extends javax.swing.JFrame {
     private Devs devsFrame;
     private Login login;
     private Register register;
-    private Adopt adopt;
-    private Rehome rehome;
     private JPanel glassPane;
 
     // for pet current panel temp info holder
@@ -91,23 +89,25 @@ public class LandingPage extends javax.swing.JFrame {
     private boolean aboutUsClicked;
     private boolean FAQsClicked;
     private boolean petsClicked;
-    private int FAQsPanelCounter = 4000001;
+    private int FAQsPanelCounter = 0;
+    private int totalFAQsPanels = 4;
     private Timer timer;
-    
+
     /**
      * Creates new form Main
+     *
      * @param logout
      */
     public LandingPage(boolean logout) {
         initComponents();
-        
+
         // get all initial data from the database
         populatePetsFromDB();
-        totalPetsToDisplay = totalPets;
-        
+        totalPetsToDisplay = spManager.getAllPetsCount();
+
         // default
         defaultWindow();
-        
+
         // hide other panels
         navBar.setVisible(false);
         homeBody.setVisible(false);
@@ -115,7 +115,6 @@ public class LandingPage extends javax.swing.JFrame {
         petsBody.setVisible(false);
         FAQsBody.setVisible(false);
 
-        
         // Window logo
         ImageIcon icon1 = null;
         try {
@@ -128,8 +127,8 @@ public class LandingPage extends javax.swing.JFrame {
             System.err.println("Error: Image not found. " + e.getMessage());
             e.printStackTrace();
         }
-        
-        if(!logout) {
+
+        if (!logout) {
             // Create a timer to stop the GIF after 6 seconds
             timer = new Timer(0, new ActionListener() {
                 @Override
@@ -149,7 +148,7 @@ public class LandingPage extends javax.swing.JFrame {
             navBar.setVisible(true);
             homeBody.setVisible(true);
         }
-        
+
         // glass pane to block out any interaction within the main frame when opening a sub frame
         glassPane = new JPanel();
         glassPane.setOpaque(false);
@@ -162,7 +161,7 @@ public class LandingPage extends javax.swing.JFrame {
                     exitDialog.toFront();
                     Toolkit.getDefaultToolkit().beep(); // Play default system beep
                 }
-                
+
                 // for business rules in about us panel
                 if (businessRulesFrame != null && businessRulesFrame.isVisible()) {
                     businessRulesFrame.toFront();
@@ -179,20 +178,16 @@ public class LandingPage extends javax.swing.JFrame {
 
         setGlassPane(glassPane);
     }
-    
+
     // getters
     public Login getLogin() {
         return login;
     }
-    
+
     public Register getRegister() {
         return register;
     }
-    
-    public Adopt getAdopt() {
-        return adopt;
-    }
-    
+
     private void defaultWindow() {
         // set pet count
         adoptedCounter.setText(String.valueOf(totalPetsToDisplay));
@@ -258,6 +253,7 @@ public class LandingPage extends javax.swing.JFrame {
 
     private void handleHomeButtonClick() {
         // update count of pets
+        totalPetsToDisplay = spManager.getAllPetsCount();
         adoptedCounter.setText(String.valueOf(totalPetsToDisplay));
 
         updatePanelVisibility(true, false, false, false, false, false, false);
@@ -298,21 +294,37 @@ public class LandingPage extends javax.swing.JFrame {
         updateButtonIcons("/Resources/home.png", "/Resources/about us.png", "/Resources/FAQs.png", "/Resources/pets click.png", "/Resources/vets.png", "/Resources/application.png", "/Resources/head.png", "/Resources/collar.png");
     }
 
+    private void initializeFAQsPanel() {
+        FAQsPanelCounter = 0;
+        setFAQsPanelVisibility(FAQsPanelCounter);
+        updateButtonVisibility();
+    }
+
     private void FAQsChangePanel(String button) {
         if (button.equals("next")) {
-            FAQsPanelCounter++;
+            if (FAQsPanelCounter < totalFAQsPanels - 1) {
+                FAQsPanelCounter++;
+            }
         } else if (button.equals("prev")) {
-            FAQsPanelCounter--;
+            if (FAQsPanelCounter > 0) {
+                FAQsPanelCounter--;
+            }
         }
-        int counter = Math.abs(FAQsPanelCounter) % 4;
-        setFAQsPanelVisibility(counter);
+
+        setFAQsPanelVisibility(FAQsPanelCounter);
+        updateButtonVisibility();
+    }
+
+    private void updateButtonVisibility() {
+        prev.setVisible(FAQsPanelCounter > 0);
+        next.setVisible(FAQsPanelCounter < totalFAQsPanels - 1);
     }
 
     private void setFAQsPanelVisibility(int panel) {
-        FAQsPanel1.setVisible(panel == 1);
-        FAQsPanel2.setVisible(panel == 2);
-        FAQsPanel3.setVisible(panel == 3);
-        FAQsPanel4.setVisible(panel == 0);
+        FAQsPanel1.setVisible(panel == 0);
+        FAQsPanel2.setVisible(panel == 1);
+        FAQsPanel3.setVisible(panel == 2);
+        FAQsPanel4.setVisible(panel == 3);
     }
 
     private void petProfiles() {
@@ -416,8 +428,8 @@ public class LandingPage extends javax.swing.JFrame {
 
         // Hide or show pet panels and their components
         for (int i = 1; i <= petPanels.length && i < totalPets; i++) {
-            petPanels[i-1].setVisible(hide);
-            for (JLabel component : petComponents[i-1]) {
+            petPanels[i - 1].setVisible(hide);
+            for (JLabel component : petComponents[i - 1]) {
                 component.setVisible(hide);
             }
         }
@@ -453,13 +465,12 @@ public class LandingPage extends javax.swing.JFrame {
         String origin = "";
         String status = "";
         String size = "";
-        
 
         int diff = 2;
         // Update pet panel 1 based on selected panel
         switch (panel) {
             case 1:
-                if(totalPets == 1) {
+                if (totalPets == 1) {
                     diff = 1;
                 }
                 origin = pets.get(petIndex - diff).getPetOrigin();
@@ -478,6 +489,7 @@ public class LandingPage extends javax.swing.JFrame {
                 if (status.toUpperCase().equals("NA")) {
                     pStatus = "Not Adopted";
                 } else if (status.equals("A")) {
+                    petAdoptButton.setVisible(false);
                     pStatus = "Adopted";
                 }
 
@@ -521,6 +533,7 @@ public class LandingPage extends javax.swing.JFrame {
                 if (status.toUpperCase().equals("NA")) {
                     pStatus = "Not Adopted";
                 } else if (status.equals("A")) {
+                    petAdoptButton.setVisible(false);
                     pStatus = "Adopted";
                 }
 
@@ -567,6 +580,7 @@ public class LandingPage extends javax.swing.JFrame {
                 if (status.toUpperCase().equals("NA")) {
                     pStatus = "Not Adopted";
                 } else if (status.toUpperCase().equals("A")) {
+                    petAdoptButton.setVisible(false);
                     pStatus = "Adopted";
                 }
 
@@ -613,60 +627,59 @@ public class LandingPage extends javax.swing.JFrame {
         petGenders.removeAll(petGenders);
         sortCriteria.removeAll(sortCriteria);
 
-        
-        JCheckBox[] types = { dogType, catType, hamsterType, rabbitType };
-        JCheckBox[] origins = { rescuedOrigin, ownedOrigin };
-        JCheckBox[] statuses = { adoptedStatus, notAdoptedStatus };
-        JCheckBox[] sizes = { tinySize, smallSize, mediumSize, largeSize };
-        JCheckBox[] genders = { femaleGender, maleGender };
-        
-        for(JCheckBox type : types) {
-            if(type.isSelected()) {
+        JCheckBox[] types = {dogType, catType, hamsterType, rabbitType};
+        JCheckBox[] origins = {rescuedOrigin, ownedOrigin};
+        JCheckBox[] statuses = {adoptedStatus, notAdoptedStatus};
+        JCheckBox[] sizes = {tinySize, smallSize, mediumSize, largeSize};
+        JCheckBox[] genders = {femaleGender, maleGender};
+
+        for (JCheckBox type : types) {
+            if (type.isSelected()) {
                 petTypes.add(type.getText());
             }
         }
-        
-        for(JCheckBox origin : origins) {
-            if(origin.isSelected()) {
+
+        for (JCheckBox origin : origins) {
+            if (origin.isSelected()) {
                 petOrigins.add(origin.getText());
             }
         }
-        
-        for(JCheckBox status : statuses) {
-            if(status.isSelected()) {
+
+        for (JCheckBox status : statuses) {
+            if (status.isSelected()) {
                 petStatuses.add(status.getText());
             }
         }
-        
-        for(JCheckBox size : sizes) {
-            if(size.isSelected()) {
+
+        for (JCheckBox size : sizes) {
+            if (size.isSelected()) {
                 petSizes.add(size.getText());
             }
         }
-        
-        for(JCheckBox gender : genders) {
-            if(gender.isSelected()) {
+
+        for (JCheckBox gender : genders) {
+            if (gender.isSelected()) {
                 petGenders.add(gender.getText());
             }
         }
-        
+
         // sort and display the priority level
         JCheckBox checkBox;
-        for(int i = 0; i < sortingPriority.size(); i++) {
-            checkBox = sortingPriority.get(i);            
+        for (int i = 0; i < sortingPriority.size(); i++) {
+            checkBox = sortingPriority.get(i);
             sortCriteria.add(checkBox.getText());
-            
-            if(checkBox.equals(orderByID)) {
-                IDprio.setText(String.valueOf(i+1));
-            } else if(checkBox.equals(orderByName)) {
-                namePrio.setText(String.valueOf(i+1));
-            } else if(checkBox.equals(orderByAge)) {
-                agePrio.setText(String.valueOf(i+1));
+
+            if (checkBox.equals(orderByID)) {
+                IDprio.setText(String.valueOf(i + 1));
+            } else if (checkBox.equals(orderByName)) {
+                namePrio.setText(String.valueOf(i + 1));
+            } else if (checkBox.equals(orderByAge)) {
+                agePrio.setText(String.valueOf(i + 1));
             }
         }
-        
+
         System.out.println(dogType.getText());
-        
+
         populatePetsFromDB();
         petProfilesReset();
         petProfiles();
@@ -981,13 +994,13 @@ public class LandingPage extends javax.swing.JFrame {
 
         adoptedLabel.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         adoptedLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        adoptedLabel.setText("Wonderful Pets");
+        adoptedLabel.setText("Click for summary!");
         adoptedLabel.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 adoptedLabelbadgeKeyPressed(evt);
             }
         });
-        homeBody.add(adoptedLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 490, 320, 50));
+        homeBody.add(adoptedLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(875, 490, 350, 50));
 
         badge.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/badge2.png"))); // NOI18N
         badge.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1648,12 +1661,12 @@ public class LandingPage extends javax.swing.JFrame {
     private void registerButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerButtonMouseClicked
         // TODO add your handling code here:
         if (login != null) {
-            if(login.getRegister() != null) {
+            if (login.getRegister() != null) {
                 register = login.getRegister();
             }
             login.setVisible(false);
         }
-        
+
         if (register == null) {
             register = new Register(this);
             registerController = new RegisterController(register);
@@ -1678,8 +1691,8 @@ public class LandingPage extends javax.swing.JFrame {
 
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
         // TODO add your handling code here:
-        if (register != null ){
-            if(register.getLogin() != null) {
+        if (register != null) {
+            if (register.getLogin() != null) {
                 login = register.getLogin();
             }
             register.setVisible(false);
@@ -1690,8 +1703,7 @@ public class LandingPage extends javax.swing.JFrame {
             login.setVisible(true);
         } else if (!login.isVisible()) {
             login.setVisible(true);
-        }
-        else {
+        } else {
             login.toFront();
             login.requestFocus();
         }
@@ -1916,26 +1928,28 @@ public class LandingPage extends javax.swing.JFrame {
 
     private void petPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petPanel1MouseClicked
         // TODO add your handling code here:
-        setCurrentPetPanel(1);
         hidePetPanels(false);
+        setCurrentPetPanel(1);
     }//GEN-LAST:event_petPanel1MouseClicked
 
     private void petPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petPanel2MouseClicked
         // TODO add your handling code here:
-        setCurrentPetPanel(2);
         hidePetPanels(false);
+        setCurrentPetPanel(2);
+
     }//GEN-LAST:event_petPanel2MouseClicked
 
     private void petPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petPanel3MouseClicked
         // TODO add your handling code here:
-        setCurrentPetPanel(3);
         hidePetPanels(false);
+        setCurrentPetPanel(3);
+
     }//GEN-LAST:event_petPanel3MouseClicked
 
     private void petBackButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petBackButtonMouseClicked
         // TODO add your handling code here:
-        setCurrentPetPanel(0);
         hidePetPanels(true);
+        setCurrentPetPanel(0);
         petPanel1Clicked = false;
     }//GEN-LAST:event_petBackButtonMouseClicked
 
@@ -1951,20 +1965,21 @@ public class LandingPage extends javax.swing.JFrame {
 
     private void petAdoptButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petAdoptButtonMouseClicked
         // TODO add your handling code here:
-        if (rehome != null) {
-            if (rehome.getAdopt() != null) {
-                adopt = rehome.getAdopt();
+        if (register != null) {
+            if (register.getLogin() != null) {
+                login = register.getLogin();
             }
-            rehome.setVisible(false);
+            register.setVisible(false);
         }
-        if (adopt == null) {
-            adopt = new Adopt(this, null);
-            adopt.setVisible(true);
-        } else if (!adopt.isVisible()) {
-            adopt.setVisible(true);
+        if (login == null) {
+            login = new Login(this);
+            loginController = new LoginController(login);
+            login.setVisible(true);
+        } else if (!login.isVisible()) {
+            login.setVisible(true);
         } else {
-            adopt.toFront();
-            adopt.requestFocus();
+            login.toFront();
+            login.requestFocus();
         }
     }//GEN-LAST:event_petAdoptButtonMouseClicked
 
@@ -2050,13 +2065,13 @@ public class LandingPage extends javax.swing.JFrame {
 
     private void orderByNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderByNameActionPerformed
         // TODO add your handling code here:
-        if(orderByName.isSelected()) {
+        if (orderByName.isSelected()) {
             sortingPriority.add(orderByName);
             nameDescending.setEnabled(true);
         } else if (sortingPriority != null) {
             // remove checkbox if exist
-            for(JCheckBox attr : sortingPriority) {
-                if(attr.equals(orderByName)) {
+            for (JCheckBox attr : sortingPriority) {
+                if (attr.equals(orderByName)) {
                     sortingPriority.remove(attr);
                     break;
                 }
@@ -2066,7 +2081,7 @@ public class LandingPage extends javax.swing.JFrame {
             namePrio.setText("");
 
             // unselect descending if checked and call the corresponding listener
-            if(nameDescending.isSelected()) {
+            if (nameDescending.isSelected()) {
                 nameDescending.setSelected(false);
                 nameDescending.setEnabled(false);
                 nameDescendingActionPerformed(evt);
@@ -2078,13 +2093,13 @@ public class LandingPage extends javax.swing.JFrame {
 
     private void orderByAgeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderByAgeActionPerformed
         // TODO add your handling code here:
-        if(orderByAge.isSelected()) {
+        if (orderByAge.isSelected()) {
             sortingPriority.add(orderByAge);
             ageDescending.setEnabled(true);
         } else if (sortingPriority != null) {
             // remove checkbox if found
-            for(JCheckBox attr : sortingPriority) {
-                if(attr.equals(orderByAge)) {
+            for (JCheckBox attr : sortingPriority) {
+                if (attr.equals(orderByAge)) {
                     sortingPriority.remove(attr);
                     break;
                 }
@@ -2094,7 +2109,7 @@ public class LandingPage extends javax.swing.JFrame {
             agePrio.setText("");
 
             // unselect descending if checked and call the corresponding listener
-            if(ageDescending.isSelected()) {
+            if (ageDescending.isSelected()) {
                 ageDescending.setSelected(false);
                 ageDescending.setEnabled(false);
                 ageDescendingActionPerformed(evt);
@@ -2106,13 +2121,13 @@ public class LandingPage extends javax.swing.JFrame {
 
     private void orderByIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderByIDActionPerformed
         // TODO add your handling code here:
-        if(orderByID.isSelected()) {
+        if (orderByID.isSelected()) {
             IDdescending.setEnabled(true);
             sortingPriority.add(orderByID);
         } else if (sortingPriority != null) {
             // remove checkbox if found
-            for(JCheckBox attr : sortingPriority) {
-                if(attr.equals(orderByID)) {
+            for (JCheckBox attr : sortingPriority) {
+                if (attr.equals(orderByID)) {
                     sortingPriority.remove(attr);
                     break;
                 }
@@ -2122,7 +2137,7 @@ public class LandingPage extends javax.swing.JFrame {
             IDprio.setText("");
 
             // unselect descending if checked and call the corresponding listener
-            if(IDdescending.isSelected()) {
+            if (IDdescending.isSelected()) {
                 IDdescending.setSelected(false);
                 IDdescending.setEnabled(false);
                 IDdescendingActionPerformed(evt);
@@ -2134,7 +2149,7 @@ public class LandingPage extends javax.swing.JFrame {
 
     private void IDdescendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDdescendingActionPerformed
         // TODO add your handling code here:
-        if(IDdescending.isSelected()) {
+        if (IDdescending.isSelected()) {
             orderByID.setText("petID DESC");
         } else {
             orderByID.setText("petID");
@@ -2144,7 +2159,7 @@ public class LandingPage extends javax.swing.JFrame {
 
     private void nameDescendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameDescendingActionPerformed
         // TODO add your handling code here:
-        if(nameDescending.isSelected()) {
+        if (nameDescending.isSelected()) {
             orderByName.setText("petName DESC");
         } else {
             orderByName.setText("petName");
@@ -2154,7 +2169,7 @@ public class LandingPage extends javax.swing.JFrame {
 
     private void ageDescendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ageDescendingActionPerformed
         // TODO add your handling code here:
-        if(ageDescending.isSelected()) {
+        if (ageDescending.isSelected()) {
             orderByAge.setText("petAge DESC");
         } else {
             orderByAge.setText("petAge");
@@ -2236,6 +2251,7 @@ public class LandingPage extends javax.swing.JFrame {
     private void faqButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_faqButtonMousePressed
         // TODO add your handling code here:
         if (!FAQsClicked) {
+            initializeFAQsPanel();
             handleFaqButtonClick();
         }
     }//GEN-LAST:event_faqButtonMousePressed

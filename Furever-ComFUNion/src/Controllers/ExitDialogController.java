@@ -16,16 +16,22 @@ import javax.swing.JPanel;
  * @author joshu
  */
 public class ExitDialogController {
-    private final ExitDialog view;
-    private final LandingPage landingPage;
-    private final UserLoggedIn userLoggedIn;
-    private final VetLoggedIn vetInterface;
+    private ExitDialog view = null;
+    private LandingPage landingPage = null;
+    private UserLoggedIn userLoggedIn = null;
+    private VetLoggedIn vetLoggedIn = null;
 
-    public ExitDialogController(ExitDialog view, LandingPage landingPage, UserLoggedIn userLoggedIn, VetLoggedIn vetInterface) {
-        this.view = view;
-        this.landingPage = landingPage;
-        this.userLoggedIn = userLoggedIn;
-        this.vetInterface = vetInterface;
+    public ExitDialogController(ExitDialog view, LandingPage landingPage, UserLoggedIn userLoggedIn, VetLoggedIn vetLoggedIn) {
+        if(view != null) {
+            this.view = view;
+        }
+        if(userLoggedIn != null) {
+            this.userLoggedIn = userLoggedIn;
+        } else if(vetLoggedIn != null) {
+            this.vetLoggedIn = vetLoggedIn;
+        } else if(landingPage != null) {
+            this.landingPage = landingPage;
+        }
 
         // Initialize event listeners or additional logic here if needed
         initEventHandlers();
@@ -73,6 +79,9 @@ public class ExitDialogController {
 
         if (userLoggedIn != null) {
             view.setGlassPaneVisible((JPanel) userLoggedIn.getGlassPane(), false);
+        }
+        if (vetLoggedIn != null) {
+            view.setGlassPaneVisible((JPanel) vetLoggedIn.getGlassPane(), false);
         }
         view.setVisible(false);
     }
