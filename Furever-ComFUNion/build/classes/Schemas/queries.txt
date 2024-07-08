@@ -13,7 +13,6 @@ RegisterController
 > isEmailExist(String email) : line 375
 > isContactNumberExist(String contactNumber) : line 382
 > birthdateToAge(String birthdate) : line 406
->> there are some methods to implement here. ctrl + f "IMPLEMENT HERE:" for easy navigation
 
 UserLoggedIn
 > confirmButtonMouseClicked : line 4028, 4040
@@ -26,6 +25,8 @@ Rehome
 > rehomeButtonMouseClicked : line 846, 852, 875, 884
 
 VetLoggedIn
+> profileDeleteButtonMouseClicked : line 4950
+> profileConfirmButtonMouseClicked : line 5071
 
 Rescued
 > rescueButtonMouseClicked : line 457

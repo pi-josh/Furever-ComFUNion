@@ -209,6 +209,10 @@ public class Register extends javax.swing.JFrame {
         // Populate month combobox
         for (int m = 1; m <= 12; m++) {
             String monthValue = String.valueOf(m);
+            if(m > 9) {
+                monthValue = "0" + monthValue;
+            }
+            
             month.addItem(monthValue);
         }
 
@@ -248,6 +252,9 @@ public class Register extends javax.swing.JFrame {
             day.removeAllItems();
             for (int d = 1; d <= daysInMonth; d++) {
                 String dayValue = String.valueOf(d);
+                if(d > 9) {
+                    dayValue = "0" + dayValue;
+                }
                 day.addItem(dayValue);
             }
         }
@@ -470,6 +477,12 @@ public class Register extends javax.swing.JFrame {
         registerContainer.add(contactNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 80, -1, -1));
 
         contactNumScroll.setHorizontalScrollBar(null);
+
+        contactNum.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                contactNumKeyTyped(evt);
+            }
+        });
         contactNumScroll.setViewportView(contactNum);
 
         registerContainer.add(contactNumScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 110, 280, -1));
@@ -538,6 +551,17 @@ public class Register extends javax.swing.JFrame {
         yearMonthDay.add((String) day.getSelectedItem());
         birthdate.setText("".join("-", yearMonthDay));
     }//GEN-LAST:event_setBirthdate
+
+    private void contactNumKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_contactNumKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        String contactNumText = ((javax.swing.JTextField) evt.getSource()).getText();
+
+        // Check if the character is not a digit or if the text exceeds 10 characters
+        if (!Character.isDigit(c) || contactNumText.length() >= 10) {
+            evt.consume();  // Ignore the event, so the character is not added to the text field
+        }
+    }//GEN-LAST:event_contactNumKeyTyped
 
     
     /**

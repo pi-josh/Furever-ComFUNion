@@ -3942,18 +3942,19 @@ public class UserLoggedIn extends javax.swing.JFrame {
                             if(highlight1.isVisible()) {
                                 /*
                                 currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID1.getText()));
-                                    if(currentApplication != null) {
+                                if(currentApplication != null) {
+                                    if(methodName(currentApplication.getApplicationID())) {                                
                                         Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
                                         if(pet != null) {
                                             String appType = currentApplication.getApplicationType();
                                             if(appType.equals("A")) {
                                                 spManager.updatePetStatus(pet.getPetID(), "NA");
-                                            } else if(appType.equals("R") {
+                                            } else if(appType.equals("R")) {
                                                 // QUERY HERE: delete a pet record by id
                                                 spManager.methodName(pet.getPetID());
                                             }
                                         }
-                                if(methodName(currentApplication.getApplicationID()) {
+                                    }
                                     success = true;
                                 } else {
                                     success = false;
@@ -3963,18 +3964,19 @@ public class UserLoggedIn extends javax.swing.JFrame {
                             if(highlight2.isVisible()) {
                                 /*
                                 currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID2.getText()));
-                                    if(currentApplication != null) {
+                                if(currentApplication != null) {
+                                    if(methodName(currentApplication.getApplicationID())) {                                
                                         Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
                                         if(pet != null) {
                                             String appType = currentApplication.getApplicationType();
                                             if(appType.equals("A")) {
                                                 spManager.updatePetStatus(pet.getPetID(), "NA");
-                                            } else if(appType.equals("R") {
+                                            } else if(appType.equals("R")) {
                                                 // QUERY HERE: delete a pet record by id
                                                 spManager.methodName(pet.getPetID());
                                             }
                                         }
-                                if(methodName(currentApplication.getApplicationID()) {
+                                    }
                                     success = true;
                                 } else {
                                     success = false;
@@ -3984,18 +3986,19 @@ public class UserLoggedIn extends javax.swing.JFrame {
                             if(highlight3.isVisible()) {
                                 /*
                                 currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID3.getText()));
-                                    if(currentApplication != null) {
+                                if(currentApplication != null) {
+                                    if(methodName(currentApplication.getApplicationID())) {                                
                                         Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
                                         if(pet != null) {
                                             String appType = currentApplication.getApplicationType();
                                             if(appType.equals("A")) {
                                                 spManager.updatePetStatus(pet.getPetID(), "NA");
-                                            } else if(appType.equals("R") {
+                                            } else if(appType.equals("R")) {
                                                 // QUERY HERE: delete a pet record by id
                                                 spManager.methodName(pet.getPetID());
                                             }
                                         }
-                                if(methodName(currentApplication.getApplicationID()) {
+                                    }
                                     success = true;
                                 } else {
                                     success = false;
@@ -4005,18 +4008,19 @@ public class UserLoggedIn extends javax.swing.JFrame {
                             if(highlight4.isVisible()) {
                                 /*
                                 currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID4.getText()));
-                                    if(currentApplication != null) {
+                                if(currentApplication != null) {
+                                    if(methodName(currentApplication.getApplicationID())) {                                
                                         Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
                                         if(pet != null) {
                                             String appType = currentApplication.getApplicationType();
                                             if(appType.equals("A")) {
                                                 spManager.updatePetStatus(pet.getPetID(), "NA");
-                                            } else if(appType.equals("R") {
+                                            } else if(appType.equals("R")) {
                                                 // QUERY HERE: delete a pet record by id
                                                 spManager.methodName(pet.getPetID());
                                             }
                                         }
-                                if(methodName(currentApplication.getApplicationID()) {
+                                    }
                                     success = true;
                                 } else {
                                     success = false;
@@ -4026,18 +4030,19 @@ public class UserLoggedIn extends javax.swing.JFrame {
                             if(highlight5.isVisible()) {
                                 /*
                                 currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID5.getText()));
-                                    if(currentApplication != null) {
+                                if(currentApplication != null) {
+                                    if(methodName(currentApplication.getApplicationID())) {                                
                                         Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
                                         if(pet != null) {
                                             String appType = currentApplication.getApplicationType();
                                             if(appType.equals("A")) {
                                                 spManager.updatePetStatus(pet.getPetID(), "NA");
-                                            } else if(appType.equals("R") {
+                                            } else if(appType.equals("R")) {
                                                 // QUERY HERE: delete a pet record by id
                                                 spManager.methodName(pet.getPetID());
                                             }
                                         }
-                                if(methodName(currentApplication.getApplicationID()) {
+                                    }
                                     success = true;
                                 } else {
                                     success = false;
@@ -4100,7 +4105,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         username.setText(client.getClientUsername());
         password.setText(client.getClientPassword());
         currentAddress.setText(client.getClientAddress());
-        emailAddress.setText(client.getClientOccupation());
+        emailAddress.setText(client.getClientEmailAdd());
         occupation.setText(client.getClientOccupation());
         companyName.setText(client.getCompanyName());
         workType.setSelectedItem(client.getWorkType());

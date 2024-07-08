@@ -5,6 +5,7 @@
  */
 package Views;
 
+import Controllers.InformationDialogController;
 import Models.Application;
 import Models.Client;
 import Models.Pet;
@@ -13,6 +14,8 @@ import Models.Veterinarian;
 import java.awt.MediaTracker;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,9 +23,12 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -34,10 +40,20 @@ public class Adopt extends javax.swing.JFrame {
     // for moving the frame
     private Point mouseDownCompCoords;
     
+    
+    // sub frames
     private UserLoggedIn userLoggedIn;
+    private boolean edit;
+    private InformationDialog informationDialog;
     private Adopt adopt;
     private Rehome rehome;
-    private boolean edit;
+    private JPanel glassPane;
+
+    // controllers
+    InformationDialogController informationController;
+    
+    // for information dialog
+    boolean userResponse;
     
     // Client who is logged in
     Client client;
@@ -145,6 +161,25 @@ public class Adopt extends javax.swing.JFrame {
         
         // Window logo
         setWindowIcon();
+        
+        // glass pane to block out any interaction within the main frame when opening a sub frame
+        glassPane = new JPanel();
+        glassPane.setOpaque(false);
+        glassPane.setVisible(false);
+        glassPane.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // brings the active sub frame on the front and add a system beep to notify
+
+                // for exit dialog
+                if (informationDialog != null && informationDialog.isVisible()) {
+                    informationDialog.toFront();
+                    Toolkit.getDefaultToolkit().beep();
+                }
+            }
+        });
+
+        setGlassPane(glassPane);
     }
     
     private void populateVetComboBox() {
@@ -373,6 +408,29 @@ public class Adopt extends javax.swing.JFrame {
         }
     }
     
+    public CountDownLatch countDownLatch() {
+        // Create a CountDownLatch
+        CountDownLatch latch = new CountDownLatch(1);
+
+        // Show the custom frame on the EDT
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                if (informationDialog == null || !informationDialog.isVisible()) {
+                    informationDialog = new InformationDialog(Adopt.this, null, null, latch);
+                    informationController = new InformationDialogController(informationDialog, Adopt.this, null, null, latch);
+                    informationDialog.setVisible(true);
+                    glassPane.setVisible(true);
+                } else {
+                    informationDialog.toFront();
+                    informationDialog.requestFocus();
+                }
+            }
+        });
+        return latch;
+    }
+
+    
     // getters
     public Rehome getRehome() {
         return rehome;
@@ -527,7 +585,7 @@ public class Adopt extends javax.swing.JFrame {
                 adoptNextMouseExited(evt);
             }
         });
-        adoptPanel1.add(adoptNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(605, 575, 220, 70));
+        adoptPanel1.add(adoptNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(605, 590, 220, 70));
 
         age.setEditable(false);
         age.addActionListener(new java.awt.event.ActionListener() {
@@ -684,7 +742,7 @@ public class Adopt extends javax.swing.JFrame {
                 adoptPrevMouseExited(evt);
             }
         });
-        adoptPanel2.add(adoptPrev, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 565, 220, 75));
+        adoptPanel2.add(adoptPrev, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 590, 220, 75));
 
         petAge.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1091,51 +1149,78 @@ public class Adopt extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "You must agree to the terms.", "Validation Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        String applicationType = "A";
-        String[] appointDateTime = ((String) availableDates.getSelectedItem()).trim().split(" ");
-        String appointDate = appointDateTime[0];
-        String appointTime = appointDateTime[1];
-        String appointPlace = "Vet Clinic";
-        String appointStatus = "P";
-        int clientID = Integer.valueOf(adopterID.getText().trim());
-        String selectedPetID = ((String) petID.getSelectedItem()).trim();
-        String selectedVetID = ((String) vetID.getSelectedItem()).trim();
         
-        System.out.println(applicationType + " " + appointDate + " " + appointTime + " " + appointPlace + " " + clientID + " " + selectedPetID + " " + selectedVetID);
-        
-        
-        if(edit) {
-            /*
-            // QUERY HERE; update adopt application form by id in the application table
-            // the method will return true if successful, otherwise false
-            if(spManager.methodName(application.getApplicationID(), applicationType, appointDate, appointTime, appointPlace, appointStatus, clientID, selectedPetID, selectedVetID)) {
-                JOptionPane.showMessageDialog(null, "Application Updated Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                // this will check if the pet being adopted has been changed
-                if(!tempPet.getPetID().equals(pet.getPetID())) {
-                   spManager.updatePetStatus(selectedPetID, "NA");
+        CountDownLatch latch = countDownLatch();
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "Application Update Failed", "Failed", JOptionPane.ERROR_MESSAGE);
-                return;
+
+                // Continue with code execution based on user's response
+                userResponse = informationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                            String applicationType = "A";
+                            String[] appointDateTime = ((String) availableDates.getSelectedItem()).trim().split(" ");
+                            String appointDate = appointDateTime[0];
+                            String appointTime = appointDateTime[1];
+                            String appointPlace = "Vet Clinic";
+                            String appointStatus = "P";
+                            int clientID = Integer.valueOf(adopterID.getText().trim());
+                            String selectedPetID = ((String) petID.getSelectedItem()).trim();
+                            String selectedVetID = ((String) vetID.getSelectedItem()).trim();
+
+                            System.out.println(applicationType + " " + appointDate + " " + appointTime + " " + appointPlace + " " + clientID + " " + selectedPetID + " " + selectedVetID);
+
+
+                            if(edit) {
+                                /*
+                                // QUERY HERE; update adopt application form by id in the application table
+                                // the method will return true if successful, otherwise false
+                                if(spManager.methodName(application.getApplicationID(), applicationType, appointDate, appointTime, appointPlace, appointStatus, clientID, selectedPetID, selectedVetID)) {
+                                    JOptionPane.showMessageDialog(null, "Application Updated Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                                    // this will check if the pet being adopted has been changed
+                                    if(!tempPet.getPetID().equals(pet.getPetID())) {
+                                       spManager.updatePetStatus(selectedPetID, "NA");
+                                    }
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Application Update Failed", "Failed", JOptionPane.ERROR_MESSAGE);
+                                    return;
+                                }
+                                */
+                            } else {
+                                // QUERY HERE: insert adopt application form in the application table
+                                // the method will return true if successful, otherwise false
+                                if(spManager.insertApplicationRecord(applicationType, appointDate, appointTime, appointPlace, appointStatus, clientID, selectedPetID, selectedVetID) && spManager.updatePetStatus(selectedPetID, "A")) {
+                                    JOptionPane.showMessageDialog(null, "Application Submitted!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Application Failed", "Failed", JOptionPane.ERROR_MESSAGE);
+                                    return;
+                                }
+                            }
+
+                            userLoggedIn.setApplicationClicked(false);
+                            userLoggedIn.populateAppsFromDB();
+                            userLoggedIn.handleApplicationButtonClick();
+                            userLoggedIn.applications();
+                            userLoggedIn.applicationEditVisibility(false);
+                            Adopt.this.dispose();
+                        }
+                    }
+                });
             }
-            */
-        } else {
-            // QUERY HERE: insert adopt application form in the application table
-            // the method will return true if successful, otherwise false
-            if(spManager.insertApplicationRecord(applicationType, appointDate, appointTime, appointPlace, appointStatus, clientID, selectedPetID, selectedVetID) && spManager.updatePetStatus(selectedPetID, "A")) {
-                JOptionPane.showMessageDialog(null, "Application Submitted!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null, "Application Failed", "Failed", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-        }
+        }).start();
         
-        userLoggedIn.setApplicationClicked(false);
-        userLoggedIn.populateAppsFromDB();
-        userLoggedIn.handleApplicationButtonClick();
-        userLoggedIn.applications();
-        userLoggedIn.applicationEditVisibility(false);
-        this.dispose();
     }//GEN-LAST:event_adoptButtonMouseClicked
 
     private void adoptButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adoptButtonMouseEntered

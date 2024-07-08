@@ -21,19 +21,25 @@ public class InformationDialog extends javax.swing.JFrame {
     // for moving the frame
     private Point mouseDownCompCoords;
     
+    // sub frames 
+    Adopt adopt;
+    Rehome rehome;
+    Rescued rescued;
+    
     private boolean userResponse;
     private JPanel glassPane = (JPanel) null;
     private final CountDownLatch latch;
 
-    public InformationDialog(UserLoggedIn userLoggedIn, VetLoggedIn vetLoggedIn, CountDownLatch latch) {
+    public InformationDialog(Adopt adopt, Rehome rehome, Rescued rescued, CountDownLatch latch) {
         initComponents();
         this.latch = latch;
-        if(userLoggedIn != null) {
-            this.glassPane = (JPanel) userLoggedIn.getGlassPane();
-        } else if(vetLoggedIn != null) {
-            this.glassPane = (JPanel) vetLoggedIn.getGlassPane();
+        if(adopt != null) {
+            this.glassPane = (JPanel) adopt.getGlassPane();
+        } else if(rehome != null) {
+            this.glassPane = (JPanel) rehome.getGlassPane();
+        } else if(rescued != null) {
+            this.glassPane = (JPanel) rescued.getGlassPane();
         }
-
         // Window logo
         try {
             ImageIcon icon = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Resources/logo2.png")));
@@ -163,7 +169,7 @@ public class InformationDialog extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InformationDialog(null, null, null).setVisible(true);
+                new InformationDialog(null, null, null, null).setVisible(true);
             }
         });
     }
@@ -177,7 +183,4 @@ public class InformationDialog extends javax.swing.JFrame {
     private javax.swing.JLabel yesButton;
     // End of variables declaration//GEN-END:variables
 
-    private void setModal(boolean b) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

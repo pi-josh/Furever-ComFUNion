@@ -5,13 +5,19 @@
  */
 package Views;
 
+import Controllers.InformationDialogController;
 import Models.Veterinarian;
 import java.awt.MediaTracker;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.concurrent.CountDownLatch;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -23,6 +29,17 @@ public class Rescued extends javax.swing.JFrame {
     
     // sub frames
     private VetLoggedIn vetLoggedIn;
+    private boolean edit;
+    private InformationDialog informationDialog;
+    private Adopt adopt;
+    private Rehome rehome;
+    private JPanel glassPane;
+
+    // controllers
+    InformationDialogController informationController;
+    
+    // for information dialog
+    boolean userResponse;
     
     // Veterinarian who is currently logged in
     private Veterinarian vet;
@@ -68,6 +85,25 @@ public class Rescued extends javax.swing.JFrame {
         petSize.add(small);
         petSize.add(medium);
         petSize.add(large);
+        
+        // glass pane to block out any interaction within the main frame when opening a sub frame
+        glassPane = new JPanel();
+        glassPane.setOpaque(false);
+        glassPane.setVisible(false);
+        glassPane.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // brings the active sub frame on the front and add a system beep to notify
+
+                // for exit dialog
+                if (informationDialog != null && informationDialog.isVisible()) {
+                    informationDialog.toFront();
+                    Toolkit.getDefaultToolkit().beep();
+                }
+            }
+        });
+
+        setGlassPane(glassPane);
     }
     
     public Rescued() {
@@ -104,6 +140,28 @@ public class Rescued extends javax.swing.JFrame {
             System.err.println("Error: Image not found. " + e.getMessage());
             e.printStackTrace();
         }
+    }
+    
+    public CountDownLatch countDownLatch() {
+        // Create a CountDownLatch
+        CountDownLatch latch = new CountDownLatch(1);
+
+        // Show the custom frame on the EDT
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                if (informationDialog == null || !informationDialog.isVisible()) {
+                    informationDialog = new InformationDialog(null, null, Rescued.this, latch);
+                    informationController = new InformationDialogController(informationDialog, null, null, Rescued.this, latch);
+                    informationDialog.setVisible(true);
+                    glassPane.setVisible(true);
+                } else {
+                    informationDialog.toFront();
+                    informationDialog.requestFocus();
+                }
+            }
+        });
+        return latch;
     }
 
     
@@ -456,29 +514,55 @@ public class Rescued extends javax.swing.JFrame {
         } else {
             enteredPetAge = petAge.getText().trim() + " month";
         }
-        String selectedPetType = ((String)petType.getSelectedItem()).trim();
-        String selectedPetSex = petSex;
-        String selectedPetOrigin = "O";
-        String selectedStatus = "NA";
-        String selectedPetSize = petSize;
-        /*
-        // QUERY HERE: insert pet record in the pet table
-        // the method will return the pet id if successful, otherwise return an empty string
-        String selectedPetID = methodName(selectedPetType, selectedPetOrigin, selectedPetStatus, selectedPetSize,
-                              enteredPetAge, enteredPetName, selectedPetSex);
-        if(!"".equals(selectedPetID)) {
-            JOptionPane.showMessageDialog(null, "Rescue Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(null, "Rescue Failed", "Failed", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        */
-        vetLoggedIn.setApplicationClicked(false);
-        vetLoggedIn.populateAppsFromDB(1);
-        vetLoggedIn.handleApplicationButtonClick();
-        vetLoggedIn.applications();
-        vetLoggedIn.applicationEditVisibility(false);
-        this.dispose();
+        final String selectedPetType = ((String)petType.getSelectedItem()).trim();
+        final String selectedPetSex = petSex;
+        final String selectedPetOrigin = "O";
+        final String selectedPetStatus = "NA";
+        final String selectedPetSize = petSize;
+        
+        CountDownLatch latch = countDownLatch();
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Continue with code execution based on user's response
+                userResponse = informationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                            /*
+                            // QUERY HERE: insert pet record in the pet table
+                            // the method will return the pet id if successful, otherwise return an empty string
+                            String selectedPetID = methodName(selectedPetType, selectedPetOrigin, selectedPetStatus, selectedPetSize,
+                                                  enteredPetAge, enteredPetName, selectedPetSex);
+                            if(!"".equals(selectedPetID)) {
+                                JOptionPane.showMessageDialog(null, "Rescue Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Rescue Failed", "Failed", JOptionPane.ERROR_MESSAGE);
+                                return;
+                            }
+                            */
+                            vetLoggedIn.setApplicationClicked(false);
+                            vetLoggedIn.populateAppsFromDB(1);
+                            vetLoggedIn.handleApplicationButtonClick();
+                            vetLoggedIn.applications();
+                            vetLoggedIn.applicationEditVisibility(false);
+                            Rescued.this.dispose();
+                        }
+                    }
+                });
+            }
+        }).start();
     }//GEN-LAST:event_rescuedButtonMouseClicked
 
     private void rescuedButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rescuedButtonMouseEntered

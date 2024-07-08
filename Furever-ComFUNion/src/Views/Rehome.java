@@ -5,6 +5,7 @@
  */
 package Views;
 
+import Controllers.InformationDialogController;
 import Models.Application;
 import Models.Client;
 import Models.Pet;
@@ -13,6 +14,8 @@ import Models.Veterinarian;
 import java.awt.MediaTracker;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,9 +23,12 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -37,9 +43,17 @@ public class Rehome extends javax.swing.JFrame {
 
     // sub frames
     private UserLoggedIn userLoggedIn;
+    private boolean edit;
+    private InformationDialog informationDialog;
     private Adopt adopt;
     private Rehome rehome;
-    private boolean edit;
+    private JPanel glassPane;
+
+    // controllers
+    InformationDialogController informationController;
+    
+    // for information dialog
+    boolean userResponse;
 
     // Client who is logged in
     Client client;
@@ -132,6 +146,25 @@ public class Rehome extends javax.swing.JFrame {
 
         // hide 2nd panel
         rehomePanel2.setVisible(false);
+        
+        // glass pane to block out any interaction within the main frame when opening a sub frame
+        glassPane = new JPanel();
+        glassPane.setOpaque(false);
+        glassPane.setVisible(false);
+        glassPane.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // brings the active sub frame on the front and add a system beep to notify
+
+                // for exit dialog
+                if (informationDialog != null && informationDialog.isVisible()) {
+                    informationDialog.toFront();
+                    Toolkit.getDefaultToolkit().beep();
+                }
+            }
+        });
+
+        setGlassPane(glassPane);
     }
 
     private void populateVetComboBox() {
@@ -266,6 +299,28 @@ public class Rehome extends javax.swing.JFrame {
     // getters
     public Adopt getAdopt() {
         return adopt;
+    }
+    
+    public CountDownLatch countDownLatch() {
+        // Create a CountDownLatch
+        CountDownLatch latch = new CountDownLatch(1);
+
+        // Show the custom frame on the EDT
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                if (informationDialog == null || !informationDialog.isVisible()) {
+                    informationDialog = new InformationDialog(null, Rehome.this, null, latch);
+                    informationController = new InformationDialogController(informationDialog, null, Rehome.this, null, latch);
+                    informationDialog.setVisible(true);
+                    glassPane.setVisible(true);
+                } else {
+                    informationDialog.toFront();
+                    informationDialog.requestFocus();
+                }
+            }
+        });
+        return latch;
     }
 
     /**
@@ -413,7 +468,7 @@ public class Rehome extends javax.swing.JFrame {
                 rehomeNextMouseExited(evt);
             }
         });
-        rehomePanel1.add(rehomeNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(605, 575, 220, 70));
+        rehomePanel1.add(rehomeNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(605, 590, 220, 70));
 
         firstName.setEditable(false);
         rehomePanel1.add(firstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(214, 287, 232, 32));
@@ -490,7 +545,7 @@ public class Rehome extends javax.swing.JFrame {
                 rehomePrevMouseExited(evt);
             }
         });
-        rehomePanel2.add(rehomePrev, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 565, 220, 75));
+        rehomePanel2.add(rehomePrev, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 590, 220, 75));
 
         petID.setEnabled(false);
         petID.addActionListener(new java.awt.event.ActionListener() {
@@ -846,64 +901,74 @@ public class Rehome extends javax.swing.JFrame {
         } else {
             enteredPetAge = petAge.getText().trim() + " month";
         }
-        String selectedPetType = ((String)petType.getSelectedItem()).trim();
-        String selectedPetSex = petSex;
-        String selectedPetOrigin = "O";
-        String selectedStatus = "NA";
-        String selectedPetSize = petSize;
-        /*
-        // QUERY HERE: update pet record in the pet table by pet id
-        // the method will return the pet id if successful, otherwise return an empty string
-        if(edit) {
-            String selectedPetID = methodName(tempPet.getPetID(), selectedPetType, selectedPetOrigin, selectedPetStatus, selectedPetSize,
-                                  enteredPetAge, enteredPetName, selectedPetSex);
-        } else {
-            // QUERY HERE: insert pet record in the pet table
-            // the method will return the pet id if successful, otherwise return an empty string
-            String selectedPetID = methodName(selectedPetType, selectedPetOrigin, selectedPetStatus, selectedPetSize,
-                                  enteredPetAge, enteredPetName, selectedPetSex);
-        }
+        final String selectedPetType = ((String)petType.getSelectedItem()).trim();
+        final String selectedPetSex = petSex;
+        final String selectedPetOrigin = "O";
+        final String selectedStatus = "NA";
+        final String selectedPetSize = petSize;
         
         
-        */
-        if("".equals(selectedPetID)) {
-            JOptionPane.showMessageDialog(null, "Insertion of pet record unsuccessful", "Validation Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        String applicationType = "R";
-        String[] appointDateTime = ((String) availableDates.getSelectedItem()).trim().split(" ");
-        String appointDate = appointDateTime[0];
-        String appointTime = appointDateTime[1];
-        String appointPlace = "Vet Clinic";
-        String appointStatus = "P";
-        int clientID = Integer.valueOf(ownerID.getText().trim());
-        String selectedVetID = ((String) vetID.getSelectedItem()).trim();
-        
-        /*
-        // QUERY HERE: update rehome application form in the application table by application id
-        // the method will return true if successful, otherwise false
-        if(edit) {
-            if(methodName(application.getApplicationID(), applicationType, appointDate, appointTime, appointPlace, appointStatus, clientID, selectedPetID, selectedVetID)) {
-                JOptionPane.showMessageDialog(null, "Application Updated Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                        } else {
-                JOptionPane.showMessageDialog(null, "Application Update Failed", "Failed", JOptionPane.ERROR_MESSAGE);
+        CountDownLatch latch = countDownLatch();
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Continue with code execution based on user's response
+                userResponse = informationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                            String applicationType = "R";
+                            String[] appointDateTime = ((String) availableDates.getSelectedItem()).trim().split(" ");
+                            String appointDate = appointDateTime[0];
+                            String appointTime = appointDateTime[1];
+                            String appointPlace = "Vet Clinic";
+                            String appointStatus = "P";
+                            int clientID = Integer.valueOf(ownerID.getText().trim());
+                            String selectedVetID = ((String) vetID.getSelectedItem()).trim();
+
+                            /*
+                            // QUERY HERE: update rehome application form in the application table by application id
+                            // the method will return true if successful, otherwise false
+                            if(edit) {
+                                if(methodName(application.getApplicationID(), applicationType, appointDate, appointTime, appointPlace, appointStatus, clientID, selectedPetID, selectedVetID)) {
+                                    JOptionPane.showMessageDialog(null, "Application Updated Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                                            } else {
+                                    JOptionPane.showMessageDialog(null, "Application Update Failed", "Failed", JOptionPane.ERROR_MESSAGE);
+                                }
+                            } else {
+                                // QUERY HERE: insert rehome application form in the application table
+                                // the method will return true if successful, otherwise false
+                                if(methodName(applicationType, appointDate, appointTime, appointPlace, appointStatus, clientID, selectedPetID, selectedVetID)) {
+                                    JOptionPane.showMessageDialog(null, "Application Submitted!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Application Failed", "Failed", JOptionPane.ERROR_MESSAGE);
+                                }
+                            }
+                            */
+                            userLoggedIn.setApplicationClicked(false);
+                            userLoggedIn.populateAppsFromDB();
+                            userLoggedIn.handleApplicationButtonClick();
+                            userLoggedIn.applications();
+                            userLoggedIn.applicationEditVisibility(false);
+                            Rehome.this.dispose();
+                        }
+                    }
+                });
             }
-        } else {
-            // QUERY HERE: insert rehome application form in the application table
-            // the method will return true if successful, otherwise false
-            if(methodName(applicationType, appointDate, appointTime, appointPlace, appointStatus, clientID, selectedPetID, selectedVetID)) {
-                JOptionPane.showMessageDialog(null, "Application Submitted!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null, "Application Failed", "Failed", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-        */
-        userLoggedIn.setApplicationClicked(false);
-        userLoggedIn.populateAppsFromDB();
-        userLoggedIn.handleApplicationButtonClick();
-        userLoggedIn.applications();
-        userLoggedIn.applicationEditVisibility(false);
-        this.dispose();
+        }).start();
+        
+        
     }//GEN-LAST:event_rehomeButtonMouseClicked
 
     private void rehomeButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rehomeButtonMouseEntered

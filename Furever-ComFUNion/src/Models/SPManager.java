@@ -1,6 +1,8 @@
 package Models;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +13,152 @@ public class SPManager {
 
     public SPManager() {
         // Connection is created per method call, not in the constructor
+    }
+    // Method to check if a cell number already exists in the client or vet table
+    public boolean isCellNumExistQuery(String cellNum) {
+        String clientQuery = "SELECT COUNT(*) FROM `client.v2` WHERE CellNum = ?";
+        String vetQuery = "SELECT COUNT(*) FROM `vet.v2` WHERE VetCellNum = ?";
+
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement clientPs = connection.prepareStatement(clientQuery);
+             PreparedStatement vetPs = connection.prepareStatement(vetQuery)) {
+
+            // Check client table
+            clientPs.setString(1, cellNum);
+            try (ResultSet clientRs = clientPs.executeQuery()) {
+                if (clientRs.next() && clientRs.getInt(1) > 0) {
+                    return true;
+                }
+            }
+
+            // Check vet table
+            vetPs.setString(1, cellNum);
+            try (ResultSet vetRs = vetPs.executeQuery()) {
+                if (vetRs.next() && vetRs.getInt(1) > 0) {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+     
+    // Method to check if an email address already exists in the client or vet table
+    public boolean isEmailExistQuery(String email) {
+        String clientQuery = "SELECT COUNT(*) FROM `client.v2` WHERE ClientEmailAdd = ?";
+        String vetQuery = "SELECT COUNT(*) FROM `vet.v2` WHERE VetEmailAdd = ?";
+
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement clientPs = connection.prepareStatement(clientQuery);
+             PreparedStatement vetPs = connection.prepareStatement(vetQuery)) {
+
+            // Check client table
+            clientPs.setString(1, email);
+            try (ResultSet clientRs = clientPs.executeQuery()) {
+                if (clientRs.next() && clientRs.getInt(1) > 0) {
+                    return true;
+                }
+            }
+
+            // Check vet table
+            vetPs.setString(1, email);
+            try (ResultSet vetRs = vetPs.executeQuery()) {
+                if (vetRs.next() && vetRs.getInt(1) > 0) {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+    
+    // Method to check if a username already exists in the client or vet table
+    public boolean isUsernameExistQuery(String username) {
+        String clientQuery = "SELECT COUNT(*) FROM `client.v2` WHERE ClientUsername = ?";
+        String vetQuery = "SELECT COUNT(*) FROM `vet.v2` WHERE VetUsername = ?";
+
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement clientPs = connection.prepareStatement(clientQuery);
+             PreparedStatement vetPs = connection.prepareStatement(vetQuery)) {
+
+            // Check client table
+            clientPs.setString(1, username);
+            try (ResultSet clientRs = clientPs.executeQuery()) {
+                if (clientRs.next() && clientRs.getInt(1) > 0) {
+                    return true;
+                }
+            }
+
+            // Check vet table
+            vetPs.setString(1, username);
+            try (ResultSet vetRs = vetPs.executeQuery()) {
+                if (vetRs.next() && vetRs.getInt(1) > 0) {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    
+    public static int birthdateToAge(String birthdate) {
+        LocalDate birthDate = LocalDate.parse(birthdate);
+        LocalDate currentDate = LocalDate.now();
+        if (birthDate != null && currentDate != null) {
+            return Period.between(birthDate, currentDate).getYears();
+        } else {
+                return 0; 
+        }
+    }
+    
+    // Methods to register a new account
+    public boolean registerClient(String clientUsername, String clientPassword, String clientFullName, int clientAge, String clientAddress, String cellNum, String clientEmailAdd, String clientOccupation, String companyName, String workType, String clientAcctStatus) {
+        String query = "INSERT INTO `client.v2` (ClientUsername, ClientPassword, ClientFullName, ClientAge, ClientAddress, CellNum, ClientEmailAdd, ClientOccupation, CompanyName, WorkType, ClientAcctStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, clientUsername);
+            ps.setString(2, clientPassword);
+            ps.setString(3, clientFullName);
+            ps.setInt(4, clientAge);
+            ps.setString(5, clientAddress);
+            ps.setString(6, cellNum);
+            ps.setString(7, clientEmailAdd);
+            ps.setString(8, clientOccupation);
+            ps.setString(9, companyName);
+            ps.setString(10, workType);
+            ps.setString(11, clientAcctStatus);
+            int result = ps.executeUpdate();
+            return result > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean registerVet(String vetUsername, String vetPassword, String vetFullName, int vetAge, String vetCellNum, String vetEmailAdd, String vetAcctStatus) {
+        String query = "INSERT INTO `vet.v2` (VetUsername, VetPassword, VetFullName, VetAge, VetCellNum, VetEmailAdd, VetAcctStatus) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, vetUsername);
+            ps.setString(2, vetPassword);
+            ps.setString(3, vetFullName);
+            ps.setInt(4, vetAge);
+            ps.setString(5, vetCellNum);
+            ps.setString(6, vetEmailAdd);
+            ps.setString(7, vetAcctStatus);
+            int result = ps.executeUpdate();
+            return result > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
     
     // Method to get adoption application history for a vet

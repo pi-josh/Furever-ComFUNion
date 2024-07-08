@@ -22,6 +22,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -119,8 +120,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
      * Creates new form Main
      */
     public VetLoggedIn(Veterinarian vet) {
-        
-        this.vet = new Veterinarian("V004", "Juswa07", "riseandshine", "Joshua Macatunao", 20, "213", "sdfadf", "A");
+        // this.vet = new Veterinarian("V004", "Juswa07", "riseandshine", "Joshua Macatunao", 20, "213", "sdfadf", "A");
 
         // populate
         populatePetsFromDB();
@@ -133,6 +133,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
         
         if (vet != null) {
             // update profile
+            this.vet = vet;
             updateVetProfile();
         }
 
@@ -419,7 +420,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
         fullName = new javax.swing.JTextPane();
         profileName = new javax.swing.JLabel();
         usernameScroll = new javax.swing.JScrollPane();
-        username1 = new javax.swing.JTextPane();
+        username = new javax.swing.JTextPane();
         profileUsername = new javax.swing.JLabel();
         contactNumScroll = new javax.swing.JScrollPane();
         contactNum = new javax.swing.JTextPane();
@@ -2049,12 +2050,12 @@ public class VetLoggedIn extends javax.swing.JFrame {
 
         usernameScroll.setHorizontalScrollBar(null);
 
-        username1.addKeyListener(new java.awt.event.KeyAdapter() {
+        username.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                username1enterTabKeyPressed(evt);
+                usernameenterTabKeyPressed(evt);
             }
         });
-        usernameScroll.setViewportView(username1);
+        usernameScroll.setViewportView(username);
 
         profileBody.add(usernameScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 540, 220, -1));
 
@@ -2081,6 +2082,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
 
         emailAddressScroll.setHorizontalScrollBar(null);
 
+        emailAddress.setEditable(false);
         emailAddress.setEnabled(false);
         emailAddress.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -2128,7 +2130,6 @@ public class VetLoggedIn extends javax.swing.JFrame {
         profilePassword.setText("**********");
         profileBody.add(profilePassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 593, 220, -1));
 
-        currentAddressScroll.setEnabled(false);
         currentAddressScroll.setHorizontalScrollBar(null);
         currentAddressScroll.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -2136,10 +2137,11 @@ public class VetLoggedIn extends javax.swing.JFrame {
             }
         });
 
+        currentAddress.setEditable(false);
         currentAddress.setEnabled(false);
         currentAddressScroll.setViewportView(currentAddress);
 
-        profileBody.add(currentAddressScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 382, 270, -1));
+        profileBody.add(currentAddressScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 356, 280, 70));
 
         profileAddress.setFont(new java.awt.Font("Comic Sans MS", 0, 16)); // NOI18N
         profileAddress.setForeground(new java.awt.Color(139, 83, 18));
@@ -2148,6 +2150,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
 
         occupationScroll.setHorizontalScrollBar(null);
 
+        occupation.setEditable(false);
         occupation.setEnabled(false);
         occupation.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -2165,6 +2168,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
 
         companyScroll.setHorizontalScrollBar(null);
 
+        companyName.setEditable(false);
         companyName.setEnabled(false);
         companyName.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -2718,9 +2722,11 @@ public class VetLoggedIn extends javax.swing.JFrame {
 
         for (JCheckBox acceptCheckBox : acceptCheckBoxes) {
             acceptCheckBox.setVisible(false);
+            acceptCheckBox.setSelected(false);
         }
         for (JCheckBox declineCheckBox : declineCheckBoxes) {
             declineCheckBox.setVisible(false);
+            declineCheckBox.setSelected(false);
         }
         for (JLabel highlighter : highlighters) {
             highlighter.setVisible(false);
@@ -2971,7 +2977,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
 
         // text fields
         fullName.setVisible(edit);
-        username1.setVisible(edit);
+        username.setVisible(edit);
         contactNum.setVisible(edit);
         emailAddress.setVisible(edit);
         currentAddress.setVisible(edit);
@@ -3900,6 +3906,70 @@ public class VetLoggedIn extends javax.swing.JFrame {
                     @Override
                     public void run() {
                         if (userResponse) {
+                            Application currentApplication = null;
+                            boolean success = false;
+                            if (highlight1.isVisible()) {
+                                currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID1.getText()));
+                                if (currentApplication != null) {
+                                    if (accept1.isSelected()) {
+                                        /*
+                                        // QUERY HERE: update application status to "A"
+                                        // method will return true if successful, otherwise false
+                                        if (methodName(currentApplication.getApplicationID(), "A")) {   
+                                            success = true;
+                                        } else {
+                                            success = false;
+                                        }
+                                        */
+                                    } else if (decline1.isSelected()) {
+                                        /*                    
+                                        Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
+                                        if (pet != null) {
+                                            String appType = currentApplication.getApplicationType();
+                                            if (appType.equals("A")) {
+                                                // QUERY HERE: update application status to "C"
+                                                // method will return true if successful, otherwise false
+                                                if (methodName(currentApplication.getApplicationID(), "C")) {   
+                                                    spManager.updatePetStatus(pet.getPetID(), "NA");
+                                                    success = true;
+                                                } else {
+                                                    success = false;
+                                                }
+                                            } else if (appType.equals("R")) {
+                                                // QUERY HERE: delete a pet and application record by id
+                                                // method will return true if successful, otherwise false
+                                                if (methodName(currentApplication.getApplicationID())) {
+                                                    spManager.methodName(pet.getPetID());
+                                                    success = true;
+                                                } else {
+                                                    success = false;
+                                                }
+                                            }
+                                        }
+                                        */    
+                                    } else {
+                                        success = false;
+                                    }
+                                } else {
+                                    success = false;
+                                }
+                            }
+                            if (highlight2.isVisible()) {
+                                // Handle highlight2 logic here
+                            }
+                            if (highlight3.isVisible()) {
+                                // Handle highlight3 logic here
+                            }
+                            if (highlight4.isVisible()) {
+                                // Handle highlight4 logic here
+                            }
+                            if (highlight5.isVisible()) {
+                                // Handle highlight5 logic here
+                            }
+
+                            if (success) {
+                                JOptionPane.showMessageDialog(null, "Application Deleted Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                            }
                             applicationEditVisibility(false);
                             applicationPrev.setVisible(appPrev);
                             applicationNext.setVisible(appNext);
@@ -3908,6 +3978,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
                 });
             }
         }).start();
+
     }//GEN-LAST:event_confirmButtonMouseClicked
 
     private void cancelButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseClicked
@@ -3942,183 +4013,6 @@ public class VetLoggedIn extends javax.swing.JFrame {
             }
         }).start();
     }//GEN-LAST:event_cancelButtonMouseClicked
-
-    private void profileEditButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileEditButtonMouseClicked
-        // TODO add your handling code here:
-        profileEditVisibility(true);
-    }//GEN-LAST:event_profileEditButtonMouseClicked
-
-    private void profileEditButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileEditButtonMouseEntered
-        // TODO add your handling code here:
-        profileEditButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button hover (2).png")));
-    }//GEN-LAST:event_profileEditButtonMouseEntered
-
-    private void profileEditButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileEditButtonMouseExited
-        // TODO add your handling code here:
-        profileEditButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (2).png")));
-    }//GEN-LAST:event_profileEditButtonMouseExited
-
-    private void profileDeleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileDeleteButtonMouseClicked
-        // TODO add your handling code here:
-        CountDownLatch latch = countDownLatch();
-
-        // Use a separate thread to wait for the user's response
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    // Wait for the user to respond
-                    latch.await();
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-
-                // Continue with code execution based on user's response
-                userResponse = confirmationDialog.getUserResponse();
-
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (userResponse) {
-                        }
-                    }
-                });
-            }
-        }).start();
-    }//GEN-LAST:event_profileDeleteButtonMouseClicked
-
-    private void profileDeleteButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileDeleteButtonMouseEntered
-        // TODO add your handling code here:
-        profileDeleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/delete button hover (2).png")));
-    }//GEN-LAST:event_profileDeleteButtonMouseEntered
-
-    private void profileDeleteButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileDeleteButtonMouseExited
-        // TODO add your handling code here:
-        profileDeleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/delete button (2).png")));
-    }//GEN-LAST:event_profileDeleteButtonMouseExited
-
-    private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
-        // TODO add your handling code here:     
-        CountDownLatch latch = countDownLatch();
-
-        // Use a separate thread to wait for the user's response
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    // Wait for the user to respond
-                    latch.await();
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-
-                // Continue with code execution based on user's response
-                userResponse = confirmationDialog.getUserResponse();
-
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (userResponse) {
-                            VetLoggedIn.this.setVisible(false);
-                            new LandingPage(true).setVisible(true);
-                        }
-                    }
-                });
-            }
-        }).start();
-    }//GEN-LAST:event_logoutButtonMouseClicked
-
-    private void logoutButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseEntered
-        // TODO add your handling code here:
-        logoutButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/logout button hover (1).png")));
-    }//GEN-LAST:event_logoutButtonMouseEntered
-
-    private void logoutButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseExited
-        // TODO add your handling code here:
-        logoutButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/logout button (1).png")));
-    }//GEN-LAST:event_logoutButtonMouseExited
-
-    private void profileConfirmButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileConfirmButtonMouseClicked
-        // TODO add your handling code here
-        // Create a CountDownLatch
-        CountDownLatch latch = countDownLatch();
-
-        // Use a separate thread to wait for the user's response
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    // Wait for the user to respond
-                    latch.await();
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-
-                // Continue with code execution based on user's response
-                userResponse = confirmationDialog.getUserResponse();
-
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (userResponse) {
-                            profileEditVisibility(false);
-                        }
-                    }
-                });
-            }
-        }).start();
-    }//GEN-LAST:event_profileConfirmButtonMouseClicked
-
-    private void profileConfirmButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileConfirmButtonMouseEntered
-        // TODO add your handling code here:
-        profileConfirmButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/confirm button hover (2).png")));
-    }//GEN-LAST:event_profileConfirmButtonMouseEntered
-
-    private void profileConfirmButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileConfirmButtonMouseExited
-        // TODO add your handling code here:
-        profileConfirmButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/confirm button (2).png")));
-    }//GEN-LAST:event_profileConfirmButtonMouseExited
-
-    private void profileCancelButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileCancelButtonMouseClicked
-        // Create a CountDownLatch
-        CountDownLatch latch = countDownLatch();
-
-        // Use a separate thread to wait for the user's response
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    // Wait for the user to respond
-                    latch.await();
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-
-                // Continue with code execution based on user's response
-                userResponse = confirmationDialog.getUserResponse();
-
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (userResponse) {
-                            profileEditVisibility(false);
-                        }
-                    }
-                });
-            }
-        }).start();
-    }//GEN-LAST:event_profileCancelButtonMouseClicked
-
-    private void profileCancelButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileCancelButtonMouseEntered
-        // TODO add your handling code here:
-        profileCancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/cancel button hover (2).png")));
-
-    }//GEN-LAST:event_profileCancelButtonMouseEntered
-
-    private void profileCancelButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileCancelButtonMouseExited
-        // TODO add your handling code here:
-        profileCancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/cancel button (2).png")));
-    }//GEN-LAST:event_profileCancelButtonMouseExited
 
     private void rehomeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rehomeButtonMouseClicked
         // TODO add your handling code here:
@@ -4168,184 +4062,6 @@ public class VetLoggedIn extends javax.swing.JFrame {
         hidePetPanels(true);
         petPanel1Clicked = false;
     }//GEN-LAST:event_petBackButtonMouseClicked
-
-    private void fullNameenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fullNameenterTabKeyPressed
-        // TODO add your handling code here:
-        switch (evt.getKeyChar()) {
-            case KeyEvent.VK_ENTER:
-                // Ignore the event if it is the Enter key
-                evt.consume();
-                break;
-            case KeyEvent.VK_TAB:
-                evt.consume();
-                break;
-            default:
-                // Otherwise, handle the event normally
-                super.processKeyEvent(evt);
-                break;
-        }
-    }//GEN-LAST:event_fullNameenterTabKeyPressed
-
-    private void username1enterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_username1enterTabKeyPressed
-        // TODO add your handling code here:
-        switch (evt.getKeyChar()) {
-            case KeyEvent.VK_ENTER:
-                // Ignore the event if it is the Enter key
-                evt.consume();
-                break;
-            case KeyEvent.VK_TAB:
-                evt.consume();
-                break;
-            default:
-                // Otherwise, handle the event normally
-                super.processKeyEvent(evt);
-                break;
-        }
-    }//GEN-LAST:event_username1enterTabKeyPressed
-
-    private void contactNumenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_contactNumenterTabKeyPressed
-        // TODO add your handling code here:
-        switch (evt.getKeyChar()) {
-            case KeyEvent.VK_ENTER:
-                // Ignore the event if it is the Enter key
-                evt.consume();
-                break;
-            case KeyEvent.VK_TAB:
-                evt.consume();
-                break;
-            default:
-                // Otherwise, handle the event normally
-                super.processKeyEvent(evt);
-                break;
-        }
-    }//GEN-LAST:event_contactNumenterTabKeyPressed
-
-    private void passwordenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordenterTabKeyPressed
-        // TODO add your handling code here:
-        switch (evt.getKeyChar()) {
-            case KeyEvent.VK_ENTER:
-                // Ignore the event if it is the Enter key
-                evt.consume();
-                break;
-            case KeyEvent.VK_TAB:
-                evt.consume();
-                break;
-            default:
-                // Otherwise, handle the event normally
-                super.processKeyEvent(evt);
-                break;
-        }
-    }//GEN-LAST:event_passwordenterTabKeyPressed
-
-    private void confirmPasswordenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_confirmPasswordenterTabKeyPressed
-        // TODO add your handling code here:
-        switch (evt.getKeyChar()) {
-            case KeyEvent.VK_ENTER:
-                // Ignore the event if it is the Enter key
-                evt.consume();
-                break;
-            case KeyEvent.VK_TAB:
-                evt.consume();
-                break;
-            default:
-                // Otherwise, handle the event normally
-                super.processKeyEvent(evt);
-                break;
-        }
-    }//GEN-LAST:event_confirmPasswordenterTabKeyPressed
-
-    private void confirmPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_confirmPasswordActionPerformed
-
-    private void currentAddressScrollenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_currentAddressScrollenterTabKeyPressed
-        // TODO add your handling code here:
-        switch (evt.getKeyChar()) {
-            case KeyEvent.VK_ENTER:
-                // Ignore the event if it is the Enter key
-                evt.consume();
-                break;
-            case KeyEvent.VK_TAB:
-                evt.consume();
-                break;
-            default:
-                // Otherwise, handle the event normally
-                super.processKeyEvent(evt);
-                break;
-        }
-    }//GEN-LAST:event_currentAddressScrollenterTabKeyPressed
-
-    private void occupationenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_occupationenterTabKeyPressed
-        // TODO add your handling code here:
-        switch (evt.getKeyChar()) {
-            case KeyEvent.VK_ENTER:
-                // Ignore the event if it is the Enter key
-                evt.consume();
-                break;
-            case KeyEvent.VK_TAB:
-                evt.consume();
-                break;
-            default:
-                // Otherwise, handle the event normally
-                super.processKeyEvent(evt);
-                break;
-        }
-    }//GEN-LAST:event_occupationenterTabKeyPressed
-
-    private void emailAddressenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailAddressenterTabKeyPressed
-        // TODO add your handling code here:
-        switch (evt.getKeyChar()) {
-            case KeyEvent.VK_ENTER:
-                // Ignore the event if it is the Enter key
-                evt.consume();
-                break;
-            case KeyEvent.VK_TAB:
-                evt.consume();
-                break;
-            default:
-                // Otherwise, handle the event normally
-                super.processKeyEvent(evt);
-                break;
-        }
-    }//GEN-LAST:event_emailAddressenterTabKeyPressed
-
-    private void workTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workTypeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_workTypeActionPerformed
-
-    private void workTypeenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_workTypeenterTabKeyPressed
-        // TODO add your handling code here:
-        switch (evt.getKeyChar()) {
-            case KeyEvent.VK_ENTER:
-                // Ignore the event if it is the Enter key
-                evt.consume();
-                break;
-            case KeyEvent.VK_TAB:
-                evt.consume();
-                break;
-            default:
-                // Otherwise, handle the event normally
-                super.processKeyEvent(evt);
-                break;
-        }
-    }//GEN-LAST:event_workTypeenterTabKeyPressed
-
-    private void companyNameenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_companyNameenterTabKeyPressed
-        // TODO add your handling code here:
-        switch (evt.getKeyChar()) {
-            case KeyEvent.VK_ENTER:
-                // Ignore the event if it is the Enter key
-                evt.consume();
-                break;
-            case KeyEvent.VK_TAB:
-                evt.consume();
-                break;
-            default:
-                // Otherwise, handle the event normally
-                super.processKeyEvent(evt);
-                break;
-        }
-    }//GEN-LAST:event_companyNameenterTabKeyPressed
 
     private void petBackButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petBackButtonMouseEntered
         // TODO add your handling code here:
@@ -4743,23 +4459,6 @@ public class VetLoggedIn extends javax.swing.JFrame {
         rescueButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/rescue button.png")));
     }//GEN-LAST:event_rescueButtonMouseExited
 
-    private void ageenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ageenterTabKeyPressed
-        // TODO add your handling code here:
-        switch (evt.getKeyChar()) {
-            case KeyEvent.VK_ENTER:
-            // Ignore the event if it is the Enter key
-            evt.consume();
-            break;
-            case KeyEvent.VK_TAB:
-            evt.consume();
-            break;
-            default:
-            // Otherwise, handle the event normally
-            super.processKeyEvent(evt);
-            break;
-        }
-    }//GEN-LAST:event_ageenterTabKeyPressed
-
     private void accept1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accept1ActionPerformed
         // TODO add your handling code here:
          JLabel[] infos = {appID1, appType1, appPetName1, appPetType1, appAppointDate1, appVet1};
@@ -4816,42 +4515,636 @@ public class VetLoggedIn extends javax.swing.JFrame {
     private void accept2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accept2ActionPerformed
         // TODO add your handling code here:
         JLabel[] infos = {appID2, appType2, appPetName2, appPetType2, appAppointDate2, appVet2};
+        
+        if(decline2.isSelected()) {
+        decline2.setSelected(false);
+        }
+
+        if(!accept2.isSelected()) {
+            if (highlight2.isVisible()) {
+                highlight2.setVisible(false);
+                for (JLabel info : infos) {
+                    info.setForeground(Color.white);
+                }
+                accept2.setForeground(Color.white);
+                decline2.setForeground(Color.white);
+            }
+        } else {
+            highlight2.setVisible(true);
+            for (JLabel info : infos) {
+                info.setForeground(Color.black);
+            }
+            accept2.setForeground(Color.black);
+            decline2.setForeground(Color.black);
+        }
     }//GEN-LAST:event_accept2ActionPerformed
 
     private void decline2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decline2ActionPerformed
         // TODO add your handling code here:
         JLabel[] infos = {appID2, appType2, appPetName2, appPetType2, appAppointDate2, appVet2};
+        if(accept2.isSelected()) {
+            accept2.setSelected(false);
+        }
+
+        if(!decline2.isSelected()) {
+            if (highlight2.isVisible()) {
+                highlight2.setVisible(false);
+                for (JLabel info : infos) {
+                    info.setForeground(Color.white);
+                }
+                accept2.setForeground(Color.white);
+                decline2.setForeground(Color.white);
+            }
+        } else {
+            highlight2.setVisible(true);
+            for (JLabel info : infos) {
+                info.setForeground(Color.black);
+            }
+            accept2.setForeground(Color.black);
+            decline2.setForeground(Color.black);
+        }
     }//GEN-LAST:event_decline2ActionPerformed
 
     private void accept3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accept3ActionPerformed
         // TODO add your handling code here:
         JLabel[] infos = {appID3, appType3, appPetName3, appPetType3, appAppointDate3, appVet3};
+        
+        if(decline3.isSelected()) {
+            decline3.setSelected(false);
+        }
+
+        if(!accept3.isSelected()) {
+            if (highlight3.isVisible()) {
+                highlight3.setVisible(false);
+                for (JLabel info : infos) {
+                    info.setForeground(Color.white);
+                }
+                accept3.setForeground(Color.white);
+                decline3.setForeground(Color.white);
+            }
+        } else {
+            highlight3.setVisible(true);
+            for (JLabel info : infos) {
+                info.setForeground(Color.black);
+            }
+            accept3.setForeground(Color.black);
+            decline3.setForeground(Color.black);
+        }
     }//GEN-LAST:event_accept3ActionPerformed
 
     private void decline3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decline3ActionPerformed
         // TODO add your handling code here:
         JLabel[] infos = {appID3, appType3, appPetName3, appPetType3, appAppointDate3, appVet3};
+        
+        if(accept3.isSelected()) {
+            accept3.setSelected(false);
+        }
+
+        if(!decline3.isSelected()) {
+            if (highlight3.isVisible()) {
+                highlight3.setVisible(false);
+                for (JLabel info : infos) {
+                    info.setForeground(Color.white);
+                }
+                accept3.setForeground(Color.white);
+                decline3.setForeground(Color.white);
+            }
+        } else {
+            highlight3.setVisible(true);
+            for (JLabel info : infos) {
+                info.setForeground(Color.black);
+            }
+            accept3.setForeground(Color.black);
+            decline3.setForeground(Color.black);
+        }
     }//GEN-LAST:event_decline3ActionPerformed
 
     private void accept4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accept4ActionPerformed
         // TODO add your handling code here:
         JLabel[] infos = {appID4, appType4, appPetName4, appPetType4, appAppointDate4, appVet4};
+        
+        if(decline4.isSelected()) {
+            decline4.setSelected(false);
+        }
+
+        if(!accept4.isSelected()) {
+            if (highlight4.isVisible()) {
+                highlight4.setVisible(false);
+                for (JLabel info : infos) {
+                    info.setForeground(Color.white);
+                }
+                accept4.setForeground(Color.white);
+                decline4.setForeground(Color.white);
+            }
+        } else {
+            highlight4.setVisible(true);
+            for (JLabel info : infos) {
+                info.setForeground(Color.black);
+            }
+            accept4.setForeground(Color.black);
+            decline4.setForeground(Color.black);
+        }
     }//GEN-LAST:event_accept4ActionPerformed
 
     private void decline4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decline4ActionPerformed
         // TODO add your handling code here:
         JLabel[] infos = {appID4, appType4, appPetName4, appPetType4, appAppointDate4, appVet4};
+        
+        if(accept4.isSelected()) {
+            accept4.setSelected(false);
+        }
+
+        if(!decline4.isSelected()) {
+            if (highlight4.isVisible()) {
+                highlight4.setVisible(false);
+                for (JLabel info : infos) {
+                    info.setForeground(Color.white);
+                }
+                accept4.setForeground(Color.white);
+                decline4.setForeground(Color.white);
+            }
+        } else {
+            highlight4.setVisible(true);
+            for (JLabel info : infos) {
+                info.setForeground(Color.black);
+            }
+            accept4.setForeground(Color.black);
+            decline4.setForeground(Color.black);
+        }
     }//GEN-LAST:event_decline4ActionPerformed
 
     private void accept5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accept5ActionPerformed
         // TODO add your handling code here:
         JLabel[] infos = {appID5, appType5, appPetName5, appPetType5, appAppointDate5, appVet5};
+        
+        if(decline5.isSelected()) {
+            decline5.setSelected(false);
+        }
+
+        if(!accept5.isSelected()) {
+            if (highlight5.isVisible()) {
+                highlight5.setVisible(false);
+                for (JLabel info : infos) {
+                    info.setForeground(Color.white);
+                }
+                accept5.setForeground(Color.white);
+                decline5.setForeground(Color.white);
+            }
+        } else {
+            highlight5.setVisible(true);
+            for (JLabel info : infos) {
+                info.setForeground(Color.black);
+            }
+            accept5.setForeground(Color.black);
+            decline5.setForeground(Color.black);
+        }
     }//GEN-LAST:event_accept5ActionPerformed
 
     private void decline5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decline5ActionPerformed
         // TODO add your handling code here:
         JLabel[] infos = {appID5, appType5, appPetName5, appPetType5, appAppointDate5, appVet5};
+        
+        if(accept5.isSelected()) {
+            accept5.setSelected(false);
+        }
+
+        if(!decline5.isSelected()) {
+            if (highlight5.isVisible()) {
+                highlight5.setVisible(false);
+                for (JLabel info : infos) {
+                    info.setForeground(Color.white);
+                }
+                accept5.setForeground(Color.white);
+                decline5.setForeground(Color.white);
+            }
+        } else {
+            highlight5.setVisible(true);
+            for (JLabel info : infos) {
+                info.setForeground(Color.black);
+            }
+            accept5.setForeground(Color.black);
+            decline5.setForeground(Color.black);
+        }
     }//GEN-LAST:event_decline5ActionPerformed
+
+    private void fullNameenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fullNameenterTabKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyChar()) {
+            case KeyEvent.VK_ENTER:
+            // Ignore the event if it is the Enter key
+            evt.consume();
+            break;
+            case KeyEvent.VK_TAB:
+            evt.consume();
+            break;
+            default:
+            // Otherwise, handle the event normally
+            super.processKeyEvent(evt);
+            break;
+        }
+    }//GEN-LAST:event_fullNameenterTabKeyPressed
+
+    private void usernameenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameenterTabKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyChar()) {
+            case KeyEvent.VK_ENTER:
+            // Ignore the event if it is the Enter key
+            evt.consume();
+            break;
+            case KeyEvent.VK_TAB:
+            evt.consume();
+            break;
+            default:
+            // Otherwise, handle the event normally
+            super.processKeyEvent(evt);
+            break;
+        }
+    }//GEN-LAST:event_usernameenterTabKeyPressed
+
+    private void contactNumenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_contactNumenterTabKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyChar()) {
+            case KeyEvent.VK_ENTER:
+            // Ignore the event if it is the Enter key
+            evt.consume();
+            break;
+            case KeyEvent.VK_TAB:
+            evt.consume();
+            break;
+            default:
+            // Otherwise, handle the event normally
+            super.processKeyEvent(evt);
+            break;
+        }
+    }//GEN-LAST:event_contactNumenterTabKeyPressed
+
+    private void emailAddressenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailAddressenterTabKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyChar()) {
+            case KeyEvent.VK_ENTER:
+            // Ignore the event if it is the Enter key
+            evt.consume();
+            break;
+            case KeyEvent.VK_TAB:
+            evt.consume();
+            break;
+            default:
+            // Otherwise, handle the event normally
+            super.processKeyEvent(evt);
+            break;
+        }
+    }//GEN-LAST:event_emailAddressenterTabKeyPressed
+
+    private void passwordenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordenterTabKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyChar()) {
+            case KeyEvent.VK_ENTER:
+            // Ignore the event if it is the Enter key
+            evt.consume();
+            break;
+            case KeyEvent.VK_TAB:
+            evt.consume();
+            break;
+            default:
+            // Otherwise, handle the event normally
+            super.processKeyEvent(evt);
+            break;
+        }
+    }//GEN-LAST:event_passwordenterTabKeyPressed
+
+    private void confirmPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_confirmPasswordActionPerformed
+
+    private void confirmPasswordenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_confirmPasswordenterTabKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyChar()) {
+            case KeyEvent.VK_ENTER:
+            // Ignore the event if it is the Enter key
+            evt.consume();
+            break;
+            case KeyEvent.VK_TAB:
+            evt.consume();
+            break;
+            default:
+            // Otherwise, handle the event normally
+            super.processKeyEvent(evt);
+            break;
+        }
+    }//GEN-LAST:event_confirmPasswordenterTabKeyPressed
+
+    private void currentAddressScrollenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_currentAddressScrollenterTabKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyChar()) {
+            case KeyEvent.VK_ENTER:
+            // Ignore the event if it is the Enter key
+            evt.consume();
+            break;
+            case KeyEvent.VK_TAB:
+            evt.consume();
+            break;
+            default:
+            // Otherwise, handle the event normally
+            super.processKeyEvent(evt);
+            break;
+        }
+    }//GEN-LAST:event_currentAddressScrollenterTabKeyPressed
+
+    private void occupationenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_occupationenterTabKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyChar()) {
+            case KeyEvent.VK_ENTER:
+            // Ignore the event if it is the Enter key
+            evt.consume();
+            break;
+            case KeyEvent.VK_TAB:
+            evt.consume();
+            break;
+            default:
+            // Otherwise, handle the event normally
+            super.processKeyEvent(evt);
+            break;
+        }
+    }//GEN-LAST:event_occupationenterTabKeyPressed
+
+    private void companyNameenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_companyNameenterTabKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyChar()) {
+            case KeyEvent.VK_ENTER:
+            // Ignore the event if it is the Enter key
+            evt.consume();
+            break;
+            case KeyEvent.VK_TAB:
+            evt.consume();
+            break;
+            default:
+            // Otherwise, handle the event normally
+            super.processKeyEvent(evt);
+            break;
+        }
+    }//GEN-LAST:event_companyNameenterTabKeyPressed
+
+    private void workTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workTypeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_workTypeActionPerformed
+
+    private void workTypeenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_workTypeenterTabKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyChar()) {
+            case KeyEvent.VK_ENTER:
+            // Ignore the event if it is the Enter key
+            evt.consume();
+            break;
+            case KeyEvent.VK_TAB:
+            evt.consume();
+            break;
+            default:
+            // Otherwise, handle the event normally
+            super.processKeyEvent(evt);
+            break;
+        }
+    }//GEN-LAST:event_workTypeenterTabKeyPressed
+
+    private void ageenterTabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ageenterTabKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyChar()) {
+            case KeyEvent.VK_ENTER:
+            // Ignore the event if it is the Enter key
+            evt.consume();
+            break;
+            case KeyEvent.VK_TAB:
+            evt.consume();
+            break;
+            default:
+            // Otherwise, handle the event normally
+            super.processKeyEvent(evt);
+            break;
+        }
+    }//GEN-LAST:event_ageenterTabKeyPressed
+
+    private void profileDeleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileDeleteButtonMouseClicked
+        // TODO add your handling code here:
+        CountDownLatch latch = countDownLatch();
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Continue with code execution based on user's response
+                userResponse = confirmationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                            boolean success = false;
+
+                            /*
+                            // QUERY HERE: delete a vet record by changing the account status to "D"
+                            // method will return true if successful, otherwise false
+                            success = spManager.methodName(vet.getVetID());
+                            */
+                            if(success) {
+                                VetLoggedIn.this.setVisible(false);
+                                new LandingPage(true).setVisible(true);
+                            }
+                        }
+                    }
+                });
+            }
+        }).start();
+    }//GEN-LAST:event_profileDeleteButtonMouseClicked
+
+    private void profileDeleteButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileDeleteButtonMouseEntered
+        // TODO add your handling code here:
+        profileDeleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/delete button hover (2).png")));
+    }//GEN-LAST:event_profileDeleteButtonMouseEntered
+
+    private void profileDeleteButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileDeleteButtonMouseExited
+        // TODO add your handling code here:
+        profileDeleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/delete button (2).png")));
+    }//GEN-LAST:event_profileDeleteButtonMouseExited
+
+    private void profileEditButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileEditButtonMouseClicked
+        // TODO add your handling code here:
+        profileEditVisibility(true);
+        fullName.setText(vet.getVetFullName());
+        age.setText(String.valueOf(vet.getVetAge()));
+        contactNum.setText(vet.getVetCellNum());
+        username.setText(vet.getVetUsername());
+        password.setText(vet.getVetPassword());
+        emailAddress.setText(vet.getVetEmailAdd());
+    }//GEN-LAST:event_profileEditButtonMouseClicked
+
+    private void profileEditButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileEditButtonMouseEntered
+        // TODO add your handling code here:
+        profileEditButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button hover (2).png")));
+    }//GEN-LAST:event_profileEditButtonMouseEntered
+
+    private void profileEditButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileEditButtonMouseExited
+        // TODO add your handling code here:
+        profileEditButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/edit button (2).png")));
+    }//GEN-LAST:event_profileEditButtonMouseExited
+
+    private void profileCancelButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileCancelButtonMouseClicked
+        // Create a CountDownLatch
+        CountDownLatch latch = countDownLatch();
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Continue with code execution based on user's response
+                userResponse = confirmationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                            confirmPassword.setText("");
+                            profileEditVisibility(false);
+                        }
+                    }
+                });
+            }
+        }).start();
+    }//GEN-LAST:event_profileCancelButtonMouseClicked
+
+    private void profileCancelButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileCancelButtonMouseEntered
+        // TODO add your handling code here:
+        profileCancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/cancel button hover (2).png")));
+    }//GEN-LAST:event_profileCancelButtonMouseEntered
+
+    private void profileCancelButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileCancelButtonMouseExited
+        // TODO add your handling code here:
+        profileCancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/cancel button (2).png")));
+    }//GEN-LAST:event_profileCancelButtonMouseExited
+
+    private void profileConfirmButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileConfirmButtonMouseClicked
+        // TODO add your handling code here
+        // Create a CountDownLatch
+        CountDownLatch latch = countDownLatch();
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Continue with code execution based on user's response
+                userResponse = confirmationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                            boolean success = false;
+
+                            String fullNameVar = fullName.getText().trim();
+                            int ageVar = Integer.valueOf(age.getText().trim());
+                            String contactNumVar = contactNum.getText().trim();
+                            String usernameVar = username.getText().trim();
+                            String passwordVar = (String) password.getText();
+                            String confirmPasswordVar = (String) confirmPassword.getText();
+                            String emailAddressVar = emailAddress.getText().trim();
+
+                            if(registerController.validateVetInput(fullNameVar, emailAddressVar, usernameVar, contactNumVar, passwordVar, confirmPasswordVar,"")) {
+                            /* QUERY HERE: update vet record by id
+                            String acctStatus = 'A';
+                            success = methodName(vet.getVetID(), usernameVar, passwordVar, fullNameVar, ageVar, contactNumberVar,
+                                emailAddressVar, acctStatus);    returns true if successful
+
+                            if (success) {
+                                // Show success message
+                                confirmPassword.setText("");
+                                JOptionPane.showMessageDialog(null, "Profile Updated Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                            } else {
+                                // Show error message
+                                JOptionPane.showMessageDialog(null, "Profile Update Failed. Please try again.");
+                                return;
+                            }
+                            */
+                        } else {
+                            return;
+                        }
+
+                        profileEditVisibility(false);
+                    }
+                }
+            });
+        }
+        }).start();
+    }//GEN-LAST:event_profileConfirmButtonMouseClicked
+
+    private void profileConfirmButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileConfirmButtonMouseEntered
+        // TODO add your handling code here:
+        profileConfirmButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/confirm button hover (2).png")));
+    }//GEN-LAST:event_profileConfirmButtonMouseEntered
+
+    private void profileConfirmButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileConfirmButtonMouseExited
+        // TODO add your handling code here:
+        profileConfirmButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/confirm button (2).png")));
+    }//GEN-LAST:event_profileConfirmButtonMouseExited
+
+    private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
+        // TODO add your handling code here:
+        CountDownLatch latch = countDownLatch();
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Continue with code execution based on user's response
+                userResponse = confirmationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                            VetLoggedIn.this.setVisible(false);
+                            new LandingPage(true).setVisible(true);
+                        }
+                    }
+                });
+            }
+        }).start();
+    }//GEN-LAST:event_logoutButtonMouseClicked
+
+    private void logoutButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseEntered
+        // TODO add your handling code here:
+        logoutButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/logout button hover (1).png")));
+    }//GEN-LAST:event_logoutButtonMouseEntered
+
+    private void logoutButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseExited
+        // TODO add your handling code here:
+        logoutButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/logout button (1).png")));
+    }//GEN-LAST:event_logoutButtonMouseExited
 
     /**
      * @param args the command line arguments
@@ -5087,7 +5380,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel successPanel2;
     private javax.swing.JLabel successPanel3;
     private javax.swing.JCheckBox tinySize;
-    private javax.swing.JTextPane username1;
+    private javax.swing.JTextPane username;
     private javax.swing.JScrollPane usernameScroll;
     private javax.swing.JLabel vetButton;
     private javax.swing.JLabel vetClick;

@@ -1,5 +1,6 @@
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAllPetsCount`()
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAllExistingApplications`()
 BEGIN
-SELECT COUNT(*)
-FROM forevercomfunion.`pet.v2`;
+SELECT AppointDate, AppointTime, VetID
+FROM forevercomfunion.`application.v2`
+WHERE AppointStatus != "C";
 END
