@@ -2849,7 +2849,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
             totalApplications = applications.size();
         }
 
-        // totalApplications = 3;
+        // totalApplications = 5;
         // Array of app infos
         JLabel[] appIDs = {appID1, appID2, appID3, appID4, appID5};
         JLabel[] appTypes = {appType1, appType2, appType3, appType4, appType5};
@@ -2900,7 +2900,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         applicationPrev.setVisible(appIndex > 0);
 
         // Show or hide next button based on totalApplications
-        applicationNext.setVisible(totalApplications > 6);
+        applicationNext.setVisible(totalApplications > 5);
     }
 
     private void profileEditVisibility(boolean edit) {
@@ -3027,7 +3027,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                         pOrigin = "Owned";
                         break;
                     case 'R':
-                        pOrigin = "Rehome";
+                        pOrigin = "Rescued";
                         break;
                 }
 
@@ -3072,7 +3072,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                         pOrigin = "Owned";
                         break;
                     case 'R':
-                        pOrigin = "Rehome";
+                        pOrigin = "Rescued";
                         break;
                 }
 
@@ -3120,7 +3120,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                         pOrigin = "Owned";
                         break;
                     case 'R':
-                        pOrigin = "Rehome";
+                        pOrigin = "Rescued";
                         break;
                 }
 
@@ -3940,18 +3940,17 @@ public class UserLoggedIn extends javax.swing.JFrame {
                             // QUERY HERE: delete an application record by id
                             // method will return true if successful, otherwise false
                             if(highlight1.isVisible()) {
-                                /*
                                 currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID1.getText()));
                                 if(currentApplication != null) {
-                                    if(methodName(currentApplication.getApplicationID())) {                                
+                                    if(spManager.deleteApplicationRecordByID(currentApplication.getApplicationID())) {                                
                                         Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
                                         if(pet != null) {
                                             String appType = currentApplication.getApplicationType();
                                             if(appType.equals("A")) {
-                                                spManager.updatePetStatus(pet.getPetID(), "NA");
+                                                spManager.updatePetStatus(Integer.valueOf(pet.getPetID()), "NA");
                                             } else if(appType.equals("R")) {
                                                 // QUERY HERE: delete a pet record by id
-                                                spManager.methodName(pet.getPetID());
+                                                spManager.deletePetRecordByID(Integer.valueOf(pet.getPetID()));
                                             }
                                         }
                                     }
@@ -3959,21 +3958,19 @@ public class UserLoggedIn extends javax.swing.JFrame {
                                 } else {
                                     success = false;
                                 }
-                                */
                             }
                             if(highlight2.isVisible()) {
-                                /*
                                 currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID2.getText()));
                                 if(currentApplication != null) {
-                                    if(methodName(currentApplication.getApplicationID())) {                                
+                                    if(spManager.deleteApplicationRecordByID(currentApplication.getApplicationID())) {                                
                                         Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
                                         if(pet != null) {
                                             String appType = currentApplication.getApplicationType();
                                             if(appType.equals("A")) {
-                                                spManager.updatePetStatus(pet.getPetID(), "NA");
+                                                spManager.updatePetStatus(Integer.valueOf(pet.getPetID()), "NA");
                                             } else if(appType.equals("R")) {
                                                 // QUERY HERE: delete a pet record by id
-                                                spManager.methodName(pet.getPetID());
+                                                spManager.deletePetRecordByID(Integer.valueOf(pet.getPetID()));
                                             }
                                         }
                                     }
@@ -3981,21 +3978,19 @@ public class UserLoggedIn extends javax.swing.JFrame {
                                 } else {
                                     success = false;
                                 }
-                                */
                             }
                             if(highlight3.isVisible()) {
-                                /*
                                 currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID3.getText()));
                                 if(currentApplication != null) {
-                                    if(methodName(currentApplication.getApplicationID())) {                                
+                                    if(spManager.deleteApplicationRecordByID(currentApplication.getApplicationID())) {                                
                                         Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
                                         if(pet != null) {
                                             String appType = currentApplication.getApplicationType();
                                             if(appType.equals("A")) {
-                                                spManager.updatePetStatus(pet.getPetID(), "NA");
+                                                spManager.updatePetStatus(Integer.valueOf(pet.getPetID()), "NA");
                                             } else if(appType.equals("R")) {
                                                 // QUERY HERE: delete a pet record by id
-                                                spManager.methodName(pet.getPetID());
+                                                spManager.deletePetRecordByID(Integer.valueOf(pet.getPetID()));
                                             }
                                         }
                                     }
@@ -4003,21 +3998,19 @@ public class UserLoggedIn extends javax.swing.JFrame {
                                 } else {
                                     success = false;
                                 }
-                                */
                             }
                             if(highlight4.isVisible()) {
-                                /*
                                 currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID4.getText()));
                                 if(currentApplication != null) {
-                                    if(methodName(currentApplication.getApplicationID())) {                                
+                                    if(spManager.deleteApplicationRecordByID(currentApplication.getApplicationID())) {                                
                                         Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
                                         if(pet != null) {
                                             String appType = currentApplication.getApplicationType();
                                             if(appType.equals("A")) {
-                                                spManager.updatePetStatus(pet.getPetID(), "NA");
+                                                spManager.updatePetStatus(Integer.valueOf(pet.getPetID()), "NA");
                                             } else if(appType.equals("R")) {
                                                 // QUERY HERE: delete a pet record by id
-                                                spManager.methodName(pet.getPetID());
+                                                spManager.deletePetRecordByID(Integer.valueOf(pet.getPetID()));
                                             }
                                         }
                                     }
@@ -4025,21 +4018,19 @@ public class UserLoggedIn extends javax.swing.JFrame {
                                 } else {
                                     success = false;
                                 }
-                                */
                             }
                             if(highlight5.isVisible()) {
-                                /*
                                 currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID5.getText()));
                                 if(currentApplication != null) {
-                                    if(methodName(currentApplication.getApplicationID())) {                                
+                                    if(spManager.deleteApplicationRecordByID(currentApplication.getApplicationID())) {                                
                                         Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
                                         if(pet != null) {
                                             String appType = currentApplication.getApplicationType();
                                             if(appType.equals("A")) {
-                                                spManager.updatePetStatus(pet.getPetID(), "NA");
+                                                spManager.updatePetStatus(Integer.valueOf(pet.getPetID()), "NA");
                                             } else if(appType.equals("R")) {
                                                 // QUERY HERE: delete a pet record by id
-                                                spManager.methodName(pet.getPetID());
+                                                spManager.deletePetRecordByID(Integer.valueOf(pet.getPetID()));
                                             }
                                         }
                                     }
@@ -4047,11 +4038,15 @@ public class UserLoggedIn extends javax.swing.JFrame {
                                 } else {
                                     success = false;
                                 }
-                                */
                             }
                             
                             if(success) {
                                 JOptionPane.showMessageDialog(null, "Application Deleted Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                                UserLoggedIn.this.setApplicationClicked(false);
+                                UserLoggedIn.this.populateAppsFromDB();
+                                UserLoggedIn.this.handleApplicationButtonClick();
+                                UserLoggedIn.this.applications();
+                                UserLoggedIn.this.applicationEditVisibility(false);
                             }
                             applicationEditVisibility(false);
                             applicationPrev.setVisible(appPrev);
@@ -4104,6 +4099,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         contactNum.setText(client.getCellNum());
         username.setText(client.getClientUsername());
         password.setText(client.getClientPassword());
+        confirmPassword.setText(client.getClientPassword());
         currentAddress.setText(client.getClientAddress());
         emailAddress.setText(client.getClientEmailAdd());
         occupation.setText(client.getClientOccupation());
@@ -4144,13 +4140,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
                     public void run() {
                         if (userResponse) {
                             boolean success = false;
-                            
-                            /*
                             // QUERY HERE: delete a client record by changing the account status to "D"
                             // method will return true if successful, otherwise false
-                            success = spManager.methodName(client.getClientID());
-                            */
+                            success = spManager.deleteClientRecordByID(client.getClientID());
                             if(success) {
+                                spManager.updateApplicationRecordByClientID(client.getClientID());
+                                JOptionPane.showMessageDialog(null, "Account deleted successfully!");
                                 UserLoggedIn.this.setVisible(false);
                                 new LandingPage(true).setVisible(true);
                             }
@@ -4236,41 +4231,50 @@ public class UserLoggedIn extends javax.swing.JFrame {
                     public void run() {
                         if (userResponse) {
                             boolean success = false;
-                            
-                            String fullNameVar = fullName.getText().trim();
-                            int ageVar = Integer.valueOf(age.getText().trim());
-                            String contactNumVar = contactNum.getText().trim();
-                            String usernameVar = username.getText().trim();
-                            String passwordVar = (String) password.getText();
-                            String confirmPasswordVar = (String) confirmPassword.getText();
-                            String currentAddressVar = currentAddress.getText().trim();
-                            String emailAddressVar = emailAddress.getText().trim();
-                            String occupationVar = occupation.getText().trim();
-                            String companyNameVar = companyName.getText().trim();
-                            String workTypeVar = (String) workType.getSelectedItem();
-                            
-                            if(registerController.validateClientInput(fullNameVar, emailAddressVar, usernameVar, contactNumVar, passwordVar, confirmPasswordVar,
-                                             currentAddressVar, occupationVar, companyNameVar, workTypeVar, "")) {
-                            /* QUERY HERE: update client record by id
-                                String acctStatus = 'A';
-                                success = methodName(client.getClientID(), usernameVar, passwordVar, fullNameVar, ageVar, currentAddressVar, contactNumberVar,
-                                                     emailAddressVar, occupationVar, companyNameVar, workTypeVar, acctStatus);    returns true if successful
-                                
-                                if (success) {
-                                    // Show success message
-                                    confirmPassword.setText("");
-                                    JOptionPane.showMessageDialog(null, "Profile Updated Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
-                                } else {
-                                    // Show error message
-                                    JOptionPane.showMessageDialog(null, "Profile Update Failed. Please try again.");
-                                    return;
-                                }  
-                            */
+
+                        String fullNameVar = fullName.getText().trim();
+                        int ageVar = Integer.valueOf(age.getText().trim());
+                        String contactNumVar = contactNum.getText().trim();
+                        String usernameVar = username.getText().trim();
+                        String passwordVar = (String) password.getText();
+                        String confirmPasswordVar = (String) confirmPassword.getText();
+                        String currentAddressVar = currentAddress.getText().trim();
+                        String emailAddressVar = emailAddress.getText().trim();
+                        String occupationVar = occupation.getText().trim();
+                        String companyNameVar = companyName.getText().trim();
+                        String workTypeVar = (String) workType.getSelectedItem();
+
+                        // Check if any of the critical fields (emailAddress, contactNum, username) have changed
+                        boolean criticalFieldsChanged = !emailAddressVar.equals(client.getClientEmailAdd()) ||
+                                                         !contactNumVar.equals(client.getCellNum()) ||
+                                                         !usernameVar.equals(client.getClientUsername());
+
+                        // Perform conditional validation
+                        if (!criticalFieldsChanged || registerController.validateClientInput(fullNameVar, emailAddressVar, usernameVar, contactNumVar, passwordVar, confirmPasswordVar,
+                                                                    currentAddressVar, occupationVar, companyNameVar, workTypeVar, "")) {
+                            // If critical fields haven't changed or validation passes, update the client record
+                            String acctStatus = "A";
+                            success = spManager.updateClientRecordByID(client.getClientID(), usernameVar, passwordVar, fullNameVar, ageVar, currentAddressVar, contactNumVar,
+                                                                      emailAddressVar, occupationVar, companyNameVar, workTypeVar, acctStatus);
+
+                            if (success) {
+                                // Show success message
+                                JOptionPane.showMessageDialog(null, "Profile Updated Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                                confirmPassword.setText("");
+                                client = spManager.getClientByCredentials(usernameVar, passwordVar);
+                                updateClientProfile();
                             } else {
+                                // Show error message
+                                JOptionPane.showMessageDialog(null, "Profile Update Failed. Please try again.");
                                 return;
                             }
-                                              
-                            profileEditVisibility(false);
+                        } else {
+                            // Show validation error message
+                            JOptionPane.showMessageDialog(null, "Please fill in all required fields correctly.");
+                            return;
+                        }
+
+                        profileEditVisibility(false);
                         }
                     }
                 });
@@ -4650,35 +4654,58 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void editButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton2MouseClicked
         // TODO add your handling code here:
+        // QUERY HERE: return an application record by id
         Application currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID2.getText()));
         if(currentApplication != null) {
             // QUERY HERE: return pet and vet by id from the current application
             Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
             Veterinarian vet = spManager.getVetRecordByID(currentApplication.getVetID());
             if(pet != null && vet != null) {
-                if (rehome != null) {
-                    if (rehome.getAdopt() != null) {
-                        adopt = rehome.getAdopt();
+                String currentAppType = currentApplication.getApplicationType();
+                if(currentAppType.equals("A")) {
+                    if (rehome != null) {
+                        if (rehome.getAdopt() != null) {
+                            adopt = rehome.getAdopt();
+                        }
+                        rehome.dispose();
                     }
-                    rehome.dispose();
-                }
-                if (adopt != null) {
-                    adopt.dispose();
-                    adopt = null;
-                }
-                if (adopt == null) {
-                    adopt = new Adopt(this, currentApplication, client, pet, vet, true);
-                    adopt.setVisible(true);
-                } else if (!adopt.isVisible()) {
-                    adopt.setVisible(true);
-                } else {
-                    adopt.toFront();
-                    adopt.requestFocus();
+                    if (adopt != null) {
+                        adopt.dispose();
+                        adopt = null;
+                    }
+                    if (adopt == null) {
+                        adopt = new Adopt(this, currentApplication, client, pet, vet, true);
+                        adopt.setVisible(true);
+                    } else if (!adopt.isVisible()) {
+                        adopt.setVisible(true);
+                    } else {
+                        adopt.toFront();
+                        adopt.requestFocus();
+                    }
+                } else if(currentAppType.equals("R")) {
+                    if (adopt != null) {
+                        if (adopt.getRehome() != null) {
+                            rehome = adopt.getRehome();
+                        }
+                        adopt.dispose();
+                    }
+                    if(rehome != null) {
+                        rehome.dispose();
+                        rehome = null;
+                    }
+                    if (rehome == null) {
+                        rehome = new Rehome(this, currentApplication, client, pet, vet, true);
+                        rehome.setVisible(true);
+                    } else if (!rehome.isVisible()) {
+                        rehome.setVisible(true);
+                    } else {
+                        rehome.toFront();
+                        rehome.requestFocus();
+                    }
+
                 }
             }
         }
-
-        
     }//GEN-LAST:event_editButton2MouseClicked
 
     private void editButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton2MouseEntered
@@ -4693,34 +4720,58 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void editButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton3MouseClicked
         // TODO add your handling code here:
+        // QUERY HERE: return an application record by id
         Application currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID3.getText()));
         if(currentApplication != null) {
             // QUERY HERE: return pet and vet by id from the current application
             Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
             Veterinarian vet = spManager.getVetRecordByID(currentApplication.getVetID());
             if(pet != null && vet != null) {
-                if (rehome != null) {
-                    if (rehome.getAdopt() != null) {
-                        adopt = rehome.getAdopt();
+                String currentAppType = currentApplication.getApplicationType();
+                if(currentAppType.equals("A")) {
+                    if (rehome != null) {
+                        if (rehome.getAdopt() != null) {
+                            adopt = rehome.getAdopt();
+                        }
+                        rehome.dispose();
                     }
-                    rehome.dispose();
-                }
-                if (adopt != null) {
-                    adopt.dispose();
-                    adopt = null;
-                }
-                if (adopt == null) {
-                    adopt = new Adopt(this, currentApplication, client, pet, vet, true);
-                    adopt.setVisible(true);
-                } else if (!adopt.isVisible()) {
-                    adopt.setVisible(true);
-                } else {
-                    adopt.toFront();
-                    adopt.requestFocus();
+                    if (adopt != null) {
+                        adopt.dispose();
+                        adopt = null;
+                    }
+                    if (adopt == null) {
+                        adopt = new Adopt(this, currentApplication, client, pet, vet, true);
+                        adopt.setVisible(true);
+                    } else if (!adopt.isVisible()) {
+                        adopt.setVisible(true);
+                    } else {
+                        adopt.toFront();
+                        adopt.requestFocus();
+                    }
+                } else if(currentAppType.equals("R")) {
+                    if (adopt != null) {
+                        if (adopt.getRehome() != null) {
+                            rehome = adopt.getRehome();
+                        }
+                        adopt.dispose();
+                    }
+                    if(rehome != null) {
+                        rehome.dispose();
+                        rehome = null;
+                    }
+                    if (rehome == null) {
+                        rehome = new Rehome(this, currentApplication, client, pet, vet, true);
+                        rehome.setVisible(true);
+                    } else if (!rehome.isVisible()) {
+                        rehome.setVisible(true);
+                    } else {
+                        rehome.toFront();
+                        rehome.requestFocus();
+                    }
+
                 }
             }
         }
-
     }//GEN-LAST:event_editButton3MouseClicked
 
     private void editButton3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton3MouseEntered
@@ -4735,34 +4786,58 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void editButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton4MouseClicked
         // TODO add your handling code here:
+        // QUERY HERE: return an application record by id
         Application currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID4.getText()));
         if(currentApplication != null) {
             // QUERY HERE: return pet and vet by id from the current application
             Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
             Veterinarian vet = spManager.getVetRecordByID(currentApplication.getVetID());
             if(pet != null && vet != null) {
-                if (rehome != null) {
-                    if (rehome.getAdopt() != null) {
-                        adopt = rehome.getAdopt();
+                String currentAppType = currentApplication.getApplicationType();
+                if(currentAppType.equals("A")) {
+                    if (rehome != null) {
+                        if (rehome.getAdopt() != null) {
+                            adopt = rehome.getAdopt();
+                        }
+                        rehome.dispose();
                     }
-                    rehome.dispose();
-                }
-                if (adopt != null) {
-                    adopt.dispose();
-                    adopt = null;
-                }
-                if (adopt == null) {
-                    adopt = new Adopt(this, currentApplication, client, pet, vet, true);
-                    adopt.setVisible(true);
-                } else if (!adopt.isVisible()) {
-                    adopt.setVisible(true);
-                } else {
-                    adopt.toFront();
-                    adopt.requestFocus();
+                    if (adopt != null) {
+                        adopt.dispose();
+                        adopt = null;
+                    }
+                    if (adopt == null) {
+                        adopt = new Adopt(this, currentApplication, client, pet, vet, true);
+                        adopt.setVisible(true);
+                    } else if (!adopt.isVisible()) {
+                        adopt.setVisible(true);
+                    } else {
+                        adopt.toFront();
+                        adopt.requestFocus();
+                    }
+                } else if(currentAppType.equals("R")) {
+                    if (adopt != null) {
+                        if (adopt.getRehome() != null) {
+                            rehome = adopt.getRehome();
+                        }
+                        adopt.dispose();
+                    }
+                    if(rehome != null) {
+                        rehome.dispose();
+                        rehome = null;
+                    }
+                    if (rehome == null) {
+                        rehome = new Rehome(this, currentApplication, client, pet, vet, true);
+                        rehome.setVisible(true);
+                    } else if (!rehome.isVisible()) {
+                        rehome.setVisible(true);
+                    } else {
+                        rehome.toFront();
+                        rehome.requestFocus();
+                    }
+
                 }
             }
         }
-
     }//GEN-LAST:event_editButton4MouseClicked
 
     private void editButton4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton4MouseEntered
@@ -4777,34 +4852,58 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void editButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton5MouseClicked
         // TODO add your handling code here:
+        // QUERY HERE: return an application record by id
         Application currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID5.getText()));
         if(currentApplication != null) {
             // QUERY HERE: return pet and vet by id from the current application
             Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
             Veterinarian vet = spManager.getVetRecordByID(currentApplication.getVetID());
             if(pet != null && vet != null) {
-                if (rehome != null) {
-                    if (rehome.getAdopt() != null) {
-                        adopt = rehome.getAdopt();
+                String currentAppType = currentApplication.getApplicationType();
+                if(currentAppType.equals("A")) {
+                    if (rehome != null) {
+                        if (rehome.getAdopt() != null) {
+                            adopt = rehome.getAdopt();
+                        }
+                        rehome.dispose();
                     }
-                    rehome.dispose();
-                }
-                if (adopt != null) {
-                    adopt.dispose();
-                    adopt = null;
-                }
-                if (adopt == null) {
-                    adopt = new Adopt(this, currentApplication, client, pet, vet, true);
-                    adopt.setVisible(true);
-                } else if (!adopt.isVisible()) {
-                    adopt.setVisible(true);
-                } else {
-                    adopt.toFront();
-                    adopt.requestFocus();
+                    if (adopt != null) {
+                        adopt.dispose();
+                        adopt = null;
+                    }
+                    if (adopt == null) {
+                        adopt = new Adopt(this, currentApplication, client, pet, vet, true);
+                        adopt.setVisible(true);
+                    } else if (!adopt.isVisible()) {
+                        adopt.setVisible(true);
+                    } else {
+                        adopt.toFront();
+                        adopt.requestFocus();
+                    }
+                } else if(currentAppType.equals("R")) {
+                    if (adopt != null) {
+                        if (adopt.getRehome() != null) {
+                            rehome = adopt.getRehome();
+                        }
+                        adopt.dispose();
+                    }
+                    if(rehome != null) {
+                        rehome.dispose();
+                        rehome = null;
+                    }
+                    if (rehome == null) {
+                        rehome = new Rehome(this, currentApplication, client, pet, vet, true);
+                        rehome.setVisible(true);
+                    } else if (!rehome.isVisible()) {
+                        rehome.setVisible(true);
+                    } else {
+                        rehome.toFront();
+                        rehome.requestFocus();
+                    }
+
                 }
             }
         }
-
     }//GEN-LAST:event_editButton5MouseClicked
 
     private void editButton5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton5MouseEntered

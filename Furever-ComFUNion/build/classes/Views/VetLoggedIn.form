@@ -3427,10 +3427,6 @@
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
             <Component class="javax.swing.JTextPane" name="emailAddress">
-              <Properties>
-                <Property name="editable" type="boolean" value="false"/>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
               <Events>
                 <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="emailAddressenterTabKeyPressed"/>
               </Events>
@@ -3539,6 +3535,7 @@
             <Component class="javax.swing.JTextPane" name="currentAddress">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
+                <Property name="text" type="java.lang.String" value="Pet Sanctuary of the Philippines"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
@@ -3552,7 +3549,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="12" green="53" red="8b" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Mandaluyong City, Metro Manila"/>
+            <Property name="text" type="java.lang.String" value="Pet Sanctuary of the Philippines"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -3580,6 +3577,7 @@
             <Component class="javax.swing.JTextPane" name="occupation">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
+                <Property name="text" type="java.lang.String" value="Veterinarian"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
@@ -3596,7 +3594,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="12" green="53" red="8b" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Software Engineer"/>
+            <Property name="text" type="java.lang.String" value="Veterinarian"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -3624,6 +3622,7 @@
             <Component class="javax.swing.JTextPane" name="companyName">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
+                <Property name="text" type="java.lang.String" value="Furever ComFUNion"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
@@ -3640,7 +3639,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="12" green="53" red="8b" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Google"/>
+            <Property name="text" type="java.lang.String" value="Furever ComFUNion"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

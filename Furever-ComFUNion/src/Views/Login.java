@@ -137,7 +137,7 @@ public class Login extends javax.swing.JFrame {
             return;
         }
         // if not existing at both tables, display an error
-        errorMessage.setText("Invalid username or password");
+        errorMessage.setText("Invalid credentials/Account inactive");
         errorMessage.setForeground(Color.RED);
     }
 
@@ -286,8 +286,10 @@ public class Login extends javax.swing.JFrame {
         logo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         loginContainer.add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 210, 200));
 
+        errorMessage.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        errorMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         errorMessage.setText("lagayan ng error message rito");
-        loginContainer.add(errorMessage, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 370, -1, -1));
+        loginContainer.add(errorMessage, new org.netbeans.lib.awtextra.AbsoluteConstraints(133, 356, 250, 50));
 
         errorMessageContainer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/login error container.png"))); // NOI18N
         loginContainer.add(errorMessageContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 340, -1, -1));

@@ -893,20 +893,19 @@ public class Rehome extends javax.swing.JFrame {
         }
         
         // if all information is not empty
-        String selectedPetID = "";
-        String enteredPetName = petName.getText().trim();
+        final String enteredPetName = petName.getText().trim();
         String enteredPetAge = "";
         if(Integer.valueOf(petAge.getText().trim()) > 1) {
             enteredPetAge = petAge.getText().trim() + " months";
         } else {
             enteredPetAge = petAge.getText().trim() + " month";
         }
+        final String finalEnteredPetAge = enteredPetAge;
         final String selectedPetType = ((String)petType.getSelectedItem()).trim();
         final String selectedPetSex = petSex;
         final String selectedPetOrigin = "O";
-        final String selectedStatus = "NA";
+        final String selectedPetStatus = "NA";
         final String selectedPetSize = petSize;
-        
         
         CountDownLatch latch = countDownLatch();
 
@@ -928,6 +927,24 @@ public class Rehome extends javax.swing.JFrame {
                     @Override
                     public void run() {
                         if (userResponse) {
+                            int selectedPetID = 0;
+                            // QUERY HERE: update pet record in the pet table by pet id
+                            // the method will return the pet id if successful, otherwise return an empty string
+                            if(edit) {
+                                selectedPetID = spManager.updatePetRecordByID(Integer.valueOf(tempPet.getPetID()), selectedPetType, selectedPetOrigin, selectedPetStatus, selectedPetSize,
+                                                      finalEnteredPetAge, enteredPetName, selectedPetSex);
+                            } else {
+                                // QUERY HERE: insert pet record in the pet table
+                                // the method will return the pet id if successful, otherwise return an empty string
+                                selectedPetID = spManager.insertPetRecord(selectedPetType, selectedPetOrigin, selectedPetStatus, selectedPetSize,
+                                                      finalEnteredPetAge, enteredPetName, selectedPetSex);
+                            }
+
+                            if(selectedPetID == 0) {
+                                JOptionPane.showMessageDialog(null, "Insertion of pet record unsuccessful", "Validation Error", JOptionPane.ERROR_MESSAGE);
+                                return;
+                            }
+                            
                             String applicationType = "R";
                             String[] appointDateTime = ((String) availableDates.getSelectedItem()).trim().split(" ");
                             String appointDate = appointDateTime[0];
@@ -935,13 +952,12 @@ public class Rehome extends javax.swing.JFrame {
                             String appointPlace = "Vet Clinic";
                             String appointStatus = "P";
                             int clientID = Integer.valueOf(ownerID.getText().trim());
-                            String selectedVetID = ((String) vetID.getSelectedItem()).trim();
+                            int selectedVetID = Integer.valueOf(((String) vetID.getSelectedItem()).trim());
 
-                            /*
                             // QUERY HERE: update rehome application form in the application table by application id
                             // the method will return true if successful, otherwise false
                             if(edit) {
-                                if(methodName(application.getApplicationID(), applicationType, appointDate, appointTime, appointPlace, appointStatus, clientID, selectedPetID, selectedVetID)) {
+                                if(spManager.updateApplicationRecord(application.getApplicationID(), applicationType, appointDate, appointTime, appointPlace, appointStatus, clientID, selectedPetID, selectedVetID)) {
                                     JOptionPane.showMessageDialog(null, "Application Updated Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
                                             } else {
                                     JOptionPane.showMessageDialog(null, "Application Update Failed", "Failed", JOptionPane.ERROR_MESSAGE);
@@ -949,13 +965,13 @@ public class Rehome extends javax.swing.JFrame {
                             } else {
                                 // QUERY HERE: insert rehome application form in the application table
                                 // the method will return true if successful, otherwise false
-                                if(methodName(applicationType, appointDate, appointTime, appointPlace, appointStatus, clientID, selectedPetID, selectedVetID)) {
+                                if(spManager.insertApplicationRecord(applicationType, appointDate, appointTime, appointPlace, appointStatus, clientID, selectedPetID, selectedVetID)) {
                                     JOptionPane.showMessageDialog(null, "Application Submitted!", "Success", JOptionPane.INFORMATION_MESSAGE);
                                 } else {
                                     JOptionPane.showMessageDialog(null, "Application Failed", "Failed", JOptionPane.ERROR_MESSAGE);
+                                    spManager.deletePetRecordByID(selectedPetID);
                                 }
                             }
-                            */
                             userLoggedIn.setApplicationClicked(false);
                             userLoggedIn.populateAppsFromDB();
                             userLoggedIn.handleApplicationButtonClick();

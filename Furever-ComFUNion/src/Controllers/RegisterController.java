@@ -219,6 +219,11 @@ public class RegisterController {
             String occupation = view.getOccupation().getText().trim();
             String companyName = view.getCompanyName().getText().trim();
             String workType = (String) view.getWorkType().getSelectedItem();
+            if("Travel".equals(workType)) {
+                workType = "T";
+            } else {
+                workType = "NT";
+            }
             String birthdate = view.getBirthdate().getText().trim();
             
             System.out.println(fullName + " " + emailAddress + " " + username + " " + contactNumber + " " + password + " " +
@@ -240,6 +245,9 @@ public class RegisterController {
             JOptionPane.showMessageDialog(view, "User registered successfully!");
             // Clear fields after successful registration
             clearFields();
+            
+            view.loginButtonMouseClicked(null);
+            view.dispose();
         }
     }
     
@@ -415,6 +423,7 @@ public class RegisterController {
         view.getConfirmPassword().setText("");
         view.getBirthdate().setText("");
         view.getPasscode().setText("");
+        view.getUsername().setText("");
         
         view.getAskVetCheckBox().setSelected(false);
         view.getPasscodeScroll().setVisible(false);

@@ -209,7 +209,7 @@ public class Register extends javax.swing.JFrame {
         // Populate month combobox
         for (int m = 1; m <= 12; m++) {
             String monthValue = String.valueOf(m);
-            if(m > 9) {
+            if(m < 10) {
                 monthValue = "0" + monthValue;
             }
             
@@ -252,7 +252,7 @@ public class Register extends javax.swing.JFrame {
             day.removeAllItems();
             for (int d = 1; d <= daysInMonth; d++) {
                 String dayValue = String.valueOf(d);
-                if(d > 9) {
+                if(d < 10) {
                     dayValue = "0" + dayValue;
                 }
                 day.addItem(dayValue);
@@ -555,7 +555,7 @@ public class Register extends javax.swing.JFrame {
     private void contactNumKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_contactNumKeyTyped
         // TODO add your handling code here:
         char c = evt.getKeyChar();
-        String contactNumText = ((javax.swing.JTextField) evt.getSource()).getText();
+        String contactNumText = ((javax.swing.JTextPane) evt.getSource()).getText();
 
         // Check if the character is not a digit or if the text exceeds 10 characters
         if (!Character.isDigit(c) || contactNumText.length() >= 10) {

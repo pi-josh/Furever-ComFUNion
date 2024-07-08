@@ -794,6 +794,7 @@ public class Adopt extends javax.swing.JFrame {
         adoptPanel2.add(availableDates, new org.netbeans.lib.awtextra.AbsoluteConstraints(539, 462, 238, 32));
 
         adopted.setContentAreaFilled(false);
+        adopted.setEnabled(false);
         adopted.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         adopted.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         adopted.addActionListener(new java.awt.event.ActionListener() {
@@ -803,6 +804,7 @@ public class Adopt extends javax.swing.JFrame {
         });
         adoptPanel2.add(adopted, new org.netbeans.lib.awtextra.AbsoluteConstraints(192, 397, 20, 20));
 
+        notAdopted.setSelected(true);
         notAdopted.setContentAreaFilled(false);
         notAdopted.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         notAdopted.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1177,27 +1179,27 @@ public class Adopt extends javax.swing.JFrame {
                             String appointPlace = "Vet Clinic";
                             String appointStatus = "P";
                             int clientID = Integer.valueOf(adopterID.getText().trim());
-                            String selectedPetID = ((String) petID.getSelectedItem()).trim();
-                            String selectedVetID = ((String) vetID.getSelectedItem()).trim();
+                            int selectedPetID = Integer.valueOf((String)petID.getSelectedItem());
+                            int selectedVetID = Integer.valueOf((String)vetID.getSelectedItem());
 
                             System.out.println(applicationType + " " + appointDate + " " + appointTime + " " + appointPlace + " " + clientID + " " + selectedPetID + " " + selectedVetID);
 
 
                             if(edit) {
-                                /*
                                 // QUERY HERE; update adopt application form by id in the application table
                                 // the method will return true if successful, otherwise false
-                                if(spManager.methodName(application.getApplicationID(), applicationType, appointDate, appointTime, appointPlace, appointStatus, clientID, selectedPetID, selectedVetID)) {
+                                if(spManager.updateApplicationRecord(application.getApplicationID(), applicationType, appointDate, appointTime, appointPlace, appointStatus, clientID, selectedPetID, selectedVetID)) {
                                     JOptionPane.showMessageDialog(null, "Application Updated Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
                                     // this will check if the pet being adopted has been changed
-                                    if(!tempPet.getPetID().equals(pet.getPetID())) {
-                                       spManager.updatePetStatus(selectedPetID, "NA");
+                                    if(!tempPet.getPetID().equals(String.valueOf(selectedPetID))) {
+                                       System.out.println(tempPet.getPetID() + " " + selectedPetID);
+                                       spManager.updatePetStatus(Integer.valueOf(tempPet.getPetID()), "NA");
+                                       spManager.updatePetStatus(selectedPetID, "A");
                                     }
                                 } else {
                                     JOptionPane.showMessageDialog(null, "Application Update Failed", "Failed", JOptionPane.ERROR_MESSAGE);
                                     return;
                                 }
-                                */
                             } else {
                                 // QUERY HERE: insert adopt application form in the application table
                                 // the method will return true if successful, otherwise false

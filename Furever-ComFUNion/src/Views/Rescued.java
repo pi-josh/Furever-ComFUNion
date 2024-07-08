@@ -6,6 +6,7 @@
 package Views;
 
 import Controllers.InformationDialogController;
+import Models.SPManager;
 import Models.Veterinarian;
 import java.awt.MediaTracker;
 import java.awt.Point;
@@ -24,6 +25,8 @@ import javax.swing.SwingUtilities;
  * @author joshu
  */
 public class Rescued extends javax.swing.JFrame {
+    SPManager spManager = new SPManager();
+    
     // for moving the frame
     private Point mouseDownCompCoords;
     
@@ -180,6 +183,7 @@ public class Rescued extends javax.swing.JFrame {
         petSize = new javax.swing.ButtonGroup();
         minimizeButton = new javax.swing.JLabel();
         backButton = new javax.swing.JLabel();
+        header = new javax.swing.JLabel();
         rescuedPanel = new javax.swing.JPanel();
         rescuedButton = new javax.swing.JLabel();
         petID = new javax.swing.JTextField();
@@ -221,6 +225,7 @@ public class Rescued extends javax.swing.JFrame {
             }
         });
         getContentPane().add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(815, 10, 40, 20));
+        minimizeButton.getAccessibleContext().setAccessibleName("Rescued");
 
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button (1).png"))); // NOI18N
         backButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -235,6 +240,20 @@ public class Rescued extends javax.swing.JFrame {
             }
         });
         getContentPane().add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(855, 5, 40, 40));
+        backButton.getAccessibleContext().setAccessibleName("Rescued");
+
+        header.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                headerMouseDragged(evt);
+            }
+        });
+        header.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                headerMousePressed(evt);
+            }
+        });
+        getContentPane().add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 110));
+        header.getAccessibleContext().setAccessibleName("Rescued");
 
         rescuedPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
         rescuedPanel.setPreferredSize(new java.awt.Dimension(900, 680));
@@ -304,8 +323,8 @@ public class Rescued extends javax.swing.JFrame {
         });
         rescuedPanel.add(male, new org.netbeans.lib.awtextra.AbsoluteConstraints(729, 291, 20, 20));
 
+        rescued.setSelected(true);
         rescued.setContentAreaFilled(false);
-        rescued.setEnabled(false);
         rescued.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         rescued.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         rescued.addActionListener(new java.awt.event.ActionListener() {
@@ -315,8 +334,8 @@ public class Rescued extends javax.swing.JFrame {
         });
         rescuedPanel.add(rescued, new org.netbeans.lib.awtextra.AbsoluteConstraints(588, 364, 20, 20));
 
-        owned.setSelected(true);
         owned.setContentAreaFilled(false);
+        owned.setEnabled(false);
         owned.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         owned.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         owned.addActionListener(new java.awt.event.ActionListener() {
@@ -507,16 +526,17 @@ public class Rescued extends javax.swing.JFrame {
         
         // if all information is not empty
         String selectedPetID = "";
-        String enteredPetName = petName.getText().trim();
+        final String enteredPetName = petName.getText().trim();
         String enteredPetAge = "";
         if(Integer.valueOf(petAge.getText().trim()) > 1) {
             enteredPetAge = petAge.getText().trim() + " months";
         } else {
             enteredPetAge = petAge.getText().trim() + " month";
         }
+        final String finalEnteredPetAge = enteredPetAge;
         final String selectedPetType = ((String)petType.getSelectedItem()).trim();
         final String selectedPetSex = petSex;
-        final String selectedPetOrigin = "O";
+        final String selectedPetOrigin = "R";
         final String selectedPetStatus = "NA";
         final String selectedPetSize = petSize;
         
@@ -540,18 +560,16 @@ public class Rescued extends javax.swing.JFrame {
                     @Override
                     public void run() {
                         if (userResponse) {
-                            /*
                             // QUERY HERE: insert pet record in the pet table
                             // the method will return the pet id if successful, otherwise return an empty string
-                            String selectedPetID = methodName(selectedPetType, selectedPetOrigin, selectedPetStatus, selectedPetSize,
-                                                  enteredPetAge, enteredPetName, selectedPetSex);
+                            int selectedPetID = spManager.insertPetRecord(selectedPetType, selectedPetOrigin, selectedPetStatus, selectedPetSize,
+                                                  finalEnteredPetAge, enteredPetName, selectedPetSex);
                             if(!"".equals(selectedPetID)) {
                                 JOptionPane.showMessageDialog(null, "Rescue Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
                             } else {
                                 JOptionPane.showMessageDialog(null, "Rescue Failed", "Failed", JOptionPane.ERROR_MESSAGE);
                                 return;
                             }
-                            */
                             vetLoggedIn.setApplicationClicked(false);
                             vetLoggedIn.populateAppsFromDB(1);
                             vetLoggedIn.handleApplicationButtonClick();
@@ -677,6 +695,7 @@ public class Rescued extends javax.swing.JFrame {
     private javax.swing.JCheckBox adopted;
     private javax.swing.JLabel backButton;
     private javax.swing.JCheckBox female;
+    private javax.swing.JLabel header;
     private javax.swing.JCheckBox iAgree;
     private javax.swing.JCheckBox large;
     private javax.swing.JCheckBox male;

@@ -6,6 +6,7 @@
 package Controllers;
 
 import Views.ConfirmationDialog;
+import Views.Summary;
 import Views.UserLoggedIn;
 import Views.VetLoggedIn;
 import java.awt.event.MouseAdapter;

@@ -113,6 +113,9 @@ public class VetLoggedIn extends javax.swing.JFrame {
     private List<String> petGenders = new ArrayList<>();
     private List<String> sortCriteria = new ArrayList<>();
     
+    // for gettint the current panel the vet checking out
+    private int currentCriteria;
+    
     // for sorting priority
     ArrayList<JCheckBox> sortingPriority = new ArrayList<>();   
 
@@ -121,22 +124,21 @@ public class VetLoggedIn extends javax.swing.JFrame {
      */
     public VetLoggedIn(Veterinarian vet) {
         // this.vet = new Veterinarian("V004", "Juswa07", "riseandshine", "Joshua Macatunao", 20, "213", "sdfadf", "A");
-
-        // populate
-        populatePetsFromDB();
-        populateVetsFromDB();
-        populateAppsFromDB(1);
-        
         initComponents();
-        
-        totalPetsToDisplay = spManager.getAllPetsCount();
         
         if (vet != null) {
             // update profile
             this.vet = vet;
             updateVetProfile();
         }
-
+        
+        // populate
+        populatePetsFromDB();
+        populateVetsFromDB();
+        populateAppsFromDB(1);
+        
+        totalPetsToDisplay = spManager.getAllPetsCount();
+        
         // populate the combo boxes
         populateComboBoxes();
 
@@ -203,8 +205,9 @@ public class VetLoggedIn extends javax.swing.JFrame {
         profileContactNum.setText(vet.getVetCellNum());
         profileEmailAddress.setText(vet.getVetEmailAdd());
         profilePassword.setText(vet.getVetPassword());
-        profileAddress.setText("Pet Sanctuary");
+        profileAddress.setText("Pet Sanctuary of the Philippines");
         profileOccupation.setText("Veterinarian");
+        companyName.setText("Furever ComFUNion");
         profileWorkType.setText("No Travel");
         profileAge.setText(String.valueOf(vet.getVetAge()));
 
@@ -2082,8 +2085,6 @@ public class VetLoggedIn extends javax.swing.JFrame {
 
         emailAddressScroll.setHorizontalScrollBar(null);
 
-        emailAddress.setEditable(false);
-        emailAddress.setEnabled(false);
         emailAddress.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 emailAddressenterTabKeyPressed(evt);
@@ -2138,6 +2139,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
         });
 
         currentAddress.setEditable(false);
+        currentAddress.setText("Pet Sanctuary of the Philippines");
         currentAddress.setEnabled(false);
         currentAddressScroll.setViewportView(currentAddress);
 
@@ -2145,12 +2147,13 @@ public class VetLoggedIn extends javax.swing.JFrame {
 
         profileAddress.setFont(new java.awt.Font("Comic Sans MS", 0, 16)); // NOI18N
         profileAddress.setForeground(new java.awt.Color(139, 83, 18));
-        profileAddress.setText("Mandaluyong City, Metro Manila");
+        profileAddress.setText("Pet Sanctuary of the Philippines");
         profileBody.add(profileAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 382, 270, -1));
 
         occupationScroll.setHorizontalScrollBar(null);
 
         occupation.setEditable(false);
+        occupation.setText("Veterinarian");
         occupation.setEnabled(false);
         occupation.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -2163,12 +2166,13 @@ public class VetLoggedIn extends javax.swing.JFrame {
 
         profileOccupation.setFont(new java.awt.Font("Comic Sans MS", 0, 16)); // NOI18N
         profileOccupation.setForeground(new java.awt.Color(139, 83, 18));
-        profileOccupation.setText("Software Engineer");
+        profileOccupation.setText("Veterinarian");
         profileBody.add(profileOccupation, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 488, 230, -1));
 
         companyScroll.setHorizontalScrollBar(null);
 
         companyName.setEditable(false);
+        companyName.setText("Furever ComFUNion");
         companyName.setEnabled(false);
         companyName.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -2181,7 +2185,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
 
         profileCompany.setFont(new java.awt.Font("Comic Sans MS", 0, 16)); // NOI18N
         profileCompany.setForeground(new java.awt.Color(139, 83, 18));
-        profileCompany.setText("Google");
+        profileCompany.setText("Furever ComFUNion");
         profileBody.add(profileCompany, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 540, 250, -1));
 
         workType.setEnabled(false);
@@ -2358,26 +2362,32 @@ public class VetLoggedIn extends javax.swing.JFrame {
         // QUERY HERE: get all application records based on the button clicked
         switch(criteria) {
             case 1:
+                currentCriteria = 1;
                 this.applications = spManager.getPendingAdoptionApplicationsForVet(vet.getVetID());
                 totalApplications = applications.size();
                 break;
             case 2:
+                currentCriteria = 2;
                 this.applications = spManager.getSuccessfulAdoptionApplicationsForVet(vet.getVetID());
                 totalApplications = applications.size();
                 break;
             case 3:
+                currentCriteria = 3;
                 this.applications = spManager.getCancelledAdoptionApplicationsForVet(vet.getVetID());
                 totalApplications = applications.size();
                 break;
             case 4:
+                currentCriteria = 4;
                 this.applications = spManager.getPendingRehomeApplicationsForVet(vet.getVetID());
                 totalApplications = applications.size();
                 break;
             case 5:
+                currentCriteria = 5;
                 this.applications = spManager.getSuccessfulRehomeApplicationsForVet(vet.getVetID());
                 totalApplications = applications.size();
                 break;
             case 6:
+                currentCriteria = 6;
                 this.applications = spManager.getCancelledRehomeApplicationsForVet(vet.getVetID());
                 totalApplications = applications.size();
                 break;
@@ -2949,7 +2959,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
         applicationPrev.setVisible(appIndex > 0);
 
         // Show or hide next button based on totalApplications
-        applicationNext.setVisible(totalApplications > 6);
+        applicationNext.setVisible(totalApplications > 5);
     }
 
     private void profileEditVisibility(boolean edit) {
@@ -3069,7 +3079,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
                         pOrigin = "Owned";
                         break;
                     case 'R':
-                        pOrigin = "Rehome";
+                        pOrigin = "Rescued";
                         break;
                 }
 
@@ -3111,7 +3121,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
                         pOrigin = "Owned";
                         break;
                     case 'R':
-                        pOrigin = "Rehome";
+                        pOrigin = "Rescued";
                         break;
                 }
 
@@ -3157,7 +3167,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
                         pOrigin = "Owned";
                         break;
                     case 'R':
-                        pOrigin = "Rehome";
+                        pOrigin = "Rescued";
                         break;
                 }
 
@@ -3912,25 +3922,22 @@ public class VetLoggedIn extends javax.swing.JFrame {
                                 currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID1.getText()));
                                 if (currentApplication != null) {
                                     if (accept1.isSelected()) {
-                                        /*
-                                        // QUERY HERE: update application status to "A"
+                                        // QUERY HERE: update application status to "S"
                                         // method will return true if successful, otherwise false
-                                        if (methodName(currentApplication.getApplicationID(), "A")) {   
+                                        if (spManager.acceptApplicationRecord(currentApplication.getApplicationID())) {   
                                             success = true;
                                         } else {
                                             success = false;
                                         }
-                                        */
-                                    } else if (decline1.isSelected()) {
-                                        /*                    
+                                    } else if (decline1.isSelected()) {                 
                                         Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
                                         if (pet != null) {
                                             String appType = currentApplication.getApplicationType();
                                             if (appType.equals("A")) {
                                                 // QUERY HERE: update application status to "C"
                                                 // method will return true if successful, otherwise false
-                                                if (methodName(currentApplication.getApplicationID(), "C")) {   
-                                                    spManager.updatePetStatus(pet.getPetID(), "NA");
+                                                if (spManager.declineApplicationRecord(currentApplication.getApplicationID())) {   
+                                                    spManager.updatePetStatus(Integer.valueOf(pet.getPetID()), "NA");
                                                     success = true;
                                                 } else {
                                                     success = false;
@@ -3938,15 +3945,14 @@ public class VetLoggedIn extends javax.swing.JFrame {
                                             } else if (appType.equals("R")) {
                                                 // QUERY HERE: delete a pet and application record by id
                                                 // method will return true if successful, otherwise false
-                                                if (methodName(currentApplication.getApplicationID())) {
-                                                    spManager.methodName(pet.getPetID());
+                                                if (spManager.deleteApplicationRecordByID(currentApplication.getApplicationID())) {
+                                                    spManager.deletePetRecordByID(Integer.valueOf(pet.getPetID()));
                                                     success = true;
                                                 } else {
                                                     success = false;
                                                 }
                                             }
                                         }
-                                        */    
                                     } else {
                                         success = false;
                                     }
@@ -3956,19 +3962,184 @@ public class VetLoggedIn extends javax.swing.JFrame {
                             }
                             if (highlight2.isVisible()) {
                                 // Handle highlight2 logic here
+                                currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID2.getText()));
+                                if (currentApplication != null) {
+                                    if (accept2.isSelected()) {
+                                        // QUERY HERE: update application status to "S"
+                                        // method will return true if successful, otherwise false
+                                        if (spManager.acceptApplicationRecord(currentApplication.getApplicationID())) {   
+                                            success = true;
+                                        } else {
+                                            success = false;
+                                        }
+                                    } else if (decline2.isSelected()) {                 
+                                        Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
+                                        if (pet != null) {
+                                            String appType = currentApplication.getApplicationType();
+                                            if (appType.equals("A")) {
+                                                // QUERY HERE: update application status to "C"
+                                                // method will return true if successful, otherwise false
+                                                if (spManager.declineApplicationRecord(currentApplication.getApplicationID())) {   
+                                                    spManager.updatePetStatus(Integer.valueOf(pet.getPetID()), "NA");
+                                                    success = true;
+                                                } else {
+                                                    success = false;
+                                                }
+                                            } else if (appType.equals("R")) {
+                                                // QUERY HERE: delete a pet and application record by id
+                                                // method will return true if successful, otherwise false
+                                                if (spManager.deleteApplicationRecordByID(currentApplication.getApplicationID())) {
+                                                    spManager.deletePetRecordByID(Integer.valueOf(pet.getPetID()));
+                                                    success = true;
+                                                } else {
+                                                    success = false;
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        success = false;
+                                    }
+                                } else {
+                                    success = false;
+                                }
                             }
                             if (highlight3.isVisible()) {
                                 // Handle highlight3 logic here
+                                currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID3.getText()));
+                                if (currentApplication != null) {
+                                    if (accept3.isSelected()) {
+                                        // QUERY HERE: update application status to "S"
+                                        // method will return true if successful, otherwise false
+                                        if (spManager.acceptApplicationRecord(currentApplication.getApplicationID())) {   
+                                            success = true;
+                                        } else {
+                                            success = false;
+                                        }
+                                    } else if (decline3.isSelected()) {                 
+                                        Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
+                                        if (pet != null) {
+                                            String appType = currentApplication.getApplicationType();
+                                            if (appType.equals("A")) {
+                                                // QUERY HERE: update application status to "C"
+                                                // method will return true if successful, otherwise false
+                                                if (spManager.declineApplicationRecord(currentApplication.getApplicationID())) {   
+                                                    spManager.updatePetStatus(Integer.valueOf(pet.getPetID()), "NA");
+                                                    success = true;
+                                                } else {
+                                                    success = false;
+                                                }
+                                            } else if (appType.equals("R")) {
+                                                // QUERY HERE: delete a pet and application record by id
+                                                // method will return true if successful, otherwise false
+                                                if (spManager.deleteApplicationRecordByID(currentApplication.getApplicationID())) {
+                                                    spManager.deletePetRecordByID(Integer.valueOf(pet.getPetID()));
+                                                    success = true;
+                                                } else {
+                                                    success = false;
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        success = false;
+                                    }
+                                } else {
+                                    success = false;
+                                }
                             }
                             if (highlight4.isVisible()) {
                                 // Handle highlight4 logic here
+                                currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID4.getText()));
+                                if (currentApplication != null) {
+                                    if (accept4.isSelected()) {
+                                        // QUERY HERE: update application status to "S"
+                                        // method will return true if successful, otherwise false
+                                        if (spManager.acceptApplicationRecord(currentApplication.getApplicationID())) {   
+                                            success = true;
+                                        } else {
+                                            success = false;
+                                        }
+                                    } else if (decline4.isSelected()) {                 
+                                        Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
+                                        if (pet != null) {
+                                            String appType = currentApplication.getApplicationType();
+                                            if (appType.equals("A")) {
+                                                // QUERY HERE: update application status to "C"
+                                                // method will return true if successful, otherwise false
+                                                if (spManager.declineApplicationRecord(currentApplication.getApplicationID())) {   
+                                                    spManager.updatePetStatus(Integer.valueOf(pet.getPetID()), "NA");
+                                                    success = true;
+                                                } else {
+                                                    success = false;
+                                                }
+                                            } else if (appType.equals("R")) {
+                                                // QUERY HERE: delete a pet and application record by id
+                                                // method will return true if successful, otherwise false
+                                                if (spManager.deleteApplicationRecordByID(currentApplication.getApplicationID())) {
+                                                    spManager.deletePetRecordByID(Integer.valueOf(pet.getPetID()));
+                                                    success = true;
+                                                } else {
+                                                    success = false;
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        success = false;
+                                    }
+                                } else {
+                                    success = false;
+                                }
                             }
                             if (highlight5.isVisible()) {
                                 // Handle highlight5 logic here
+                                currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID5.getText()));
+                                if (currentApplication != null) {
+                                    if (accept5.isSelected()) {
+                                        // QUERY HERE: update application status to "S"
+                                        // method will return true if successful, otherwise false
+                                        if (spManager.acceptApplicationRecord(currentApplication.getApplicationID())) {   
+                                            success = true;
+                                        } else {
+                                            success = false;
+                                        }
+                                    } else if (decline5.isSelected()) {                 
+                                        Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
+                                        if (pet != null) {
+                                            String appType = currentApplication.getApplicationType();
+                                            if (appType.equals("A")) {
+                                                // QUERY HERE: update application status to "C"
+                                                // method will return true if successful, otherwise false
+                                                if (spManager.declineApplicationRecord(currentApplication.getApplicationID())) {   
+                                                    spManager.updatePetStatus(Integer.valueOf(pet.getPetID()), "NA");
+                                                    success = true;
+                                                } else {
+                                                    success = false;
+                                                }
+                                            } else if (appType.equals("R")) {
+                                                // QUERY HERE: delete a pet and application record by id
+                                                // method will return true if successful, otherwise false
+                                                if (spManager.deleteApplicationRecordByID(currentApplication.getApplicationID())) {
+                                                    spManager.deletePetRecordByID(Integer.valueOf(pet.getPetID()));
+                                                    success = true;
+                                                } else {
+                                                    success = false;
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        success = false;
+                                    }
+                                } else {
+                                    success = false;
+                                }
                             }
 
                             if (success) {
-                                JOptionPane.showMessageDialog(null, "Application Deleted Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "Application Processed Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                                VetLoggedIn.this.setApplicationClicked(false);
+                                VetLoggedIn.this.populateAppsFromDB(currentCriteria);
+                                VetLoggedIn.this.handleApplicationButtonClick();
+                                VetLoggedIn.this.applications();
+                                VetLoggedIn.this.applicationEditVisibility(false);
                             }
                             applicationEditVisibility(false);
                             applicationPrev.setVisible(appPrev);
@@ -4945,13 +5116,12 @@ public class VetLoggedIn extends javax.swing.JFrame {
                     public void run() {
                         if (userResponse) {
                             boolean success = false;
-
-                            /*
                             // QUERY HERE: delete a vet record by changing the account status to "D"
                             // method will return true if successful, otherwise false
-                            success = spManager.methodName(vet.getVetID());
-                            */
+                            success = spManager.deleteVetRecordByID(Integer.valueOf(vet.getVetID()));
                             if(success) {
+                                spManager.updateApplicationRecordByVetID(Integer.valueOf(vet.getVetID()));
+                                JOptionPane.showMessageDialog(null, "Account deleted successfully!");
                                 VetLoggedIn.this.setVisible(false);
                                 new LandingPage(true).setVisible(true);
                             }
@@ -4980,7 +5150,9 @@ public class VetLoggedIn extends javax.swing.JFrame {
         contactNum.setText(vet.getVetCellNum());
         username.setText(vet.getVetUsername());
         password.setText(vet.getVetPassword());
+        confirmPassword.setText(vet.getVetPassword());
         emailAddress.setText(vet.getVetEmailAdd());
+        occupation.setText(profileOccupation.getText());
     }//GEN-LAST:event_profileEditButtonMouseClicked
 
     private void profileEditButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileEditButtonMouseEntered
@@ -5067,27 +5239,36 @@ public class VetLoggedIn extends javax.swing.JFrame {
                             String confirmPasswordVar = (String) confirmPassword.getText();
                             String emailAddressVar = emailAddress.getText().trim();
 
-                            if(registerController.validateVetInput(fullNameVar, emailAddressVar, usernameVar, contactNumVar, passwordVar, confirmPasswordVar,"")) {
-                            /* QUERY HERE: update vet record by id
-                            String acctStatus = 'A';
-                            success = methodName(vet.getVetID(), usernameVar, passwordVar, fullNameVar, ageVar, contactNumberVar,
-                                emailAddressVar, acctStatus);    returns true if successful
+                            // Check if any of the critical fields (emailAddress, contactNum, username) have changed
+                            boolean criticalFieldsChanged = !emailAddressVar.equals(vet.getVetEmailAdd()) ||
+                                                             !contactNumVar.equals(vet.getVetCellNum()) ||
+                                                             !usernameVar.equals(vet.getVetUsername());
 
-                            if (success) {
-                                // Show success message
-                                confirmPassword.setText("");
-                                JOptionPane.showMessageDialog(null, "Profile Updated Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                            // Perform conditional validation
+                            if (!criticalFieldsChanged || registerController.validateVetInput(fullNameVar, emailAddressVar, usernameVar, contactNumVar, passwordVar, confirmPasswordVar, "")) {
+                                // If critical fields haven't changed or validation passes, update the vet record
+                                String acctStatus = "A";
+                                success = spManager.updateVetRecordByID(Integer.valueOf(vet.getVetID()), usernameVar, passwordVar, fullNameVar, ageVar, contactNumVar,
+                                                                        emailAddressVar, acctStatus);
+
+                                if (success) {
+                                    // Show success message
+                                    JOptionPane.showMessageDialog(null, "Profile Updated Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                                    confirmPassword.setText("");
+                                    vet = spManager.getVetByCredentials(usernameVar, passwordVar);
+                                    updateVetProfile();
+                                } else {
+                                    // Show error message
+                                    JOptionPane.showMessageDialog(null, "Profile Update Failed. Please try again.");
+                                    return;
+                                }
                             } else {
-                                // Show error message
-                                JOptionPane.showMessageDialog(null, "Profile Update Failed. Please try again.");
+                                // Show validation error message
+                                JOptionPane.showMessageDialog(null, "Please fill in all required fields correctly.");
                                 return;
                             }
-                            */
-                        } else {
-                            return;
-                        }
 
-                        profileEditVisibility(false);
+                            profileEditVisibility(false);
                     }
                 }
             });
