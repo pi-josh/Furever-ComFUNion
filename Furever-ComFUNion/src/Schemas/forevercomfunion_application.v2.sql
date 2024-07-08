@@ -39,7 +39,7 @@ CREATE TABLE `application.v2` (
   CONSTRAINT `ClientID` FOREIGN KEY (`ClientID`) REFERENCES `client.v2` (`ClientID`),
   CONSTRAINT `PetID` FOREIGN KEY (`PetID`) REFERENCES `pet.v2` (`PetID`),
   CONSTRAINT `VetID` FOREIGN KEY (`VetID`) REFERENCES `vet.v2` (`VetID`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -48,7 +48,7 @@ CREATE TABLE `application.v2` (
 
 LOCK TABLES `application.v2` WRITE;
 /*!40000 ALTER TABLE `application.v2` DISABLE KEYS */;
-INSERT INTO `application.v2` VALUES (1,'R','2024-06-04','08:30:00','Vet Clinic','S',1,5,1),(2,'R','2024-03-30','10:30:00','Vet Clinic','S',2,3,3),(3,'R','2024-04-12','12:00:00','Vet Clinic','S',3,2,3),(4,'A','2024-04-19','15:00:00','Vet Clinic','S',4,1,1),(5,'A','2024-04-25','16:00:00','Vet Clinic','S',4,2,1),(6,'A','2024-04-02','17:00:00','Vet Clinic','C',4,3,1),(7,'A','2024-04-19','15:00:00','Vet Clinic','C',4,4,1),(8,'A','2024-06-23','13:00:00','Vet Clinic','S',5,5,2),(9,'A','2024-06-23','13:30:00','Vet Clinic','P',5,6,2),(10,'R','2024-07-23','09:30:00','Vet Clinic','S',5,7,2),(11,'R','2024-07-07','01:51:00','Vet Clinic','P',4,8,4),(12,'A','2024-07-08','12:00:00','Vet Clinic','P',1,3,4),(14,'A','2024-07-09','09:00:00','Vet Clinic','P',1,4,4),(15,'A','2024-07-09','10:00:00','Vet Clinic','P',1,6,4),(16,'A','2024-07-10','10:00:00','Vet Clinic','P',1,7,3);
+INSERT INTO `application.v2` VALUES (1,'R','2024-06-04','08:30:00','Vet Clinic','S',1,5,1),(2,'R','2024-03-30','10:30:00','Vet Clinic','S',2,3,3),(3,'R','2024-04-12','12:00:00','Vet Clinic','S',3,2,3),(4,'A','2024-04-19','15:00:00','Vet Clinic','S',4,1,1),(5,'A','2024-04-25','16:00:00','Vet Clinic','S',4,2,1),(6,'A','2024-04-02','17:00:00','Vet Clinic','C',4,3,1),(7,'A','2024-04-19','15:00:00','Vet Clinic','C',4,4,1),(8,'A','2024-06-23','13:00:00','Vet Clinic','S',5,5,2),(9,'A','2024-06-23','13:30:00','Vet Clinic','P',5,6,2),(10,'R','2024-07-23','09:30:00','Vet Clinic','S',5,7,2),(11,'R','2024-07-07','01:51:00','Vet Clinic','S',4,8,4),(20,'R','2024-07-09','10:00:00','Vet Clinic','P',1,45,4),(22,'A','2024-07-09','12:00:00','Vet Clinic','S',1,4,4),(23,'R','2024-07-09','13:00:00','Vet Clinic','P',1,47,4),(24,'A','2024-07-09','14:00:00','Vet Clinic','S',1,11,4),(25,'A','2024-07-09','16:00:00','Vet Clinic','C',1,9,4),(26,'A','2024-07-09','15:00:00','Vet Clinic','C',1,6,4),(28,'A','2024-07-09','15:00:00','Vet Clinic','P',1,10,4);
 /*!40000 ALTER TABLE `application.v2` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -61,4 +61,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-08 17:46:34
+-- Dump completed on 2024-07-09  0:57:12

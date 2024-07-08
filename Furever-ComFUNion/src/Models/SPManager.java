@@ -963,4 +963,58 @@ public class SPManager {
             }
         }
     }
+    
+    public void buildAndExecuteSummaryQuery(List<String> displayAttributes, List<String> columnFunctions, List<String> havingConditions) {
+        String query = buildQuery(displayAttributes, columnFunctions, havingConditions);
+
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+            while (resultSet.next()) {
+                // Process the result set here as needed
+                for (String attribute : displayAttributes) {
+                    System.out.print(attribute + ": " + resultSet.getString(attribute) + " ");
+                }
+                for (String function : columnFunctions) {
+                    String[] parts = function.split(" ");
+                    if (parts.length > 1) {
+                        System.out.print(parts[1] + ": " + resultSet.getString(parts[1]) + " ");
+                    }
+                }
+                System.out.println();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } // THIS IS THE 1 TO BE CALLED !!!
+    }
+
+    private String buildQuery(List<String> displayAttributes, List<String> columnFunctions, List<String> havingConditions) {
+        StringBuilder queryBuilder = new StringBuilder();
+
+        queryBuilder.append("SELECT ");
+        if (!displayAttributes.isEmpty()) {
+            queryBuilder.append(String.join(", ", displayAttributes));
+        }
+        if (!columnFunctions.isEmpty()) {
+            if (!displayAttributes.isEmpty()) {
+                queryBuilder.append(", ");
+            }
+            queryBuilder.append(String.join(", ", columnFunctions));
+        }
+
+        queryBuilder.append(" FROM forevercomfunion.`application.v2` a, forevercomfunion.`client.v2` c, forevercomfunion.`pet.v2` p, forevercomfunion.`vet.v2` v ");
+        queryBuilder.append("WHERE a.ClientID = c.ClientID AND a.PetID = p.PetID AND a.VetID = v.VetID ");
+
+        if (!displayAttributes.isEmpty()) {
+            queryBuilder.append("GROUP BY ").append(String.join(", ", displayAttributes)).append(" ");
+        }
+
+        if (!havingConditions.isEmpty()) {
+            queryBuilder.append("HAVING ").append(String.join(" AND ", havingConditions)).append(" ");
+        }
+        System.out.println(queryBuilder.toString());
+
+        return queryBuilder.toString();
+    }
 }
