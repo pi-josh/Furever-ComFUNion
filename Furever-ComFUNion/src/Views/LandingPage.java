@@ -482,7 +482,7 @@ public class LandingPage extends javax.swing.JFrame {
                         pOrigin = "Owned";
                         break;
                     case 'R':
-                        pOrigin = "Rehome";
+                        pOrigin = "Rescued";
                         break;
                 }
 
@@ -526,7 +526,7 @@ public class LandingPage extends javax.swing.JFrame {
                         pOrigin = "Owned";
                         break;
                     case 'R':
-                        pOrigin = "Rehome";
+                        pOrigin = "Rescued";
                         break;
                 }
 
@@ -573,7 +573,7 @@ public class LandingPage extends javax.swing.JFrame {
                         pOrigin = "Owned";
                         break;
                     case 'R':
-                        pOrigin = "Rehome";
+                        pOrigin = "Rescued";
                         break;
                 }
 
@@ -677,8 +677,6 @@ public class LandingPage extends javax.swing.JFrame {
                 agePrio.setText(String.valueOf(i + 1));
             }
         }
-
-        System.out.println(dogType.getText());
 
         populatePetsFromDB();
         petProfilesReset();

@@ -5,24 +5,44 @@
  */
 package Views;
 
+import Controllers.InformationDialogController;
+import Models.SPManager;
 import Models.Veterinarian;
 import java.awt.MediaTracker;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.concurrent.CountDownLatch;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 /**
  *
  * @author joshu
  */
 public class Rescued extends javax.swing.JFrame {
+    SPManager spManager = new SPManager();
+    
     // for moving the frame
     private Point mouseDownCompCoords;
     
     // sub frames
     private VetLoggedIn vetLoggedIn;
+    private boolean edit;
+    private InformationDialog informationDialog;
+    private Adopt adopt;
+    private Rehome rehome;
+    private JPanel glassPane;
+
+    // controllers
+    InformationDialogController informationController;
+    
+    // for information dialog
+    boolean userResponse;
     
     // Veterinarian who is currently logged in
     private Veterinarian vet;
@@ -68,6 +88,25 @@ public class Rescued extends javax.swing.JFrame {
         petSize.add(small);
         petSize.add(medium);
         petSize.add(large);
+        
+        // glass pane to block out any interaction within the main frame when opening a sub frame
+        glassPane = new JPanel();
+        glassPane.setOpaque(false);
+        glassPane.setVisible(false);
+        glassPane.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // brings the active sub frame on the front and add a system beep to notify
+
+                // for exit dialog
+                if (informationDialog != null && informationDialog.isVisible()) {
+                    informationDialog.toFront();
+                    Toolkit.getDefaultToolkit().beep();
+                }
+            }
+        });
+
+        setGlassPane(glassPane);
     }
     
     public Rescued() {
@@ -105,6 +144,28 @@ public class Rescued extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+    
+    public CountDownLatch countDownLatch() {
+        // Create a CountDownLatch
+        CountDownLatch latch = new CountDownLatch(1);
+
+        // Show the custom frame on the EDT
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                if (informationDialog == null || !informationDialog.isVisible()) {
+                    informationDialog = new InformationDialog(null, null, Rescued.this, latch);
+                    informationController = new InformationDialogController(informationDialog, null, null, Rescued.this, latch);
+                    informationDialog.setVisible(true);
+                    glassPane.setVisible(true);
+                } else {
+                    informationDialog.toFront();
+                    informationDialog.requestFocus();
+                }
+            }
+        });
+        return latch;
+    }
 
     
     /**
@@ -122,6 +183,7 @@ public class Rescued extends javax.swing.JFrame {
         petSize = new javax.swing.ButtonGroup();
         minimizeButton = new javax.swing.JLabel();
         backButton = new javax.swing.JLabel();
+        header = new javax.swing.JLabel();
         rescuedPanel = new javax.swing.JPanel();
         rescuedButton = new javax.swing.JLabel();
         petID = new javax.swing.JTextField();
@@ -163,6 +225,7 @@ public class Rescued extends javax.swing.JFrame {
             }
         });
         getContentPane().add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(815, 10, 40, 20));
+        minimizeButton.getAccessibleContext().setAccessibleName("Rescued");
 
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button (1).png"))); // NOI18N
         backButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -177,6 +240,20 @@ public class Rescued extends javax.swing.JFrame {
             }
         });
         getContentPane().add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(855, 5, 40, 40));
+        backButton.getAccessibleContext().setAccessibleName("Rescued");
+
+        header.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                headerMouseDragged(evt);
+            }
+        });
+        header.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                headerMousePressed(evt);
+            }
+        });
+        getContentPane().add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 110));
+        header.getAccessibleContext().setAccessibleName("Rescued");
 
         rescuedPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
         rescuedPanel.setPreferredSize(new java.awt.Dimension(900, 680));
@@ -246,8 +323,8 @@ public class Rescued extends javax.swing.JFrame {
         });
         rescuedPanel.add(male, new org.netbeans.lib.awtextra.AbsoluteConstraints(729, 291, 20, 20));
 
+        rescued.setSelected(true);
         rescued.setContentAreaFilled(false);
-        rescued.setEnabled(false);
         rescued.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         rescued.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         rescued.addActionListener(new java.awt.event.ActionListener() {
@@ -257,8 +334,8 @@ public class Rescued extends javax.swing.JFrame {
         });
         rescuedPanel.add(rescued, new org.netbeans.lib.awtextra.AbsoluteConstraints(588, 364, 20, 20));
 
-        owned.setSelected(true);
         owned.setContentAreaFilled(false);
+        owned.setEnabled(false);
         owned.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         owned.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         owned.addActionListener(new java.awt.event.ActionListener() {
@@ -449,36 +526,61 @@ public class Rescued extends javax.swing.JFrame {
         
         // if all information is not empty
         String selectedPetID = "";
-        String enteredPetName = petName.getText().trim();
+        final String enteredPetName = petName.getText().trim();
         String enteredPetAge = "";
         if(Integer.valueOf(petAge.getText().trim()) > 1) {
             enteredPetAge = petAge.getText().trim() + " months";
         } else {
             enteredPetAge = petAge.getText().trim() + " month";
         }
-        String selectedPetType = ((String)petType.getSelectedItem()).trim();
-        String selectedPetSex = petSex;
-        String selectedPetOrigin = "O";
-        String selectedStatus = "NA";
-        String selectedPetSize = petSize;
-        /*
-        // QUERY HERE: insert pet record in the pet table
-        // the method will return the pet id if successful, otherwise return an empty string
-        String selectedPetID = methodName(selectedPetType, selectedPetOrigin, selectedPetStatus, selectedPetSize,
-                              enteredPetAge, enteredPetName, selectedPetSex);
-        if(!"".equals(selectedPetID)) {
-            JOptionPane.showMessageDialog(null, "Rescue Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(null, "Rescue Failed", "Failed", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        */
-        vetLoggedIn.setApplicationClicked(false);
-        vetLoggedIn.populateAppsFromDB(1);
-        vetLoggedIn.handleApplicationButtonClick();
-        vetLoggedIn.applications();
-        vetLoggedIn.applicationEditVisibility(false);
-        this.dispose();
+        final String finalEnteredPetAge = enteredPetAge;
+        final String selectedPetType = ((String)petType.getSelectedItem()).trim();
+        final String selectedPetSex = petSex;
+        final String selectedPetOrigin = "R";
+        final String selectedPetStatus = "NA";
+        final String selectedPetSize = petSize;
+        
+        CountDownLatch latch = countDownLatch();
+
+        // Use a separate thread to wait for the user's response
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Wait for the user to respond
+                    latch.await();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Continue with code execution based on user's response
+                userResponse = informationDialog.getUserResponse();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse) {
+                            // QUERY HERE: insert pet record in the pet table
+                            // the method will return the pet id if successful, otherwise return an empty string
+                            int selectedPetID = spManager.insertPetRecord(selectedPetType, selectedPetOrigin, selectedPetStatus, selectedPetSize,
+                                                  finalEnteredPetAge, enteredPetName, selectedPetSex);
+                            if(!"".equals(selectedPetID)) {
+                                JOptionPane.showMessageDialog(null, "Rescue Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Rescue Failed", "Failed", JOptionPane.ERROR_MESSAGE);
+                                return;
+                            }
+                            vetLoggedIn.setApplicationClicked(false);
+                            vetLoggedIn.populateAppsFromDB(1);
+                            vetLoggedIn.handleApplicationButtonClick();
+                            vetLoggedIn.applications();
+                            vetLoggedIn.applicationEditVisibility(false);
+                            Rescued.this.dispose();
+                        }
+                    }
+                });
+            }
+        }).start();
     }//GEN-LAST:event_rescuedButtonMouseClicked
 
     private void rescuedButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rescuedButtonMouseEntered
@@ -593,6 +695,7 @@ public class Rescued extends javax.swing.JFrame {
     private javax.swing.JCheckBox adopted;
     private javax.swing.JLabel backButton;
     private javax.swing.JCheckBox female;
+    private javax.swing.JLabel header;
     private javax.swing.JCheckBox iAgree;
     private javax.swing.JCheckBox large;
     private javax.swing.JCheckBox male;

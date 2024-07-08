@@ -1,15 +1,24 @@
 package Controllers;
 
+import Models.SPManager;
 import Views.Register;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.regex.Pattern;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class RegisterController {
+    // Database Manager
+    SPManager spManager = new SPManager();
+    
     private Register view = null;
 
     public RegisterController(Register view) {
+        
         this.view = view;
         attachEventHandlers();
     }
@@ -190,12 +199,10 @@ public class RegisterController {
             if(isVet) {
                 view.getErrorMessage().setText(""); // Clear error message
                 if(validateVetInput(fullName, emailAddress, username, contactNumber, password, confirmPassword, birthdate)) {
-                    /* QUERY HERE: insert the record to the vet table
-                    String acctStatus = 'A';
-                    int age = birthdateToAge(birthdate);
-                    success = methodName(username, password, fullName, age, contactNumber, emailAddress, acctStatus);    returns true if successful
-                    */
-                    success = true;
+                    //QUERY HERE: insert the record to the vet table
+                    String acctStatus = "A";
+                    int age = convertBirthdateToAge(birthdate);
+                    success = spManager.registerVet(username, password, fullName, age, contactNumber, emailAddress, acctStatus);   // returns true if successful
                 }
             } else {
                 view.getErrorMessage().setText("Incorrect passcode!");
@@ -212,6 +219,11 @@ public class RegisterController {
             String occupation = view.getOccupation().getText().trim();
             String companyName = view.getCompanyName().getText().trim();
             String workType = (String) view.getWorkType().getSelectedItem();
+            if("Travel".equals(workType)) {
+                workType = "T";
+            } else {
+                workType = "NT";
+            }
             String birthdate = view.getBirthdate().getText().trim();
             
             System.out.println(fullName + " " + emailAddress + " " + username + " " + contactNumber + " " + password + " " +
@@ -220,13 +232,11 @@ public class RegisterController {
             // validate inputs
             if(validateClientInput(fullName, emailAddress, username, contactNumber, password, confirmPassword,
                     currentAddress, occupation, companyName, workType, birthdate)) {
-                /* QUERY HERE: insert the record to the client table
-                    String acctStatus = 'A';
-                    int age = birthdateToAge(birthdate);
-                    success = methodName(username, password, fullName, age, currentAddress, contactNumber,
-                                         emailAddress, occupation, companyName, workType, acctStatus);    returns true if successful
-                */
-                success = true;
+                // QUERY HERE: insert the record to the client table
+                    String acctStatus = "A";
+                    int age = convertBirthdateToAge(birthdate);
+                    success = spManager.registerClient(username, password, fullName, age, currentAddress, contactNumber,
+                                         emailAddress, occupation, companyName, workType, acctStatus);  //  returns true if successful
             }
         }
 
@@ -235,9 +245,9 @@ public class RegisterController {
             JOptionPane.showMessageDialog(view, "User registered successfully!");
             // Clear fields after successful registration
             clearFields();
-        } else {
-            // Show error message
-            JOptionPane.showMessageDialog(view, "Failed to register user. Please try again.");
+            
+            view.loginButtonMouseClicked(null);
+            view.dispose();
         }
     }
     
@@ -348,48 +358,56 @@ public class RegisterController {
     }
     
     private boolean isUsernameExist(String username) {
-        /* QUERY HERE: check if username already exist in client and vet tables
-        return methodName(username);    // returns a boolean whether it exist or not
-        */
-        return false;
+        // QUERY HERE: check if username already exist in client and vet tables
+        return spManager.isUsernameExistQuery(username);    // returns a boolean whether it exist or not
     }
     
     private boolean isEmailExist(String email) {
-        /* QUERY HERE: check if email address already exist in client and vet tables
-        return methodName(email);    // returns a boolean whether it exist or not
-        */
-        return false;
+        // QUERY HERE: check if email address already exist in client and vet tables
+        return spManager.isEmailExistQuery(email);    // returns a boolean whether it exist or not
     }
     
     private boolean isContactNumberExist(String contactNumber) {
-        /* QUERY HERE: check if contact number already exist in client and vet tables
-        return methodName(contactNumber);    // returns a boolean whether it exist or not
-        */
-        return false;
+        // QUERY HERE: check if contact number already exist in client and vet tables
+        return spManager.isCellNumExistQuery(contactNumber);    // returns a boolean whether it exist or not
     }
 
     private boolean isValidEmail(String email) {
         // IMPLEMENT HERE:
-        return true;
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        if (email == null) {
+            return false;
+        }
+        return pattern.matcher(email).matches();
     }
 
     private boolean isValidBirthdate(String birthdate) {
-        // IMPLEMENT
-        return true;
+        // IMPLEMENT HERE:
+        // Ensure date is in YYYY-MM-DD format
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        try {
+            LocalDate date = LocalDate.parse(birthdate, dateFormatter);
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
     }
 
     private boolean isValidContactNumber(String contactNumber) {
-        // IMPLEMENT
-        return true;
+        // IMPLEMENT HERE:
+        // Check if the contact number contains only digits, has a length of 10, and starts with 9
+        if (contactNumber == null || contactNumber.isEmpty()) {
+            return false;
+        }
+        String contactNumberRegex = "^9\\d{9}$";
+        return contactNumber.matches(contactNumberRegex);
     }
     
-    private int birthdateToAge(String birthdate) {
-        // IMPLEMENT
-        /*
-           QUERY HERE: get the age of the user based on his/her birthday
-        return methodName(birthdate);   this will return an integer value for age
-        */
-        return 0;
+    private int convertBirthdateToAge(String birthdate) {
+        // IMPLEMENT HERE:
+        // QUERY HERE: get the age of the user based on his/her birthday
+        return spManager.birthdateToAge(birthdate);  // this will return an integer value for age
     }
 
     private void clearFields() {
@@ -405,6 +423,7 @@ public class RegisterController {
         view.getConfirmPassword().setText("");
         view.getBirthdate().setText("");
         view.getPasscode().setText("");
+        view.getUsername().setText("");
         
         view.getAskVetCheckBox().setSelected(false);
         view.getPasscodeScroll().setVisible(false);

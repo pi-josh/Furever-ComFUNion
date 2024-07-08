@@ -1,9 +1,11 @@
+package Views;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Views;
+
 
 import java.awt.MediaTracker;
 import java.awt.Point;
@@ -110,7 +112,7 @@ public class ExitDialog extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jEditorPane1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Developers");
+        setTitle("Exit Dialog");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setUndecorated(true);
         setResizable(false);
@@ -141,8 +143,6 @@ public class ExitDialog extends javax.swing.JFrame {
         exitDialogPanel.add(exitDialog, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 2, 550, 296));
 
         getContentPane().add(exitDialogPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 300));
-
-        getAccessibleContext().setAccessibleName("Devs");
 
         pack();
         setLocationRelativeTo(null);

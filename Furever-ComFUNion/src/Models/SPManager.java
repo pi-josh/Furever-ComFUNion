@@ -1,6 +1,8 @@
 package Models;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +13,152 @@ public class SPManager {
 
     public SPManager() {
         // Connection is created per method call, not in the constructor
+    }
+    // Method to check if a cell number already exists in the client or vet table
+    public boolean isCellNumExistQuery(String cellNum) {
+        String clientQuery = "SELECT COUNT(*) FROM `client.v2` WHERE CellNum = ?";
+        String vetQuery = "SELECT COUNT(*) FROM `vet.v2` WHERE VetCellNum = ?";
+
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement clientPs = connection.prepareStatement(clientQuery);
+             PreparedStatement vetPs = connection.prepareStatement(vetQuery)) {
+
+            // Check client table
+            clientPs.setString(1, cellNum);
+            try (ResultSet clientRs = clientPs.executeQuery()) {
+                if (clientRs.next() && clientRs.getInt(1) > 0) {
+                    return true;
+                }
+            }
+
+            // Check vet table
+            vetPs.setString(1, cellNum);
+            try (ResultSet vetRs = vetPs.executeQuery()) {
+                if (vetRs.next() && vetRs.getInt(1) > 0) {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+     
+    // Method to check if an email address already exists in the client or vet table
+    public boolean isEmailExistQuery(String email) {
+        String clientQuery = "SELECT COUNT(*) FROM `client.v2` WHERE ClientEmailAdd = ?";
+        String vetQuery = "SELECT COUNT(*) FROM `vet.v2` WHERE VetEmailAdd = ?";
+
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement clientPs = connection.prepareStatement(clientQuery);
+             PreparedStatement vetPs = connection.prepareStatement(vetQuery)) {
+
+            // Check client table
+            clientPs.setString(1, email);
+            try (ResultSet clientRs = clientPs.executeQuery()) {
+                if (clientRs.next() && clientRs.getInt(1) > 0) {
+                    return true;
+                }
+            }
+
+            // Check vet table
+            vetPs.setString(1, email);
+            try (ResultSet vetRs = vetPs.executeQuery()) {
+                if (vetRs.next() && vetRs.getInt(1) > 0) {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+    
+    // Method to check if a username already exists in the client or vet table
+    public boolean isUsernameExistQuery(String username) {
+        String clientQuery = "SELECT COUNT(*) FROM `client.v2` WHERE ClientUsername = ?";
+        String vetQuery = "SELECT COUNT(*) FROM `vet.v2` WHERE VetUsername = ?";
+
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement clientPs = connection.prepareStatement(clientQuery);
+             PreparedStatement vetPs = connection.prepareStatement(vetQuery)) {
+
+            // Check client table
+            clientPs.setString(1, username);
+            try (ResultSet clientRs = clientPs.executeQuery()) {
+                if (clientRs.next() && clientRs.getInt(1) > 0) {
+                    return true;
+                }
+            }
+
+            // Check vet table
+            vetPs.setString(1, username);
+            try (ResultSet vetRs = vetPs.executeQuery()) {
+                if (vetRs.next() && vetRs.getInt(1) > 0) {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    
+    public static int birthdateToAge(String birthdate) {
+        LocalDate birthDate = LocalDate.parse(birthdate);
+        LocalDate currentDate = LocalDate.now();
+        if (birthDate != null && currentDate != null) {
+            return Period.between(birthDate, currentDate).getYears();
+        } else {
+                return 0; 
+        }
+    }
+    
+    // Methods to register a new account
+    public boolean registerClient(String clientUsername, String clientPassword, String clientFullName, int clientAge, String clientAddress, String cellNum, String clientEmailAdd, String clientOccupation, String companyName, String workType, String clientAcctStatus) {
+        String query = "INSERT INTO `client.v2` (ClientUsername, ClientPassword, ClientFullName, ClientAge, ClientAddress, CellNum, ClientEmailAdd, ClientOccupation, CompanyName, WorkType, ClientAcctStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, clientUsername);
+            ps.setString(2, clientPassword);
+            ps.setString(3, clientFullName);
+            ps.setInt(4, clientAge);
+            ps.setString(5, clientAddress);
+            ps.setString(6, cellNum);
+            ps.setString(7, clientEmailAdd);
+            ps.setString(8, clientOccupation);
+            ps.setString(9, companyName);
+            ps.setString(10, workType);
+            ps.setString(11, clientAcctStatus);
+            int result = ps.executeUpdate();
+            return result > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean registerVet(String vetUsername, String vetPassword, String vetFullName, int vetAge, String vetCellNum, String vetEmailAdd, String vetAcctStatus) {
+        String query = "INSERT INTO `vet.v2` (VetUsername, VetPassword, VetFullName, VetAge, VetCellNum, VetEmailAdd, VetAcctStatus) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, vetUsername);
+            ps.setString(2, vetPassword);
+            ps.setString(3, vetFullName);
+            ps.setInt(4, vetAge);
+            ps.setString(5, vetCellNum);
+            ps.setString(6, vetEmailAdd);
+            ps.setString(7, vetAcctStatus);
+            int result = ps.executeUpdate();
+            return result > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
     
     // Method to get adoption application history for a vet
@@ -393,7 +541,7 @@ public class SPManager {
     }
     
     // Method to insert an application record
-    public boolean insertApplicationRecord(String applicationType, String appointDate, String appointTime, String appointPlace, String appointStatus, int clientID, String petID, String vetID) {
+    public boolean insertApplicationRecord(String applicationType, String appointDate, String appointTime, String appointPlace, String appointStatus, int clientID, int petID, int vetID) {
         String insertQuery = "INSERT INTO forevercomfunion.`application.v2` (applicationType, appointDate, appointTime, appointPlace, appointStatus, clientID, petID, vetID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
@@ -405,8 +553,8 @@ public class SPManager {
             ps.setString(4, appointPlace);
             ps.setString(5, appointStatus);
             ps.setInt(6, clientID);
-            ps.setString(7, petID);
-            ps.setString(8, vetID);
+            ps.setInt(7, petID);
+            ps.setInt(8, vetID);
 
             int rowsAffected = ps.executeUpdate();
             return rowsAffected > 0;
@@ -417,7 +565,7 @@ public class SPManager {
     }
     
     // Method to update the status of pet record
-    public boolean updatePetStatus(String petID, String petStatus) {
+    public boolean updatePetStatus(int petID, String petStatus) {
         String updateQuery = "UPDATE forevercomfunion.`pet.v2`"
                            + "SET PetStatus = ?"
                            + "WHERE PetID = ?;";
@@ -425,7 +573,7 @@ public class SPManager {
              PreparedStatement ps = connection.prepareStatement(updateQuery)) {
 
             ps.setString(1, petStatus);
-            ps.setString(2, petID);
+            ps.setInt(2, petID);
 
             int rowsAffected = ps.executeUpdate();
             return rowsAffected > 0;
@@ -534,5 +682,285 @@ public class SPManager {
             e.printStackTrace();
         }
         return petCount;
+    }
+    
+    // Method to update application record
+    public boolean updateApplicationRecord(int applicationID, String applicationType, String appointDate, String appointTime, String appointPlace, String appointStatus, int clientID, int selectedPetID, int selectedVetID) {
+        String updateQuery = "UPDATE forevercomfunion.`application.v2` SET applicationType = ?, appointDate = ?, appointTime = ?, appointPlace = ?, appointStatus = ?, clientID = ?, petID = ?, vetID = ? WHERE applicationID = ?;";
+
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement ps = connection.prepareStatement(updateQuery)) {
+
+            ps.setString(1, applicationType);
+            ps.setString(2, appointDate);
+            ps.setString(3, appointTime);
+            ps.setString(4, appointPlace);
+            ps.setString(5, appointStatus);
+            ps.setInt(6, clientID);
+            ps.setInt(7, selectedPetID);
+            ps.setInt(8, selectedVetID);
+            ps.setInt(9, applicationID);
+
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    // Method to delete an application record
+    public boolean deleteApplicationRecordByID(int applicationID) {
+        String deleteQuery = "DELETE FROM forevercomfunion.`application.v2` WHERE applicationID = ?";
+
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement ps = connection.prepareStatement(deleteQuery)) {
+            ps.setInt(1, applicationID);
+
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    // Method to insert a pet record and return the generated primary key
+    public int insertPetRecord(String petType, String petOrigin, String petStatus, String petSize,
+                               String petAge, String petName, String petSex) {
+        String insertQuery = "INSERT INTO forevercomfunion.`pet.v2` (petType, petOrigin, petStatus, petSize, petAge, petName, petSex) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        int generatedKey = 0;
+
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement ps = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
+
+            ps.setString(1, petType);
+            ps.setString(2, petOrigin);
+            ps.setString(3, petStatus);
+            ps.setString(4, petSize);
+            ps.setString(5, petAge);
+            ps.setString(6, petName);
+            ps.setString(7, petSex);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        generatedKey = rs.getInt(1);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return generatedKey;
+    }
+    
+    // Method to update a pet record by ID and return the petID if successful, otherwise return 0
+    public int updatePetRecordByID(int petID, String petType, String petOrigin, String petStatus, String petSize,
+                                   String petAge, String petName, String petSex) {
+        String updateQuery = "UPDATE forevercomfunion.`pet.v2` SET petType = ?, petOrigin = ?, petStatus = ?, petSize = ?, petAge = ?, petName = ?, petSex = ? WHERE petID = ?";
+        int result = 0;
+
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement ps = connection.prepareStatement(updateQuery)) {
+
+            ps.setString(1, petType);
+            ps.setString(2, petOrigin);
+            ps.setString(3, petStatus);
+            ps.setString(4, petSize);
+            ps.setString(5, petAge);
+            ps.setString(6, petName);
+            ps.setString(7, petSex);
+            ps.setInt(8, petID);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                result = petID;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    
+    // Method to delete a pet record by ID
+    public int deletePetRecordByID(int petID) {
+        String deleteQuery = "DELETE FROM forevercomfunion.`pet.v2` WHERE petID = ?";
+        int result = 0;
+
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement ps = connection.prepareStatement(deleteQuery)) {
+
+            ps.setInt(1, petID);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                result = petID;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    
+    // Method to accept an application record
+    // Changing the appointStatus to "S"
+    public boolean acceptApplicationRecord(int appID) {
+        return updateApplicationStatus(appID, "S");
+    }
+
+    // Method to decline an application record
+    // Changing the appointStatus to "C"
+    public boolean declineApplicationRecord(int appID) {
+        return updateApplicationStatus(appID, "C");
+    }
+
+    // Common method to update the application status
+    private boolean updateApplicationStatus(int appID, String appointStatus) {
+        String updateQuery = "UPDATE forevercomfunion.`application.v2` SET appointStatus = ? WHERE applicationID = ?";
+        boolean result = false;
+
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement ps = connection.prepareStatement(updateQuery)) {
+
+            ps.setString(1, appointStatus);
+            ps.setInt(2, appID);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                result = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    
+    // Method to update client record by id
+    public boolean updateClientRecordByID(int clientID, String username, String password, String fullName, int age, String currentAddress, String contactNumber, String emailAddress, String occupation, String companyName, String workType, String acctStatus) {
+        String updateQuery = "UPDATE `client.v2` SET ClientUsername = ?, ClientPassword = ?, ClientFullName = ?, ClientAge = ?, ClientAddress = ?, CellNum = ?, ClientEmailAdd = ?, ClientOccupation = ?, CompanyName = ?, WorkType = ?, ClientAcctStatus = ? WHERE ClientID = ?";
+
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement ps = connection.prepareStatement(updateQuery)) {
+
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ps.setString(3, fullName);
+            ps.setInt(4, age);
+            ps.setString(5, currentAddress);
+            ps.setString(6, contactNumber);
+            ps.setString(7, emailAddress);
+            ps.setString(8, occupation);
+            ps.setString(9, companyName);
+            ps.setString(10, workType);
+            ps.setString(11, acctStatus);
+            ps.setInt(12, clientID);
+
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    // Method to update vet record by id
+    public boolean updateVetRecordByID(int vetID, String username, String password, String fullName, int age, String contactNumber, String emailAddress, String acctStatus) {
+        String updateQuery = "UPDATE `vet.v2` SET VetUsername = ?, VetPassword = ?, VetFullName = ?, VetAge = ?, VetCellNum = ?, VetEmailAdd = ?, VetAcctStatus = ? WHERE VetID = ?";
+
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement ps = connection.prepareStatement(updateQuery)) {
+
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ps.setString(3, fullName);
+            ps.setInt(4, age);
+            ps.setString(5, contactNumber);
+            ps.setString(6, emailAddress);
+            ps.setString(7, acctStatus);
+            ps.setInt(8, vetID);
+
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    //Method to delete a client record by changing the account status to "D"
+    public boolean deleteClientRecordByID(int clientID) {
+        String updateQuery = "UPDATE forevercomfunion.`client.v2` SET ClientAcctStatus = 'D' WHERE ClientID = ?";
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            PreparedStatement ps = connection.prepareStatement(updateQuery)) {
+            ps.setInt(1, clientID);
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    //Method to delete a veterinarian record by changing the account status to "D"
+    public boolean deleteVetRecordByID(int vetID) {
+        String updateQuery = "UPDATE forevercomfunion.`vet.v2` SET VetAcctStatus = 'D' WHERE VetID = ?";
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            PreparedStatement ps = connection.prepareStatement(updateQuery)) {
+            ps.setInt(1, vetID);
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    // Method to update pending applications assigned to a vet when they are deactivated
+    // If applicationType == "A", the corresponding petID's petStatus would be set to "NA" and appointStatus would be set to "C" for Cancelled
+    // If applicationType == "R", the application would be deleted and the corresponding petID's record would be deleted also
+    public void updateApplicationRecordByVetID(int vetID) {
+        ArrayList<Application> adoptApplications = null;
+        ArrayList<Application> rehomeApplications = null;
+        
+        adoptApplications = getPendingAdoptionApplicationsForVet(String.valueOf(vetID));
+        rehomeApplications = getPendingRehomeApplicationsForVet(String.valueOf(vetID));
+        
+        if(adoptApplications != null) {
+            for(Application adopt : adoptApplications) {
+                declineApplicationRecord(vetID);
+                updatePetStatus(Integer.valueOf(adopt.getPetID()), "NA");
+            }
+        }
+        if(rehomeApplications != null) {
+            for(Application rehome : rehomeApplications) {
+                int curPetID = Integer.valueOf(rehome.getPetID());
+                deleteApplicationRecordByID(rehome.getApplicationID());
+                deletePetRecordByID(curPetID);
+            }
+        }
+    }
+    
+    // Method to update pending applications assigned to a client when they deactivated
+    // If applicationType == "A", the corresponding petID's petStatus would be set to "NA" and appointStatus would be set to "C" for Cancelled
+    // If applicationType == "R", the application would be deleted and the corresponding petID's record would be deleted also
+    public void updateApplicationRecordByClientID(int clientID) {
+        ArrayList<Application> applications = null;
+        
+        getApplicationHistoryForClient(clientID);
+        if(applications != null) {
+            for(Application app : applications) {
+                String appType = app.getApplicationType();
+                if(appType.equals("A")) {
+                    declineApplicationRecord(Integer.valueOf(app.getVetID()));
+                    updatePetStatus(Integer.valueOf(app.getPetID()), "NA");
+                } else if(appType.equals("R")) {
+                    int curPetID = Integer.valueOf(app.getPetID());
+                    deleteApplicationRecordByID(app.getApplicationID());
+                    deletePetRecordByID(curPetID);
+                }
+            }
+        }
     }
 }
