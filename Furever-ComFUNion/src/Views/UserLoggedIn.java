@@ -2999,8 +2999,6 @@ public class UserLoggedIn extends javax.swing.JFrame {
             tempPetAge = petAge1.getText();
             tempPetGender = petGender1.getText();
             petPanel1Clicked = true;
-
-            System.out.println(tempPetName); // Optional: Print stored pet name
         }
 
         String pOrigin = "", pStatus = "", pSize = "";
@@ -3226,12 +3224,27 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 agePrio.setText(String.valueOf(i+1));
             }
         }
-        
-        System.out.println(dogType.getText());
-        
+                
         populatePetsFromDB();
         petProfilesReset();
         petProfiles();
+    }
+    
+    private void resetPetsFilterSortBy() {
+        JCheckBox[] checkboxes = { dogType, catType, hamsterType, rabbitType,
+                                   ownedOrigin, rescuedOrigin,
+                                   adoptedStatus, notAdoptedStatus,
+                                   tinySize, smallSize, mediumSize, largeSize,
+                                   femaleGender, maleGender,
+                                   orderByID, orderByName, orderByAge,
+                                   IDdescending, nameDescending, ageDescending };
+        for(JCheckBox checkbox : checkboxes) {
+            checkbox.setSelected(false);
+        }
+        orderByIDActionPerformed(null);
+        orderByNameActionPerformed(null);
+        orderByAgeActionPerformed(null);
+        petFilterBySortBy();
     }
 
     public CountDownLatch countDownLatch() {
@@ -3449,6 +3462,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private void petButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petButtonMousePressed
         // TODO add your handling code here:
         if (!petsClicked) {
+            resetPetsFilterSortBy();
             handlePetButtonClick();
             petProfiles();
         }

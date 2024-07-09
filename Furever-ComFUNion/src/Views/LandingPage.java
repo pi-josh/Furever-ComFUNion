@@ -682,6 +682,23 @@ public class LandingPage extends javax.swing.JFrame {
         petProfilesReset();
         petProfiles();
     }
+    
+    private void resetPetsFilterSortBy() {
+        JCheckBox[] checkboxes = { dogType, catType, hamsterType, rabbitType,
+                                   ownedOrigin, rescuedOrigin,
+                                   adoptedStatus, notAdoptedStatus,
+                                   tinySize, smallSize, mediumSize, largeSize,
+                                   femaleGender, maleGender,
+                                   orderByID, orderByName, orderByAge,
+                                   IDdescending, nameDescending, ageDescending };
+        for(JCheckBox checkbox : checkboxes) {
+            checkbox.setSelected(false);
+        }
+        orderByIDActionPerformed(null);
+        orderByNameActionPerformed(null);
+        orderByAgeActionPerformed(null);
+        petFilterBySortBy();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -2276,6 +2293,7 @@ public class LandingPage extends javax.swing.JFrame {
     private void petButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petButtonMousePressed
         // TODO add your handling code here:
         if (!petsClicked) {
+            resetPetsFilterSortBy();
             handlePetButtonClick();
             petProfiles();
         }

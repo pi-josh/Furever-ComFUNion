@@ -3058,8 +3058,6 @@ public class VetLoggedIn extends javax.swing.JFrame {
             tempPetAge = petAge1.getText();
             tempPetGender = petGender1.getText();
             petPanel1Clicked = true;
-
-            System.out.println(tempPetName); // Optional: Print stored pet name
         }
 
         String pOrigin = "", pStatus = "", pSize = "";
@@ -3067,12 +3065,17 @@ public class VetLoggedIn extends javax.swing.JFrame {
         String origin = "";
         String status = "";
         String size = "";
+        
+        int diff = 2;
         // Update pet panel 1 based on selected panel
         switch (panel) {
             case 1:
-                origin = pets.get(petIndex - 2).getPetOrigin();
-                status = pets.get(petIndex - 2).getPetStatus();
-                size = pets.get(petIndex - 2).getPetSize();
+                if (totalPets == 1) {
+                    diff = 1;
+                }
+                origin = pets.get(petIndex - diff).getPetOrigin();
+                status = pets.get(petIndex - diff).getPetStatus();
+                size = pets.get(petIndex - diff).getPetSize();
 
                 switch (origin.charAt(0)) {
                     case 'O':
@@ -3104,17 +3107,18 @@ public class VetLoggedIn extends javax.swing.JFrame {
                         break;
                 }
 
-                petID.setText(String.valueOf(pets.get(petIndex - 2).getPetID()));
-                petType.setText(String.valueOf(pets.get(petIndex - 2).getPetType()));
+                petID.setText(String.valueOf(pets.get(petIndex - diff).getPetID()));
+                petType.setText(String.valueOf(pets.get(petIndex - diff).getPetType()));
                 petOrigin.setText(pOrigin);
                 petStatus.setText(pStatus);
                 petSize.setText(pSize);
                 break;
             case 2:
+                diff = 1;
                 // Display pet panel 2 information on panel 1     
-                origin = pets.get(petIndex - 2).getPetOrigin();
-                status = pets.get(petIndex - 2).getPetStatus();
-                size = pets.get(petIndex - 2).getPetSize();
+                origin = pets.get(petIndex - diff).getPetOrigin();
+                status = pets.get(petIndex - diff).getPetStatus();
+                size = pets.get(petIndex - diff).getPetSize();
 
                 switch (origin.charAt(0)) {
                     case 'O':
@@ -3150,17 +3154,17 @@ public class VetLoggedIn extends javax.swing.JFrame {
                 petAge1.setText(petAge2.getText());
                 petGender1.setText(petGender2.getText());
                 petImg1.setIcon(new javax.swing.ImageIcon(getClass().getResource(petURL2)));
-                petID.setText(String.valueOf(pets.get(petIndex - 1).getPetID()));
-                petType.setText(String.valueOf(pets.get(petIndex - 1).getPetType()));
+                petID.setText(String.valueOf(pets.get(petIndex - diff).getPetID()));
+                petType.setText(String.valueOf(pets.get(petIndex - diff).getPetType()));
                 petOrigin.setText(pOrigin);
                 petStatus.setText(pStatus);
                 petSize.setText(pSize);
                 break;
             case 3:
                 // Display pet panel 3 information on panel 1
-                origin = pets.get(petIndex - 2).getPetOrigin();
-                status = pets.get(petIndex - 2).getPetStatus();
-                size = pets.get(petIndex - 2).getPetSize();
+                origin = pets.get(petIndex).getPetOrigin();
+                status = pets.get(petIndex).getPetStatus();
+                size = pets.get(petIndex).getPetSize();
 
                 switch (origin.charAt(0)) {
                     case 'O':
@@ -3294,11 +3298,26 @@ public class VetLoggedIn extends javax.swing.JFrame {
             }
         }
         
-        System.out.println(dogType.getText());
-        
         populatePetsFromDB();
         petProfilesReset();
         petProfiles();
+    }
+    
+    private void resetPetsFilterSortBy() {
+        JCheckBox[] checkboxes = { dogType, catType, hamsterType, rabbitType,
+                                   ownedOrigin, rescuedOrigin,
+                                   adoptedStatus, notAdoptedStatus,
+                                   tinySize, smallSize, mediumSize, largeSize,
+                                   femaleGender, maleGender,
+                                   orderByID, orderByName, orderByAge,
+                                   IDdescending, nameDescending, ageDescending };
+        for(JCheckBox checkbox : checkboxes) {
+            checkbox.setSelected(false);
+        }
+        orderByIDActionPerformed(null);
+        orderByNameActionPerformed(null);
+        orderByAgeActionPerformed(null);
+        petFilterBySortBy();
     }
     
     private void setPanelVisibility(boolean[] pendingVisibilities, boolean[] successVisibilities, boolean[] deniedVisibilities) {
@@ -3512,6 +3531,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
     private void petButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petButtonMousePressed
         // TODO add your handling code here:
         if (!petsClicked) {
+            resetPetsFilterSortBy();
             handlePetButtonClick();
             petProfiles();
         }
