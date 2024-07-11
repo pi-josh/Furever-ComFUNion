@@ -35,12 +35,12 @@ import javax.swing.SwingUtilities;
  * @author joshu
  */
 public class Adopt extends javax.swing.JFrame {
+
     SPManager spManager = new SPManager();
-    
+
     // for moving the frame
     private Point mouseDownCompCoords;
-    
-    
+
     // sub frames
     private UserLoggedIn userLoggedIn;
     private boolean edit;
@@ -51,21 +51,21 @@ public class Adopt extends javax.swing.JFrame {
 
     // controllers
     InformationDialogController informationController;
-    
+
     // for information dialog
     boolean userResponse;
-    
+
     // Client who is logged in
     Client client;
-    
+
     // Current application, vet and pet being edited
     Application application;
     Pet tempPet;
     Veterinarian vet;
-    
+
     // Pet records
     ArrayList<Pet> pets;
-    
+
     // filter and sorting conditions
     private List<String> petTypes = new ArrayList<>();
     private List<String> petOrigins = new ArrayList<>();
@@ -73,21 +73,19 @@ public class Adopt extends javax.swing.JFrame {
     private List<String> petSizes = new ArrayList<>();
     private List<String> petGenders = new ArrayList<>();
     private List<String> sortCriteria = new ArrayList<>();
-    
+
     // Pet who is being adopted
     Pet pet;
-    
-    
+
     // Vet records
     ArrayList<Veterinarian> vets;
-    
-    
+
     /**
      * Creates new form Rehome
      */
     public Adopt(UserLoggedIn userLoggedIn, Application application, Client client, Pet pet, Veterinarian vet, boolean edit) {
         initComponents();
-        
+
         // combo box
         populateVetComboBox();
         populatePetComboBox();
@@ -97,28 +95,28 @@ public class Adopt extends javax.swing.JFrame {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        
-        if(userLoggedIn != null) {
+
+        if (userLoggedIn != null) {
             this.userLoggedIn = userLoggedIn;
             rehome = userLoggedIn.getRehome();
             adopt = userLoggedIn.getAdopt();
         }
-        
-        if(application != null) {
+
+        if (application != null) {
             this.application = application;
             String dateTime = application.getAppointDate() + " " + application.getAppointTime();
             availableDates.addItem(dateTime);
             availableDates.setSelectedItem(dateTime);
         }
-         
-        if(client != null) {
+
+        if (client != null) {
             this.client = client;
             setClientInformation(client);
         }
-        if(pet != null) {
+        if (pet != null) {
             this.pet = pet;
             setPetInformation(pet);
-            if(edit) {
+            if (edit) {
                 petID.addItem(pet.getPetID());
                 petName.addItem(pet.getPetName());
                 petID.setSelectedItem(pet.getPetID());
@@ -130,38 +128,38 @@ public class Adopt extends javax.swing.JFrame {
             vetID.setSelectedItem(vet.getVetID());
             vetName.setSelectedItem(vet.getVetFullName());
         }
-        
+
         this.edit = edit;
-        if(edit) {
+        if (edit) {
             this.tempPet = pet;
         }
-        
+
         setVisible(true);
-        
+
         // radio buttons
         workType.add(travel);
         workType.add(noTravel);
-        
+
         petSex.add(male);
         petSex.add(female);
-        
+
         petOrigin.add(owned);
         petOrigin.add(rescued);
-        
+
         petStatus.add(adopted);
         petStatus.add(notAdopted);
-        
+
         petSize.add(tiny);
         petSize.add(small);
         petSize.add(medium);
         petSize.add(large);
-        
+
         // hide 2nd panel
         adoptPanel2.setVisible(false);
-        
+
         // Window logo
         setWindowIcon();
-        
+
         // glass pane to block out any interaction within the main frame when opening a sub frame
         glassPane = new JPanel();
         glassPane.setOpaque(false);
@@ -181,7 +179,7 @@ public class Adopt extends javax.swing.JFrame {
 
         setGlassPane(glassPane);
     }
-    
+
     private void populateVetComboBox() {
         // populate checkboxes with vet names
         this.vets = spManager.getAllVetsIDName();
@@ -189,12 +187,12 @@ public class Adopt extends javax.swing.JFrame {
         vetID.addItem("");
         vetName.removeAllItems();
         vetName.addItem("");
-        for(Veterinarian vet : vets) {
+        for (Veterinarian vet : vets) {
             vetName.addItem(vet.getVetFullName());
             vetID.addItem(vet.getVetID());
         }
     }
-    
+
     private void populatePetComboBox() {
         // populate combobox with pet id
         this.pets = spManager.getFilteredSortedPets(petTypes, petOrigins, petStatuses, petSizes, petGenders, sortCriteria);
@@ -202,67 +200,67 @@ public class Adopt extends javax.swing.JFrame {
         petID.addItem("");
         petName.removeAllItems();
         petName.addItem("");
-        for(Pet pet : pets) {
-            if(pet.getPetStatus().equals("NA")) {
+        for (Pet pet : pets) {
+            if (pet.getPetStatus().equals("NA")) {
                 petID.addItem(pet.getPetID());
                 petName.addItem(pet.getPetName());
             }
         }
     }
-    
+
     private void setClientInformation(Client client) {
         this.client = client;
-            String[] nameParts = client.getClientFullName().trim().split("\\s+");
+        String[] nameParts = client.getClientFullName().trim().split("\\s+");
 
-            String firstNameVar = "";
-            String lastNameVar = "";
+        String firstNameVar = "";
+        String lastNameVar = "";
 
-            if (nameParts.length == 2) {
-                // Case with one first name and one last name
-                firstNameVar = nameParts[0];
-                lastNameVar = nameParts[1];
-            } else if (nameParts.length >= 3) {
-                // Case with two words for the first name and the rest for the last name
-                firstNameVar = nameParts[0] + " " + nameParts[1];
+        if (nameParts.length == 2) {
+            // Case with one first name and one last name
+            firstNameVar = nameParts[0];
+            lastNameVar = nameParts[1];
+        } else if (nameParts.length >= 3) {
+            // Case with two words for the first name and the rest for the last name
+            firstNameVar = nameParts[0] + " " + nameParts[1];
 
-                // Remaining parts as last name
-                StringBuilder lastNameBuilder = new StringBuilder();
-                for (int i = 2; i < nameParts.length; i++) {
-                    lastNameBuilder.append(nameParts[i]);
-                    if (i < nameParts.length - 1) {
-                        lastNameBuilder.append(" ");
-                    }
+            // Remaining parts as last name
+            StringBuilder lastNameBuilder = new StringBuilder();
+            for (int i = 2; i < nameParts.length; i++) {
+                lastNameBuilder.append(nameParts[i]);
+                if (i < nameParts.length - 1) {
+                    lastNameBuilder.append(" ");
                 }
-                lastNameVar = lastNameBuilder.toString();
             }
-            
-            firstName.setText(firstNameVar);
-            lastName.setText(lastNameVar);
-            adopterID.setText(String.valueOf(client.getClientID()));
-            age.setText(String.valueOf(client.getClientAge()));
-            address.setText(client.getClientAddress());
-            phoneNumber.setText(client.getCellNum());
-            emailAddress.setText(client.getClientEmailAdd());
-            companyName.setText(client.getCompanyName());
-            occupation.setText(client.getClientOccupation());
-            String workType = client.getWorkType();
-            if(workType.equals("T")) {
-                travel.setSelected(true);
-            } else if(workType.equals("NT")) {
-                noTravel.setSelected(true);
-            }
+            lastNameVar = lastNameBuilder.toString();
+        }
+
+        firstName.setText(firstNameVar);
+        lastName.setText(lastNameVar);
+        adopterID.setText(String.valueOf(client.getClientID()));
+        age.setText(String.valueOf(client.getClientAge()));
+        address.setText(client.getClientAddress());
+        phoneNumber.setText(client.getCellNum());
+        emailAddress.setText(client.getClientEmailAdd());
+        companyName.setText(client.getCompanyName());
+        occupation.setText(client.getClientOccupation());
+        String workType = client.getWorkType();
+        if (workType.equals("T")) {
+            travel.setSelected(true);
+        } else if (workType.equals("NT")) {
+            noTravel.setSelected(true);
+        }
     }
-    
+
     private void setPetInformation(Pet pet) {
         this.pet = pet;
-            
+
         String sex = pet.getPetSex();
         String origin = pet.getPetOrigin();
         String status = pet.getPetStatus();
         String size = pet.getPetSize();
 
         petID.setSelectedItem(pet.getPetID());
-        switch(sex.toUpperCase().charAt(0)) {
+        switch (sex.toUpperCase().charAt(0)) {
             case 'M':
                 male.setSelected(true);
                 break;
@@ -273,7 +271,7 @@ public class Adopt extends javax.swing.JFrame {
         petName.setSelectedItem(pet.getPetName());
         petAge.setText(String.valueOf(pet.getPetAge()));
         petType.setText(pet.getPetType());
-        switch(origin.toUpperCase().charAt(0)) {
+        switch (origin.toUpperCase().charAt(0)) {
             case 'O':
                 owned.setSelected(true);
                 break;
@@ -281,12 +279,12 @@ public class Adopt extends javax.swing.JFrame {
                 rescued.setSelected(true);
                 break;
         }
-        if(status.toUpperCase().equals("NA")) {
+        if (status.toUpperCase().equals("NA")) {
             notAdopted.setSelected(true);
-        } else if(status.toUpperCase().equals("A")) {
+        } else if (status.toUpperCase().equals("A")) {
             adopted.setSelected(true);
         }
-        switch(size.toUpperCase().charAt(0)) {
+        switch (size.toUpperCase().charAt(0)) {
             case 'T':
                 tiny.setSelected(true);
                 break;
@@ -305,7 +303,7 @@ public class Adopt extends javax.swing.JFrame {
         petAge.setEditable(false);
         petType.setEditable(false);
     }
-    
+
     private void resetPetInformation() {
         pet = null;
         male.setSelected(false);
@@ -322,11 +320,11 @@ public class Adopt extends javax.swing.JFrame {
         medium.setSelected(false);
         large.setSelected(false);
     }
-    
+
     // available dates
     public List<String> getAvailableDateTimes(int daysAhead, String selectedVetID) throws ParseException {
         List<String> availableDateTimes = new ArrayList<>();
-        if("".equals(selectedVetID)) {
+        if ("".equals(selectedVetID)) {
             availableDateTimes.add("");
         } else {
             List<Application> existingApplications = spManager.getAllExistingApplications();
@@ -365,35 +363,34 @@ public class Adopt extends javax.swing.JFrame {
         }
     }
 
-    
     public Adopt() {
         initComponents();
-        
+
         // radio buttons
         workType.add(travel);
         workType.add(noTravel);
-        
+
         petSex.add(male);
         petSex.add(female);
-        
+
         petOrigin.add(owned);
         petOrigin.add(rescued);
-        
+
         petStatus.add(adopted);
         petStatus.add(notAdopted);
-        
+
         petSize.add(tiny);
         petSize.add(small);
         petSize.add(medium);
         petSize.add(large);
-        
+
         // hide 2nd panel
         adoptPanel2.setVisible(false);
-        
+
         // Window logo
         setWindowIcon();
     }
-    
+
     private void setWindowIcon() {
         ImageIcon icon1 = null;
         try {
@@ -407,7 +404,7 @@ public class Adopt extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
+
     public CountDownLatch countDownLatch() {
         // Create a CountDownLatch
         CountDownLatch latch = new CountDownLatch(1);
@@ -430,12 +427,11 @@ public class Adopt extends javax.swing.JFrame {
         return latch;
     }
 
-    
     // getters
     public Rehome getRehome() {
         return rehome;
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -513,7 +509,7 @@ public class Adopt extends javax.swing.JFrame {
                 minimizeButtonMouseExited(evt);
             }
         });
-        getContentPane().add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(815, 10, 40, 20));
+        getContentPane().add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 10, 40, 20));
 
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button (1).png"))); // NOI18N
         backButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -997,84 +993,84 @@ public class Adopt extends javax.swing.JFrame {
 
     private void femaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_femaleActionPerformed
         // TODO add your handling code here:
-        if(pet != null) {
+        if (pet != null) {
             setPetInformation(pet);
         }
     }//GEN-LAST:event_femaleActionPerformed
 
     private void maleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maleActionPerformed
         // TODO add your handling code here:
-        if(pet != null) {
+        if (pet != null) {
             setPetInformation(pet);
         }
     }//GEN-LAST:event_maleActionPerformed
 
     private void petAgeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_petAgeActionPerformed
         // TODO add your handling code here:
-        if(pet != null) {
+        if (pet != null) {
             setPetInformation(pet);
         }
     }//GEN-LAST:event_petAgeActionPerformed
 
     private void petTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_petTypeActionPerformed
         // TODO add your handling code here:
-        if(pet != null) {
+        if (pet != null) {
             setPetInformation(pet);
         }
     }//GEN-LAST:event_petTypeActionPerformed
 
     private void rescuedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rescuedActionPerformed
         // TODO add your handling code here:
-        if(pet != null) {
+        if (pet != null) {
             setPetInformation(pet);
         }
     }//GEN-LAST:event_rescuedActionPerformed
 
     private void ownedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ownedActionPerformed
         // TODO add your handling code here:
-        if(pet != null) {
+        if (pet != null) {
             setPetInformation(pet);
         }
     }//GEN-LAST:event_ownedActionPerformed
 
     private void adoptedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adoptedActionPerformed
         // TODO add your handling code here:
-        if(pet != null) {
+        if (pet != null) {
             setPetInformation(pet);
         }
     }//GEN-LAST:event_adoptedActionPerformed
 
     private void notAdoptedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notAdoptedActionPerformed
         // TODO add your handling code here:
-        if(pet != null) {
+        if (pet != null) {
             setPetInformation(pet);
         }
     }//GEN-LAST:event_notAdoptedActionPerformed
 
     private void tinyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tinyActionPerformed
         // TODO add your handling code here:
-        if(pet != null) {
+        if (pet != null) {
             setPetInformation(pet);
         }
     }//GEN-LAST:event_tinyActionPerformed
 
     private void smallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smallActionPerformed
         // TODO add your handling code here:
-        if(pet != null) {
+        if (pet != null) {
             setPetInformation(pet);
         }
     }//GEN-LAST:event_smallActionPerformed
 
     private void largeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_largeActionPerformed
         // TODO add your handling code here:
-        if(pet != null) {
+        if (pet != null) {
             setPetInformation(pet);
         }
     }//GEN-LAST:event_largeActionPerformed
 
     private void mediumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mediumActionPerformed
         // TODO add your handling code here:
-        if(pet != null) {
+        if (pet != null) {
             setPetInformation(pet);
         }
     }//GEN-LAST:event_mediumActionPerformed
@@ -1112,7 +1108,7 @@ public class Adopt extends javax.swing.JFrame {
 
     private void petButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petButtonMouseClicked
         // TODO add your handling code here:
-        if(userLoggedIn != null) {
+        if (userLoggedIn != null) {
             userLoggedIn.setVisible(true);
             userLoggedIn.handlePetButtonClick();
             userLoggedIn.petFilterBySortBy();
@@ -1151,7 +1147,7 @@ public class Adopt extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "You must agree to the terms.", "Validation Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         CountDownLatch latch = countDownLatch();
 
         // Use a separate thread to wait for the user's response
@@ -1179,22 +1175,21 @@ public class Adopt extends javax.swing.JFrame {
                             String appointPlace = "Vet Clinic";
                             String appointStatus = "P";
                             int clientID = Integer.valueOf(adopterID.getText().trim());
-                            int selectedPetID = Integer.valueOf((String)petID.getSelectedItem());
-                            int selectedVetID = Integer.valueOf((String)vetID.getSelectedItem());
+                            int selectedPetID = Integer.valueOf((String) petID.getSelectedItem());
+                            int selectedVetID = Integer.valueOf((String) vetID.getSelectedItem());
 
                             System.out.println(applicationType + " " + appointDate + " " + appointTime + " " + appointPlace + " " + clientID + " " + selectedPetID + " " + selectedVetID);
 
-
-                            if(edit) {
+                            if (edit) {
                                 // QUERY HERE; update adopt application form by id in the application table
                                 // the method will return true if successful, otherwise false
-                                if(spManager.updateApplicationRecord(application.getApplicationID(), applicationType, appointDate, appointTime, appointPlace, appointStatus, clientID, selectedPetID, selectedVetID)) {
+                                if (spManager.updateApplicationRecord(application.getApplicationID(), applicationType, appointDate, appointTime, appointPlace, appointStatus, clientID, selectedPetID, selectedVetID)) {
                                     JOptionPane.showMessageDialog(null, "Application Updated Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
                                     // this will check if the pet being adopted has been changed
-                                    if(!tempPet.getPetID().equals(String.valueOf(selectedPetID))) {
-                                       System.out.println(tempPet.getPetID() + " " + selectedPetID);
-                                       spManager.updatePetStatus(Integer.valueOf(tempPet.getPetID()), "NA");
-                                       spManager.updatePetStatus(selectedPetID, "A");
+                                    if (!tempPet.getPetID().equals(String.valueOf(selectedPetID))) {
+                                        System.out.println(tempPet.getPetID() + " " + selectedPetID);
+                                        spManager.updatePetStatus(Integer.valueOf(tempPet.getPetID()), "NA");
+                                        spManager.updatePetStatus(selectedPetID, "A");
                                     }
                                 } else {
                                     JOptionPane.showMessageDialog(null, "Application Update Failed", "Failed", JOptionPane.ERROR_MESSAGE);
@@ -1203,7 +1198,7 @@ public class Adopt extends javax.swing.JFrame {
                             } else {
                                 // QUERY HERE: insert adopt application form in the application table
                                 // the method will return true if successful, otherwise false
-                                if(spManager.insertApplicationRecord(applicationType, appointDate, appointTime, appointPlace, appointStatus, clientID, selectedPetID, selectedVetID) && spManager.updatePetStatus(selectedPetID, "A")) {
+                                if (spManager.insertApplicationRecord(applicationType, appointDate, appointTime, appointPlace, appointStatus, clientID, selectedPetID, selectedVetID) && spManager.updatePetStatus(selectedPetID, "A")) {
                                     JOptionPane.showMessageDialog(null, "Application Submitted!", "Success", JOptionPane.INFORMATION_MESSAGE);
                                 } else {
                                     JOptionPane.showMessageDialog(null, "Application Failed", "Failed", JOptionPane.ERROR_MESSAGE);
@@ -1222,7 +1217,7 @@ public class Adopt extends javax.swing.JFrame {
                 });
             }
         }).start();
-        
+
     }//GEN-LAST:event_adoptButtonMouseClicked
 
     private void adoptButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adoptButtonMouseEntered
@@ -1243,8 +1238,8 @@ public class Adopt extends javax.swing.JFrame {
     private void vetNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vetNameActionPerformed
         // TODO add your handling code here:
         String currentVetName = (String) vetName.getSelectedItem();
-        for(Veterinarian vet : vets) {
-            if(vet.getVetFullName().equals(currentVetName)) {
+        for (Veterinarian vet : vets) {
+            if (vet.getVetFullName().equals(currentVetName)) {
                 vetID.setSelectedItem(String.valueOf(vet.getVetID()));
                 try {
                     populateDateTimeComboBox(30);
@@ -1266,8 +1261,8 @@ public class Adopt extends javax.swing.JFrame {
     private void petIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_petIDActionPerformed
         // TODO add your handling code here:
         String currentPetID = (String) petID.getSelectedItem();
-        for(Pet pet : pets) {
-            if(pet.getPetID().equals(currentPetID)) {
+        for (Pet pet : pets) {
+            if (pet.getPetID().equals(currentPetID)) {
                 this.pet = pet;
                 setPetInformation(pet);
                 return;
@@ -1289,8 +1284,8 @@ public class Adopt extends javax.swing.JFrame {
     private void petNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_petNameActionPerformed
         // TODO add your handling code here:
         String currentPetName = (String) petName.getSelectedItem();
-        for(Pet pet : pets) {
-            if(pet.getPetName().equals(currentPetName)) {
+        for (Pet pet : pets) {
+            if (pet.getPetName().equals(currentPetName)) {
                 this.pet = pet;
                 setPetInformation(pet);
                 return;
@@ -1302,8 +1297,8 @@ public class Adopt extends javax.swing.JFrame {
     private void vetIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vetIDActionPerformed
         // TODO add your handling code here:
         String currentVetID = (String) vetID.getSelectedItem();
-        for(Veterinarian vet : vets) {
-            if(vet.getVetID().equals(currentVetID)) {
+        for (Veterinarian vet : vets) {
+            if (vet.getVetID().equals(currentVetID)) {
                 vetName.setSelectedItem(vet.getVetFullName());
                 try {
                     populateDateTimeComboBox(30);

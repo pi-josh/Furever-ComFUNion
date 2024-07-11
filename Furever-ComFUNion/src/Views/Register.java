@@ -22,12 +22,13 @@ import javax.swing.*;
  * @author joshu
  */
 public class Register extends javax.swing.JFrame {
+
     // for moving the frame
     private Point mouseDownCompCoords;
-    
+
     // controller
     private LoginController loginController;
-    
+
     // frames
     private LandingPage landingPage;
     private Login login;
@@ -58,7 +59,7 @@ public class Register extends javax.swing.JFrame {
 
         populateComboBoxes();
         setWindowIcon();
-        
+
         // set the default value of birthdate based on the default value of year, month, and day comboboxes
         List<String> yearMonthDay = new ArrayList<>();
         yearMonthDay.add((String) year.getSelectedItem());
@@ -66,7 +67,7 @@ public class Register extends javax.swing.JFrame {
         yearMonthDay.add((String) day.getSelectedItem());
         birthdate.setText("".join("-", yearMonthDay));
     }
-    
+
     private void setWindowIcon() {
         ImageIcon icon1 = null;
         try {
@@ -80,12 +81,12 @@ public class Register extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
+
     // getters
     public Login getLogin() {
         return login;
     }
-    
+
     // Getter methods for all components
     public javax.swing.JCheckBox getAskVetCheckBox() {
         return askVet;
@@ -102,7 +103,6 @@ public class Register extends javax.swing.JFrame {
     public JTextPane getCompanyName() {
         return companyName;
     }
-
 
     public JPasswordField getConfirmPassword() {
         return confirmPassword;
@@ -135,7 +135,7 @@ public class Register extends javax.swing.JFrame {
     public JLabel getLoginButton() {
         return loginButton;
     }
-    
+
     public JLabel getMinimizeButton() {
         return minimizeButton;
     }
@@ -147,11 +147,10 @@ public class Register extends javax.swing.JFrame {
     public JTextPane getOccupation() {
         return occupation;
     }
-    
+
     public JTextPane getUsername() {
         return username;
     }
-
 
     public JTextPane getPasscode() {
         return passcode;
@@ -181,7 +180,6 @@ public class Register extends javax.swing.JFrame {
         return registerButton;
     }
 
-
     public JComboBox<String> getWorkType() {
         return workType;
     }
@@ -193,7 +191,7 @@ public class Register extends javax.swing.JFrame {
     public boolean isVet() {
         return askVet.isSelected();
     }
-    
+
     private void populateComboBoxes() {
         // Populate worktype combobox
         workType.addItem("Travel");
@@ -209,10 +207,10 @@ public class Register extends javax.swing.JFrame {
         // Populate month combobox
         for (int m = 1; m <= 12; m++) {
             String monthValue = String.valueOf(m);
-            if(m < 10) {
+            if (m < 10) {
                 monthValue = "0" + monthValue;
             }
-            
+
             month.addItem(monthValue);
         }
 
@@ -221,6 +219,7 @@ public class Register extends javax.swing.JFrame {
     }
 
     private class ComboBoxActionListener implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent e) {
             updateDays();
@@ -252,33 +251,32 @@ public class Register extends javax.swing.JFrame {
             day.removeAllItems();
             for (int d = 1; d <= daysInMonth; d++) {
                 String dayValue = String.valueOf(d);
-                if(d < 10) {
+                if (d < 10) {
                     dayValue = "0" + dayValue;
                 }
                 day.addItem(dayValue);
             }
         }
     }
-    
+
     public void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {
         if (landingPage != null) {
             login = landingPage.getLogin();
         }
-        
+
         if (login == null) {
             login = new Login(landingPage);
             loginController = new LoginController(login);
             login.setVisible(true);
         } else if (!login.isVisible()) {
             login.setVisible(true);
-        }
-        else {
+        } else {
             login.toFront();
             login.requestFocus();
         }
         this.dispose();
     }
-  
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -344,7 +342,7 @@ public class Register extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         minimizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/minimize button (1).png"))); // NOI18N
-        getContentPane().add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(815, 10, 40, 20));
+        getContentPane().add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 10, 40, 20));
 
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button (1).png"))); // NOI18N
         getContentPane().add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(855, 5, 40, 40));
@@ -563,7 +561,6 @@ public class Register extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_contactNumKeyTyped
 
-    
     /**
      * @param args the command line arguments
      */

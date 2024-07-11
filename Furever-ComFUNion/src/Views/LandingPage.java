@@ -70,6 +70,7 @@ public class LandingPage extends javax.swing.JFrame {
     private ExitDialog exitDialog;
     private BusinessRules businessRulesFrame;
     private Devs devsFrame;
+    private Summary summaryFrame;
     private Login login;
     private Register register;
     private JPanel glassPane;
@@ -171,6 +172,12 @@ public class LandingPage extends javax.swing.JFrame {
                 // for devs in about us panel
                 if (devsFrame != null && devsFrame.isVisible()) {
                     devsFrame.toFront();
+                    Toolkit.getDefaultToolkit().beep();
+                }
+                
+                // for summary in home panel
+                if (summaryFrame != null && summaryFrame.isVisible()) {
+                    summaryFrame.toFront();
                     Toolkit.getDefaultToolkit().beep();
                 }
             }
@@ -456,8 +463,6 @@ public class LandingPage extends javax.swing.JFrame {
             tempPetAge = petAge1.getText();
             tempPetGender = petGender1.getText();
             petPanel1Clicked = true;
-
-            System.out.println(tempPetName); // Optional: Print stored pet name
         }
 
         String pOrigin = "", pStatus = "", pSize = "";
@@ -681,6 +686,23 @@ public class LandingPage extends javax.swing.JFrame {
         populatePetsFromDB();
         petProfilesReset();
         petProfiles();
+    }
+    
+    private void resetPetsFilterSortBy() {
+        JCheckBox[] checkboxes = { dogType, catType, hamsterType, rabbitType,
+                                   ownedOrigin, rescuedOrigin,
+                                   adoptedStatus, notAdoptedStatus,
+                                   tinySize, smallSize, mediumSize, largeSize,
+                                   femaleGender, maleGender,
+                                   orderByID, orderByName, orderByAge,
+                                   IDdescending, nameDescending, ageDescending };
+        for(JCheckBox checkbox : checkboxes) {
+            checkbox.setSelected(false);
+        }
+        orderByIDActionPerformed(null);
+        orderByNameActionPerformed(null);
+        orderByAgeActionPerformed(null);
+        petFilterBySortBy();
     }
 
     /**
@@ -971,7 +993,7 @@ public class LandingPage extends javax.swing.JFrame {
                 minimizeButtonMouseExited(evt);
             }
         });
-        navBar.add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1285, 10, 40, 20));
+        navBar.add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1280, 10, 40, 20));
 
         getContentPane().add(navBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 140));
 
@@ -992,7 +1014,7 @@ public class LandingPage extends javax.swing.JFrame {
 
         adoptedLabel.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         adoptedLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        adoptedLabel.setText("Click for summary!");
+        adoptedLabel.setText("Wonderful Pets");
         adoptedLabel.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 adoptedLabelbadgeKeyPressed(evt);
@@ -2086,6 +2108,10 @@ public class LandingPage extends javax.swing.JFrame {
                 return;
             }
         }
+        if(!orderByName.isSelected()) {
+            nameDescending.setSelected(false);
+            nameDescending.setEnabled(false);
+        }
         petFilterBySortBy();
     }//GEN-LAST:event_orderByNameActionPerformed
 
@@ -2114,6 +2140,10 @@ public class LandingPage extends javax.swing.JFrame {
                 return;
             }
         }
+        if(!orderByAge.isSelected()) {
+            ageDescending.setSelected(false);
+            ageDescending.setEnabled(false);
+        }
         petFilterBySortBy();
     }//GEN-LAST:event_orderByAgeActionPerformed
 
@@ -2141,6 +2171,10 @@ public class LandingPage extends javax.swing.JFrame {
                 IDdescendingActionPerformed(evt);
                 return;
             }
+        }
+        if(!orderByID.isSelected()) {
+            IDdescending.setSelected(false);
+            IDdescending.setEnabled(false);
         }
         petFilterBySortBy();
     }//GEN-LAST:event_orderByIDActionPerformed
@@ -2276,6 +2310,7 @@ public class LandingPage extends javax.swing.JFrame {
     private void petButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petButtonMousePressed
         // TODO add your handling code here:
         if (!petsClicked) {
+            resetPetsFilterSortBy();
             handlePetButtonClick();
             petProfiles();
         }

@@ -18,9 +18,10 @@ import javax.swing.JPanel;
  * @author joshu
  */
 public class ConfirmationDialog extends javax.swing.JFrame {
+
     // for moving the frame
     private Point mouseDownCompCoords;
-    
+
     private boolean userResponse;
     private JPanel glassPane = (JPanel) null;
     private final CountDownLatch latch;
@@ -28,9 +29,9 @@ public class ConfirmationDialog extends javax.swing.JFrame {
     public ConfirmationDialog(UserLoggedIn userLoggedIn, VetLoggedIn vetLoggedIn, CountDownLatch latch) {
         initComponents();
         this.latch = latch;
-        if(userLoggedIn != null) {
+        if (userLoggedIn != null) {
             this.glassPane = (JPanel) userLoggedIn.getGlassPane();
-        } else if(vetLoggedIn != null) {
+        } else if (vetLoggedIn != null) {
             this.glassPane = (JPanel) vetLoggedIn.getGlassPane();
         }
 

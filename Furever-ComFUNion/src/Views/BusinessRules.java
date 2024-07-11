@@ -16,29 +16,30 @@ import javax.swing.JPanel;
  * @author joshu
  */
 public class BusinessRules extends javax.swing.JFrame {
+
     // for moving the frame
     private Point mouseDownCompCoords;
-    
+
     // sub frames
     private UserLoggedIn userLoggedIn;
     private VetLoggedIn vetLoggedIn;
     private LandingPage landingPage;
     private JPanel glassPane;
-    
+
     /**
      * Creates new form Register
      */
     public BusinessRules(LandingPage landingPage, UserLoggedIn userLoggedIn, VetLoggedIn vetLoggedIn) {
         initComponents();
-        if(userLoggedIn != null) {
+        if (userLoggedIn != null) {
             this.userLoggedIn = userLoggedIn;
-        } else if(landingPage != null) {
+        } else if (landingPage != null) {
             this.landingPage = landingPage;
-        } else if(vetLoggedIn != null) {
+        } else if (vetLoggedIn != null) {
             this.vetLoggedIn = vetLoggedIn;
         }
         setVisible(true);
-        
+
         // Window logo
         ImageIcon icon1 = null;
         try {
@@ -52,10 +53,10 @@ public class BusinessRules extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
+
     public BusinessRules() {
         initComponents();
-        
+
         // Window logo
         ImageIcon icon1 = null;
         try {
@@ -69,6 +70,7 @@ public class BusinessRules extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -139,6 +141,9 @@ public class BusinessRules extends javax.swing.JFrame {
             glassPane.setVisible(false);
         } else if (landingPage != null) {
             glassPane = (JPanel) landingPage.getGlassPane();
+            glassPane.setVisible(false);
+        } else if (vetLoggedIn != null) {
+            glassPane = (JPanel) vetLoggedIn.getGlassPane();
             glassPane.setVisible(false);
         }
         this.dispose();

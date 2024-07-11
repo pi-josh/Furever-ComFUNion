@@ -5,8 +5,6 @@ package Views;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 import java.awt.MediaTracker;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -19,10 +17,10 @@ import javax.swing.JPanel;
  * @author joshu
  */
 public class ExitDialog extends javax.swing.JFrame {
+
     // for moving the frame
     private Point mouseDownCompCoords;
-    
-    
+
     // sub frames
     private LandingPage landingPage;
     private UserLoggedIn userLoggedIn;
@@ -59,10 +57,10 @@ public class ExitDialog extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
+
     public ExitDialog() {
         initComponents();
-        
+
         // Window logo
         ImageIcon icon1 = null;
         try {
@@ -76,7 +74,7 @@ public class ExitDialog extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
+
     // Getters and setters
     public JLabel getYesButton() {
         return yesButton;
@@ -92,7 +90,6 @@ public class ExitDialog extends javax.swing.JFrame {
         }
     }
 
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

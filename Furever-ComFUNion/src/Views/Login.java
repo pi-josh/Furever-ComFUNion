@@ -25,18 +25,19 @@ import javax.swing.JTextPane;
  * @author joshu
  */
 public class Login extends javax.swing.JFrame {
+
     SPManager spManager = new SPManager();
-    
+
     // for moving the frame
     private Point mouseDownCompCoords;
-    
+
     // controller
     private RegisterController registerController;
-    
+
     // frames
     private LandingPage landingPage;
     private Register register;
-    
+
     public Login(LandingPage landingPage) {
         initComponents();
         this.landingPage = landingPage;
@@ -45,17 +46,17 @@ public class Login extends javax.swing.JFrame {
 
         // Window logo
         setWindowIcon();
-        
+
         resetErrorMessage();
     }
-    
+
     // Default constructor
     public Login() {
         initComponents();
-        
+
         // controller
         LoginController controller = new LoginController(this);
-        
+
         // Window logo
         setWindowIcon();
     }
@@ -72,12 +73,12 @@ public class Login extends javax.swing.JFrame {
             System.err.println("Error: Image not found. " + e.getMessage());
             e.printStackTrace();
         }
-    }  
-    
+    }
+
     public Register getRegister() {
         return register;
     }
-    
+
     // Getters for UI components
     public JLabel getBackButton() {
         return backButton;
@@ -111,10 +112,10 @@ public class Login extends javax.swing.JFrame {
         // Simulate authentication
         Client client = null;
         Veterinarian vet = null;
-        
+
         //QUERY HERE: check if the entered username and password exist in client or vet table
         // default acc for viewing sample infos
-        if(enteredUsername.equals("admin") && enteredPassword.equals("admin")) {
+        if (enteredUsername.equals("admin") && enteredPassword.equals("admin")) {
             this.setVisible(false);
             landingPage.setVisible(false);
             new UserLoggedIn(null).setVisible(true);
@@ -122,7 +123,7 @@ public class Login extends javax.swing.JFrame {
         }
         // client
         client = spManager.getClientByCredentials(enteredUsername, enteredPassword);  // this will return the client if exist, else null
-        if(client != null) {
+        if (client != null) {
             this.setVisible(false);
             landingPage.setVisible(false);
             new UserLoggedIn(client).setVisible(true);
@@ -130,7 +131,7 @@ public class Login extends javax.swing.JFrame {
         }
         // veterinarian
         vet = spManager.getVetByCredentials(enteredUsername, enteredPassword); // this will return the veterinarian if exist, else null
-        if(vet != null) {
+        if (vet != null) {
             this.setVisible(false);
             landingPage.setVisible(false);
             new VetLoggedIn(vet).setVisible(true);
@@ -157,11 +158,11 @@ public class Login extends javax.swing.JFrame {
         }
         this.dispose();
     }
-    
+
     public void resetErrorMessage() {
         errorMessage.setText(""); // Reset the error message label
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -226,7 +227,7 @@ public class Login extends javax.swing.JFrame {
                 minimizeButtonMouseExited(evt);
             }
         });
-        titleContainer.add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(815, 10, 40, 20));
+        titleContainer.add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 10, 40, 20));
 
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button (1).png"))); // NOI18N
         backButton.addMouseListener(new java.awt.event.MouseAdapter() {

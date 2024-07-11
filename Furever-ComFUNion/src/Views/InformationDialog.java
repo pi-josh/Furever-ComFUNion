@@ -18,14 +18,15 @@ import javax.swing.JPanel;
  * @author joshu
  */
 public class InformationDialog extends javax.swing.JFrame {
+
     // for moving the frame
     private Point mouseDownCompCoords;
-    
+
     // sub frames 
     Adopt adopt;
     Rehome rehome;
     Rescued rescued;
-    
+
     private boolean userResponse;
     private JPanel glassPane = (JPanel) null;
     private final CountDownLatch latch;
@@ -33,11 +34,11 @@ public class InformationDialog extends javax.swing.JFrame {
     public InformationDialog(Adopt adopt, Rehome rehome, Rescued rescued, CountDownLatch latch) {
         initComponents();
         this.latch = latch;
-        if(adopt != null) {
+        if (adopt != null) {
             this.glassPane = (JPanel) adopt.getGlassPane();
-        } else if(rehome != null) {
+        } else if (rehome != null) {
             this.glassPane = (JPanel) rehome.getGlassPane();
-        } else if(rescued != null) {
+        } else if (rescued != null) {
             this.glassPane = (JPanel) rescued.getGlassPane();
         }
         // Window logo

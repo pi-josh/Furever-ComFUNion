@@ -16,28 +16,29 @@ import javax.swing.JPanel;
  * @author joshu
  */
 public class Devs extends javax.swing.JFrame {
+
     // for moving the frame
     private Point mouseDownCompCoords;
-    
+
     private UserLoggedIn userLoggedIn;
     private VetLoggedIn vetLoggedIn;
     private LandingPage landingPage;
     private JPanel glassPane;
-    
+
     /**
      * Creates new form Register
      */
     public Devs(LandingPage landingPage, UserLoggedIn userLoggedIn, VetLoggedIn vetLoggedIn) {
         initComponents();
-        if(userLoggedIn != null) {
+        if (userLoggedIn != null) {
             this.userLoggedIn = userLoggedIn;
-        } else if(landingPage != null) {
+        } else if (landingPage != null) {
             this.landingPage = landingPage;
-        } else if(vetLoggedIn != null) {
+        } else if (vetLoggedIn != null) {
             this.vetLoggedIn = vetLoggedIn;
         }
         setVisible(true);
-        
+
         // Window logo
         ImageIcon icon1 = null;
         try {
@@ -51,10 +52,10 @@ public class Devs extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
+
     public Devs() {
         initComponents();
-        
+
         // Window logo
         ImageIcon icon1 = null;
         try {
@@ -68,6 +69,7 @@ public class Devs extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -151,6 +153,9 @@ public class Devs extends javax.swing.JFrame {
         } else if (landingPage != null) {
             glassPane = (JPanel) landingPage.getGlassPane();
             glassPane.setVisible(false);
+        } else if (vetLoggedIn != null) {
+            glassPane = (JPanel) vetLoggedIn.getGlassPane();
+            glassPane.setVisible(false);
         }
         this.dispose();
     }//GEN-LAST:event_backButtonMouseClicked
@@ -191,20 +196,6 @@ public class Devs extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Devs.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
