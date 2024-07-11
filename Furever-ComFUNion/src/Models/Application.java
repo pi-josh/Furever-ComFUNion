@@ -14,11 +14,12 @@ public class Application {
     private String petType;
     
     // for displaying
-    public Application(int applicationID, String applicationType, String appointDate, 
+    public Application(int applicationID, String applicationType, String appointDate, String appointTime,
                        String appointStatus, int clientID, String vetName, String petName, String petType) {
         this.applicationID = applicationID;
         this.applicationType = applicationType;
         this.appointDate = appointDate;
+        this.appointTime = appointTime;
         this.appointStatus = appointStatus;
         this.clientID = clientID;
         this.vetName = vetName;

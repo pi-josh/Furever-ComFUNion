@@ -25,11 +25,12 @@ import javax.swing.SwingUtilities;
  * @author joshu
  */
 public class Rescued extends javax.swing.JFrame {
+
     SPManager spManager = new SPManager();
-    
+
     // for moving the frame
     private Point mouseDownCompCoords;
-    
+
     // sub frames
     private VetLoggedIn vetLoggedIn;
     private boolean edit;
@@ -40,55 +41,56 @@ public class Rescued extends javax.swing.JFrame {
 
     // controllers
     InformationDialogController informationController;
-    
+
     // for information dialog
     boolean userResponse;
-    
+
     // Veterinarian who is currently logged in
     private Veterinarian vet;
-    
+
     /**
      * Creates new form Rehome
+     *
      * @param userLoggedIn
      */
     public Rescued(VetLoggedIn vetLoggedIn, Veterinarian vet) {
         initComponents();
-        if(vetLoggedIn != null) {
+        if (vetLoggedIn != null) {
             this.vetLoggedIn = vetLoggedIn;
         }
-        if(vet != null) {
+        if (vet != null) {
             this.vet = vet;
             vetID.setText(vet.getVetID());
             vetName.setText(vet.getVetFullName());
         }
-        
+
         // pet type combo box
         petType.addItem("");
         petType.addItem("Cat");
         petType.addItem("Dog");
         petType.addItem("Hamster");
         petType.addItem("Rabbit");
-        
+
         setVisible(true);
 
         // Window logo
         setWindowIcon();
-        
+
         // radio buttons   
         petSex.add(male);
         petSex.add(female);
-        
+
         petOrigin.add(owned);
         petOrigin.add(rescued);
-        
+
         petStatus.add(adopted);
         petStatus.add(notAdopted);
-        
+
         petSize.add(tiny);
         petSize.add(small);
         petSize.add(medium);
         petSize.add(large);
-        
+
         // glass pane to block out any interaction within the main frame when opening a sub frame
         glassPane = new JPanel();
         glassPane.setOpaque(false);
@@ -108,29 +110,29 @@ public class Rescued extends javax.swing.JFrame {
 
         setGlassPane(glassPane);
     }
-    
+
     public Rescued() {
         initComponents();
-        
+
         // Window logo
         setWindowIcon();
-        
+
         // radio buttons   
         petSex.add(male);
         petSex.add(female);
-        
+
         petOrigin.add(owned);
         petOrigin.add(rescued);
-        
+
         petStatus.add(adopted);
         petStatus.add(notAdopted);
-        
+
         petSize.add(tiny);
         petSize.add(small);
         petSize.add(medium);
         petSize.add(large);
     }
-    
+
     private void setWindowIcon() {
         ImageIcon icon1 = null;
         try {
@@ -144,7 +146,7 @@ public class Rescued extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
+
     public CountDownLatch countDownLatch() {
         // Create a CountDownLatch
         CountDownLatch latch = new CountDownLatch(1);
@@ -167,7 +169,6 @@ public class Rescued extends javax.swing.JFrame {
         return latch;
     }
 
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -224,7 +225,7 @@ public class Rescued extends javax.swing.JFrame {
                 minimizeButtonMouseExited(evt);
             }
         });
-        getContentPane().add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(815, 10, 40, 20));
+        getContentPane().add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 10, 40, 20));
         minimizeButton.getAccessibleContext().setAccessibleName("Rescued");
 
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button (1).png"))); // NOI18N
@@ -470,76 +471,76 @@ public class Rescued extends javax.swing.JFrame {
     private void rescuedButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rescuedButtonMouseClicked
         // TODO add your handling code here:
         // pet name
-        if("".equals(petName.getText())) {
+        if ("".equals(petName.getText())) {
             JOptionPane.showMessageDialog(null, "Please enter a pet name.", "Validation Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         // pet age
-        if("".equals(petAge.getText())) {
+        if ("".equals(petAge.getText())) {
             JOptionPane.showMessageDialog(null, "Please enter a pet age.", "Validation Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         // pet type
-        if("".equals((String)petType.getSelectedItem())) {
+        if ("".equals((String) petType.getSelectedItem())) {
             JOptionPane.showMessageDialog(null, "Please choose a pet type.", "Validation Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         String petSex = "";
         String petSize = "";
-        
+
         // pet sex
-        if(male.isSelected()) {
+        if (male.isSelected()) {
             petSex = "M";
-        } else if(female.isSelected()) {
+        } else if (female.isSelected()) {
             petSex = "F";
         }
-        
+
         if ("".equals(petSex)) {
             JOptionPane.showMessageDialog(null, "Please choose a pet sex.", "Validation Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         // pet size
-        if(tiny.isSelected()) {
+        if (tiny.isSelected()) {
             petSize = "T";
-        } else if(small.isSelected()) {
+        } else if (small.isSelected()) {
             petSize = "S";
-        } else if(medium.isSelected()) {
+        } else if (medium.isSelected()) {
             petSize = "M";
-        } else if(large.isSelected()) {
+        } else if (large.isSelected()) {
             petSize = "L";
         }
-        
+
         if ("".equals(petSize)) {
             JOptionPane.showMessageDialog(null, "Please choose a pet size.", "Validation Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         // agreement
         if (!iAgree.isSelected()) {
             JOptionPane.showMessageDialog(null, "You must agree to the terms.", "Validation Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         // if all information is not empty
         String selectedPetID = "";
         final String enteredPetName = petName.getText().trim();
         String enteredPetAge = "";
-        if(Integer.valueOf(petAge.getText().trim()) > 1) {
+        if (Integer.valueOf(petAge.getText().trim()) > 1) {
             enteredPetAge = petAge.getText().trim() + " months";
         } else {
             enteredPetAge = petAge.getText().trim() + " month";
         }
         final String finalEnteredPetAge = enteredPetAge;
-        final String selectedPetType = ((String)petType.getSelectedItem()).trim();
+        final String selectedPetType = ((String) petType.getSelectedItem()).trim();
         final String selectedPetSex = petSex;
         final String selectedPetOrigin = "R";
         final String selectedPetStatus = "NA";
         final String selectedPetSize = petSize;
-        
+
         CountDownLatch latch = countDownLatch();
 
         // Use a separate thread to wait for the user's response
@@ -563,8 +564,8 @@ public class Rescued extends javax.swing.JFrame {
                             // QUERY HERE: insert pet record in the pet table
                             // the method will return the pet id if successful, otherwise return an empty string
                             int selectedPetID = spManager.insertPetRecord(selectedPetType, selectedPetOrigin, selectedPetStatus, selectedPetSize,
-                                                  finalEnteredPetAge, enteredPetName, selectedPetSex);
-                            if(!"".equals(selectedPetID)) {
+                                    finalEnteredPetAge, enteredPetName, selectedPetSex);
+                            if (!"".equals(selectedPetID)) {
                                 JOptionPane.showMessageDialog(null, "Rescue Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
                             } else {
                                 JOptionPane.showMessageDialog(null, "Rescue Failed", "Failed", JOptionPane.ERROR_MESSAGE);

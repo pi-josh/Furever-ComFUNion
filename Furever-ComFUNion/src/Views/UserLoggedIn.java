@@ -37,30 +37,31 @@ import javax.swing.SwingUtilities;
  * @author joshu
  */
 public class UserLoggedIn extends javax.swing.JFrame {
+
     // Database manager
     SPManager spManager = new SPManager();
     RegisterController registerController = new RegisterController();
-    
+
     // Client who is currently logged in
     private Client client;
-    
+
     // Pet records
     Pet pet; // pet who is going to be adopted
     ArrayList<Pet> pets;
     private int totalPets;
     private int totalPetsToDisplay;
     private int petIndex = 0;
-    
+
     // Veterinarian records
     ArrayList<Veterinarian> vets;
     private int totalVets;
     private int vetIndex = 0;
-    
+
     // Application Records
     ArrayList<Application> applications;
     private int totalApplications;
     private int appIndex = 0;
-    
+
     // filter and sorting conditions
     private List<String> petTypes = new ArrayList<>();
     private List<String> petOrigins = new ArrayList<>();
@@ -68,10 +69,10 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private List<String> petSizes = new ArrayList<>();
     private List<String> petGenders = new ArrayList<>();
     private List<String> sortCriteria = new ArrayList<>();
-    
+
     // for sorting priority
-    ArrayList<JCheckBox> sortingPriority = new ArrayList<>();   
-    
+    ArrayList<JCheckBox> sortingPriority = new ArrayList<>();
+
     // for moving the frame
     private Point mouseDownCompCoords;
 
@@ -87,6 +88,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private ConfirmationDialog confirmationDialog;
     private BusinessRules businessRulesFrame;
     private Devs devsFrame;
+    private Summary summaryFrame;
     private Adopt adopt;
     private Rehome rehome;
     private JPanel glassPane;
@@ -114,7 +116,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     // app next and prev buttons
     private boolean appPrev, appNext;
-    
+
     /**
      * Creates new form Main
      */
@@ -125,7 +127,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         populatePetsFromDB();
         populateVetsFromDB();
         populateAppsFromDB();
-        
+
         totalPetsToDisplay = spManager.getAllPetsCount();
 
         initComponents();
@@ -185,6 +187,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
                     confirmationDialog.toFront();
                     Toolkit.getDefaultToolkit().beep();
                 }
+                
+                // for summary in home panel
+                if (summaryFrame != null && summaryFrame.isVisible()) {
+                    summaryFrame.toFront();
+                    Toolkit.getDefaultToolkit().beep();
+                }
             }
         });
 
@@ -216,7 +224,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     public Rehome getRehome() {
         return rehome;
     }
-    
+
     // setters
     public void setApplicationClicked(boolean click) {
         this.applicationClicked = click;
@@ -357,6 +365,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         appType5 = new javax.swing.JLabel();
         appPetName5 = new javax.swing.JLabel();
         appPetType5 = new javax.swing.JLabel();
+        appAppointTime5 = new javax.swing.JLabel();
         appAppointDate5 = new javax.swing.JLabel();
         appVet5 = new javax.swing.JLabel();
         appStatus5 = new javax.swing.JLabel();
@@ -365,6 +374,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         appType4 = new javax.swing.JLabel();
         appPetName4 = new javax.swing.JLabel();
         appPetType4 = new javax.swing.JLabel();
+        appAppointTime4 = new javax.swing.JLabel();
         appAppointDate4 = new javax.swing.JLabel();
         appVet4 = new javax.swing.JLabel();
         appStatus4 = new javax.swing.JLabel();
@@ -373,6 +383,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         appType3 = new javax.swing.JLabel();
         appPetName3 = new javax.swing.JLabel();
         appPetType3 = new javax.swing.JLabel();
+        appAppointTime3 = new javax.swing.JLabel();
         appAppointDate3 = new javax.swing.JLabel();
         appVet3 = new javax.swing.JLabel();
         appStatus3 = new javax.swing.JLabel();
@@ -381,12 +392,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
         appType2 = new javax.swing.JLabel();
         appPetName2 = new javax.swing.JLabel();
         appPetType2 = new javax.swing.JLabel();
+        appAppointTime2 = new javax.swing.JLabel();
         appAppointDate2 = new javax.swing.JLabel();
         appVet2 = new javax.swing.JLabel();
         appStatus2 = new javax.swing.JLabel();
         appStatus1 = new javax.swing.JLabel();
         highlight2 = new javax.swing.JLabel();
         appVet1 = new javax.swing.JLabel();
+        appAppointTime1 = new javax.swing.JLabel();
         appAppointDate1 = new javax.swing.JLabel();
         appPetType1 = new javax.swing.JLabel();
         appPetName1 = new javax.swing.JLabel();
@@ -515,7 +528,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 minimizeButtonMouseExited(evt);
             }
         });
-        navBar.add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1285, 10, 40, 20));
+        navBar.add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1280, 10, 40, 20));
 
         line.setBackground(new java.awt.Color(255, 251, 209));
         line.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 1, 1, new java.awt.Color(0, 0, 0)));
@@ -688,13 +701,13 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
         adoptedLabel.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         adoptedLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        adoptedLabel.setText("Wonderful Pets");
+        adoptedLabel.setText("Click for summary!");
         adoptedLabel.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 badgeKeyPressed(evt);
             }
         });
-        homeBody.add(adoptedLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 490, 320, 50));
+        homeBody.add(adoptedLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(875, 490, 350, 50));
 
         badge.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/badge2.png"))); // NOI18N
         badge.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1546,12 +1559,18 @@ public class UserLoggedIn extends javax.swing.JFrame {
         appPetType5.setToolTipText("");
         applicationBody.add(appPetType5, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 580, 110, -1));
 
+        appAppointTime5.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appAppointTime5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appAppointTime5.setText("23:00:00");
+        appAppointTime5.setToolTipText("");
+        applicationBody.add(appAppointTime5, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 595, 150, -1));
+
         appAppointDate5.setBackground(new java.awt.Color(255, 255, 255));
         appAppointDate5.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appAppointDate5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appAppointDate5.setText("9999-99-99");
         appAppointDate5.setToolTipText("");
-        applicationBody.add(appAppointDate5, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 580, 150, -1));
+        applicationBody.add(appAppointDate5, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 570, 150, -1));
 
         appVet5.setBackground(new java.awt.Color(255, 255, 255));
         appVet5.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
@@ -1594,11 +1613,17 @@ public class UserLoggedIn extends javax.swing.JFrame {
         appPetType4.setToolTipText("");
         applicationBody.add(appPetType4, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 513, 110, -1));
 
+        appAppointTime4.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appAppointTime4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appAppointTime4.setText("23:00:00");
+        appAppointTime4.setToolTipText("");
+        applicationBody.add(appAppointTime4, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 525, 150, -1));
+
         appAppointDate4.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appAppointDate4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appAppointDate4.setText("9999-99-99");
         appAppointDate4.setToolTipText("");
-        applicationBody.add(appAppointDate4, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 513, 150, -1));
+        applicationBody.add(appAppointDate4, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 500, 150, -1));
 
         appVet4.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appVet4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1639,11 +1664,17 @@ public class UserLoggedIn extends javax.swing.JFrame {
         appPetType3.setToolTipText("");
         applicationBody.add(appPetType3, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 443, 110, -1));
 
+        appAppointTime3.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appAppointTime3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appAppointTime3.setText("23:00:00");
+        appAppointTime3.setToolTipText("");
+        applicationBody.add(appAppointTime3, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 455, 150, -1));
+
         appAppointDate3.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appAppointDate3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appAppointDate3.setText("9999-99-99");
         appAppointDate3.setToolTipText("");
-        applicationBody.add(appAppointDate3, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 443, 150, -1));
+        applicationBody.add(appAppointDate3, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 430, 150, -1));
 
         appVet3.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appVet3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1684,11 +1715,17 @@ public class UserLoggedIn extends javax.swing.JFrame {
         appPetType2.setToolTipText("");
         applicationBody.add(appPetType2, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 373, 110, -1));
 
+        appAppointTime2.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appAppointTime2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appAppointTime2.setText("23:00:00");
+        appAppointTime2.setToolTipText("");
+        applicationBody.add(appAppointTime2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 385, 150, -1));
+
         appAppointDate2.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appAppointDate2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appAppointDate2.setText("9999-99-99");
         appAppointDate2.setToolTipText("");
-        applicationBody.add(appAppointDate2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 373, 150, -1));
+        applicationBody.add(appAppointDate2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 360, 150, -1));
 
         appVet2.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appVet2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1717,11 +1754,17 @@ public class UserLoggedIn extends javax.swing.JFrame {
         appVet1.setToolTipText("");
         applicationBody.add(appVet1, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 303, 160, -1));
 
+        appAppointTime1.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        appAppointTime1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        appAppointTime1.setText("23:00:00");
+        appAppointTime1.setToolTipText("");
+        applicationBody.add(appAppointTime1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 315, 150, -1));
+
         appAppointDate1.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appAppointDate1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appAppointDate1.setText("9999-99-99");
         appAppointDate1.setToolTipText("");
-        applicationBody.add(appAppointDate1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 303, 150, -1));
+        applicationBody.add(appAppointDate1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 290, 150, -1));
 
         appPetType1.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         appPetType1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -2310,13 +2353,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
         workType.addItem("No Travel");
     }
 
-    
     private void populatePetsFromDB() {
         // QUERY HERE: filtering and sorting pet profiles based on the selected checkboxes
         this.pets = spManager.getFilteredSortedPets(petTypes, petOrigins, petStatuses, petSizes, petGenders, sortCriteria);  // returns all pets that meets the criteria
         totalPets = pets.size();
     }
-    
+
     private void populateVetsFromDB() {
         // QUERY HERE: get all vet records
         this.vets = spManager.getAllVets();
@@ -2372,7 +2414,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private void handleHomeButtonClick() {
         // update count of pets
         //QUERY HERE: get total count of records in the pet table
-        totalPetsToDisplay = spManager.getAllPetsCount(); 
+        totalPetsToDisplay = spManager.getAllPetsCount();
         adoptedCounter.setText(String.valueOf(totalPetsToDisplay));
 
         updatePanelVisibility(true, false, false, false, false, false, false);
@@ -2468,7 +2510,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         setFAQsPanelVisibility(FAQsPanelCounter);
         updateButtonVisibility();
     }
-    
+
     private void updateButtonVisibility() {
         prev.setVisible(FAQsPanelCounter > 0);
         next.setVisible(FAQsPanelCounter < totalFAQsPanels - 1);
@@ -2662,7 +2704,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         for (JLabel deleteButton : deleteButtons) {
             deleteButton.setVisible(false);
         }
-        for(JLabel editButton : editButtons) {
+        for (JLabel editButton : editButtons) {
             editButton.setVisible(false);
         }
         for (JLabel highlighter : highlighters) {
@@ -2677,7 +2719,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
             // Iterate through the arrays and set visibility based on total applcations
             for (int i = 0; i < deleteButtons.length; i++) {
                 if (i < totalApplications) {
-                    if(applications.get(appIndex).getAppointStatus().charAt(0) == 'P') {
+                    if (applications.get(appIndex).getAppointStatus().charAt(0) == 'P') {
                         editButtons[i].setVisible(true);
                         deleteButtons[i].setVisible(true);
                     }
@@ -2696,6 +2738,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
             JLabel[] appPetNames = {appPetName1, appPetName2, appPetName3, appPetName4, appPetName5};
             JLabel[] appPetTypes = {appPetType1, appPetType2, appPetType3, appPetType4, appPetType5};
             JLabel[] appAppointDates = {appAppointDate1, appAppointDate2, appAppointDate3, appAppointDate4, appAppointDate5};
+            JLabel[] appAppointTimes = {appAppointTime1, appAppointTime2, appAppointTime3, appAppointTime4, appAppointTime5};
             JLabel[] appVets = {appVet1, appVet2, appVet3, appVet4, appVet5};
             JLabel[] appStatuses = {appStatus1, appStatus2, appStatus3, appStatus4, appStatus5};
 
@@ -2707,6 +2750,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                     appPetNames[i].setForeground(Color.white);
                     appPetTypes[i].setForeground(Color.white);
                     appAppointDates[i].setForeground(Color.white);
+                    appAppointTimes[i].setForeground(Color.white);
                     appVets[i].setForeground(Color.white);
                     appStatuses[i].setForeground(Color.white);
                 }
@@ -2735,6 +2779,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
             appPetName1.setText(applications.get(appIndex).getPetName());
             appPetType1.setText(applications.get(appIndex).getPetType());
             appAppointDate1.setText(String.valueOf(applications.get(appIndex).getAppointDate()));
+            appAppointTime1.setText(String.valueOf(applications.get(appIndex).getAppointTime()));
             appVet1.setText(applications.get(appIndex).getVetName());
             appStatus1.setText(status1);
         }
@@ -2760,7 +2805,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
             appPetName2.setText(applications.get(appIndex).getPetName());
             appPetType2.setText(applications.get(appIndex).getPetType());
             appAppointDate2.setText(String.valueOf(applications.get(appIndex).getAppointDate()));
-            appVet2.setText(applications.get(appIndex).getVetName());
+            appAppointTime2.setText(String.valueOf(applications.get(appIndex).getAppointTime()));
             appStatus2.setText(status2);
         }
         appIndex++;
@@ -2785,6 +2830,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
             appPetName3.setText(applications.get(appIndex).getPetName());
             appPetType3.setText(applications.get(appIndex).getPetType());
             appAppointDate3.setText(String.valueOf(applications.get(appIndex).getAppointDate()));
+            appAppointTime3.setText(String.valueOf(applications.get(appIndex).getAppointTime()));
             appVet3.setText(applications.get(appIndex).getVetName());
             appStatus3.setText(status3);
         }
@@ -2810,6 +2856,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
             appPetName4.setText(applications.get(appIndex).getPetName());
             appPetType4.setText(applications.get(appIndex).getPetType());
             appAppointDate4.setText(String.valueOf(applications.get(appIndex).getAppointDate()));
+            appAppointTime4.setText(String.valueOf(applications.get(appIndex).getAppointTime()));
             appVet4.setText(applications.get(appIndex).getVetName());
             appStatus4.setText(status4);
         }
@@ -2835,6 +2882,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
             appPetName5.setText(applications.get(appIndex).getPetName());
             appPetType5.setText(applications.get(appIndex).getPetType());
             appAppointDate5.setText(String.valueOf(applications.get(appIndex).getAppointDate()));
+            appAppointTime5.setText(String.valueOf(applications.get(appIndex).getAppointTime()));
             appVet5.setText(applications.get(appIndex).getVetName());
             appStatus5.setText(status5);
         }
@@ -2856,6 +2904,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
         JLabel[] appPetNames = {appPetName1, appPetName2, appPetName3, appPetName4, appPetName5};
         JLabel[] appPetTypes = {appPetType1, appPetType2, appPetType3, appPetType4, appPetType5};
         JLabel[] appAppointDates = {appAppointDate1, appAppointDate2, appAppointDate3, appAppointDate4, appAppointDate5};
+        JLabel[] appAppointTimes = {appAppointTime1, appAppointTime2, appAppointTime3, appAppointTime4, appAppointTime5};
         JLabel[] appVets = {appVet1, appVet2, appVet3, appVet4, appVet5};
         JLabel[] appStatuses = {appStatus1, appStatus2, appStatus3, appStatus4, appStatus5};
 
@@ -2867,6 +2916,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 appPetNames[i].setVisible(true);
                 appPetTypes[i].setVisible(true);
                 appAppointDates[i].setVisible(true);
+                appAppointTimes[i].setVisible(true);
                 appVets[i].setVisible(true);
                 appStatuses[i].setVisible(true);
 
@@ -2875,6 +2925,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 appPetNames[i].setForeground(Color.white);
                 appPetTypes[i].setForeground(Color.white);
                 appAppointDates[i].setForeground(Color.white);
+                appAppointTimes[i].setForeground(Color.white);
                 appVets[i].setForeground(Color.white);
                 appStatuses[i].setForeground(Color.white);
             } else {
@@ -2883,6 +2934,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                 appPetNames[i].setVisible(false);
                 appPetTypes[i].setVisible(false);
                 appAppointDates[i].setVisible(false);
+                appAppointTimes[i].setVisible(false);
                 appVets[i].setVisible(false);
                 appStatuses[i].setVisible(false);
             }
@@ -3006,13 +3058,12 @@ public class UserLoggedIn extends javax.swing.JFrame {
         String origin = "";
         String status = "";
         String size = "";
-        
 
         int diff = 2;
         // Update pet panel 1 based on selected panel
         switch (panel) {
             case 1:
-                if(totalPets == 1) {
+                if (totalPets == 1) {
                     diff = 1;
                 }
                 pet = pets.get(petIndex - diff);
@@ -3173,72 +3224,71 @@ public class UserLoggedIn extends javax.swing.JFrame {
         petGenders.removeAll(petGenders);
         sortCriteria.removeAll(sortCriteria);
 
-        
-        JCheckBox[] types = { dogType, catType, hamsterType, rabbitType };
-        JCheckBox[] origins = { rescuedOrigin, ownedOrigin };
-        JCheckBox[] statuses = { adoptedStatus, notAdoptedStatus };
-        JCheckBox[] sizes = { tinySize, smallSize, mediumSize, largeSize };
-        JCheckBox[] genders = { femaleGender, maleGender };
-        
-        for(JCheckBox type : types) {
-            if(type.isSelected()) {
+        JCheckBox[] types = {dogType, catType, hamsterType, rabbitType};
+        JCheckBox[] origins = {rescuedOrigin, ownedOrigin};
+        JCheckBox[] statuses = {adoptedStatus, notAdoptedStatus};
+        JCheckBox[] sizes = {tinySize, smallSize, mediumSize, largeSize};
+        JCheckBox[] genders = {femaleGender, maleGender};
+
+        for (JCheckBox type : types) {
+            if (type.isSelected()) {
                 petTypes.add(type.getText());
             }
         }
-        
-        for(JCheckBox origin : origins) {
-            if(origin.isSelected()) {
+
+        for (JCheckBox origin : origins) {
+            if (origin.isSelected()) {
                 petOrigins.add(origin.getText());
             }
         }
-        
-        for(JCheckBox status : statuses) {
-            if(status.isSelected()) {
+
+        for (JCheckBox status : statuses) {
+            if (status.isSelected()) {
                 petStatuses.add(status.getText());
             }
         }
-        
-        for(JCheckBox size : sizes) {
-            if(size.isSelected()) {
+
+        for (JCheckBox size : sizes) {
+            if (size.isSelected()) {
                 petSizes.add(size.getText());
             }
         }
-        
-        for(JCheckBox gender : genders) {
-            if(gender.isSelected()) {
+
+        for (JCheckBox gender : genders) {
+            if (gender.isSelected()) {
                 petGenders.add(gender.getText());
             }
         }
-        
+
         // sort and display the priority level
         JCheckBox checkBox;
-        for(int i = 0; i < sortingPriority.size(); i++) {
-            checkBox = sortingPriority.get(i);            
+        for (int i = 0; i < sortingPriority.size(); i++) {
+            checkBox = sortingPriority.get(i);
             sortCriteria.add(checkBox.getText());
-            
-            if(checkBox.equals(orderByID)) {
-                IDprio.setText(String.valueOf(i+1));
-            } else if(checkBox.equals(orderByName)) {
-                namePrio.setText(String.valueOf(i+1));
-            } else if(checkBox.equals(orderByAge)) {
-                agePrio.setText(String.valueOf(i+1));
+
+            if (checkBox.equals(orderByID)) {
+                IDprio.setText(String.valueOf(i + 1));
+            } else if (checkBox.equals(orderByName)) {
+                namePrio.setText(String.valueOf(i + 1));
+            } else if (checkBox.equals(orderByAge)) {
+                agePrio.setText(String.valueOf(i + 1));
             }
         }
-                
+
         populatePetsFromDB();
         petProfilesReset();
         petProfiles();
     }
-    
+
     private void resetPetsFilterSortBy() {
-        JCheckBox[] checkboxes = { dogType, catType, hamsterType, rabbitType,
-                                   ownedOrigin, rescuedOrigin,
-                                   adoptedStatus, notAdoptedStatus,
-                                   tinySize, smallSize, mediumSize, largeSize,
-                                   femaleGender, maleGender,
-                                   orderByID, orderByName, orderByAge,
-                                   IDdescending, nameDescending, ageDescending };
-        for(JCheckBox checkbox : checkboxes) {
+        JCheckBox[] checkboxes = {dogType, catType, hamsterType, rabbitType,
+            ownedOrigin, rescuedOrigin,
+            adoptedStatus, notAdoptedStatus,
+            tinySize, smallSize, mediumSize, largeSize,
+            femaleGender, maleGender,
+            orderByID, orderByName, orderByAge,
+            IDdescending, nameDescending, ageDescending};
+        for (JCheckBox checkbox : checkboxes) {
             checkbox.setSelected(false);
         }
         orderByIDActionPerformed(null);
@@ -3656,9 +3706,13 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void badgeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_badgeMousePressed
         // TODO add your handling code here:
-        if (!petsClicked) {
-            handlePetButtonClick();
-            petProfiles();
+        if (summaryFrame == null || !summaryFrame.isVisible()) {
+            summaryFrame = new Summary(null, this, null);
+            summaryFrame.setVisible(true);
+            glassPane.setVisible(true);
+        } else {
+            summaryFrame.toFront();
+            summaryFrame.requestFocus();
         }
     }//GEN-LAST:event_badgeMousePressed
 
@@ -3790,7 +3844,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void deleteButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton1MouseClicked
         // TODO add your handling code here:
-        JLabel[] infos = {appID1, appType1, appPetName1, appPetType1, appAppointDate1, appVet1, appStatus1};
+        JLabel[] infos = {appID1, appType1, appPetName1, appPetType1, appAppointDate1, appAppointTime1, appVet1, appStatus1};
 
         if (highlight1.isVisible()) {
             highlight1.setVisible(false);
@@ -3817,7 +3871,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void deleteButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton2MouseClicked
         // TODO add your handling code here:
-        JLabel[] infos = {appID2, appType2, appPetName2, appPetType2, appAppointDate2, appVet2, appStatus2};
+        JLabel[] infos = {appID2, appType2, appPetName2, appPetType2, appAppointDate2, appAppointTime2, appVet2, appStatus2};
 
         if (highlight2.isVisible()) {
             highlight2.setVisible(false);
@@ -3844,7 +3898,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void deleteButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton3MouseClicked
         // TODO add your handling code here:
-        JLabel[] infos = {appID3, appType3, appPetName3, appPetType3, appAppointDate3, appVet3, appStatus3};
+        JLabel[] infos = {appID3, appType3, appPetName3, appPetType3, appAppointDate3, appAppointTime3, appVet3, appStatus3};
         if (highlight3.isVisible()) {
             highlight3.setVisible(false);
             for (JLabel info : infos) {
@@ -3870,7 +3924,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void deleteButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton4MouseClicked
         // TODO add your handling code here:
-        JLabel[] infos = {appID4, appType4, appPetName4, appPetType4, appAppointDate4, appVet4, appStatus4};
+        JLabel[] infos = {appID4, appType4, appPetName4, appPetType4, appAppointDate4, appAppointTime4, appVet4, appStatus4};
         if (highlight4.isVisible()) {
             highlight4.setVisible(false);
             for (JLabel info : infos) {
@@ -3896,7 +3950,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void deleteButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButton5MouseClicked
         // TODO add your handling code here:
-        JLabel[] infos = {appID5, appType5, appPetName5, appPetType5, appAppointDate5, appVet5, appStatus5};
+        JLabel[] infos = {appID5, appType5, appPetName5, appPetType5, appAppointDate5, appAppointTime5, appVet5, appStatus5};
         if (highlight5.isVisible()) {
             highlight5.setVisible(false);
             for (JLabel info : infos) {
@@ -3953,16 +4007,16 @@ public class UserLoggedIn extends javax.swing.JFrame {
                             boolean success = false;
                             // QUERY HERE: delete an application record by id
                             // method will return true if successful, otherwise false
-                            if(highlight1.isVisible()) {
+                            if (highlight1.isVisible()) {
                                 currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID1.getText()));
-                                if(currentApplication != null) {
-                                    if(spManager.deleteApplicationRecordByID(currentApplication.getApplicationID())) {                                
+                                if (currentApplication != null) {
+                                    if (spManager.deleteApplicationRecordByID(currentApplication.getApplicationID())) {
                                         Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
-                                        if(pet != null) {
+                                        if (pet != null) {
                                             String appType = currentApplication.getApplicationType();
-                                            if(appType.equals("A")) {
+                                            if (appType.equals("A")) {
                                                 spManager.updatePetStatus(Integer.valueOf(pet.getPetID()), "NA");
-                                            } else if(appType.equals("R")) {
+                                            } else if (appType.equals("R")) {
                                                 // QUERY HERE: delete a pet record by id
                                                 spManager.deletePetRecordByID(Integer.valueOf(pet.getPetID()));
                                             }
@@ -3973,16 +4027,16 @@ public class UserLoggedIn extends javax.swing.JFrame {
                                     success = false;
                                 }
                             }
-                            if(highlight2.isVisible()) {
+                            if (highlight2.isVisible()) {
                                 currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID2.getText()));
-                                if(currentApplication != null) {
-                                    if(spManager.deleteApplicationRecordByID(currentApplication.getApplicationID())) {                                
+                                if (currentApplication != null) {
+                                    if (spManager.deleteApplicationRecordByID(currentApplication.getApplicationID())) {
                                         Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
-                                        if(pet != null) {
+                                        if (pet != null) {
                                             String appType = currentApplication.getApplicationType();
-                                            if(appType.equals("A")) {
+                                            if (appType.equals("A")) {
                                                 spManager.updatePetStatus(Integer.valueOf(pet.getPetID()), "NA");
-                                            } else if(appType.equals("R")) {
+                                            } else if (appType.equals("R")) {
                                                 // QUERY HERE: delete a pet record by id
                                                 spManager.deletePetRecordByID(Integer.valueOf(pet.getPetID()));
                                             }
@@ -3993,16 +4047,16 @@ public class UserLoggedIn extends javax.swing.JFrame {
                                     success = false;
                                 }
                             }
-                            if(highlight3.isVisible()) {
+                            if (highlight3.isVisible()) {
                                 currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID3.getText()));
-                                if(currentApplication != null) {
-                                    if(spManager.deleteApplicationRecordByID(currentApplication.getApplicationID())) {                                
+                                if (currentApplication != null) {
+                                    if (spManager.deleteApplicationRecordByID(currentApplication.getApplicationID())) {
                                         Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
-                                        if(pet != null) {
+                                        if (pet != null) {
                                             String appType = currentApplication.getApplicationType();
-                                            if(appType.equals("A")) {
+                                            if (appType.equals("A")) {
                                                 spManager.updatePetStatus(Integer.valueOf(pet.getPetID()), "NA");
-                                            } else if(appType.equals("R")) {
+                                            } else if (appType.equals("R")) {
                                                 // QUERY HERE: delete a pet record by id
                                                 spManager.deletePetRecordByID(Integer.valueOf(pet.getPetID()));
                                             }
@@ -4013,16 +4067,16 @@ public class UserLoggedIn extends javax.swing.JFrame {
                                     success = false;
                                 }
                             }
-                            if(highlight4.isVisible()) {
+                            if (highlight4.isVisible()) {
                                 currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID4.getText()));
-                                if(currentApplication != null) {
-                                    if(spManager.deleteApplicationRecordByID(currentApplication.getApplicationID())) {                                
+                                if (currentApplication != null) {
+                                    if (spManager.deleteApplicationRecordByID(currentApplication.getApplicationID())) {
                                         Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
-                                        if(pet != null) {
+                                        if (pet != null) {
                                             String appType = currentApplication.getApplicationType();
-                                            if(appType.equals("A")) {
+                                            if (appType.equals("A")) {
                                                 spManager.updatePetStatus(Integer.valueOf(pet.getPetID()), "NA");
-                                            } else if(appType.equals("R")) {
+                                            } else if (appType.equals("R")) {
                                                 // QUERY HERE: delete a pet record by id
                                                 spManager.deletePetRecordByID(Integer.valueOf(pet.getPetID()));
                                             }
@@ -4033,16 +4087,16 @@ public class UserLoggedIn extends javax.swing.JFrame {
                                     success = false;
                                 }
                             }
-                            if(highlight5.isVisible()) {
+                            if (highlight5.isVisible()) {
                                 currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID5.getText()));
-                                if(currentApplication != null) {
-                                    if(spManager.deleteApplicationRecordByID(currentApplication.getApplicationID())) {                                
+                                if (currentApplication != null) {
+                                    if (spManager.deleteApplicationRecordByID(currentApplication.getApplicationID())) {
                                         Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
-                                        if(pet != null) {
+                                        if (pet != null) {
                                             String appType = currentApplication.getApplicationType();
-                                            if(appType.equals("A")) {
+                                            if (appType.equals("A")) {
                                                 spManager.updatePetStatus(Integer.valueOf(pet.getPetID()), "NA");
-                                            } else if(appType.equals("R")) {
+                                            } else if (appType.equals("R")) {
                                                 // QUERY HERE: delete a pet record by id
                                                 spManager.deletePetRecordByID(Integer.valueOf(pet.getPetID()));
                                             }
@@ -4053,8 +4107,8 @@ public class UserLoggedIn extends javax.swing.JFrame {
                                     success = false;
                                 }
                             }
-                            
-                            if(success) {
+
+                            if (success) {
                                 JOptionPane.showMessageDialog(null, "Application Deleted Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
                                 UserLoggedIn.this.setApplicationClicked(false);
                                 UserLoggedIn.this.populateAppsFromDB();
@@ -4064,7 +4118,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                             }
                             applicationEditVisibility(false);
                             applicationPrev.setVisible(appPrev);
-                            applicationNext.setVisible(appNext);                           
+                            applicationNext.setVisible(appNext);
                         }
                     }
                 });
@@ -4157,7 +4211,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
                             // QUERY HERE: delete a client record by changing the account status to "D"
                             // method will return true if successful, otherwise false
                             success = spManager.deleteClientRecordByID(client.getClientID());
-                            if(success) {
+                            if (success) {
                                 spManager.updateApplicationRecordByClientID(client.getClientID());
                                 JOptionPane.showMessageDialog(null, "Account deleted successfully!");
                                 UserLoggedIn.this.setVisible(false);
@@ -4246,49 +4300,49 @@ public class UserLoggedIn extends javax.swing.JFrame {
                         if (userResponse) {
                             boolean success = false;
 
-                        String fullNameVar = fullName.getText().trim();
-                        int ageVar = Integer.valueOf(age.getText().trim());
-                        String contactNumVar = contactNum.getText().trim();
-                        String usernameVar = username.getText().trim();
-                        String passwordVar = (String) password.getText();
-                        String confirmPasswordVar = (String) confirmPassword.getText();
-                        String currentAddressVar = currentAddress.getText().trim();
-                        String emailAddressVar = emailAddress.getText().trim();
-                        String occupationVar = occupation.getText().trim();
-                        String companyNameVar = companyName.getText().trim();
-                        String workTypeVar = (String) workType.getSelectedItem();
+                            String fullNameVar = fullName.getText().trim();
+                            int ageVar = Integer.valueOf(age.getText().trim());
+                            String contactNumVar = contactNum.getText().trim();
+                            String usernameVar = username.getText().trim();
+                            String passwordVar = (String) password.getText();
+                            String confirmPasswordVar = (String) confirmPassword.getText();
+                            String currentAddressVar = currentAddress.getText().trim();
+                            String emailAddressVar = emailAddress.getText().trim();
+                            String occupationVar = occupation.getText().trim();
+                            String companyNameVar = companyName.getText().trim();
+                            String workTypeVar = (String) workType.getSelectedItem();
 
-                        // Check if any of the critical fields (emailAddress, contactNum, username) have changed
-                        boolean criticalFieldsChanged = !emailAddressVar.equals(client.getClientEmailAdd()) ||
-                                                         !contactNumVar.equals(client.getCellNum()) ||
-                                                         !usernameVar.equals(client.getClientUsername());
+                            // Check if any of the critical fields (emailAddress, contactNum, username) have changed
+                            boolean criticalFieldsChanged = !emailAddressVar.equals(client.getClientEmailAdd())
+                                    || !contactNumVar.equals(client.getCellNum())
+                                    || !usernameVar.equals(client.getClientUsername());
 
-                        // Perform conditional validation
-                        if (!criticalFieldsChanged || registerController.validateClientInput(fullNameVar, emailAddressVar, usernameVar, contactNumVar, passwordVar, confirmPasswordVar,
-                                                                    currentAddressVar, occupationVar, companyNameVar, workTypeVar, "")) {
-                            // If critical fields haven't changed or validation passes, update the client record
-                            String acctStatus = "A";
-                            success = spManager.updateClientRecordByID(client.getClientID(), usernameVar, passwordVar, fullNameVar, ageVar, currentAddressVar, contactNumVar,
-                                                                      emailAddressVar, occupationVar, companyNameVar, workTypeVar, acctStatus);
+                            // Perform conditional validation
+                            if (!criticalFieldsChanged || registerController.validateClientInput(fullNameVar, emailAddressVar, usernameVar, contactNumVar, passwordVar, confirmPasswordVar,
+                                    currentAddressVar, occupationVar, companyNameVar, workTypeVar, "")) {
+                                // If critical fields haven't changed or validation passes, update the client record
+                                String acctStatus = "A";
+                                success = spManager.updateClientRecordByID(client.getClientID(), usernameVar, passwordVar, fullNameVar, ageVar, currentAddressVar, contactNumVar,
+                                        emailAddressVar, occupationVar, companyNameVar, workTypeVar, acctStatus);
 
-                            if (success) {
-                                // Show success message
-                                JOptionPane.showMessageDialog(null, "Profile Updated Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
-                                confirmPassword.setText("");
-                                client = spManager.getClientByCredentials(usernameVar, passwordVar);
-                                updateClientProfile();
+                                if (success) {
+                                    // Show success message
+                                    JOptionPane.showMessageDialog(null, "Profile Updated Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                                    confirmPassword.setText("");
+                                    client = spManager.getClientByCredentials(usernameVar, passwordVar);
+                                    updateClientProfile();
+                                } else {
+                                    // Show error message
+                                    JOptionPane.showMessageDialog(null, "Profile Update Failed. Please try again.");
+                                    return;
+                                }
                             } else {
-                                // Show error message
-                                JOptionPane.showMessageDialog(null, "Profile Update Failed. Please try again.");
+                                // Show validation error message
+                                JOptionPane.showMessageDialog(null, "Please fill in all required fields correctly.");
                                 return;
                             }
-                        } else {
-                            // Show validation error message
-                            JOptionPane.showMessageDialog(null, "Please fill in all required fields correctly.");
-                            return;
-                        }
 
-                        profileEditVisibility(false);
+                            profileEditVisibility(false);
                         }
                     }
                 });
@@ -4356,7 +4410,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
             }
             adopt.dispose();
         }
-        if(rehome != null) {
+        if (rehome != null) {
             rehome.dispose();
             rehome = null;
         }
@@ -4604,13 +4658,13 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // TODO add your handling code here:
         // QUERY HERE: return an application record by id
         Application currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID1.getText()));
-        if(currentApplication != null) {
+        if (currentApplication != null) {
             // QUERY HERE: return pet and vet by id from the current application
             Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
             Veterinarian vet = spManager.getVetRecordByID(currentApplication.getVetID());
-            if(pet != null && vet != null) {
+            if (pet != null && vet != null) {
                 String currentAppType = currentApplication.getApplicationType();
-                if(currentAppType.equals("A")) {
+                if (currentAppType.equals("A")) {
                     if (rehome != null) {
                         if (rehome.getAdopt() != null) {
                             adopt = rehome.getAdopt();
@@ -4630,14 +4684,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
                         adopt.toFront();
                         adopt.requestFocus();
                     }
-                } else if(currentAppType.equals("R")) {
+                } else if (currentAppType.equals("R")) {
                     if (adopt != null) {
                         if (adopt.getRehome() != null) {
                             rehome = adopt.getRehome();
                         }
                         adopt.dispose();
                     }
-                    if(rehome != null) {
+                    if (rehome != null) {
                         rehome.dispose();
                         rehome = null;
                     }
@@ -4670,13 +4724,13 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // TODO add your handling code here:
         // QUERY HERE: return an application record by id
         Application currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID2.getText()));
-        if(currentApplication != null) {
+        if (currentApplication != null) {
             // QUERY HERE: return pet and vet by id from the current application
             Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
             Veterinarian vet = spManager.getVetRecordByID(currentApplication.getVetID());
-            if(pet != null && vet != null) {
+            if (pet != null && vet != null) {
                 String currentAppType = currentApplication.getApplicationType();
-                if(currentAppType.equals("A")) {
+                if (currentAppType.equals("A")) {
                     if (rehome != null) {
                         if (rehome.getAdopt() != null) {
                             adopt = rehome.getAdopt();
@@ -4696,14 +4750,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
                         adopt.toFront();
                         adopt.requestFocus();
                     }
-                } else if(currentAppType.equals("R")) {
+                } else if (currentAppType.equals("R")) {
                     if (adopt != null) {
                         if (adopt.getRehome() != null) {
                             rehome = adopt.getRehome();
                         }
                         adopt.dispose();
                     }
-                    if(rehome != null) {
+                    if (rehome != null) {
                         rehome.dispose();
                         rehome = null;
                     }
@@ -4736,13 +4790,13 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // TODO add your handling code here:
         // QUERY HERE: return an application record by id
         Application currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID3.getText()));
-        if(currentApplication != null) {
+        if (currentApplication != null) {
             // QUERY HERE: return pet and vet by id from the current application
             Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
             Veterinarian vet = spManager.getVetRecordByID(currentApplication.getVetID());
-            if(pet != null && vet != null) {
+            if (pet != null && vet != null) {
                 String currentAppType = currentApplication.getApplicationType();
-                if(currentAppType.equals("A")) {
+                if (currentAppType.equals("A")) {
                     if (rehome != null) {
                         if (rehome.getAdopt() != null) {
                             adopt = rehome.getAdopt();
@@ -4762,14 +4816,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
                         adopt.toFront();
                         adopt.requestFocus();
                     }
-                } else if(currentAppType.equals("R")) {
+                } else if (currentAppType.equals("R")) {
                     if (adopt != null) {
                         if (adopt.getRehome() != null) {
                             rehome = adopt.getRehome();
                         }
                         adopt.dispose();
                     }
-                    if(rehome != null) {
+                    if (rehome != null) {
                         rehome.dispose();
                         rehome = null;
                     }
@@ -4802,13 +4856,13 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // TODO add your handling code here:
         // QUERY HERE: return an application record by id
         Application currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID4.getText()));
-        if(currentApplication != null) {
+        if (currentApplication != null) {
             // QUERY HERE: return pet and vet by id from the current application
             Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
             Veterinarian vet = spManager.getVetRecordByID(currentApplication.getVetID());
-            if(pet != null && vet != null) {
+            if (pet != null && vet != null) {
                 String currentAppType = currentApplication.getApplicationType();
-                if(currentAppType.equals("A")) {
+                if (currentAppType.equals("A")) {
                     if (rehome != null) {
                         if (rehome.getAdopt() != null) {
                             adopt = rehome.getAdopt();
@@ -4828,14 +4882,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
                         adopt.toFront();
                         adopt.requestFocus();
                     }
-                } else if(currentAppType.equals("R")) {
+                } else if (currentAppType.equals("R")) {
                     if (adopt != null) {
                         if (adopt.getRehome() != null) {
                             rehome = adopt.getRehome();
                         }
                         adopt.dispose();
                     }
-                    if(rehome != null) {
+                    if (rehome != null) {
                         rehome.dispose();
                         rehome = null;
                     }
@@ -4868,13 +4922,13 @@ public class UserLoggedIn extends javax.swing.JFrame {
         // TODO add your handling code here:
         // QUERY HERE: return an application record by id
         Application currentApplication = spManager.getApplicationRecord(Integer.valueOf(appID5.getText()));
-        if(currentApplication != null) {
+        if (currentApplication != null) {
             // QUERY HERE: return pet and vet by id from the current application
             Pet pet = spManager.getPetRecordByID(currentApplication.getPetID());
             Veterinarian vet = spManager.getVetRecordByID(currentApplication.getVetID());
-            if(pet != null && vet != null) {
+            if (pet != null && vet != null) {
                 String currentAppType = currentApplication.getApplicationType();
-                if(currentAppType.equals("A")) {
+                if (currentAppType.equals("A")) {
                     if (rehome != null) {
                         if (rehome.getAdopt() != null) {
                             adopt = rehome.getAdopt();
@@ -4894,14 +4948,14 @@ public class UserLoggedIn extends javax.swing.JFrame {
                         adopt.toFront();
                         adopt.requestFocus();
                     }
-                } else if(currentAppType.equals("R")) {
+                } else if (currentAppType.equals("R")) {
                     if (adopt != null) {
                         if (adopt.getRehome() != null) {
                             rehome = adopt.getRehome();
                         }
                         adopt.dispose();
                     }
-                    if(rehome != null) {
+                    if (rehome != null) {
                         rehome.dispose();
                         rehome = null;
                     }
@@ -4932,7 +4986,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void ageDescendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ageDescendingActionPerformed
         // TODO add your handling code here:
-        if(ageDescending.isSelected()) {
+        if (ageDescending.isSelected()) {
             orderByAge.setText("petAge DESC");
         } else {
             orderByAge.setText("petAge");
@@ -4942,7 +4996,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void nameDescendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameDescendingActionPerformed
         // TODO add your handling code here:
-        if(nameDescending.isSelected()) {
+        if (nameDescending.isSelected()) {
             orderByName.setText("petName DESC");
         } else {
             orderByName.setText("petName");
@@ -4952,7 +5006,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void IDdescendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDdescendingActionPerformed
         // TODO add your handling code here:
-        if(IDdescending.isSelected()) {
+        if (IDdescending.isSelected()) {
             orderByID.setText("petID DESC");
         } else {
             orderByID.setText("petID");
@@ -4962,13 +5016,13 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void orderByIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderByIDActionPerformed
         // TODO add your handling code here:
-        if(orderByID.isSelected()) {
+        if (orderByID.isSelected()) {
             IDdescending.setEnabled(true);
             sortingPriority.add(orderByID);
         } else if (sortingPriority != null) {
             // remove checkbox if found
-            for(JCheckBox attr : sortingPriority) {
-                if(attr.equals(orderByID)) {
+            for (JCheckBox attr : sortingPriority) {
+                if (attr.equals(orderByID)) {
                     sortingPriority.remove(attr);
                     break;
                 }
@@ -4978,7 +5032,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
             IDprio.setText("");
 
             // unselect descending if checked and call the corresponding listener
-            if(IDdescending.isSelected()) {
+            if (IDdescending.isSelected()) {
                 IDdescending.setSelected(false);
                 IDdescending.setEnabled(false);
                 IDdescendingActionPerformed(evt);
@@ -4990,13 +5044,13 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void orderByAgeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderByAgeActionPerformed
         // TODO add your handling code here:
-        if(orderByAge.isSelected()) {
+        if (orderByAge.isSelected()) {
             sortingPriority.add(orderByAge);
             ageDescending.setEnabled(true);
         } else if (sortingPriority != null) {
             // remove checkbox if found
-            for(JCheckBox attr : sortingPriority) {
-                if(attr.equals(orderByAge)) {
+            for (JCheckBox attr : sortingPriority) {
+                if (attr.equals(orderByAge)) {
                     sortingPriority.remove(attr);
                     break;
                 }
@@ -5006,7 +5060,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
             agePrio.setText("");
 
             // unselect descending if checked and call the corresponding listener
-            if(ageDescending.isSelected()) {
+            if (ageDescending.isSelected()) {
                 ageDescending.setSelected(false);
                 ageDescending.setEnabled(false);
                 ageDescendingActionPerformed(evt);
@@ -5018,13 +5072,13 @@ public class UserLoggedIn extends javax.swing.JFrame {
 
     private void orderByNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderByNameActionPerformed
         // TODO add your handling code here:
-        if(orderByName.isSelected()) {
+        if (orderByName.isSelected()) {
             sortingPriority.add(orderByName);
             nameDescending.setEnabled(true);
         } else if (sortingPriority != null) {
             // remove checkbox if exist
-            for(JCheckBox attr : sortingPriority) {
-                if(attr.equals(orderByName)) {
+            for (JCheckBox attr : sortingPriority) {
+                if (attr.equals(orderByName)) {
                     sortingPriority.remove(attr);
                     break;
                 }
@@ -5034,7 +5088,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
             namePrio.setText("");
 
             // unselect descending if checked and call the corresponding listener
-            if(nameDescending.isSelected()) {
+            if (nameDescending.isSelected()) {
                 nameDescending.setSelected(false);
                 nameDescending.setEnabled(false);
                 nameDescendingActionPerformed(evt);
@@ -5292,6 +5346,11 @@ public class UserLoggedIn extends javax.swing.JFrame {
     private javax.swing.JLabel appAppointDate3;
     private javax.swing.JLabel appAppointDate4;
     private javax.swing.JLabel appAppointDate5;
+    private javax.swing.JLabel appAppointTime1;
+    private javax.swing.JLabel appAppointTime2;
+    private javax.swing.JLabel appAppointTime3;
+    private javax.swing.JLabel appAppointTime4;
+    private javax.swing.JLabel appAppointTime5;
     private javax.swing.JLabel appID1;
     private javax.swing.JLabel appID2;
     private javax.swing.JLabel appID3;

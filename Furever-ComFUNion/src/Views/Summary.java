@@ -6,6 +6,8 @@
 package Views;
 
 import Controllers.ConfirmationDialogController;
+import Models.SPManager;
+import java.awt.Component;
 import java.awt.MediaTracker;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -13,15 +15,22 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
  * @author joshu
  */
 public class Summary extends javax.swing.JFrame {
+
+    // Database manager
+    SPManager spManager = new SPManager();
 
     // for moving the frame
     private Point mouseDownCompCoords;
@@ -30,11 +39,13 @@ public class Summary extends javax.swing.JFrame {
     private UserLoggedIn userLoggedIn;
     private VetLoggedIn vetLoggedIn;
     private LandingPage landingPage;
+    private JPanel glassPane;
 
-    // summary display, scalar, and having conditions
+    // summary display, column, and having conditions
     private List<String> displayAttributes = new ArrayList<>();
     private List<String> columnFunctions = new ArrayList<>();
     private List<String> havingConditions = new ArrayList<>();
+    private List<String> validateText = new ArrayList<>();
 
     // controller
     ConfirmationDialogController confirmationController;
@@ -65,21 +76,23 @@ public class Summary extends javax.swing.JFrame {
             System.err.println("Error: Image not found. " + e.getMessage());
             e.printStackTrace();
         }
-        
+
         countHaving.setName("countHaving");
         minHaving.setName("minHaving");
         maxHaving.setName("maxHaving");
         sumHaving.setName("sumHaving");
         averageHaving.setName("averageHaving");
-        
-        JCheckBox[] havingsCb = { countCb, minCb, maxCb, sumCb, averageCb };
+
+        JCheckBox[] havingsCb = {countCb, minCb, maxCb, sumCb, averageCb};
         JTextField[] havingsText = {countHaving, minHaving, maxHaving, sumHaving, averageHaving};
-        
-        for(int i = 0; i < havingsCb.length; i++) {
+
+        for (int i = 0; i < havingsCb.length; i++) {
             havingsCb[i].setEnabled(false);
             havingsText[i].setEditable(false);
             havingsText[i].setEnabled(false);
         }
+
+        noResultsFound.setVisible(false);
     }
 
     public Summary() {
@@ -100,41 +113,105 @@ public class Summary extends javax.swing.JFrame {
     }
 
     private void getSummary() {
-    // Clear previous selections
-    displayAttributes.clear();
-    columnFunctions.clear();
-    havingConditions.clear();
+        // Clear previous selections
+        displayAttributes.clear();
+        columnFunctions.clear();
+        havingConditions.clear();
 
-    JCheckBox[] displays = {appointStatus, clientFullName, vetFullName, petType, petName, petGender, petOrigin, petSize, petStatus};
-    JCheckBox[] scalars = {count, min, max, sum, average};
-    JCheckBox[] havingsCb = { countCb, minCb, maxCb, sumCb, averageCb };
-    JTextField[] havingsText = {countHaving, minHaving, maxHaving, sumHaving, averageHaving};
-    String[] havingsInitialInputs = new String[] {"TotalRecord", "MinimumTotalRecord", "MaximumTotalRecord", "SumTotalRecord", "AverageTotalRecord" };
+        JCheckBox[] displays = {applicationType, appointStatus, clientFullName, vetFullName, petType, petName, petGender, petOrigin, petSize, petStatus};
+        JCheckBox[] columns = {count, min, max, sum, average};
+        JComboBox[] columnParams = {countComboBox, minComboBox, maxComboBox, sumComboBox, averageComboBox};
+        JCheckBox[] havingsCb = {countCb, minCb, maxCb, sumCb, averageCb};
+        JTextField[] havingsText = {countHaving, minHaving, maxHaving, sumHaving, averageHaving};
+        String[] havingsInitialInputs = new String[]{"Total", "Minimum", "Maximum", "Sum", "Average"};
+        String[] columnInitialTexts = new String[]{"COUNT(", "MIN(", "MAX(", "SUM(", "AVG("};
 
-    // Add selected display attributes
+        // Add selected display attributes
         for (JCheckBox display : displays) {
             if (display.isSelected()) {
                 displayAttributes.add(display.getText());
             }
         }
 
-        // Map scalar checkboxes to their corresponding text fields
-        for (int i = 0; i < scalars.length; i++) {
-            JCheckBox scalar = scalars[i];
+        // Iterate over each column and corresponding UI elements
+        for (int i = 0; i < columns.length; i++) {
+            JCheckBox column = columns[i];
+            JComboBox columnParam = null;
+            String columnInitial = "";
+
+            // Initialize column initial text and parameter combo box
+            columnInitial = columnInitialTexts[i];
+            columnParam = columnParams[i];
+            column.setText(columnInitial);
+
+            // Initialize having clause text field and checkbox
             JTextField havingTextField = havingsText[i];
             JCheckBox havingCb = havingsCb[i];
             String havingInput = havingsInitialInputs[i];
+            havingTextField.setText(havingInput);
 
-            if (scalar.isSelected()) {
-                columnFunctions.add(scalar.getText());
+            // Check if the column checkbox is selected
+            if (column.isSelected()) {
+                // Enable the column parameter combo box
+                columnParam.setEnabled(true);
+                String param = (String) columnParam.getSelectedItem();
+
+                // Handle special cases for column parameters
+                if (param.equals("PetAge")) {
+                    param = "CONVERT(SUBSTRING_INDEX(PetAge, ' ', 1), UNSIGNED INTEGER)";
+                    havingTextField.setText(havingTextField.getText() + "PetAgeInMonths");
+                } else if (param.contains("ID")) {
+                    String havingParam = param.substring(0, param.length() - 2) + "Record";
+                    havingTextField.setText(havingTextField.getText() + havingParam);
+                } else if (param.equals("*")) {
+                    if (displayAttributes.isEmpty()) {
+                        JOptionPane.showMessageDialog(this, "Please choose an attribute under Display before using Count(*)!");
+                    } else {
+                        havingTextField.setText(havingTextField.getText() + "Record");
+                    }
+                } else {
+                    havingTextField.setText(havingTextField.getText() + param);
+                }
+
+                // Add the having clause text to the validation list
+                validateText.add(havingTextField.getText());
+
+                // Update the column text to include the parameter and alias
+                if(param.contains("PetID")) {
+                    column.setText(column.getText() + "p." + param + ") AS ");
+                } else if(param.contains("VetID")) {
+                    column.setText(column.getText() + "v." + param + ") AS ");
+                } else if(param.contains("ClientID")) {
+                    column.setText(column.getText() + "c." + param + ") AS ");
+                } else {
+                    column.setText(column.getText() + param + ") AS ");
+                }
+                
+                column.setText(column.getText() + havingTextField.getText());
+
+                // Add the column function text to the list
+                columnFunctions.add(column.getText());
+
+                // Enable and make the having text field editable
                 havingTextField.setEnabled(true);
                 havingTextField.setEditable(true);
                 havingTextField.setFocusable(true);
+
+                // Enable the having clause checkbox
                 havingCb.setEnabled(true);
             } else {
+                // Disable the column parameter combo box
+                columnParam.setEnabled(false);
+
+                // Reset the column text and having clause text field
+                column.setText(columnInitial);
                 havingTextField.setText(havingInput);
+
+                // Reset the having clause checkbox
                 havingCb.setSelected(false);
                 havingCb.setEnabled(false);
+
+                // Disable and make the having text field non-editable
                 havingTextField.setEditable(false);
                 havingTextField.setEnabled(false);
             }
@@ -153,14 +230,13 @@ public class Summary extends javax.swing.JFrame {
             }
         }
     }
-    
-    
+
     public void setHavingTextFields() {
         havingConditions.clear();
-        
-        JCheckBox[] havingsCb = { countCb, minCb, maxCb, sumCb, averageCb };
+
+        JCheckBox[] havingsCb = {countCb, minCb, maxCb, sumCb, averageCb};
         JTextField[] havingsText = {countHaving, minHaving, maxHaving, sumHaving, averageHaving};
-        
+
         // Add having conditions from text fields if their corresponding checkbox is selected
         for (int i = 0; i < havingsCb.length; i++) {
             JCheckBox cb = havingsCb[i];
@@ -178,8 +254,11 @@ public class Summary extends javax.swing.JFrame {
     private boolean validateHavingField(JTextField textField) {
         String text = textField.getText().trim();
 
+        String params = "".join("|", validateText);
+
         // Regular expression to match <attribute> <operator> <value> where value is a positive or negative integer
-        String regex = "^(TotalRecord|MinimumTotalRecord|MaximumTotalRecord|SumTotalRecord|AverageTotalRecord)\\s*(>=|<=|>|<|=)\\s*-?\\d+$";
+        String regex = "^(" + params + ")\\s*(>=|<=|>|<|=)\\s*-?\\d+$";
+        System.out.println(regex);
         if (!text.matches(regex)) {
             return false;
         }
@@ -205,7 +284,56 @@ public class Summary extends javax.swing.JFrame {
         return true;
     }
 
+    private void setJTableModel(ArrayList<List<String>> results) {
+        if (results != null && !results.isEmpty()) {
+            noResultsFound.setVisible(false);
 
+            // Extract headers from the first item in the results
+            List<String> headers = results.get(0);
+            String[] columnNames = headers.toArray(new String[0]);
+
+            // Extract the data rows from the results
+            Object[][] data = new Object[results.size() - 1][];
+            for (int i = 1; i < results.size(); i++) {
+                List<String> row = results.get(i);
+                data[i - 1] = row.toArray(new Object[0]);
+            }
+
+            // Create the table model with the headers and data
+            DefaultTableModel tableModel = new DefaultTableModel(data, columnNames) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false; // Make cells non-editable
+                }
+            };
+
+            // Set the model to the JTable
+            summaryTable.setModel(tableModel);
+
+            // Adjust column sizes based on the content and headers
+            for (int column = 0; column < summaryTable.getColumnCount(); column++) {
+                int preferredWidth = summaryTable.getColumnModel().getColumn(column).getMinWidth();
+
+                // Calculate width based on header
+                TableCellRenderer headerRenderer = summaryTable.getTableHeader().getDefaultRenderer();
+                Component headerComponent = headerRenderer.getTableCellRendererComponent(summaryTable, summaryTable.getColumnModel().getColumn(column).getHeaderValue(), false, false, 0, column);
+                preferredWidth = Math.max(preferredWidth, headerComponent.getPreferredSize().width + summaryTable.getIntercellSpacing().width);
+
+                // Calculate width based on cell content
+                for (int row = 0; row < summaryTable.getRowCount(); row++) {
+                    TableCellRenderer cellRenderer = summaryTable.getCellRenderer(row, column);
+                    Component c = summaryTable.prepareRenderer(cellRenderer, row, column);
+                    preferredWidth = Math.max(c.getPreferredSize().width + summaryTable.getIntercellSpacing().width, preferredWidth);
+                }
+                summaryTable.getColumnModel().getColumn(column).setPreferredWidth(preferredWidth);
+            }
+        } else {
+            noResultsFound.setVisible(true);
+
+            // Clear the JTable
+            summaryTable.setModel(new DefaultTableModel());
+        }
+    }
 
 
     /**
@@ -232,11 +360,17 @@ public class Summary extends javax.swing.JFrame {
         minHaving = new javax.swing.JTextField();
         maxHaving = new javax.swing.JTextField();
         sumHaving = new javax.swing.JTextField();
+        countComboBox = new javax.swing.JComboBox<>();
+        averageComboBox = new javax.swing.JComboBox<>();
+        sumComboBox = new javax.swing.JComboBox<>();
+        maxComboBox = new javax.swing.JComboBox<>();
+        minComboBox = new javax.swing.JComboBox<>();
         petStatus = new javax.swing.JCheckBox();
         petSize = new javax.swing.JCheckBox();
         petOrigin = new javax.swing.JCheckBox();
         petGender = new javax.swing.JCheckBox();
         petName = new javax.swing.JCheckBox();
+        applicationType = new javax.swing.JCheckBox();
         appointStatus = new javax.swing.JCheckBox();
         average = new javax.swing.JCheckBox();
         clientFullName = new javax.swing.JCheckBox();
@@ -246,6 +380,7 @@ public class Summary extends javax.swing.JFrame {
         max = new javax.swing.JCheckBox();
         count = new javax.swing.JCheckBox();
         petType = new javax.swing.JCheckBox();
+        noResultsFound = new javax.swing.JLabel();
         summaryTableScroll = new javax.swing.JScrollPane();
         summaryTable = new javax.swing.JTable();
         summaryBg = new javax.swing.JLabel();
@@ -270,7 +405,7 @@ public class Summary extends javax.swing.JFrame {
                 minimizeButtonMouseExited(evt);
             }
         });
-        getContentPane().add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(815, 10, 40, 20));
+        getContentPane().add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1035, 10, -1, -1));
 
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/back button (1).png"))); // NOI18N
         backButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -284,7 +419,7 @@ public class Summary extends javax.swing.JFrame {
                 backButtonMouseExited(evt);
             }
         });
-        getContentPane().add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(855, 5, 40, 40));
+        getContentPane().add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 5, -1, -1));
 
         header.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -296,7 +431,7 @@ public class Summary extends javax.swing.JFrame {
                 headerMousePressed(evt);
             }
         });
-        getContentPane().add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 110));
+        getContentPane().add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1120, 140));
 
         summaryPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
         summaryPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -313,7 +448,7 @@ public class Summary extends javax.swing.JFrame {
                 confirmButtonMouseExited(evt);
             }
         });
-        summaryPanel.add(confirmButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 135, 70, 70));
+        summaryPanel.add(confirmButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 210, 70, 70));
 
         minCb.setBackground(new java.awt.Color(255, 255, 255));
         minCb.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
@@ -328,7 +463,7 @@ public class Summary extends javax.swing.JFrame {
                 minCbActionPerformed(evt);
             }
         });
-        summaryPanel.add(minCb, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 147, 15, 15));
+        summaryPanel.add(minCb, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 203, 15, 15));
         minCb.getAccessibleContext().setAccessibleName("minCb");
 
         maxCb.setBackground(new java.awt.Color(255, 255, 255));
@@ -344,7 +479,7 @@ public class Summary extends javax.swing.JFrame {
                 maxCbActionPerformed(evt);
             }
         });
-        summaryPanel.add(maxCb, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 170, 15, 15));
+        summaryPanel.add(maxCb, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 233, 15, 15));
 
         sumCb.setBackground(new java.awt.Color(255, 255, 255));
         sumCb.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
@@ -359,7 +494,7 @@ public class Summary extends javax.swing.JFrame {
                 sumCbActionPerformed(evt);
             }
         });
-        summaryPanel.add(sumCb, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 193, 15, 15));
+        summaryPanel.add(sumCb, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 263, 15, 15));
 
         averageCb.setBackground(new java.awt.Color(255, 255, 255));
         averageCb.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
@@ -374,7 +509,7 @@ public class Summary extends javax.swing.JFrame {
                 averageCbActionPerformed(evt);
             }
         });
-        summaryPanel.add(averageCb, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 217, 15, 15));
+        summaryPanel.add(averageCb, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 293, 15, 15));
 
         countCb.setBackground(new java.awt.Color(255, 255, 255));
         countCb.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
@@ -389,58 +524,104 @@ public class Summary extends javax.swing.JFrame {
                 countCbActionPerformed(evt);
             }
         });
-        summaryPanel.add(countCb, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 125, 15, 15));
+        summaryPanel.add(countCb, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 173, 15, 15));
 
         averageHaving.setEditable(false);
-        averageHaving.setText("AverageTotalRecord");
+        averageHaving.setText("Average");
         averageHaving.setEnabled(false);
         averageHaving.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 averageHavingActionPerformed(evt);
             }
         });
-        summaryPanel.add(averageHaving, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 212, 200, -1));
+        summaryPanel.add(averageHaving, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 290, 200, -1));
         averageHaving.getAccessibleContext().setAccessibleName("averageHaving");
 
         countHaving.setEditable(false);
-        countHaving.setText("TotalRecord");
+        countHaving.setText("Total");
         countHaving.setEnabled(false);
-        summaryPanel.add(countHaving, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 120, 200, -1));
+        summaryPanel.add(countHaving, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 170, 200, -1));
         countHaving.getAccessibleContext().setAccessibleName("countHaving");
 
         minHaving.setEditable(false);
-        minHaving.setText("MinimumTotalRecord");
+        minHaving.setText("Minimum");
         minHaving.setEnabled(false);
         minHaving.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 minHavingActionPerformed(evt);
             }
         });
-        summaryPanel.add(minHaving, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 143, 200, -1));
+        summaryPanel.add(minHaving, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 200, 200, -1));
         minHaving.getAccessibleContext().setAccessibleName("minHaving");
 
         maxHaving.setEditable(false);
-        maxHaving.setText("MaximumTotalRecord");
+        maxHaving.setText("Maximum");
         maxHaving.setEnabled(false);
         maxHaving.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 maxHavingActionPerformed(evt);
             }
         });
-        summaryPanel.add(maxHaving, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 166, 200, -1));
+        summaryPanel.add(maxHaving, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 230, 200, -1));
         maxHaving.getAccessibleContext().setAccessibleName("maxHaving");
 
         sumHaving.setEditable(false);
-        sumHaving.setText("SumTotalRecord");
+        sumHaving.setText("Sum");
         sumHaving.setEnabled(false);
-        summaryPanel.add(sumHaving, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 189, 200, -1));
+        summaryPanel.add(sumHaving, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 260, 200, -1));
         sumHaving.getAccessibleContext().setAccessibleName("sumHaving");
+
+        countComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "*", "PetID", "VetID", "ClientID", "ApplicationID" }));
+        countComboBox.setEnabled(false);
+        countComboBox.setOpaque(false);
+        countComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                countComboBoxActionPerformed(evt);
+            }
+        });
+        summaryPanel.add(countComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 180, 170, -1));
+
+        averageComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PetAge", "VetAge", "ClientAge" }));
+        averageComboBox.setEnabled(false);
+        averageComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                averageComboBoxActionPerformed(evt);
+            }
+        });
+        summaryPanel.add(averageComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 294, 170, -1));
+
+        sumComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PetAge", "VetAge", "ClientAge" }));
+        sumComboBox.setEnabled(false);
+        sumComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sumComboBoxActionPerformed(evt);
+            }
+        });
+        summaryPanel.add(sumComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 267, 170, -1));
+
+        maxComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PetAge", "VetAge", "ClientAge" }));
+        maxComboBox.setEnabled(false);
+        maxComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                maxComboBoxActionPerformed(evt);
+            }
+        });
+        summaryPanel.add(maxComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 237, 170, -1));
+
+        minComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PetAge", "VetAge", "ClientAge" }));
+        minComboBox.setEnabled(false);
+        minComboBox.setOpaque(false);
+        minComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                minComboBoxActionPerformed(evt);
+            }
+        });
+        summaryPanel.add(minComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 208, 170, -1));
 
         petStatus.setBackground(new java.awt.Color(255, 255, 255));
         petStatus.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
         petStatus.setText("PetStatus");
         petStatus.setBorder(null);
-        petStatus.setContentAreaFilled(false);
         petStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         petStatus.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         petStatus.setIconTextGap(0);
@@ -450,13 +631,12 @@ public class Summary extends javax.swing.JFrame {
                 petStatusActionPerformed(evt);
             }
         });
-        summaryPanel.add(petStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(103, 169, 15, 15));
+        summaryPanel.add(petStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 238, 20, 20));
 
         petSize.setBackground(new java.awt.Color(255, 255, 255));
         petSize.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
         petSize.setText("PetSize");
         petSize.setBorder(null);
-        petSize.setContentAreaFilled(false);
         petSize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         petSize.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         petSize.setIconTextGap(0);
@@ -466,13 +646,12 @@ public class Summary extends javax.swing.JFrame {
                 petSizeActionPerformed(evt);
             }
         });
-        summaryPanel.add(petSize, new org.netbeans.lib.awtextra.AbsoluteConstraints(103, 190, 15, 15));
+        summaryPanel.add(petSize, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 268, 20, 20));
 
         petOrigin.setBackground(new java.awt.Color(255, 255, 255));
         petOrigin.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
         petOrigin.setText("PetOrigin");
         petOrigin.setBorder(null);
-        petOrigin.setContentAreaFilled(false);
         petOrigin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         petOrigin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         petOrigin.setIconTextGap(0);
@@ -482,13 +661,12 @@ public class Summary extends javax.swing.JFrame {
                 petOriginActionPerformed(evt);
             }
         });
-        summaryPanel.add(petOrigin, new org.netbeans.lib.awtextra.AbsoluteConstraints(103, 149, 15, 15));
+        summaryPanel.add(petOrigin, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 209, 20, 20));
 
         petGender.setBackground(new java.awt.Color(255, 255, 255));
         petGender.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        petGender.setText("PetGender");
+        petGender.setText("PetSex");
         petGender.setBorder(null);
-        petGender.setContentAreaFilled(false);
         petGender.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         petGender.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         petGender.setIconTextGap(0);
@@ -498,13 +676,12 @@ public class Summary extends javax.swing.JFrame {
                 petGenderActionPerformed(evt);
             }
         });
-        summaryPanel.add(petGender, new org.netbeans.lib.awtextra.AbsoluteConstraints(103, 209, 15, 15));
+        summaryPanel.add(petGender, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 295, 20, 20));
 
         petName.setBackground(new java.awt.Color(255, 255, 255));
         petName.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
         petName.setText("PetName");
         petName.setBorder(null);
-        petName.setContentAreaFilled(false);
         petName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         petName.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         petName.setIconTextGap(0);
@@ -514,13 +691,27 @@ public class Summary extends javax.swing.JFrame {
                 petNameActionPerformed(evt);
             }
         });
-        summaryPanel.add(petName, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 130, 15, 15));
+        summaryPanel.add(petName, new org.netbeans.lib.awtextra.AbsoluteConstraints(193, 182, 20, 20));
+
+        applicationType.setBackground(new java.awt.Color(255, 255, 255));
+        applicationType.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
+        applicationType.setText("ApplicationType");
+        applicationType.setBorder(null);
+        applicationType.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        applicationType.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        applicationType.setIconTextGap(0);
+        applicationType.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        applicationType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                applicationTypeActionPerformed(evt);
+            }
+        });
+        summaryPanel.add(applicationType, new org.netbeans.lib.awtextra.AbsoluteConstraints(297, 180, 20, 20));
 
         appointStatus.setBackground(new java.awt.Color(255, 255, 255));
         appointStatus.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
         appointStatus.setText("AppointStatus");
         appointStatus.setBorder(null);
-        appointStatus.setContentAreaFilled(false);
         appointStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         appointStatus.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         appointStatus.setIconTextGap(0);
@@ -530,13 +721,12 @@ public class Summary extends javax.swing.JFrame {
                 appointStatusActionPerformed(evt);
             }
         });
-        summaryPanel.add(appointStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 130, 15, 15));
+        summaryPanel.add(appointStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(297, 209, 20, 20));
 
         average.setBackground(new java.awt.Color(255, 255, 255));
         average.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        average.setText("AVG(COUNT(*)) AverageCountRecord");
+        average.setText("AVG(");
         average.setBorder(null);
-        average.setContentAreaFilled(false);
         average.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         average.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         average.setIconTextGap(0);
@@ -546,13 +736,12 @@ public class Summary extends javax.swing.JFrame {
                 averageActionPerformed(evt);
             }
         });
-        summaryPanel.add(average, new org.netbeans.lib.awtextra.AbsoluteConstraints(378, 163, 15, 15));
+        summaryPanel.add(average, new org.netbeans.lib.awtextra.AbsoluteConstraints(462, 294, 20, 20));
 
         clientFullName.setBackground(new java.awt.Color(255, 255, 255));
         clientFullName.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
         clientFullName.setText("ClientFullName");
         clientFullName.setBorder(null);
-        clientFullName.setContentAreaFilled(false);
         clientFullName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         clientFullName.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         clientFullName.setIconTextGap(0);
@@ -562,13 +751,12 @@ public class Summary extends javax.swing.JFrame {
                 clientFullNameActionPerformed(evt);
             }
         });
-        summaryPanel.add(clientFullName, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 171, 15, 15));
+        summaryPanel.add(clientFullName, new org.netbeans.lib.awtextra.AbsoluteConstraints(193, 241, 20, 20));
 
         vetFullName.setBackground(new java.awt.Color(255, 255, 255));
         vetFullName.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
         vetFullName.setText("VetFullName");
         vetFullName.setBorder(null);
-        vetFullName.setContentAreaFilled(false);
         vetFullName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         vetFullName.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         vetFullName.setIconTextGap(0);
@@ -578,13 +766,12 @@ public class Summary extends javax.swing.JFrame {
                 vetFullNameActionPerformed(evt);
             }
         });
-        summaryPanel.add(vetFullName, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 151, 15, 15));
+        summaryPanel.add(vetFullName, new org.netbeans.lib.awtextra.AbsoluteConstraints(193, 211, 20, 20));
 
         sum.setBackground(new java.awt.Color(255, 255, 255));
         sum.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        sum.setText("SUM(COUNT(*)) SumTotalRecord");
+        sum.setText("SUM(");
         sum.setBorder(null);
-        sum.setContentAreaFilled(false);
         sum.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         sum.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         sum.setIconTextGap(0);
@@ -594,13 +781,12 @@ public class Summary extends javax.swing.JFrame {
                 sumActionPerformed(evt);
             }
         });
-        summaryPanel.add(sum, new org.netbeans.lib.awtextra.AbsoluteConstraints(378, 200, 15, 15));
+        summaryPanel.add(sum, new org.netbeans.lib.awtextra.AbsoluteConstraints(462, 267, 20, 20));
 
         min.setBackground(new java.awt.Color(255, 255, 255));
         min.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        min.setText("MIN(COUNT(*)) MinimumTotalRecord");
+        min.setText("MIN(");
         min.setBorder(null);
-        min.setContentAreaFilled(false);
         min.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         min.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         min.setIconTextGap(0);
@@ -610,13 +796,12 @@ public class Summary extends javax.swing.JFrame {
                 minActionPerformed(evt);
             }
         });
-        summaryPanel.add(min, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 146, 15, 15));
+        summaryPanel.add(min, new org.netbeans.lib.awtextra.AbsoluteConstraints(462, 208, 20, 20));
 
         max.setBackground(new java.awt.Color(255, 255, 255));
         max.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        max.setText("MAX(COUNT(*)) MaximumTotalRecord");
+        max.setText("MAX(");
         max.setBorder(null);
-        max.setContentAreaFilled(false);
         max.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         max.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         max.setIconTextGap(0);
@@ -626,13 +811,13 @@ public class Summary extends javax.swing.JFrame {
                 maxActionPerformed(evt);
             }
         });
-        summaryPanel.add(max, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 180, 15, 15));
+        summaryPanel.add(max, new org.netbeans.lib.awtextra.AbsoluteConstraints(462, 237, 20, 20));
 
         count.setBackground(new java.awt.Color(255, 255, 255));
         count.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
-        count.setText("COUNT(*) TotalRecord");
+        count.setText("COUNT(");
+        count.setActionCommand("COUNT(");
         count.setBorder(null);
-        count.setContentAreaFilled(false);
         count.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         count.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         count.setIconTextGap(0);
@@ -642,13 +827,12 @@ public class Summary extends javax.swing.JFrame {
                 countActionPerformed(evt);
             }
         });
-        summaryPanel.add(count, new org.netbeans.lib.awtextra.AbsoluteConstraints(378, 130, 15, 15));
+        summaryPanel.add(count, new org.netbeans.lib.awtextra.AbsoluteConstraints(462, 180, 20, 20));
 
         petType.setBackground(new java.awt.Color(255, 255, 255));
         petType.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
         petType.setText("PetType");
         petType.setBorder(null);
-        petType.setContentAreaFilled(false);
         petType.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         petType.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         petType.setIconTextGap(0);
@@ -658,44 +842,31 @@ public class Summary extends javax.swing.JFrame {
                 petTypeActionPerformed(evt);
             }
         });
-        summaryPanel.add(petType, new org.netbeans.lib.awtextra.AbsoluteConstraints(103, 130, 15, 15));
+        summaryPanel.add(petType, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 181, 20, 20));
+
+        noResultsFound.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+        noResultsFound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/no result found (1).png"))); // NOI18N
+        noResultsFound.setToolTipText("");
+        summaryPanel.add(noResultsFound, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 450, 730, 330));
 
         summaryTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
-        });
+        ));
         summaryTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         summaryTable.getTableHeader().setReorderingAllowed(false);
         summaryTableScroll.setViewportView(summaryTable);
-        if (summaryTable.getColumnModel().getColumnCount() > 0) {
-            summaryTable.getColumnModel().getColumn(0).setResizable(false);
-            summaryTable.getColumnModel().getColumn(1).setResizable(false);
-            summaryTable.getColumnModel().getColumn(2).setResizable(false);
-            summaryTable.getColumnModel().getColumn(3).setResizable(false);
-            summaryTable.getColumnModel().getColumn(3).setHeaderValue("Title 4");
-        }
 
-        summaryPanel.add(summaryTableScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 260, 660, 410));
+        summaryPanel.add(summaryTableScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 400, 860, 440));
 
         summaryBg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/SUMMARY.png"))); // NOI18N
-        summaryPanel.add(summaryBg, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 2, -1, -1));
+        summaryPanel.add(summaryBg, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 2, 1121, 846));
 
-        getContentPane().add(summaryPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 680));
+        getContentPane().add(summaryPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1125, 850));
 
         pack();
         setLocationRelativeTo(null);
@@ -718,6 +889,16 @@ public class Summary extends javax.swing.JFrame {
 
     private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
         // TODO add your handling code here:
+        if (userLoggedIn != null) {
+            glassPane = (JPanel) userLoggedIn.getGlassPane();
+            glassPane.setVisible(false);
+        } else if (landingPage != null) {
+            glassPane = (JPanel) landingPage.getGlassPane();
+            glassPane.setVisible(false);
+        } else if (vetLoggedIn != null) {
+            glassPane = (JPanel) vetLoggedIn.getGlassPane();
+            glassPane.setVisible(false);
+        }
         this.dispose();
     }//GEN-LAST:event_backButtonMouseClicked
 
@@ -817,7 +998,21 @@ public class Summary extends javax.swing.JFrame {
     }//GEN-LAST:event_minHavingActionPerformed
 
     private void confirmButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmButtonMouseClicked
-        // TODO add your handling code here
+        // TODO add your handling code here:
+        String countSelectedItem = "";
+        if(count.isSelected()) {
+            countSelectedItem = (String) countComboBox.getSelectedItem();
+        }
+        if(countSelectedItem.equals("*") && displayAttributes.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please choose an attribute under Display!");
+            return;
+        } else if(displayAttributes.isEmpty() && columnFunctions.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please choose something to show!");
+            return;
+        }
+        
+        ArrayList<List<String>> results = new ArrayList<>();
+
         // Validate all having text fields before proceeding
         JTextField[] havingsText = {countHaving, minHaving, maxHaving, sumHaving, averageHaving};
         JCheckBox[] havingsCb = {countCb, minCb, maxCb, sumCb, averageCb};
@@ -839,20 +1034,11 @@ public class Summary extends javax.swing.JFrame {
         // If all fields are valid, proceed with generating the summary/query
         if (isValid) {
             setHavingTextFields(); // Optional method call
-            
-            // Print the summary
-            System.out.println("SELECT " + String.join(",", displayAttributes) + (columnFunctions.isEmpty() ? "" : "," + String.join(",", columnFunctions)));
-            System.out.println("GROUP BY " + String.join(",", displayAttributes));
-            if (!havingConditions.isEmpty()) {
-                System.out.println("HAVING " + String.join(",", havingConditions));
-            }
 
-            System.out.println("\n\n\n");
-            
-            /*
-            // QUERY HERE: get summary by display attributes, scalar functions, and having conditions
-            dataStructureToBeUsed = spManager.methodName(displayAttributes, columnFunctions, havingConditions);
-            */
+            // QUERY HERE: get summary by display attributes, column functions, and having conditions
+            results = spManager.buildAndExecuteSummaryQuery(displayAttributes, columnFunctions, havingConditions);
+
+            setJTableModel(results);
         }
     }//GEN-LAST:event_confirmButtonMouseClicked
 
@@ -899,6 +1085,36 @@ public class Summary extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_maxHavingActionPerformed
 
+    private void applicationTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applicationTypeActionPerformed
+        // TODO add your handling code here:
+        getSummary();
+    }//GEN-LAST:event_applicationTypeActionPerformed
+
+    private void averageComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_averageComboBoxActionPerformed
+        // TODO add your handling code here:
+        getSummary();
+    }//GEN-LAST:event_averageComboBoxActionPerformed
+
+    private void sumComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sumComboBoxActionPerformed
+        // TODO add your handling code here:
+        getSummary();
+    }//GEN-LAST:event_sumComboBoxActionPerformed
+
+    private void maxComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maxComboBoxActionPerformed
+        // TODO add your handling code here:
+        getSummary();
+    }//GEN-LAST:event_maxComboBoxActionPerformed
+
+    private void minComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minComboBoxActionPerformed
+        // TODO add your handling code here:
+        getSummary();
+    }//GEN-LAST:event_minComboBoxActionPerformed
+
+    private void countComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_countComboBoxActionPerformed
+        // TODO add your handling code here:
+        getSummary();
+    }//GEN-LAST:event_countComboBoxActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -942,24 +1158,30 @@ public class Summary extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox applicationType;
     private javax.swing.JCheckBox appointStatus;
     private javax.swing.JCheckBox average;
     private javax.swing.JCheckBox averageCb;
+    private javax.swing.JComboBox<String> averageComboBox;
     private javax.swing.JTextField averageHaving;
     private javax.swing.JLabel backButton;
     private javax.swing.JCheckBox clientFullName;
     private javax.swing.JLabel confirmButton;
     private javax.swing.JCheckBox count;
     private javax.swing.JCheckBox countCb;
+    private javax.swing.JComboBox<String> countComboBox;
     private javax.swing.JTextField countHaving;
     private javax.swing.JLabel header;
     private javax.swing.JCheckBox max;
     private javax.swing.JCheckBox maxCb;
+    private javax.swing.JComboBox<String> maxComboBox;
     private javax.swing.JTextField maxHaving;
     private javax.swing.JCheckBox min;
     private javax.swing.JCheckBox minCb;
+    private javax.swing.JComboBox<String> minComboBox;
     private javax.swing.JTextField minHaving;
     private javax.swing.JLabel minimizeButton;
+    private javax.swing.JLabel noResultsFound;
     private javax.swing.JCheckBox petGender;
     private javax.swing.JCheckBox petName;
     private javax.swing.JCheckBox petOrigin;
@@ -968,6 +1190,7 @@ public class Summary extends javax.swing.JFrame {
     private javax.swing.JCheckBox petType;
     private javax.swing.JCheckBox sum;
     private javax.swing.JCheckBox sumCb;
+    private javax.swing.JComboBox<String> sumComboBox;
     private javax.swing.JTextField sumHaving;
     private javax.swing.JLabel summaryBg;
     private javax.swing.JPanel summaryPanel;
