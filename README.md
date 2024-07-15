@@ -18,11 +18,10 @@ The database maintains comprehensive profiles for adoptable animals, detailing t
 
 ## Business Rules
 
-- Each application requires a veterinarian to manage it.
-- A maximum of 5 pets is permitted per application.
-- Veterinarians' services are not exclusive to a single application.
-- Each pet has its own appointment.
-- Clients can adopt and rehome animals, and vice versa.
+- Each application requires a Veterinarian to manage it.
+- One pet per application only.
+- Veterinarian's services are not strictly exclusive to a single application.
+- Clients can adopt and rehome, vice versa.
 
 ---
 
