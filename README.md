@@ -70,6 +70,10 @@ This project was created by the following students from the Faculty of the Colle
 
 **April, 2024**
 
+## Contribute
+
+We welcome contributions from developers and animal enthusiasts alike! If you have ideas for new features, improvements, or find any issues, feel free to contribute to this project. You can find the source code, report bugs, and submit pull requests directly in this Github repository.
+
 ---
 
 ![NetBeans](https://img.shields.io/badge/NetBeans-8.2-brightgreen) ![Java Swing](https://img.shields.io/badge/Java%20Swing-%E2%98%85%E2%98%85%E2%98%85%E2%98%85%E2%98%85-brightgreen) ![MySQL](https://img.shields.io/badge/MySQL-5.7-blue)
