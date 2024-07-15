@@ -6,7 +6,7 @@
 
 ## Overview
 
-"Furever ComFUNion" is an extensive database system designed to streamline the adoption and rehoming process for animals with fur and paws. Our system offers a range of features including:
+"Furever ComFUNion" is a generic database system designed to streamline the adoption and rehoming process for animals with fur and paws. Our system offers a range of features including:
 
 - Adoption/rehoming tracking
 - Applicant management
