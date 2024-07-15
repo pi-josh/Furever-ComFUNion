@@ -131,7 +131,7 @@ public class LandingPage extends javax.swing.JFrame {
 
         if (!logout) {
             // Create a timer to stop the GIF after 6 seconds
-            timer = new Timer(0, new ActionListener() {
+            timer = new Timer(15000, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     startupAnimationPanel.setVisible(false);

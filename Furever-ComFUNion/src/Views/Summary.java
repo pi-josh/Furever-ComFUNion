@@ -816,7 +816,6 @@ public class Summary extends javax.swing.JFrame {
         count.setBackground(new java.awt.Color(255, 255, 255));
         count.setFont(new java.awt.Font("Tahoma", 0, 1)); // NOI18N
         count.setText("COUNT(");
-        count.setActionCommand("COUNT(");
         count.setBorder(null);
         count.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         count.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);

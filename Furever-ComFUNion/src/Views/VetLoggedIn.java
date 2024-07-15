@@ -3928,7 +3928,7 @@ public class VetLoggedIn extends javax.swing.JFrame {
             applicationPrev.setVisible(true);
         }
 
-        if (appIndex < totalApplications) {
+        if (appIndex < totalApplications  || totalApplications >= 5) {
             totalApplications -= 5;
             applicationsReset();
             applications();

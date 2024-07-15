@@ -210,7 +210,11 @@ public class UserLoggedIn extends javax.swing.JFrame {
         profilePassword.setText(client.getClientPassword());
         profileAddress.setText(client.getClientAddress());
         profileOccupation.setText(client.getClientOccupation());
-        profileWorkType.setText(client.getWorkType());
+        if(client.getWorkType().equals("NT")) {
+            profileWorkType.setText("No Travel");
+        } else {
+            profileWorkType.setText("Travel");
+        }
         profileAge.setText(String.valueOf(client.getClientAge()));
         profileUsername.setText(client.getClientUsername());
 
@@ -2806,6 +2810,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
             appPetType2.setText(applications.get(appIndex).getPetType());
             appAppointDate2.setText(String.valueOf(applications.get(appIndex).getAppointDate()));
             appAppointTime2.setText(String.valueOf(applications.get(appIndex).getAppointTime()));
+            appVet2.setText(applications.get(appIndex).getVetName());
             appStatus2.setText(status2);
         }
         appIndex++;
@@ -3799,7 +3804,7 @@ public class UserLoggedIn extends javax.swing.JFrame {
             applicationPrev.setVisible(true);
         }
 
-        if (appIndex < totalApplications) {
+        if (appIndex < totalApplications || totalApplications >= 5) {
             totalApplications -= 5;
             applicationsReset();
             applications();
