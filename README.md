@@ -1,7 +1,5 @@
 # Furever ComFUNion
 
-![Logo](logos/logo1.png) ![Logo](logos/logo2.png)
-
 ---
 
 ## Overview
